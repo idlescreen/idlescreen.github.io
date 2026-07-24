@@ -145,6 +145,16 @@
             transform: translateY(-1px);
         }
 
+        .nav-studio-btn {
+            color: var(--accent-orange) !important;
+            font-weight: 700 !important;
+        }
+
+        .nav-studio-btn:hover {
+            color: #ffa066 !important;
+            text-shadow: 0 0 12px rgba(255, 133, 65, 0.4);
+        }
+
         /* Hero Section */
         .hero {
             padding: 5rem 0 4rem;
@@ -529,33 +539,12 @@
             line-height: 1.7;
         }
 
-        .email-form {
+        .studio-actions {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
-            max-width: 540px;
-            margin: 0 auto;
+            gap: 1rem;
             flex-wrap: wrap;
-        }
-
-        .email-input {
-            flex: 1;
-            min-width: 260px;
-            background: rgba(8, 10, 14, 0.9);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 0.85rem 1.25rem;
-            color: #fff;
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .email-input:focus {
-            border-color: var(--accent-orange);
-            box-shadow: 0 0 15px rgba(255, 133, 65, 0.25);
         }
 
         .btn-studio-submit {
@@ -565,9 +554,13 @@
             font-weight: 700;
             font-size: 0.95rem;
             border: none;
-            padding: 0.85rem 1.5rem;
+            padding: 0.85rem 1.6rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             transition: all 0.2s ease;
             box-shadow: 0 4px 15px rgba(255, 133, 65, 0.3);
             white-space: nowrap;
@@ -576,6 +569,31 @@
         .btn-studio-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 133, 65, 0.5);
+            color: #000;
+        }
+
+        .btn-studio-star {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 0.85rem 1.6rem;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-studio-star:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            color: #fff;
         }
 
         .email-success-toast {
@@ -642,7 +660,7 @@
                 <li><a href="#gallery">Screensavers</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#install">Install</a></li>
-                <li><a href="#studio">IdleStudio</a></li>
+                <li><a href="#studio" class="nav-studio-btn">IdleStudio ✨</a></li>
                 <li>
                     <a href="https://github.com/idlescreen" target="_blank" class="btn-github">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -910,17 +928,17 @@ makepkg -si
             <div class="studio-badge">✨ Early Access Creator Program</div>
             <h2>Build Custom Screensavers with IdleStudio</h2>
             <p class="studio-desc">
-                Interested in creating custom WGPU shader effects, procedural math visualizers, or batch video renders? 
-                Sign up for early access to the <strong>IdleStudio SDK</strong> & developer tools.
+                Want to create custom WGPU shader effects, procedural math visualizers, or batch video renders? 
+                Join the developer preview on GitHub for early access to the <strong>IdleStudio SDK</strong>.
             </p>
-            <form class="email-form" onsubmit="handleEmailSubmit(event)">
-                <input type="email" id="creator-email" placeholder="Enter your email address..." required class="email-input">
-                <button type="submit" class="btn-studio-submit">
-                    Request Early Access 🚀
-                </button>
-            </form>
-            <div id="email-success-toast" class="email-success-toast">
-                🎉 Thanks for joining! You are on the IdleStudio Early Access creator list.
+            <div class="studio-actions">
+                <a href="https://github.com/idlescreen/idle-studio/issues/new?title=IdleStudio+Early+Access+Request&body=I+am+interested+in+early+access+to+IdleStudio!%0A%0A-+Email/Handle:+(optional)%0A-+What+kind+of+screensavers+do+you+want+to+build:" target="_blank" class="btn-studio-submit">
+                    Request Early Access on GitHub 🚀
+                </a>
+                <a href="https://github.com/idlescreen/idle-studio" target="_blank" class="btn-studio-star">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    Star on GitHub
+                </a>
             </div>
         </div>
     </section>
