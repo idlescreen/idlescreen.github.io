@@ -12,8 +12,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
-        /* 1. Cyber-Minimal (Default) */
-        :root, html[data-theme="cyber"] {
+        /* 1. Neo-Brutalist Retro (Primary Default) */
+        :root, html[data-theme="brutalist"] {
+            --bg-dark: #121318;
+            --bg-card: #1c1d24;
+            --bg-card-hover: #262730;
+            --border-color: rgba(255, 255, 255, 0.18);
+            --border-glow: #ff5555;
+            
+            --text-main: #ffffff;
+            --text-muted: #d1d5db;
+            --text-dim: #9ca3af;
+            
+            --accent-orange: #ff5555;
+            --accent-cyan: #50fa7b;
+            --accent-purple: #bd93f9;
+            
+            --glow-primary: transparent;
+            --glow-cyan: transparent;
+            
+            --font-title: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            --radius-lg: 8px;
+            --radius-md: 6px;
+            --radius-sm: 4px;
+        }
+
+        /* 2. Cyber-Minimal */
+        html[data-theme="cyber"] {
             --bg-dark: #08090b;
             --bg-card: rgba(18, 22, 28, 0.7);
             --bg-card-hover: rgba(26, 32, 42, 0.85);
@@ -30,10 +58,6 @@
             
             --glow-primary: rgba(255, 133, 65, 0.15);
             --glow-cyan: rgba(0, 242, 254, 0.15);
-            
-            --font-title: 'Outfit', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
             
             --radius-lg: 20px;
             --radius-md: 12px;
@@ -1068,23 +1092,63 @@ git clone https://github.com/idlescreen/packages.git<br>
 cd packages/arch<br><br>
 # Step 2: Build & Install<br>
 makepkg -si
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- IdleStudio Developer Preview Section -->
+    <!-- IdleStudio Tabbed Code Table Section -->
     <section class="container studio-section" id="studio">
-        <div class="studio-card">
-            <div class="studio-badge">IDLESTUDIO SDK</div>
-            <h2>Build Your Own Screensavers</h2>
-            <p class="studio-desc">
-                Create WGPU shaders, math simulations, and offline AV1 video exports. Join the developer preview on GitHub to start building custom modules.
-            </p>
-            <div class="studio-actions">
-                <a href="https://github.com/idlescreen/idle-studio/issues/new?title=IdleStudio+Developer+Preview+Request&body=I+am+interested+in+building+custom+screensavers+with+IdleStudio!%0A%0A-+GitHub+Handle+/+Email:(optional)%0A-+What+kind+of+visual+effect+do+you+want+to+build:" target="_blank" class="btn-studio-submit">
-                    Join Developer Preview →
-                </a>
+        <div class="manual-install">
+            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">IDLESTUDIO SDK</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Build & Render Custom Screensavers</h2>
+                <p>Create WGPU shaders, batch video queues, and offline AV1 renders with IdleStudio.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="showStudioTab('studio-cli', event)">CLI Commands</button>
+                <button class="tab-btn" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
+                <button class="tab-btn" onclick="showStudioTab('studio-preview', event)">Developer Preview</button>
+            </div>
+
+            <!-- Tab 1: CLI Commands -->
+            <div id="studio-cli" class="studio-tab-content active">
+                <div class="code-block">
+# Enqueue offline video render job:<br>
+idle-studio enqueue -e beams -o /tmp/beams_4k.mkv --duration 8h --segment 1h --resolution 4k<br><br>
+# List pending render jobs in queue:<br>
+idle-studio list<br><br>
+# Process all queued render jobs:<br>
+idle-studio run --all
+                </div>
+            </div>
+
+            <!-- Tab 2: Director TUI -->
+            <div id="studio-tui" class="studio-tab-content" style="display: none;">
+                <div class="code-block">
+# Launch interactive batch queue TUI:<br>
+idle-studio tui<br><br>
+# TUI Keyboard Shortcuts:<br>
+#  j / k   Move selection up / down<br>
+#  r       Run next pending render job<br>
+#  a       Run all pending render jobs in queue<br>
+#  R       Reload job queue from disk<br>
+#  q       Quit TUI
+                </div>
+            </div>
+
+            <!-- Tab 3: Developer Preview -->
+            <div id="studio-preview" class="studio-tab-content" style="display: none;">
+                <div class="code-block">
+# Join the IdleStudio Developer Preview on GitHub:<br>
+# Request early access to the WGPU & Rust plugin SDK:
+                </div>
+                <div style="margin-top: 1.25rem;">
+                    <a href="https://github.com/idlescreen/idle-studio/issues/new?title=IdleStudio+Developer+Preview+Request&body=I+am+interested+in+building+custom+screensavers+with+IdleStudio!" target="_blank" class="btn-studio-submit">
+                        Join Developer Preview on GitHub →
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1192,6 +1256,26 @@ makepkg -si
             render();
         });
 
+        // IdleStudio Tabbed Table Logic
+        function showStudioTab(tabId, event) {
+            const studioSection = document.getElementById('studio');
+            if (!studioSection) return;
+            studioSection.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            studioSection.querySelectorAll('.studio-tab-content').forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none';
+            });
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.add('active');
+                target.style.display = 'block';
+            }
+        }
+
         // Interactive Theme Selector Logic
         function changeTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
@@ -1200,7 +1284,7 @@ makepkg -si
 
         // Initialize saved theme on load
         (function() {
-            const savedTheme = localStorage.getItem('idlescreen_theme') || 'cyber';
+            const savedTheme = localStorage.getItem('idlescreen_theme') || 'brutalist';
             document.documentElement.setAttribute('data-theme', savedTheme);
             const themeSelect = document.getElementById('theme-select');
             if (themeSelect) themeSelect.value = savedTheme;
