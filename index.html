@@ -194,24 +194,27 @@
 
         /* Install Box */
         .install-box {
-            max-width: 620px;
-            margin: 0 auto 3rem;
-            background: rgba(12, 14, 18, 0.9);
+            max-width: 760px;
+            margin: 0 auto 1.25rem;
+            background: rgba(12, 14, 18, 0.95);
             border: 1px solid var(--border-glow);
             border-radius: var(--radius-md);
-            padding: 0.75rem 1rem 0.75rem 1.25rem;
+            padding: 0.85rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1.25rem;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 25px var(--glow-primary);
         }
 
         .install-code {
             font-family: var(--font-mono);
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--accent-cyan);
             overflow-x: auto;
             white-space: nowrap;
+            flex-grow: 1;
+            padding-right: 0.5rem;
         }
 
         .btn-copy {
@@ -219,22 +222,43 @@
             color: #000;
             font-family: var(--font-title);
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             border: none;
-            padding: 0.55rem 1.1rem;
+            padding: 0.6rem 1.25rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.45rem;
             flex-shrink: 0;
         }
 
         .btn-copy:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(255, 133, 65, 0.4);
+            box-shadow: 0 4px 14px rgba(255, 133, 65, 0.45);
             background: #ffa066;
+        }
+
+        .os-support-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .os-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 0.2rem 0.65rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-main);
         }
 
         /* Section Headings */
@@ -536,6 +560,17 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     Copy
                 </button>
+            </div>
+
+            <!-- OS Support Bar -->
+            <div class="os-support-bar">
+                <span>Supported Distros:</span>
+                <span class="os-badge">Fedora</span>
+                <span class="os-badge">RHEL / Rocky</span>
+                <span class="os-badge">Ubuntu</span>
+                <span class="os-badge">Debian</span>
+                <span class="os-badge">Pop!_OS</span>
+                <span class="os-badge">Arch Linux</span>
             </div>
         </div>
     </section>
