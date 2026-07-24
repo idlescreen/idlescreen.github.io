@@ -608,19 +608,57 @@
         /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
-            padding: 2.5rem 0;
+            padding: 3rem 0;
             text-align: center;
             color: var(--text-dim);
             font-size: 0.9rem;
         }
 
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
         footer a {
             color: var(--text-muted);
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
         footer a:hover {
             color: var(--accent-orange);
+        }
+
+        .btn-footer-star {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid var(--border-color);
+            color: #fff !important;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-footer-star:hover {
+            background: rgba(255, 255, 255, 0.16) !important;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            color: #fff !important;
         }
 
         /* Toast Notice */
@@ -935,19 +973,22 @@ makepkg -si
                 <a href="https://github.com/idlescreen/idle-studio/issues/new?title=IdleStudio+Early+Access+Request&body=I+am+interested+in+early+access+to+IdleStudio!%0A%0A-+Email/Handle:+(optional)%0A-+What+kind+of+screensavers+do+you+want+to+build:" target="_blank" class="btn-studio-submit">
                     Request Early Access on GitHub 🚀
                 </a>
-                <a href="https://github.com/idlescreen/idle-studio" target="_blank" class="btn-studio-star">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    Star on GitHub
-                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container footer-content">
             <p>© 2026 IdleScreen Project. Open Source under Apache-2.0 License.</p>
-            <p style="margin-top: 0.5rem;"><a href="https://github.com/idlescreen" target="_blank">GitHub Organization</a> · <a href="https://github.com/idlescreen/idle" target="_blank">Engine Repository</a></p>
+            <div class="footer-links">
+                <a href="https://github.com/idlescreen" target="_blank">GitHub Organization</a>
+                <a href="https://github.com/idlescreen/idle" target="_blank">Engine Repository</a>
+                <a href="https://github.com/idlescreen/idle" target="_blank" class="btn-footer-star">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    Star on GitHub
+                </a>
+            </div>
         </div>
     </footer>
 
