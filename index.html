@@ -766,139 +766,8 @@
             display: none;
         }
 
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 2.5rem 0 3rem;
-            color: var(--text-dim);
-            font-size: 0.9rem;
-        }
 
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 1.75rem;
-        }
 
-        .footer-top {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 2rem 3rem;
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-            max-width: 22rem;
-        }
-
-        .footer-brand-name {
-            font-family: var(--font-title);
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
-        }
-
-        .footer-brand p {
-            margin: 0;
-            color: var(--text-dim);
-            line-height: 1.5;
-            font-size: 0.88rem;
-        }
-
-        .footer-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem 2.75rem;
-        }
-
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            min-width: 7.5rem;
-        }
-
-        .footer-col-title {
-            font-family: var(--font-title);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 0.15rem;
-        }
-
-        .footer-col a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-col a:hover {
-            color: var(--accent-orange);
-        }
-
-        .footer-bottom {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem 1.5rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.82rem;
-            color: var(--text-dim);
-        }
-
-        .footer-bottom a {
-            color: var(--text-muted);
-            text-decoration: none;
-        }
-
-        .footer-bottom a:hover {
-            color: var(--accent-orange);
-        }
-
-        @media (max-width: 640px) {
-            .footer-top {
-                flex-direction: column;
-                gap: 1.75rem;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        /* Toast Notice */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--accent-orange);
-            color: #000;
-            font-family: var(--font-title);
-            font-weight: 700;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-sm);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1000;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
     </style>
 </head>
 <body>
@@ -1254,44 +1123,7 @@ idle-studio tui<br><br>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="footer-brand-name">IdleScreen</div>
-                    <p>Ambient screensavers and idle management for Wayland.</p>
-                </div>
-                <nav class="footer-nav" aria-label="Footer">
-                    <div class="footer-col">
-                        <div class="footer-col-title">Product</div>
-                        <a href="#gallery">Gallery</a>
-                        <a href="#install">Install</a>
-                        <a href="#features">Features</a>
-                        <a href="#studio">IdleStudio</a>
-                    </div>
-                    <div class="footer-col">
-                        <div class="footer-col-title">Install</div>
-                        <a href="https://idlescreen.github.io/packages/">Packages</a>
-                        <a href="https://idlescreen.github.io/packages/install.sh">install.sh</a>
-                    </div>
-                    <div class="footer-col">
-                        <div class="footer-col-title">Source</div>
-                        <a href="https://github.com/idlescreen" target="_blank" rel="noopener">GitHub</a>
-                        <a href="https://github.com/idlescreen/idle" target="_blank" rel="noopener">Engine</a>
-                        <a href="https://github.com/idlescreen/idle-cosmic" target="_blank" rel="noopener">COSMIC applet</a>
-                        <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener">packages repo</a>
-                    </div>
-                </nav>
-            </div>
-            <div class="footer-bottom">
-                <span>© 2026 IdleScreen. Apache-2.0.</span>
-                <span>Wayland · COSMIC · Fedora · Debian</span>
-            </div>
-        </div>
-    </footer>
 
-    <div class="toast" id="toast">Command copied to clipboard!</div>
 
     <script>
         function handleEmailSubmit(e) {
@@ -1313,38 +1145,32 @@ idle-studio tui<br><br>
             const cmd = "curl -fsSL https://idlescreen.github.io/packages/install.sh | sh";
             const button = btn || document.getElementById("btn-copy-install");
             const label = button ? button.querySelector(".btn-copy-label") : null;
-            const toast = document.getElementById("toast");
 
             const markCopied = () => {
-                if (button) {
-                    button.classList.add("copied");
-                    button.setAttribute("aria-label", "Install command copied");
-                    if (label) label.textContent = "Copied!";
-                    clearTimeout(button._copyResetTimer);
-                    button._copyResetTimer = setTimeout(() => {
-                        button.classList.remove("copied");
-                        button.setAttribute("aria-label", "Copy install command");
-                        if (label) label.textContent = "Copy";
-                    }, 2200);
-                }
-                if (toast) {
-                    toast.textContent = "Command copied to clipboard!";
-                    toast.classList.add("show");
-                    setTimeout(() => { toast.classList.remove("show"); }, 2500);
-                }
+                if (!button) return;
+                button.classList.add("copied");
+                button.setAttribute("aria-label", "Install command copied");
+                if (label) label.textContent = "Copied!";
+                clearTimeout(button._copyResetTimer);
+                button._copyResetTimer = setTimeout(() => {
+                    button.classList.remove("copied");
+                    button.setAttribute("aria-label", "Copy install command");
+                    if (label) label.textContent = "Copy";
+                }, 2200);
             };
 
             const markFailed = () => {
-                if (toast) {
-                    toast.textContent = "Copy failed — select the command and copy manually";
-                    toast.classList.add("show");
-                    setTimeout(() => { toast.classList.remove("show"); }, 3000);
-                }
+                if (!button || !label) return;
+                const prev = label.textContent;
+                label.textContent = "Failed";
+                clearTimeout(button._copyResetTimer);
+                button._copyResetTimer = setTimeout(() => {
+                    label.textContent = prev || "Copy";
+                }, 2200);
             };
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(cmd).then(markCopied).catch(() => {
-                    // Fallback for older browsers / insecure contexts
                     try {
                         const ta = document.createElement("textarea");
                         ta.value = cmd;
