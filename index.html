@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IdleScreen — High-Performance Ambient Screensavers for Linux</title>
-    <meta name="description" content="Modular, GPU-accelerated screensaver engine and idle manager for Wayland compositors (COSMIC, Hyprland, Sway, GNOME, KDE).">
+    <title>IdleScreen — Modular Ambient Screensavers for Wayland</title>
+    <meta name="description" content="Modular Wayland idle host and screensaver plugins for Linux. Packages for Fedora and Debian; COSMIC panel applet; CLI and TUI.">
     <meta name="theme-color" content="#121318">
     <link rel="canonical" href="https://idlescreen.github.io/">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121318'/%3E%3Crect x='6' y='8' width='20' height='13' rx='2' fill='none' stroke='%23ff5555' stroke-width='2'/%3E%3Cpath d='M12 25h8' stroke='%23ff5555' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M20 11a4 4 0 1 1-5.5 5.5' fill='none' stroke='%2350fa7b' stroke-width='1.8'/%3E%3C/svg%3E">
     <meta property="og:title" content="IdleScreen — Ambient Screensavers for Wayland">
-    <meta property="og:description" content="Modular screensaver engine and idle manager for COSMIC, Hyprland, Sway, GNOME, and KDE.">
+    <meta property="og:description" content="Modular Wayland idle host and screensaver plugins. Fedora and Debian packages; COSMIC applet; CLI and TUI.">
     <meta property="og:url" content="https://idlescreen.github.io/">
     <meta property="og:type" content="website">
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
-        /* 1. Neo-Brutalist Retro (Primary Default) */
         :root, html[data-theme="brutalist"] {
             --bg-dark: #121318;
             --bg-card: #1c1d24;
@@ -47,7 +45,6 @@
             --radius-sm: 4px;
         }
 
-        /* 2. Cyber-Minimal */
         html[data-theme="cyber"] {
             --bg-dark: #08090b;
             --bg-card: rgba(18, 22, 28, 0.7);
@@ -71,7 +68,6 @@
             --radius-sm: 8px;
         }
 
-        /* 2. Monochrome Swiss / Apple Pro */
         html[data-theme="monochrome"] {
             --bg-dark: #000000;
             --bg-card: #0c0c0e;
@@ -91,7 +87,6 @@
             --glow-cyan: transparent;
         }
 
-        /* 3. Neo-Brutalist Retro */
         html[data-theme="brutalist"] {
             --bg-dark: #121318;
             --bg-card: #1c1d24;
@@ -114,7 +109,6 @@
             --radius-sm: 2px;
         }
 
-        /* 4. Terminal CRT Green */
         html[data-theme="terminal"] {
             --bg-dark: #020b04;
             --bg-card: #05180a;
@@ -134,7 +128,6 @@
             --glow-cyan: rgba(0, 255, 102, 0.2);
         }
 
-        /* 5. Nordic Light Mode */
         html[data-theme="nordic"] {
             --bg-dark: #f8fafc;
             --bg-card: #ffffff;
@@ -183,7 +176,6 @@
             padding: 0 1.5rem;
         }
 
-        /* Header / Navbar */
         header {
             padding: 1.5rem 0;
             border-bottom: 1px solid var(--border-color);
@@ -270,31 +262,6 @@
             text-shadow: 0 0 12px rgba(255, 133, 65, 0.4);
         }
 
-        .theme-select {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            font-weight: 500;
-            padding: 0.45rem 0.75rem;
-            border-radius: var(--radius-sm);
-            outline: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .theme-select:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .theme-select option {
-            background: #12141a;
-            color: #fff;
-        }
-
-        /* Hero Section */
         .hero {
             padding: 5rem 0 4rem;
             text-align: center;
@@ -336,12 +303,11 @@
         .hero-subtitle {
             font-size: clamp(1.05rem, 2vw, 1.25rem);
             color: var(--text-muted);
-            max-width: 720px;
+            max-width: 740px;
             margin: 0 auto 2.5rem;
             font-weight: 400;
         }
 
-        /* Install Box & Outer Copy Button */
         .install-wrapper {
             display: flex;
             align-items: center;
@@ -442,7 +408,6 @@
             color: var(--text-main);
         }
 
-        /* Section Headings */
         .section-header {
             text-align: center;
             margin-bottom: 3rem;
@@ -459,9 +424,10 @@
         .section-header p {
             color: var(--text-muted);
             font-size: 1.05rem;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
-        /* Gallery Grid */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -568,7 +534,6 @@
             color: var(--accent-orange);
         }
 
-        /* Features Section */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -601,7 +566,6 @@
             font-size: 0.95rem;
         }
 
-        /* Manual Install Section */
         .manual-install {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -617,6 +581,7 @@
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -656,19 +621,10 @@
             color: #e5e7eb;
             overflow-x: auto;
             line-height: 1.7;
-        /* IdleStudio Developer Preview Section */
-        .studio-section {
-            margin: 5rem auto 7rem;
         }
 
-        .studio-card {
-            background: linear-gradient(135deg, rgba(16, 19, 26, 0.95) 0%, rgba(10, 12, 16, 0.98) 100%);
-            border: 1px solid rgba(255, 133, 65, 0.3);
-            border-radius: var(--radius-lg);
-            padding: 4rem 2.5rem;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 133, 65, 0.12);
-            position: relative;
+        .studio-section {
+            margin: 0 auto 5rem;
         }
 
         .studio-badge {
@@ -684,29 +640,6 @@
             border-radius: 50px;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
-        }
-
-        .studio-card h2 {
-            font-family: var(--font-title);
-            font-size: clamp(2.2rem, 4vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .studio-desc {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 580px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.7;
-        }
-
-        .studio-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .btn-studio-submit {
@@ -733,46 +666,25 @@
             color: #000;
         }
 
-        .btn-studio-star {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            font-family: var(--font-title);
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding: 0.85rem 1.6rem;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+        @media (max-width: 720px) {
+            .nav-links {
+                gap: 0.75rem;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .install-wrapper {
+                flex-direction: column;
+            }
+
+            .btn-copy {
+                width: 100%;
+            }
         }
-
-        .btn-studio-star:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-            color: #fff;
-        }
-
-        .email-success-toast {
-            margin-top: 1.25rem;
-            color: var(--accent-cyan);
-            font-family: var(--font-title);
-            font-size: 0.95rem;
-            font-weight: 600;
-            display: none;
-        }
-
-
-
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="container nav-content">
             <a href="#" class="logo">
@@ -794,18 +706,16 @@
         </div>
     </header>
 
-    <!-- Hero -->
     <section class="hero">
         <div class="container">
             <div class="hero-badge">
-                GPU-Accelerated Screensavers for Wayland
+                Wayland idle host · modular plugins
             </div>
-            <h1>High-Performance Ambient<br>Screensavers for Linux</h1>
+            <h1>Ambient screensavers<br>for Linux Wayland</h1>
             <p class="hero-subtitle">
-                Modular screensaver engine and idle manager designed for Wayland compositors including COSMIC, Hyprland, Sway, GNOME, and KDE.
+                IdleScreen is a modular idle manager and screensaver host. The daemon watches compositor idle signals, loads plugin effects, and presents them on a layer-shell surface. CLI, TUI, and an optional COSMIC panel applet control it.
             </p>
 
-            <!-- 1-Line Universal Installer Box -->
             <div class="install-wrapper">
                 <div class="install-box">
                     <div class="install-code">curl -fsSL https://idlescreen.github.io/packages/install.sh | sh</div>
@@ -817,209 +727,185 @@
                 </button>
             </div>
 
-            <!-- OS Support Bar -->
             <div class="os-support-bar">
-                <span>Supported Distros:</span>
-                <span class="os-badge">Fedora</span>
-                <span class="os-badge">Debian</span>
-                <span class="os-badge" title="PKGBUILD available; not first-class via install.sh">Arch (experimental)</span>
+                <span>Install script supports:</span>
+                <span class="os-badge">Fedora (DNF)</span>
+                <span class="os-badge">Debian / Ubuntu (APT)</span>
+                <span class="os-badge" title="PKGBUILD under packages/arch; not covered by install.sh">Arch (experimental PKGBUILD)</span>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
     <section class="container" id="gallery">
         <div class="section-header">
-            <h2>Official Screensaver Gallery</h2>
-            <p>10 real-time procedural GPU & TUI visual effect modules</p>
+            <h2>Official screensavers</h2>
+            <p>Ten procedural plugins. Each draws a cell grid; the host rasterizes frames (optional wgpu cell path, CPU fallback). Preview with <code>idlescreen preview &lt;name&gt;</code>.</p>
         </div>
 
         <div class="gallery-grid">
-            <!-- 1. Beams -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="beams"></canvas>
                 </div>
                 <div class="saver-body">
                     <div class="saver-title">Beams</div>
-                    <div class="saver-desc">Laser vector particle beams crossing in high-contrast space.</div>
+                    <div class="saver-desc">Crossing vector beams across a high-contrast field.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview beams</div>
                 </div>
             </div>
 
-            <!-- 2. Cosmos -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="cosmos"></canvas>
                 </div>
                 <div class="saver-body">
                     <div class="saver-title">Cosmos</div>
-                    <div class="saver-desc">Deep space starfield & nebula simulation with warp dynamics.</div>
+                    <div class="saver-desc">Starfield and nebula-style deep-space motion.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview cosmos</div>
                 </div>
             </div>
 
-            <!-- 3. Bursts -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="bursts"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Bursts <span>💥</span></div>
-                    <div class="saver-desc">Explosive supernova geometry & particle shockwave physics.</div>
+                    <div class="saver-title">Bursts</div>
+                    <div class="saver-desc">Explosive burst patterns and expanding rings.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview bursts</div>
                 </div>
             </div>
 
-            <!-- 4. Storm -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="storm"></canvas>
                 </div>
                 <div class="saver-body">
                     <div class="saver-title">Storm</div>
-                    <div class="saver-desc">Atmospheric particle storm with lightning displacement.</div>
+                    <div class="saver-desc">Dense atmospheric particles with lightning-like flashes.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview storm</div>
                 </div>
             </div>
 
-            <!-- 5. Chaos -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="chaos"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Chaos <span>🌀</span></div>
-                    <div class="saver-desc">Mathematical strange attractor chaos fractals.</div>
+                    <div class="saver-title">Chaos</div>
+                    <div class="saver-desc">Strange-attractor style chaos curves.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview chaos</div>
                 </div>
             </div>
 
-            <!-- 6. Hearth -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="hearth"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Hearth <span>🔥</span></div>
-                    <div class="saver-desc">Warm ambient glowing embers & fluid fire simulations.</div>
+                    <div class="saver-title">Hearth</div>
+                    <div class="saver-desc">Warm ember and fire-like ambient motion.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview hearth</div>
                 </div>
             </div>
 
-            <!-- 7. Ripple -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="ripple"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Ripple <span>🌊</span></div>
-                    <div class="saver-desc">Fluid wave dynamics and reactive caustics rendering.</div>
+                    <div class="saver-title">Ripple</div>
+                    <div class="saver-desc">Expanding wave and ripple patterns.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview ripple</div>
                 </div>
             </div>
 
-            <!-- 8. Radar -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="radar"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Radar <span>📡</span></div>
-                    <div class="saver-desc">Sweep sonar radar tracking with polar target blips.</div>
+                    <div class="saver-title">Radar</div>
+                    <div class="saver-desc">Sweeping radar arc with polar blips.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview radar</div>
                 </div>
             </div>
 
-            <!-- 9. Glyphs -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">TUI / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="glyphs"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Glyphs <span>🟢</span></div>
-                    <div class="saver-desc">Digital matrix stream & terminal character cascades.</div>
+                    <div class="saver-title">Glyphs</div>
+                    <div class="saver-desc">Falling character streams in a terminal-style cascade.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview glyphs</div>
                 </div>
             </div>
 
-            <!-- 10. Gnats -->
             <div class="saver-card">
                 <div class="saver-preview">
-                    <span class="saver-tag">WGPU / GPU</span>
-                    
+                    <span class="saver-tag">Plugin</span>
                     <canvas class="saver-canvas-fallback" data-effect="gnats"></canvas>
                 </div>
                 <div class="saver-body">
-                    <div class="saver-title">Gnats <span>🪲</span></div>
-                    <div class="saver-desc">Swarming autonomous agents with predator–prey firefly motion.</div>
+                    <div class="saver-title">Gnats</div>
+                    <div class="saver-desc">Swarming agents with firefly-like motion.</div>
                     <div class="saver-cmd"><span>idlescreen</span> preview gnats</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features -->
     <section class="container" id="features">
         <div class="section-header">
-            <h2>Built for Modern Linux</h2>
-            <p>Designed from the ground up for low power, Wayland, and COSMIC</p>
+            <h2>What ships today</h2>
+            <p>Verified against the IdleScreen packages and source. Presentation needs Wayland <code>ext-idle-notify-v1</code> and <code>zwlr_layer_shell_v1</code> (or equivalent). Support is strongest on COSMIC, Hyprland, and Sway; GNOME and KDE vary by compositor protocol coverage.</p>
         </div>
 
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
-                <h3>WGPU & Ultra-Low CPU</h3>
-                <p>Hardware-accelerated shader rendering with automatic frame throttling to keep CPU usage near zero.</p>
+                <h3>Cell-grid plugins + host raster</h3>
+                <p>Savers implement a cell-grid draw API. The host rasterizes to pixels, with an optional wgpu path for cell rendering and a CPU fallback when GPU init fails.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
-                <h3>COSMIC DE Applet</h3>
-                <p>Native integration with System76 COSMIC Desktop panel applet for 1-click controls.</p>
+                <h3>COSMIC panel applet</h3>
+                <p>Optional <code>idle-cosmic</code> package: native System76 COSMIC panel applet for status, saver selection, preview, and opening the TUI dashboard.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg></div>
-                <h3>Universal TUI Host</h3>
-                <p>Full interactive terminal controller (<code>idlescreen tui</code>) with keyboard shortcuts and desktop launcher.</p>
+                <h3>CLI and TUI</h3>
+                <p><code>idlescreen</code> (alias <code>idle</code>) talks to the daemon over D-Bus. <code>idlescreen tui</code> launches the separate <code>idle-tui</code> binary; a desktop entry is also installed.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2" ry="2"></rect><line x1="23" y1="11" x2="23" y2="13"></line></svg></div>
-                <h3>Smart Power & Media</h3>
-                <p>Monitors battery state and automatically inhibits screensavers during active MPRIS2 media playback.</p>
+                <h3>Inhibit and battery behavior</h3>
+                <p>Skips presentation while logind or MPRIS2 playback reports active media. On battery, frame and simulation targets are capped (30 FPS/Hz) to reduce draw cost.</p>
             </div>
         </div>
     </section>
 
-    <!-- Manual Installation -->
     <section class="container" id="install">
         <div class="manual-install">
             <div class="section-header" style="margin-bottom: 2rem; text-align: left;">
-                <h2>Package Repository Setup</h2>
-                <p>Prefer the one-line installer above. These steps are for manual package-manager setup.</p>
+                <h2>Package repository setup</h2>
+                <p style="margin: 0;">Prefer the one-line installer above. It installs <code>idle-daemon</code>, <code>idle-cli</code>, <code>idle-savers</code>, and <code>idle-tui</code>, plus <code>idle-cosmic</code> when COSMIC is detected. Manual steps below for DNF, APT, and experimental Arch.</p>
             </div>
 
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="showTab('dnf')">Fedora / RHEL (DNF)</button>
-                <button class="tab-btn" onclick="showTab('apt')">Debian / Ubuntu (APT)</button>
-                <button class="tab-btn" onclick="showTab('arch')">Arch Linux (makepkg)</button>
+                <button type="button" class="tab-btn active" onclick="showTab('dnf', event)">Fedora / RHEL (DNF)</button>
+                <button type="button" class="tab-btn" onclick="showTab('apt', event)">Debian / Ubuntu (APT)</button>
+                <button type="button" class="tab-btn" onclick="showTab('arch', event)">Arch Linux (makepkg)</button>
             </div>
 
             <div id="dnf" class="tab-content active">
@@ -1031,23 +917,23 @@ sudo dnf check-update<br>
 sudo dnf install idle-daemon idle-cli idle-savers idle-tui<br><br>
 # COSMIC Desktop — also install the panel applet:<br>
 # sudo dnf install idle-cosmic<br><br>
-# Launch:<br>
+# Launch TUI:<br>
 idlescreen tui
                 </div>
             </div>
 
             <div id="apt" class="tab-content">
                 <div class="code-block">
-# Step 1: Add GPG key & repository<br>
+# Step 1: Add GPG key &amp; repository<br>
 sudo mkdir -p /etc/apt/keyrings<br>
-curl -fsSL https://idlescreen.github.io/packages/apt/idlescreen-keyring.gpg | sudo tee /etc/apt/keyrings/idlescreen-keyring.gpg >/dev/null<br>
-echo "deb [signed-by=/etc/apt/keyrings/idlescreen-keyring.gpg] https://idlescreen.github.io/packages/apt stable main" | sudo tee /etc/apt/sources.list.d/idlescreen.list >/dev/null<br><br>
+curl -fsSL https://idlescreen.github.io/packages/apt/idlescreen-keyring.gpg | sudo tee /etc/apt/keyrings/idlescreen-keyring.gpg &gt;/dev/null<br>
+echo "deb [signed-by=/etc/apt/keyrings/idlescreen-keyring.gpg] https://idlescreen.github.io/packages/apt stable main" | sudo tee /etc/apt/sources.list.d/idlescreen.list &gt;/dev/null<br><br>
 # Step 2: Install IdleScreen packages<br>
 sudo apt update<br>
 sudo apt install idle-daemon idle-cli idle-savers idle-tui<br><br>
 # COSMIC Desktop — also install the panel applet:<br>
 # sudo apt install idle-cosmic<br><br>
-# Launch:<br>
+# Launch TUI:<br>
 idlescreen tui
                 </div>
             </div>
@@ -1059,88 +945,66 @@ idlescreen tui
 # Step 1: Clone package definitions<br>
 git clone https://github.com/idlescreen/packages.git<br>
 cd packages/arch<br><br>
-# Step 2: Build & install (currently focuses on idle-cosmic)<br>
+# Step 2: Build &amp; install<br>
 makepkg -si
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- IdleStudio Tabbed Code Table Section -->
     <section class="container studio-section" id="studio">
         <div class="manual-install">
             <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
-                <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">OPTIONAL · PREVIEW</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — Offline Render Director</h2>
-                <p>Separate product (not included in <code>install.sh</code>). Queue offline AV1 renders and experiment with long-form exports. Still in early preview.</p>
+                <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">OPTIONAL · EARLY PREVIEW</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — offline render queue</h2>
+                <p style="margin: 0;">Separate product (not installed by <code>install.sh</code>). Queues offline jobs that run the same plugin math through the <code>render</code> pipeline to AV1 via ffmpeg (when an encoder such as libsvtav1 is available). Early preview; CLI and TUI only.</p>
             </div>
 
-            <!-- Tab Buttons -->
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="showStudioTab('studio-cli', event)">CLI Commands</button>
-                <button class="tab-btn" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
-                <button class="tab-btn" onclick="showStudioTab('studio-preview', event)">Developer Preview</button>
+                <button type="button" class="tab-btn active" onclick="showStudioTab('studio-cli', event)">CLI commands</button>
+                <button type="button" class="tab-btn" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
+                <button type="button" class="tab-btn" onclick="showStudioTab('studio-repo', event)">Source</button>
             </div>
 
-            <!-- Tab 1: CLI Commands -->
             <div id="studio-cli" class="studio-tab-content active">
                 <div class="code-block">
-# Enqueue offline video render job:<br>
-idle-studio enqueue -e beams -o /tmp/beams_4k.mkv --duration 8h --segment 1h --resolution 4k<br><br>
-# List pending render jobs in queue:<br>
+# Enqueue offline video render job (width/height, not a resolution preset):<br>
+idle-studio enqueue -e beams -o /tmp/beams.mkv --duration 8h --segment 1h --width 3840 --height 2160<br><br>
+# List pending render jobs:<br>
 idle-studio list<br><br>
 # Process all queued render jobs:<br>
 idle-studio run --all
                 </div>
             </div>
 
-            <!-- Tab 2: Director TUI -->
             <div id="studio-tui" class="studio-tab-content" style="display: none;">
                 <div class="code-block">
 # Launch interactive batch queue TUI:<br>
 idle-studio tui<br><br>
-# TUI Keyboard Shortcuts:<br>
+# TUI keys:<br>
 #  j / k   Move selection up / down<br>
-#  r       Run next pending render job<br>
-#  a       Run all pending render jobs in queue<br>
-#  R       Reload job queue from disk<br>
-#  q       Quit TUI
+#  r       Run next pending job<br>
+#  a       Run all pending jobs<br>
+#  R       Reload queue from disk<br>
+#  q       Quit
                 </div>
             </div>
 
-            <!-- Tab 3: Developer Preview -->
-            <div id="studio-preview" class="studio-tab-content" style="display: none;">
+            <div id="studio-repo" class="studio-tab-content" style="display: none;">
                 <div class="code-block">
-# Join the IdleStudio Developer Preview on GitHub:<br>
-# Request early access to the WGPU & Rust plugin SDK:
+# IdleStudio lives in its own repo (optional package: idle-studio).<br>
+# Plugin ABI for savers is idle-api in the main idle monorepo — not a separate SDK package.
                 </div>
                 <div style="margin-top: 1.25rem;">
-                    <a href="https://github.com/idlescreen/idle-studio/issues/new?title=IdleStudio+Developer+Preview+Request&body=I+am+interested+in+building+custom+screensavers+with+IdleStudio!" target="_blank" class="btn-studio-submit">
-                        Join Developer Preview on GitHub →
+                    <a href="https://github.com/idlescreen/idle-studio" target="_blank" class="btn-studio-submit">
+                        IdleStudio on GitHub →
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-
-
     <script>
-        function handleEmailSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('creator-email');
-            const toast = document.getElementById('email-success-toast');
-            if (input && input.value) {
-                let subs = JSON.parse(localStorage.getItem('idlescreen_studio_creators') || '[]');
-                subs.push({ email: input.value, date: new Date().toISOString() });
-                localStorage.setItem('idlescreen_studio_creators', JSON.stringify(subs));
-                
-                toast.style.display = 'block';
-                input.value = '';
-                setTimeout(() => { toast.style.display = 'none'; }, 7000);
-            }
-        }
-
         function copyInstall(btn) {
             const cmd = "curl -fsSL https://idlescreen.github.io/packages/install.sh | sh";
             const button = btn || document.getElementById("btn-copy-install");
@@ -1192,15 +1056,19 @@ idle-studio tui<br><br>
             }
         }
 
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
+        function showTab(tabId, event) {
+            const install = document.getElementById('install');
+            if (!install) return;
+            install.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            install.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
         }
 
-        // Procedural Animated Fallback Canvases for cards while video assets load
         document.querySelectorAll('.saver-canvas-fallback').forEach(canvas => {
             const ctx = canvas.getContext('2d');
             const parent = canvas.parentElement;
@@ -1254,7 +1122,6 @@ idle-studio tui<br><br>
             render();
         });
 
-        // IdleStudio Tabbed Table Logic
         function showStudioTab(tabId, event) {
             const studioSection = document.getElementById('studio');
             if (!studioSection) return;
@@ -1273,20 +1140,6 @@ idle-studio tui<br><br>
                 target.style.display = 'block';
             }
         }
-
-        // Interactive Theme Selector Logic
-        function changeTheme(themeName) {
-            document.documentElement.setAttribute('data-theme', themeName);
-            localStorage.setItem('idlescreen_theme', themeName);
-        }
-
-        // Initialize saved theme on load
-        (function() {
-            const savedTheme = localStorage.getItem('idlescreen_theme') || 'brutalist';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            const themeSelect = document.getElementById('theme-select');
-            if (themeSelect) themeSelect.value = savedTheme;
-        })();
     </script>
 </body>
 </html>
