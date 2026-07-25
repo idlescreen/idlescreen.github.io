@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IdleScreen — High-Performance Ambient Screensavers for Linux</title>
     <meta name="description" content="Modular, GPU-accelerated screensaver engine and idle manager for Wayland compositors (COSMIC, Hyprland, Sway, GNOME, KDE).">
-    
+    <meta name="theme-color" content="#121318">
+    <link rel="canonical" href="https://idlescreen.github.io/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121318'/%3E%3Crect x='6' y='8' width='20' height='13' rx='2' fill='none' stroke='%23ff5555' stroke-width='2'/%3E%3Cpath d='M12 25h8' stroke='%23ff5555' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M20 11a4 4 0 1 1-5.5 5.5' fill='none' stroke='%2350fa7b' stroke-width='1.8'/%3E%3C/svg%3E">
+    <meta property="og:title" content="IdleScreen — Ambient Screensavers for Wayland">
+    <meta property="og:description" content="Modular screensaver engine and idle manager for COSMIC, Hyprland, Sway, GNOME, and KDE.">
+    <meta property="og:url" content="https://idlescreen.github.io/">
+    <meta property="og:type" content="website">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -380,12 +387,38 @@
             gap: 0.45rem;
             flex-shrink: 0;
             box-shadow: 0 4px 15px rgba(255, 133, 65, 0.25);
+            min-width: 7.25rem;
+            justify-content: center;
         }
 
         .btn-copy:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(255, 133, 65, 0.45);
             background: #ffa066;
+        }
+
+        .btn-copy.copied {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 4px 18px rgba(80, 250, 123, 0.35);
+            transform: none;
+        }
+
+        .btn-copy.copied:hover {
+            background: var(--accent-cyan);
+            box-shadow: 0 4px 18px rgba(80, 250, 123, 0.45);
+        }
+
+        .btn-copy .icon-check {
+            display: none;
+        }
+
+        .btn-copy.copied .icon-copy {
+            display: none;
+        }
+
+        .btn-copy.copied .icon-check {
+            display: inline-block;
         }
 
         .os-support-bar {
@@ -853,18 +886,19 @@
                 <div class="install-box">
                     <div class="install-code">curl -fsSL https://idlescreen.github.io/packages/install.sh | sh</div>
                 </div>
-                <button class="btn-copy" onclick="copyInstall()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    Copy
+                <button type="button" class="btn-copy" id="btn-copy-install" onclick="copyInstall(this)" aria-label="Copy install command">
+                    <svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    <span class="btn-copy-label">Copy</span>
                 </button>
             </div>
 
             <!-- OS Support Bar -->
             <div class="os-support-bar">
                 <span>Supported Distros:</span>
-                <span class="os-badge">Arch</span>
-                <span class="os-badge">Debian</span>
                 <span class="os-badge">Fedora</span>
+                <span class="os-badge">Debian</span>
+                <span class="os-badge" title="PKGBUILD available; not first-class via install.sh">Arch (experimental)</span>
             </div>
         </div>
     </section>
@@ -1002,6 +1036,20 @@
                     <div class="saver-cmd"><span>idlescreen</span> preview glyphs</div>
                 </div>
             </div>
+
+            <!-- 10. Gnats -->
+            <div class="saver-card">
+                <div class="saver-preview">
+                    <span class="saver-tag">WGPU / GPU</span>
+                    
+                    <canvas class="saver-canvas-fallback" data-effect="gnats"></canvas>
+                </div>
+                <div class="saver-body">
+                    <div class="saver-title">Gnats <span>🪲</span></div>
+                    <div class="saver-desc">Swarming autonomous agents with predator–prey firefly motion.</div>
+                    <div class="saver-cmd"><span>idlescreen</span> preview gnats</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1041,7 +1089,7 @@
         <div class="manual-install">
             <div class="section-header" style="margin-bottom: 2rem; text-align: left;">
                 <h2>Package Repository Setup</h2>
-                <p>Manual installation steps for your package manager</p>
+                <p>Prefer the one-line installer above. These steps are for manual package-manager setup.</p>
             </div>
 
             <div class="tab-buttons">
@@ -1052,11 +1100,13 @@
 
             <div id="dnf" class="tab-content active">
                 <div class="code-block">
-# Step 1: Add DNF Repository<br>
+# Step 1: Add DNF repository<br>
 sudo curl -fsSL https://idlescreen.github.io/packages/rpm/idlescreen.repo -o /etc/yum.repos.d/idlescreen.repo<br><br>
-# Step 2: Install idlescreen<br>
+# Step 2: Install IdleScreen packages<br>
 sudo dnf check-update<br>
 sudo dnf install idle-daemon idle-cli idle-savers idle-tui<br><br>
+# COSMIC Desktop — also install the panel applet:<br>
+# sudo dnf install idle-cosmic<br><br>
 # Launch:<br>
 idlescreen tui
                 </div>
@@ -1064,13 +1114,15 @@ idlescreen tui
 
             <div id="apt" class="tab-content">
                 <div class="code-block">
-# Step 1: Add GPG Key & Repository<br>
+# Step 1: Add GPG key & repository<br>
 sudo mkdir -p /etc/apt/keyrings<br>
 curl -fsSL https://idlescreen.github.io/packages/apt/idlescreen-keyring.gpg | sudo tee /etc/apt/keyrings/idlescreen-keyring.gpg >/dev/null<br>
 echo "deb [signed-by=/etc/apt/keyrings/idlescreen-keyring.gpg] https://idlescreen.github.io/packages/apt stable main" | sudo tee /etc/apt/sources.list.d/idlescreen.list >/dev/null<br><br>
-# Step 2: Install idlescreen<br>
+# Step 2: Install IdleScreen packages<br>
 sudo apt update<br>
 sudo apt install idle-daemon idle-cli idle-savers idle-tui<br><br>
+# COSMIC Desktop — also install the panel applet:<br>
+# sudo apt install idle-cosmic<br><br>
 # Launch:<br>
 idlescreen tui
                 </div>
@@ -1078,11 +1130,14 @@ idlescreen tui
 
             <div id="arch" class="tab-content">
                 <div class="code-block">
-# Step 1: Clone Package Definitions<br>
+# Experimental: PKGBUILD path (not covered by install.sh)<br>
+# Prefer the curl installer on Fedora/Debian when possible.<br><br>
+# Step 1: Clone package definitions<br>
 git clone https://github.com/idlescreen/packages.git<br>
 cd packages/arch<br><br>
-# Step 2: Build & Install<br>
+# Step 2: Build & install (currently focuses on idle-cosmic)<br>
 makepkg -si
+                </div>
             </div>
         </div>
     </section>
@@ -1091,9 +1146,9 @@ makepkg -si
     <section class="container studio-section" id="studio">
         <div class="manual-install">
             <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
-                <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">IDLESTUDIO SDK</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Build & Render Custom Screensavers</h2>
-                <p>Create WGPU shaders, batch video queues, and offline AV1 renders with IdleStudio.</p>
+                <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">OPTIONAL · PREVIEW</div>
+                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — Offline Render Director</h2>
+                <p>Separate product (not included in <code>install.sh</code>). Queue offline AV1 renders and experiment with long-form exports. Still in early preview.</p>
             </div>
 
             <!-- Tab Buttons -->
@@ -1151,6 +1206,7 @@ idle-studio tui<br><br>
             <div class="footer-links">
                 <a href="https://github.com/idlescreen" target="_blank">GitHub Organization</a>
                 <a href="https://github.com/idlescreen/idle" target="_blank">Engine Repository</a>
+                <a href="https://idlescreen.github.io/packages/">Packages</a>
                 <a href="https://github.com/idlescreen/idle" target="_blank" class="btn-footer-star">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     Star on GitHub
@@ -1177,12 +1233,61 @@ idle-studio tui<br><br>
             }
         }
 
-        function copyInstall() {
+        function copyInstall(btn) {
             const cmd = "curl -fsSL https://idlescreen.github.io/packages/install.sh | sh";
-            navigator.clipboard.writeText(cmd);
+            const button = btn || document.getElementById("btn-copy-install");
+            const label = button ? button.querySelector(".btn-copy-label") : null;
             const toast = document.getElementById("toast");
-            toast.classList.add("show");
-            setTimeout(() => { toast.classList.remove("show"); }, 2500);
+
+            const markCopied = () => {
+                if (button) {
+                    button.classList.add("copied");
+                    button.setAttribute("aria-label", "Install command copied");
+                    if (label) label.textContent = "Copied!";
+                    clearTimeout(button._copyResetTimer);
+                    button._copyResetTimer = setTimeout(() => {
+                        button.classList.remove("copied");
+                        button.setAttribute("aria-label", "Copy install command");
+                        if (label) label.textContent = "Copy";
+                    }, 2200);
+                }
+                if (toast) {
+                    toast.textContent = "Command copied to clipboard!";
+                    toast.classList.add("show");
+                    setTimeout(() => { toast.classList.remove("show"); }, 2500);
+                }
+            };
+
+            const markFailed = () => {
+                if (toast) {
+                    toast.textContent = "Copy failed — select the command and copy manually";
+                    toast.classList.add("show");
+                    setTimeout(() => { toast.classList.remove("show"); }, 3000);
+                }
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(cmd).then(markCopied).catch(() => {
+                    // Fallback for older browsers / insecure contexts
+                    try {
+                        const ta = document.createElement("textarea");
+                        ta.value = cmd;
+                        ta.setAttribute("readonly", "");
+                        ta.style.position = "fixed";
+                        ta.style.left = "-9999px";
+                        document.body.appendChild(ta);
+                        ta.select();
+                        const ok = document.execCommand("copy");
+                        document.body.removeChild(ta);
+                        if (ok) markCopied();
+                        else markFailed();
+                    } catch (e) {
+                        markFailed();
+                    }
+                });
+            } else {
+                markFailed();
+            }
         }
 
         function showTab(tabId) {
