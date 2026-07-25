@@ -769,8 +769,7 @@
         /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
-            padding: 3rem 0;
-            text-align: center;
+            padding: 2.5rem 0 3rem;
             color: var(--text-dim);
             font-size: 0.9rem;
         }
@@ -778,48 +777,104 @@
         .footer-content {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 1rem;
+            align-items: stretch;
+            gap: 1.75rem;
         }
 
-        .footer-links {
+        .footer-top {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
             flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 2rem 3rem;
         }
 
-        footer a {
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            max-width: 22rem;
+        }
+
+        .footer-brand-name {
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .footer-brand p {
+            margin: 0;
+            color: var(--text-dim);
+            line-height: 1.5;
+            font-size: 0.88rem;
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 2.75rem;
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            min-width: 7.5rem;
+        }
+
+        .footer-col-title {
+            font-family: var(--font-title);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.15rem;
+        }
+
+        .footer-col a {
             color: var(--text-muted);
             text-decoration: none;
             transition: color 0.2s ease;
+            font-size: 0.9rem;
         }
 
-        footer a:hover {
+        .footer-col a:hover {
             color: var(--accent-orange);
         }
 
-        .btn-footer-star {
-            background: rgba(255, 255, 255, 0.08) !important;
-            border: 1px solid var(--border-color);
-            color: #fff !important;
-            font-family: var(--font-title);
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 0.45rem 1rem;
-            border-radius: var(--radius-sm);
-            display: inline-flex;
+        .footer-bottom {
+            display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 0.4rem;
-            transition: all 0.2s ease;
+            justify-content: space-between;
+            gap: 0.75rem 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.82rem;
+            color: var(--text-dim);
         }
 
-        .btn-footer-star:hover {
-            background: rgba(255, 255, 255, 0.16) !important;
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-            color: #fff !important;
+        .footer-bottom a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--accent-orange);
+        }
+
+        @media (max-width: 640px) {
+            .footer-top {
+                flex-direction: column;
+                gap: 1.75rem;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         /* Toast Notice */
@@ -1202,15 +1257,36 @@ idle-studio tui<br><br>
     <!-- Footer -->
     <footer>
         <div class="container footer-content">
-            <p>© 2026 IdleScreen Project. Open Source under Apache-2.0 License.</p>
-            <div class="footer-links">
-                <a href="https://github.com/idlescreen" target="_blank">GitHub Organization</a>
-                <a href="https://github.com/idlescreen/idle" target="_blank">Engine Repository</a>
-                <a href="https://idlescreen.github.io/packages/">Packages</a>
-                <a href="https://github.com/idlescreen/idle" target="_blank" class="btn-footer-star">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    Star on GitHub
-                </a>
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-name">IdleScreen</div>
+                    <p>Ambient screensavers and idle management for Wayland.</p>
+                </div>
+                <nav class="footer-nav" aria-label="Footer">
+                    <div class="footer-col">
+                        <div class="footer-col-title">Product</div>
+                        <a href="#gallery">Gallery</a>
+                        <a href="#install">Install</a>
+                        <a href="#features">Features</a>
+                        <a href="#studio">IdleStudio</a>
+                    </div>
+                    <div class="footer-col">
+                        <div class="footer-col-title">Install</div>
+                        <a href="https://idlescreen.github.io/packages/">Packages</a>
+                        <a href="https://idlescreen.github.io/packages/install.sh">install.sh</a>
+                    </div>
+                    <div class="footer-col">
+                        <div class="footer-col-title">Source</div>
+                        <a href="https://github.com/idlescreen" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://github.com/idlescreen/idle" target="_blank" rel="noopener">Engine</a>
+                        <a href="https://github.com/idlescreen/idle-cosmic" target="_blank" rel="noopener">COSMIC applet</a>
+                        <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener">packages repo</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 IdleScreen. Apache-2.0.</span>
+                <span>Wayland · COSMIC · Fedora · Debian</span>
             </div>
         </div>
     </footer>
