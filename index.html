@@ -899,7 +899,7 @@
         <div class="manual-install">
             <div class="section-header" style="margin-bottom: 2rem; text-align: left;">
                 <h2>Package repository setup</h2>
-                <p style="margin: 0;">Prefer the one-line installer above. It installs <code>idle-daemon</code>, <code>idle-cli</code>, <code>idle-savers</code>, and <code>idle-tui</code>, plus <code>idle-cosmic</code> when COSMIC is detected. Manual steps below for DNF, APT, and experimental Arch.</p>
+                <p style="margin: 0;">Prefer the one-line installer above. It installs the product metapackage <code>idlescreen</code> (pulls <code>idle-daemon</code>, <code>idle-cli</code>, <code>idle-savers</code>, <code>idle-tui</code>), plus <code>idle-cosmic</code> when COSMIC is detected. Remove later with <code>sudo dnf remove idlescreen</code> or <code>sudo apt remove idlescreen</code>. Manual steps below for DNF, APT, and experimental Arch.</p>
             </div>
 
             <div class="tab-buttons">
@@ -912,13 +912,15 @@
                 <div class="code-block">
 # Step 1: Add DNF repository<br>
 sudo curl -fsSL https://idlescreen.github.io/packages/rpm/idlescreen.repo -o /etc/yum.repos.d/idlescreen.repo<br><br>
-# Step 2: Install IdleScreen packages<br>
+# Step 2: Install (product metapackage pulls the modular stack)<br>
 sudo dnf check-update<br>
-sudo dnf install idle-daemon idle-cli idle-savers idle-tui<br><br>
+sudo dnf install idlescreen<br>
+# Equivalent modular set: idle-daemon idle-cli idle-savers idle-tui<br>
 # COSMIC Desktop — also install the panel applet:<br>
 # sudo dnf install idle-cosmic<br><br>
-# Launch TUI:<br>
-idlescreen tui
+# Launch TUI / remove product:<br>
+idlescreen tui<br>
+# sudo dnf remove idlescreen
                 </div>
             </div>
 
@@ -928,13 +930,14 @@ idlescreen tui
 sudo mkdir -p /etc/apt/keyrings<br>
 curl -fsSL https://idlescreen.github.io/packages/apt/idlescreen-keyring.gpg | sudo tee /etc/apt/keyrings/idlescreen-keyring.gpg &gt;/dev/null<br>
 echo "deb [signed-by=/etc/apt/keyrings/idlescreen-keyring.gpg] https://idlescreen.github.io/packages/apt stable main" | sudo tee /etc/apt/sources.list.d/idlescreen.list &gt;/dev/null<br><br>
-# Step 2: Install IdleScreen packages<br>
+# Step 2: Install (product metapackage pulls the modular stack)<br>
 sudo apt update<br>
-sudo apt install idle-daemon idle-cli idle-savers idle-tui<br><br>
+sudo apt install idlescreen<br>
 # COSMIC Desktop — also install the panel applet:<br>
 # sudo apt install idle-cosmic<br><br>
-# Launch TUI:<br>
-idlescreen tui
+# Launch TUI / remove product:<br>
+idlescreen tui<br>
+# sudo apt remove idlescreen
                 </div>
             </div>
 
