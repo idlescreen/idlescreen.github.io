@@ -960,7 +960,7 @@ makepkg -si
             <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
                 <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">OPTIONAL · EARLY PREVIEW</div>
                 <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — offline render Director</h2>
-                <p style="margin: 0;">Separate product from the desktop screensaver. Installs <code>idle-studio</code> (TUI Director) and its dependency <code>render</code> (plus recommended <code>idle-savers</code> + <code>ffmpeg</code>). Same signed package channel as IdleScreen.</p>
+                <p style="margin: 0;">Installs the IdleScreen package channel, then packages <code>render</code> and <code>idle-studio</code>, and <code>idle-savers</code> when available. Needs <code>/usr/bin/ffmpeg</code> (Fedora: <code>ffmpeg-free</code> is enough). Open with <code>idle-studio</code>.</p>
             </div>
 
             <div class="install-wrapper" style="margin-bottom: 1.5rem;">
@@ -971,7 +971,7 @@ makepkg -si
                     <span class="btn-copy-label">Copy</span>
                 </button>
             </div>
-            <p style="margin: 0 0 1.5rem; font-size: 0.95rem; opacity: 0.85;">Or after the repo is configured: <code>sudo dnf install idle-studio</code> / <code>sudo apt install idle-studio</code> (pulls <code>render</code>). Remove: <code>sudo dnf remove idle-studio render</code>.</p>
+            <p style="margin: 0 0 1.5rem; font-size: 0.95rem; opacity: 0.85;">With the channel configured: <code>sudo dnf install idle-studio</code> or <code>sudo apt install idle-studio</code> (pulls <code>render</code>). Remove: <code>sudo dnf remove idle-studio render</code>.</p>
 
             <div class="tab-buttons">
                 <button type="button" class="tab-btn active" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
