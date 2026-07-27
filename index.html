@@ -959,48 +959,62 @@ makepkg -si
         <div class="manual-install">
             <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
                 <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">OPTIONAL · EARLY PREVIEW</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — offline render queue</h2>
-                <p style="margin: 0;">Separate product (not installed by <code>install.sh</code>). Queues offline jobs that run the same plugin math through the <code>render</code> pipeline to AV1 via ffmpeg (when an encoder such as libsvtav1 is available). Early preview; CLI and TUI only.</p>
+                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — offline render Director</h2>
+                <p style="margin: 0;">Separate product from the desktop screensaver. Installs <code>idle-studio</code> (TUI Director) and its dependency <code>render</code> (plus recommended <code>idle-savers</code> + <code>ffmpeg</code>). Same signed package channel as IdleScreen.</p>
             </div>
 
+            <div class="install-wrapper" style="margin-bottom: 1.5rem;">
+                <div class="install-box">
+                    <div class="install-code">curl -fsSL https://idlescreen.github.io/packages/install-studio.sh | sh</div>
+                </div>
+                <button type="button" class="btn-copy" id="btn-copy-install-studio" onclick="copyStudioInstall(this)" aria-label="Copy Studio install command">
+                    <span class="btn-copy-label">Copy</span>
+                </button>
+            </div>
+            <p style="margin: 0 0 1.5rem; font-size: 0.95rem; opacity: 0.85;">Or after the repo is configured: <code>sudo dnf install idle-studio</code> / <code>sudo apt install idle-studio</code> (pulls <code>render</code>). Remove: <code>sudo dnf remove idle-studio render</code>.</p>
+
             <div class="tab-buttons">
-                <button type="button" class="tab-btn active" onclick="showStudioTab('studio-cli', event)">CLI commands</button>
-                <button type="button" class="tab-btn" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
+                <button type="button" class="tab-btn active" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
+                <button type="button" class="tab-btn" onclick="showStudioTab('studio-cli', event)">CLI / export</button>
                 <button type="button" class="tab-btn" onclick="showStudioTab('studio-repo', event)">Source</button>
             </div>
 
-            <div id="studio-cli" class="studio-tab-content active">
+            <div id="studio-tui" class="studio-tab-content active">
                 <div class="code-block">
-# Enqueue offline video render job (width/height, not a resolution preset):<br>
-idle-studio enqueue -e beams -o /tmp/beams.mkv --duration 8h --segment 1h --width 3840 --height 2160<br><br>
-# List pending render jobs:<br>
-idle-studio list<br><br>
-# Process all queued render jobs:<br>
-idle-studio run --all
+# Open the Director (TUI-first — no subcommand needed):<br>
+idle-studio<br><br>
+# Queue screen keys:<br>
+#  n       New job form<br>
+#  j / k   Move selection<br>
+#  Enter   Run selected job<br>
+#  r       Run next pending<br>
+#  a       Run all pending<br>
+#  d       Delete selected<br>
+#  q       Quit<br><br>
+# New job: Tab fields · h/l cycle effect · s save · Esc cancel
                 </div>
             </div>
 
-            <div id="studio-tui" class="studio-tab-content" style="display: none;">
+            <div id="studio-cli" class="studio-tab-content" style="display: none;">
                 <div class="code-block">
-# Launch interactive batch queue TUI:<br>
-idle-studio tui<br><br>
-# TUI keys:<br>
-#  j / k   Move selection up / down<br>
-#  r       Run next pending job<br>
-#  a       Run all pending jobs<br>
-#  R       Reload queue from disk<br>
-#  q       Quit
+# Direct export (no queue):<br>
+render -e beams --duration 10s -o ~/Videos/beams.mkv<br><br>
+# Scripted queue (optional):<br>
+idle-studio enqueue -e beams -o /tmp/beams.mkv --duration 10s<br>
+idle-studio list<br>
+idle-studio run --all
                 </div>
             </div>
 
             <div id="studio-repo" class="studio-tab-content" style="display: none;">
                 <div class="code-block">
-# IdleStudio lives in its own repo (optional package: idle-studio).<br>
-# Plugin ABI for savers is idle-api in the main idle monorepo — not a separate SDK package.
+# Monorepo: render capability + idle-studio UI<br>
+# https://github.com/idlescreen/render<br>
+# Plugins: idle-savers package → /usr/libexec/idle/screensavers
                 </div>
                 <div style="margin-top: 1.25rem;">
-                    <a href="https://github.com/idlescreen/idle-studio" target="_blank" class="btn-studio-submit">
-                        IdleStudio on GitHub →
+                    <a href="https://github.com/idlescreen/render" target="_blank" class="btn-studio-submit">
+                        render + Studio on GitHub →
                     </a>
                 </div>
             </div>
@@ -1008,6 +1022,29 @@ idle-studio tui<br><br>
     </section>
 
     <script>
+        function copyStudioInstall(btn) {
+            const cmd = "curl -fsSL https://idlescreen.github.io/packages/install-studio.sh | sh";
+            const button = btn || document.getElementById("btn-copy-install-studio");
+            const label = button ? button.querySelector(".btn-copy-label") : null;
+            const markCopied = () => {
+                if (!button) return;
+                button.classList.add("copied");
+                if (label) label.textContent = "Copied!";
+                clearTimeout(button._copyResetTimer);
+                button._copyResetTimer = setTimeout(() => {
+                    button.classList.remove("copied");
+                    if (label) label.textContent = "Copy";
+                }, 2200);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(cmd).then(markCopied).catch(() => {
+                    if (label) label.textContent = "Failed";
+                });
+            } else {
+                markCopied();
+            }
+        }
+
         function copyInstall(btn) {
             const cmd = "curl -fsSL https://idlescreen.github.io/packages/install.sh | sh";
             const button = btn || document.getElementById("btn-copy-install");
