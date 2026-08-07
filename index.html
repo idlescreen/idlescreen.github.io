@@ -733,15 +733,15 @@
 
             <div class="os-support-bar">
                 <span>Install script supports:</span>
-
-            <p class="channel-note" style="margin:0.75rem auto 0; max-width:42rem; font-size:0.9rem; opacity:0.8;">
-                Package channel: public installs use the GitHub Pages index (whatever was last published from the <code>packages</code> repo). Source trees may be ahead of that index.
-            </p>
-
                 <span class="os-badge">Fedora (DNF)</span>
                 <span class="os-badge">Debian / Ubuntu (APT)</span>
                 <span class="os-badge" title="PKGBUILD under packages/arch; not covered by install.sh">Arch (experimental PKGBUILD)</span>
             </div>
+            <p class="channel-note" style="margin:1rem auto 0; max-width:42rem; font-size:0.9rem; opacity:0.85; text-align:center;">
+                Seats the product metapackage <code>idlescreen</code> (daemon, CLI, savers, TUI) and <code>idle-cosmic</code> on COSMIC.
+                Channel: <a href="https://idlescreen.github.io/packages/" style="color:inherit;text-decoration:underline;">idlescreen.github.io/packages</a>
+                · binary name is <code>idlescreen</code> (not <code>/usr/bin/idle</code>).
+            </p>
         </div>
     </section>
 
@@ -907,7 +907,7 @@
     <section class="container" id="features">
         <div class="section-header">
             <h2>What ships today</h2>
-            <p>Verified against the IdleScreen packages and source. Presentation needs Wayland <code>ext-idle-notify-v1</code> and <code>zwlr_layer_shell_v1</code> (or equivalent). Support is strongest on COSMIC, Hyprland, and Sway; GNOME and KDE vary by compositor protocol coverage.</p>
+            <p>Linux Wayland product line: daemon, CLI (<code>idlescreen</code>), ten official savers, optional TUI and COSMIC applet. Presentation needs <code>ext-idle-notify-v1</code> and <code>zwlr_layer_shell_v1</code> (or equivalent). Strongest on COSMIC, Hyprland, and Sway; GNOME and KDE vary by protocol coverage. Windows and Steam are stubs (not shipping).</p>
         </div>
 
         <div class="features-grid">
@@ -938,7 +938,7 @@
         <div class="manual-install">
             <div class="section-header" style="margin-bottom: 2rem; text-align: left;">
                 <h2>Package repository setup</h2>
-                <p style="margin: 0;">Prefer the one-line installer above. It installs the product metapackage <code>idlescreen</code> (pulls <code>idle-daemon</code>, <code>idle-cli</code>, <code>idle-savers</code>, <code>idle-tui</code>), plus <code>idle-cosmic</code> when COSMIC is detected. Remove later with <code>sudo dnf remove idlescreen</code> or <code>sudo apt remove idlescreen</code>. Manual steps below for DNF, APT, and experimental Arch.</p>
+                <p style="margin: 0;">Prefer the one-line installer above. It installs the product metapackage <code>idlescreen</code> (pulls <code>idle-daemon</code>, <code>idle-cli</code>, <code>idle-savers</code>, <code>idle-tui</code>), plus <code>idle-cosmic</code> when COSMIC is detected. After install: <code>systemctl --user enable --now idle-daemon</code> if needed, then <code>idlescreen status</code> / <code>idlescreen doctor</code>. Remove with <code>sudo dnf remove idlescreen</code> or <code>sudo apt remove idlescreen</code>. Manual steps below for DNF, APT, and experimental Arch.</p>
             </div>
 
             <div class="tab-buttons">
