@@ -3,1222 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IdleScreen — Modular Ambient Screensavers for Wayland</title>
-    <meta name="description" content="Modular Wayland idle host and screensaver plugins for Linux. Packages for Fedora and Debian; COSMIC panel applet; CLI and TUI.">
-    <meta name="theme-color" content="#121318">
-    <link rel="canonical" href="https://idlescreen.github.io/">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121318'/%3E%3Crect x='6' y='8' width='20' height='13' rx='2' fill='none' stroke='%23ff5555' stroke-width='2'/%3E%3Cpath d='M12 25h8' stroke='%23ff5555' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M20 11a4 4 0 1 1-5.5 5.5' fill='none' stroke='%2350fa7b' stroke-width='1.8'/%3E%3C/svg%3E">
-    <meta property="og:title" content="IdleScreen — Ambient Screensavers for Wayland">
-    <meta property="og:description" content="Modular Wayland idle host and screensaver plugins. Fedora and Debian packages; COSMIC applet; CLI and TUI.">
-    <meta property="og:url" content="https://idlescreen.github.io/">
-    <meta property="og:type" content="website">
-
+    <title>Next-Gen Background Computing</title>
+    <meta name="description" content="Harnessing the power of dormant resources with beautiful, mesmerizing screensaver ecosystems.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root, html[data-theme="brutalist"] {
-            --bg-dark: #121318;
-            --bg-card: #1c1d24;
-            --bg-card-hover: #262730;
-            --border-color: rgba(255, 255, 255, 0.18);
-            --border-glow: #ff5555;
-            
-            --text-main: #ffffff;
-            --text-muted: #d1d5db;
-            --text-dim: #9ca3af;
-            
-            --accent-orange: #ff5555;
-            --accent-cyan: #50fa7b;
-            --accent-purple: #bd93f9;
-            
-            --glow-primary: transparent;
-            --glow-cyan: transparent;
-            
-            --font-title: 'Outfit', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            
-            --radius-lg: 8px;
-            --radius-md: 6px;
-            --radius-sm: 4px;
+        :root {
+            --bg: #030305;
+            --text: #f0f0f5;
+            --glass-bg: rgba(20, 20, 25, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #a2d2ff;
+            --secondary: #ffafcc;
         }
-
-        html[data-theme="cyber"] {
-            --bg-dark: #08090b;
-            --bg-card: rgba(18, 22, 28, 0.7);
-            --bg-card-hover: rgba(26, 32, 42, 0.85);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(255, 133, 65, 0.3);
-            
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --text-dim: #6b7280;
-            
-            --accent-orange: #ff8541;
-            --accent-cyan: #00f2fe;
-            --accent-purple: #7928ca;
-            
-            --glow-primary: rgba(255, 133, 65, 0.15);
-            --glow-cyan: rgba(0, 242, 254, 0.15);
-            
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-        }
-
-        html[data-theme="monochrome"] {
-            --bg-dark: #000000;
-            --bg-card: #0c0c0e;
-            --bg-card-hover: #16161a;
-            --border-color: #27272a;
-            --border-glow: #52525b;
-            
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --text-dim: #71717a;
-            
-            --accent-orange: #ffffff;
-            --accent-cyan: #e4e4e7;
-            --accent-purple: #a1a1aa;
-            
-            --glow-primary: transparent;
-            --glow-cyan: transparent;
-        }
-
-        html[data-theme="brutalist"] {
-            --bg-dark: #121318;
-            --bg-card: #1c1d24;
-            --bg-card-hover: #262730;
-            --border-color: #ffffff;
-            --border-glow: #ff5555;
-            
-            --text-main: #ffffff;
-            --text-muted: #d1d5db;
-            --text-dim: #9ca3af;
-            
-            --accent-orange: #ff5555;
-            --accent-cyan: #50fa7b;
-            --accent-purple: #bd93f9;
-            
-            --glow-primary: transparent;
-            --glow-cyan: transparent;
-            --radius-lg: 4px;
-            --radius-md: 4px;
-            --radius-sm: 2px;
-        }
-
-        html[data-theme="terminal"] {
-            --bg-dark: #020b04;
-            --bg-card: #05180a;
-            --bg-card-hover: #08240f;
-            --border-color: #006622;
-            --border-glow: #00ff66;
-            
-            --text-main: #00ff66;
-            --text-muted: #00cc52;
-            --text-dim: #008033;
-            
-            --accent-orange: #00ff66;
-            --accent-cyan: #33ff88;
-            --accent-purple: #00cc52;
-            
-            --glow-primary: rgba(0, 255, 102, 0.2);
-            --glow-cyan: rgba(0, 255, 102, 0.2);
-        }
-
-        html[data-theme="nordic"] {
-            --bg-dark: #f8fafc;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f1f5f9;
-            --border-color: #cbd5e1;
-            --border-glow: rgba(37, 99, 235, 0.25);
-            
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --text-dim: #94a3b8;
-            
-            --accent-orange: #2563eb;
-            --accent-cyan: #0284c7;
-            --accent-purple: #7c3aed;
-            
-            --glow-primary: rgba(37, 99, 235, 0.08);
-            --glow-cyan: rgba(2, 132, 199, 0.08);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            line-height: 1.6;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(255, 133, 65, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 85% 60%, rgba(0, 242, 254, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 50% 90%, rgba(121, 40, 202, 0.08) 0%, transparent 50%);
-            background-attachment: fixed;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: url('assets/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.05);
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0.4) 50%, rgba(3,3,5,0.9) 100%);
         }
 
-        header {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(16px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(8, 9, 11, 0.8);
-        }
-
-        .nav-content {
+        nav {
+            padding: 2.5rem 5vw;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text-main);
-            font-family: var(--font-title);
-            font-weight: 700;
-            font-size: 1.35rem;
-            letter-spacing: -0.02em;
-        }
-
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px var(--glow-primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-main);
-        }
-
-        .btn-github {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            color: var(--text-main) !important;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .btn-github:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .nav-studio-btn {
-            color: var(--accent-orange) !important;
-            font-weight: 700 !important;
-        }
-
-        .nav-studio-btn:hover {
-            color: #ffa066 !important;
-            text-shadow: 0 0 12px rgba(255, 133, 65, 0.4);
-        }
-
-        .hero {
-            padding: 5rem 0 4rem;
-            text-align: center;
             position: relative;
+            z-index: 10;
         }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 1rem;
-            background: rgba(255, 133, 65, 0.1);
-            border: 1px solid rgba(255, 133, 65, 0.25);
-            border-radius: 50px;
-            color: var(--accent-orange);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            animation: pulseGlow 3s infinite ease-in-out;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 133, 65, 0.15); }
-            50% { box-shadow: 0 0 20px rgba(255, 133, 65, 0.35); }
-        }
-
-        .hero h1 {
-            font-family: var(--font-title);
-            font-size: clamp(2.5rem, 5vw, 4.2rem);
+        
+        .logo {
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, #ffffff 30%, var(--text-muted) 100%);
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .hero-subtitle {
-            font-size: clamp(1.05rem, 2vw, 1.25rem);
-            color: var(--text-muted);
-            max-width: 740px;
-            margin: 0 auto 2.5rem;
-            font-weight: 400;
-        }
-
-        .install-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            margin: 0 auto 1.25rem;
-            max-width: min(840px, 95vw);
-        }
-
-        .install-box {
-            background: rgba(12, 14, 18, 0.95);
-            border: 1px solid var(--border-glow);
-            border-radius: var(--radius-md);
-            padding: 0.85rem 1.4rem;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-primary);
-            overflow-x: auto;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .install-code {
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            color: var(--accent-cyan);
-            white-space: nowrap;
-        }
-
-        .btn-copy {
-            background: var(--accent-orange);
-            color: #000;
-            font-family: var(--font-title);
-            font-weight: 700;
-            font-size: 0.9rem;
-            border: none;
-            padding: 0.85rem 1.35rem;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(255, 133, 65, 0.25);
-            min-width: 7.25rem;
-            justify-content: center;
-        }
-
-        .btn-copy:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(255, 133, 65, 0.45);
-            background: #ffa066;
-        }
-
-        .btn-copy.copied {
-            background: var(--accent-cyan);
-            color: #000;
-            box-shadow: 0 4px 18px rgba(80, 250, 123, 0.35);
-            transform: none;
-        }
-
-        .btn-copy.copied:hover {
-            background: var(--accent-cyan);
-            box-shadow: 0 4px 18px rgba(80, 250, 123, 0.45);
-        }
-
-        .btn-copy .icon-check {
-            display: none;
-        }
-
-        .btn-copy.copied .icon-copy {
-            display: none;
-        }
-
-        .btn-copy.copied .icon-check {
-            display: inline-block;
-        }
-
-        .os-support-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-            font-size: 0.88rem;
-            color: var(--text-muted);
-        }
-
-        .os-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            padding: 0.2rem 0.65rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--text-main);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            font-family: var(--font-title);
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
-        }
-
-        .saver-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .saver-card:hover {
-            background: var(--bg-card-hover);
-            border-color: rgba(255, 133, 65, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-primary);
-        }
-
-        .saver-preview {
-            width: 100%;
-            height: 210px;
-            background: #000;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .saver-preview video, .saver-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            background: #000;
-        }
-
-        .saver-canvas-fallback {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .saver-tag {
-            position: absolute;
-            z-index: 2;
-            top: 0.75rem;
-            right: 0.75rem;
-            background: rgba(0, 0, 0, 0.75);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(8px);
-            padding: 0.25rem 0.65rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-family: var(--font-mono);
-            color: var(--accent-cyan);
-        }
-
-        .saver-body {
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .saver-title {
-            font-family: var(--font-title);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.35rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .saver-desc {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-        }
-
-        .saver-cmd {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 0.5rem 0.75rem;
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .saver-cmd span {
-            color: var(--accent-orange);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-family: var(--font-title);
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .manual-install {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 0.5rem 1.2rem;
-            border-radius: var(--radius-sm);
-            font-family: var(--font-title);
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--accent-orange);
-            color: #000;
-            border-color: var(--accent-orange);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .code-block {
-            background: #040507;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 1.25rem;
-            font-family: var(--font-mono);
-            font-size: 0.88rem;
-            color: #e5e7eb;
-            overflow-x: auto;
-            line-height: 1.7;
-        }
-
-        .studio-section {
-            margin: 0 auto 5rem;
-        }
-
-        .studio-badge {
-            display: inline-block;
-            background: rgba(255, 133, 65, 0.12);
-            border: 1px solid rgba(255, 133, 65, 0.35);
-            color: var(--accent-orange);
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            padding: 0.3rem 0.9rem;
-            border-radius: 50px;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-        }
-
-        .btn-studio-submit {
-            background: var(--accent-orange);
-            color: #000;
-            font-family: var(--font-title);
-            font-weight: 700;
-            font-size: 1rem;
-            border: none;
-            padding: 0.9rem 2rem;
-            border-radius: var(--radius-sm);
+        
+        .back-link {
+            color: var(--text);
             text-decoration: none;
-            display: inline-flex;
+            font-size: 1rem;
+            font-weight: 600;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .back-link:hover { opacity: 1; }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 18px rgba(255, 133, 65, 0.35);
+            text-align: center;
+            padding: 4rem 5vw;
+            z-index: 10;
         }
 
-        .btn-studio-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 133, 65, 0.55);
-            background: #ffa066;
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            max-width: 800px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            font-weight: 300;
+            color: #b4b4c4;
+            max-width: 600px;
+            margin: 0 auto 2.5rem auto;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: #000;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(92,225,230,0.3);
         }
 
-        @media (max-width: 720px) {
-            .nav-links {
-                gap: 0.75rem;
-                flex-wrap: wrap;
-                justify-content: flex-end;
-            }
-
-            .install-wrapper {
-                flex-direction: column;
-            }
-
-            .btn-copy {
-                width: 100%;
-            }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="container nav-content">
-            <a href="#" class="logo">
-                <div class="logo-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
-                IdleScreen
-            </a>
-            <ul class="nav-links">
-                <li><a href="#gallery">Screensavers</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#install">Install</a></li>
-                <li><a href="#studio" class="nav-studio-btn">IdleStudio</a></li>
-                <li>
-                    <a href="https://github.com/idlescreen" target="_blank" class="btn-github">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                        GitHub
-                    </a>
-                </li>
-            </ul>
+    <div class="bg-container"><div class="bg-overlay"></div></div>
+    <nav>
+        <div class="logo">idlescreen</div>
+        <a href="https://UberMetroid.github.io" class="back-link">← Ecosystem</a>
+    </nav>
+    <main>
+        <div class="glass-panel">
+            <h1>Next-Gen Background Computing</h1>
+            <p class="subtitle">Harnessing the power of dormant resources with beautiful, mesmerizing screensaver ecosystems.</p>
+            <a href="https://github.com/idlescreen/idlescreen" class="cta-btn">View Repository</a>
         </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-badge">
-                Wayland idle host · modular plugins
-            </div>
-            <h1>Ambient screensavers<br>for Linux Wayland</h1>
-            <p class="hero-subtitle">
-                IdleScreen is a modular idle manager and screensaver host. The daemon watches compositor idle signals, loads plugin effects, and presents them on a layer-shell surface. CLI, TUI, and an optional COSMIC panel applet control it.
-            </p>
-
-            <div class="install-wrapper">
-                <div class="install-box">
-                    <div class="install-code">curl -fsSL https://idlescreen.github.io/packages/install.sh | sh</div>
-                </div>
-                <button type="button" class="btn-copy" id="btn-copy-install" onclick="copyInstall(this)" aria-label="Copy install command">
-                    <svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    <span class="btn-copy-label">Copy</span>
-                </button>
-            </div>
-
-            <div class="os-support-bar">
-                <span>Install script supports:</span>
-                <span class="os-badge">Fedora (DNF)</span>
-                <span class="os-badge">Debian / Ubuntu (APT)</span>
-                <span class="os-badge" title="PKGBUILD under packages/arch; not covered by install.sh">Arch (experimental PKGBUILD)</span>
-            </div>
-            <p class="channel-note" style="margin:1rem auto 0; max-width:42rem; font-size:0.9rem; opacity:0.85; text-align:center;">
-                Seats the product metapackage <code>idlescreen</code> (daemon, CLI, savers, TUI) and <code>idle-cosmic</code> on COSMIC.
-                Channel: <a href="https://idlescreen.github.io/packages/" style="color:inherit;text-decoration:underline;">idlescreen.github.io/packages</a>
-                · binary name is <code>idlescreen</code> (not <code>/usr/bin/idle</code>).
-            </p>
-        </div>
-    </section>
-
-    <section class="container" id="gallery">
-        <div class="section-header">
-            <h2>Official screensavers</h2>
-            <p>Ten procedural plugins. Each draws a cell grid; the host rasterizes frames (optional wgpu cell path, CPU fallback). Preview with <code>idlescreen preview &lt;name&gt;</code>.</p>
-        </div>
-
-        <div class="gallery-grid">
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/beams.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="beams"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Beams</div>
-                    <div class="saver-desc">Crossing vector beams across a high-contrast field.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview beams</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/cosmos.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="cosmos"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Cosmos</div>
-                    <div class="saver-desc">Starfield and nebula-style deep-space motion.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview cosmos</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/bursts.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="bursts"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Bursts</div>
-                    <div class="saver-desc">Explosive burst patterns and expanding rings.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview bursts</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/storm.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="storm"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Storm</div>
-                    <div class="saver-desc">Dense atmospheric particles with lightning-like flashes.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview storm</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/chaos.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="chaos"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Chaos</div>
-                    <div class="saver-desc">Strange-attractor style chaos curves.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview chaos</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/hearth.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="hearth"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Hearth</div>
-                    <div class="saver-desc">Warm ember and fire-like ambient motion.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview hearth</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/ripple.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="ripple"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Ripple</div>
-                    <div class="saver-desc">Expanding wave and ripple patterns.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview ripple</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/radar.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="radar"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Radar</div>
-                    <div class="saver-desc">Sweeping radar arc with polar blips.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview radar</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/glyphs.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="glyphs"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Glyphs</div>
-                    <div class="saver-desc">Falling character streams in a terminal-style cascade.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview glyphs</div>
-                </div>
-            </div>
-
-            <div class="saver-card">
-                <div class="saver-preview">
-                    <span class="saver-tag">Plugin</span>
-                    <video class="saver-video" autoplay muted loop playsinline preload="metadata" poster="">
-                        <source src="assets/videos/gnats.mp4" type="video/mp4">
-                    </video>
-                    <canvas class="saver-canvas-fallback" data-effect="gnats"></canvas>
-                </div>
-                <div class="saver-body">
-                    <div class="saver-title">Gnats</div>
-                    <div class="saver-desc">Swarming agents with firefly-like motion.</div>
-                    <div class="saver-cmd"><span>idlescreen</span> preview gnats</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="container" id="features">
-        <div class="section-header">
-            <h2>What ships today</h2>
-            <p>Linux Wayland product line: daemon, CLI (<code>idlescreen</code>), ten official savers, optional TUI and COSMIC applet. Presentation needs <code>ext-idle-notify-v1</code> and <code>zwlr_layer_shell_v1</code> (or equivalent). Strongest on COSMIC, Hyprland, and Sway; GNOME and KDE vary by protocol coverage. Windows and Steam are stubs (not shipping).</p>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
-                <h3>Cell-grid plugins + host raster</h3>
-                <p>Savers implement a cell-grid draw API. The host rasterizes to pixels, with an optional wgpu path for cell rendering and a CPU fallback when GPU init fails.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
-                <h3>COSMIC panel applet</h3>
-                <p>Optional <code>idle-cosmic</code> package: native System76 COSMIC panel applet for status, saver selection, preview, and opening the TUI dashboard.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg></div>
-                <h3>CLI and TUI</h3>
-                <p><code>idlescreen</code> talks to the daemon over D-Bus. <code>idlescreen tui</code> launches the separate <code>idle-tui</code> binary; a desktop entry is also installed. (Does not install <code>/usr/bin/idle</code> — that path is Fedora&rsquo;s Python IDE.)</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2" ry="2"></rect><line x1="23" y1="11" x2="23" y2="13"></line></svg></div>
-                <h3>Inhibit and battery behavior</h3>
-                <p>Skips presentation while logind or MPRIS2 playback reports active media. On battery, frame and simulation targets are capped (30 FPS/Hz) to reduce draw cost.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="container" id="install">
-        <div class="manual-install">
-            <div class="section-header" style="margin-bottom: 2rem; text-align: left;">
-                <h2>Package repository setup</h2>
-                <p style="margin: 0;">Prefer the one-line installer above. It installs the product metapackage <code>idlescreen</code> (pulls <code>idle-daemon</code>, <code>idle-cli</code>, <code>idle-savers</code>, <code>idle-tui</code>), plus <code>idle-cosmic</code> when COSMIC is detected. After install: <code>systemctl --user enable --now idle-daemon</code> if needed, then <code>idlescreen status</code> / <code>idlescreen doctor</code>. Remove with <code>sudo dnf remove idlescreen</code> or <code>sudo apt remove idlescreen</code>. Manual steps below for DNF, APT, and experimental Arch.</p>
-            </div>
-
-            <div class="tab-buttons">
-                <button type="button" class="tab-btn active" onclick="showTab('dnf', event)">Fedora / RHEL (DNF)</button>
-                <button type="button" class="tab-btn" onclick="showTab('apt', event)">Debian / Ubuntu (APT)</button>
-                <button type="button" class="tab-btn" onclick="showTab('arch', event)">Arch Linux (makepkg)</button>
-            </div>
-
-            <div id="dnf" class="tab-content active">
-                <div class="code-block">
-# Step 1: Add DNF repository<br>
-sudo curl -fsSL https://idlescreen.github.io/packages/rpm/idlescreen.repo -o /etc/yum.repos.d/idlescreen.repo<br><br>
-# Step 2: Install (product metapackage pulls the modular stack)<br>
-sudo dnf check-update<br>
-sudo dnf install idlescreen<br>
-# Equivalent modular set: idle-daemon idle-cli idle-savers idle-tui<br>
-# COSMIC Desktop — also install the panel applet:<br>
-# sudo dnf install idle-cosmic<br><br>
-# Launch TUI / remove product:<br>
-idlescreen tui<br>
-# sudo dnf remove idlescreen
-                </div>
-            </div>
-
-            <div id="apt" class="tab-content">
-                <div class="code-block">
-# Step 1: Add GPG key &amp; repository<br>
-sudo mkdir -p /etc/apt/keyrings<br>
-curl -fsSL https://idlescreen.github.io/packages/apt/idlescreen-keyring.gpg | sudo tee /etc/apt/keyrings/idlescreen-keyring.gpg &gt;/dev/null<br>
-echo "deb [signed-by=/etc/apt/keyrings/idlescreen-keyring.gpg] https://idlescreen.github.io/packages/apt stable main" | sudo tee /etc/apt/sources.list.d/idlescreen.list &gt;/dev/null<br><br>
-# Step 2: Install (product metapackage pulls the modular stack)<br>
-sudo apt update<br>
-sudo apt install idlescreen<br>
-# COSMIC Desktop — also install the panel applet:<br>
-# sudo apt install idle-cosmic<br><br>
-# Launch TUI / remove product:<br>
-idlescreen tui<br>
-# sudo apt remove idlescreen
-                </div>
-            </div>
-
-            <div id="arch" class="tab-content">
-                <div class="code-block">
-# Experimental: PKGBUILD path (not covered by install.sh)<br>
-# Prefer the curl installer on Fedora/Debian when possible.<br><br>
-# Step 1: Clone package definitions<br>
-git clone https://github.com/idlescreen/packages.git<br>
-cd packages/arch<br><br>
-# Step 2: Build &amp; install<br>
-makepkg -si
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="container studio-section" id="studio">
-        <div class="manual-install">
-            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
-                <div class="os-badge" style="background: rgba(255,85,85,0.15); border-color: #ff5555; color: #ff5555; font-weight: 700; margin-bottom: 1rem;">OPTIONAL · EARLY PREVIEW</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">IdleStudio — offline render Director</h2>
-                <p style="margin: 0;">Installs the IdleScreen package channel, then the product metapackage <code>idlescreen-studio</code> (pulls <code>idle-studio</code> + <code>render</code>), and <code>idle-savers</code> when available. Needs <code>/usr/bin/ffmpeg</code> (Fedora: <code>ffmpeg-free</code> is enough). Open with <code>idle-studio</code>. Remove with <code>sudo dnf remove idlescreen-studio</code> (also removes <code>idle-studio</code> + <code>render</code>).</p>
-            </div>
-
-            <div class="install-wrapper" style="margin-bottom: 1.5rem;">
-                <div class="install-box">
-                    <div class="install-code">curl -fsSL https://idlescreen.github.io/packages/install-studio.sh | sh</div>
-                </div>
-                <button type="button" class="btn-copy" id="btn-copy-install-studio" onclick="copyStudioInstall(this)" aria-label="Copy Studio install command">
-                    <span class="btn-copy-label">Copy</span>
-                </button>
-            </div>
-            <p style="margin: 0 0 1.5rem; font-size: 0.95rem; opacity: 0.85;">With the channel configured: <code>sudo dnf install idlescreen-studio</code> or <code>sudo apt install idlescreen-studio</code>. Remove: <code>sudo dnf remove idlescreen-studio</code>.</p>
-
-            <div class="tab-buttons">
-                <button type="button" class="tab-btn active" onclick="showStudioTab('studio-tui', event)">Director TUI</button>
-                <button type="button" class="tab-btn" onclick="showStudioTab('studio-cli', event)">CLI / export</button>
-                <button type="button" class="tab-btn" onclick="showStudioTab('studio-repo', event)">Source</button>
-            </div>
-
-            <div id="studio-tui" class="studio-tab-content active">
-                <div class="code-block">
-# Open the Director (TUI-first — no subcommand needed):<br>
-idle-studio<br><br>
-# Queue screen keys:<br>
-#  n       New job form<br>
-#  j / k   Move selection<br>
-#  Enter   Run selected job<br>
-#  r       Run next pending<br>
-#  a       Run all pending<br>
-#  d       Delete selected<br>
-#  q       Quit<br><br>
-# New job: Tab fields · h/l cycle effect · s save · Esc cancel
-                </div>
-            </div>
-
-            <div id="studio-cli" class="studio-tab-content" style="display: none;">
-                <div class="code-block">
-# Direct export (no queue):<br>
-render -e beams --duration 10s -o ~/Videos/beams.mkv<br><br>
-# Scripted queue (optional):<br>
-idle-studio enqueue -e beams -o /tmp/beams.mkv --duration 10s<br>
-idle-studio list<br>
-idle-studio run --all
-                </div>
-            </div>
-
-            <div id="studio-repo" class="studio-tab-content" style="display: none;">
-                <div class="code-block">
-# Monorepo: render capability + idle-studio UI<br>
-# https://github.com/idlescreen/render<br>
-# Plugins: idle-savers package → /usr/libexec/idle/screensavers
-                </div>
-                <div style="margin-top: 1.25rem;">
-                    <a href="https://github.com/idlescreen/render" target="_blank" class="btn-studio-submit">
-                        render + Studio on GitHub →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        function copyStudioInstall(btn) {
-            const cmd = "curl -fsSL https://idlescreen.github.io/packages/install-studio.sh | sh";
-            const button = btn || document.getElementById("btn-copy-install-studio");
-            const label = button ? button.querySelector(".btn-copy-label") : null;
-            const markCopied = () => {
-                if (!button) return;
-                button.classList.add("copied");
-                if (label) label.textContent = "Copied!";
-                clearTimeout(button._copyResetTimer);
-                button._copyResetTimer = setTimeout(() => {
-                    button.classList.remove("copied");
-                    if (label) label.textContent = "Copy";
-                }, 2200);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(cmd).then(markCopied).catch(() => {
-                    if (label) label.textContent = "Failed";
-                });
-            } else {
-                markCopied();
-            }
-        }
-
-        function copyInstall(btn) {
-            const cmd = "curl -fsSL https://idlescreen.github.io/packages/install.sh | sh";
-            const button = btn || document.getElementById("btn-copy-install");
-            const label = button ? button.querySelector(".btn-copy-label") : null;
-
-            const markCopied = () => {
-                if (!button) return;
-                button.classList.add("copied");
-                button.setAttribute("aria-label", "Install command copied");
-                if (label) label.textContent = "Copied!";
-                clearTimeout(button._copyResetTimer);
-                button._copyResetTimer = setTimeout(() => {
-                    button.classList.remove("copied");
-                    button.setAttribute("aria-label", "Copy install command");
-                    if (label) label.textContent = "Copy";
-                }, 2200);
-            };
-
-            const markFailed = () => {
-                if (!button || !label) return;
-                const prev = label.textContent;
-                label.textContent = "Failed";
-                clearTimeout(button._copyResetTimer);
-                button._copyResetTimer = setTimeout(() => {
-                    label.textContent = prev || "Copy";
-                }, 2200);
-            };
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(cmd).then(markCopied).catch(() => {
-                    try {
-                        const ta = document.createElement("textarea");
-                        ta.value = cmd;
-                        ta.setAttribute("readonly", "");
-                        ta.style.position = "fixed";
-                        ta.style.left = "-9999px";
-                        document.body.appendChild(ta);
-                        ta.select();
-                        const ok = document.execCommand("copy");
-                        document.body.removeChild(ta);
-                        if (ok) markCopied();
-                        else markFailed();
-                    } catch (e) {
-                        markFailed();
-                    }
-                });
-            } else {
-                markFailed();
-            }
-        }
-
-        function showTab(tabId, event) {
-            const install = document.getElementById('install');
-            if (!install) return;
-            install.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            install.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-            const target = document.getElementById(tabId);
-            if (target) target.classList.add('active');
-        }
-
-        document.querySelectorAll('.saver-canvas-fallback').forEach(canvas => {
-            const ctx = canvas.getContext('2d');
-            const parent = canvas.parentElement;
-            canvas.width = parent.clientWidth || 340;
-            canvas.height = parent.clientHeight || 210;
-            
-            let frame = 0;
-            const effect = canvas.getAttribute('data-effect');
-
-            function render() {
-                frame++;
-                ctx.fillStyle = '#05070a';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                if (effect === 'beams') {
-                    ctx.strokeStyle = '#ff8541';
-                    ctx.lineWidth = 2;
-                    for(let i=0; i<5; i++) {
-                        let y = (canvas.height / 5) * i + Math.sin(frame * 0.05 + i) * 20;
-                        ctx.beginPath();
-                        ctx.moveTo(0, y);
-                        ctx.lineTo(canvas.width, canvas.height - y);
-                        ctx.stroke();
-                    }
-                } else if (effect === 'cosmos') {
-                    ctx.fillStyle = '#00f2fe';
-                    for(let i=0; i<30; i++) {
-                        let x = (i * 37 + frame * 2) % canvas.width;
-                        let y = (i * 19) % canvas.height;
-                        let r = (i % 3) + 1;
-                        ctx.beginPath();
-                        ctx.arc(x, y, r, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                } else {
-                    ctx.fillStyle = 'rgba(255, 133, 65, 0.4)';
-                    let cx = canvas.width / 2 + Math.cos(frame * 0.03) * 40;
-                    let cy = canvas.height / 2 + Math.sin(frame * 0.03) * 30;
-                    ctx.beginPath();
-                    ctx.arc(cx, cy, 35, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                const video = parent.querySelector('video');
-                if (video && !video.error && video.readyState >= 2 && video.videoWidth > 0) {
-                    canvas.style.display = 'none';
-                    return;
-                }
-                requestAnimationFrame(render);
-            }
-            render();
-        });
-
-        function showStudioTab(tabId, event) {
-            const studioSection = document.getElementById('studio');
-            if (!studioSection) return;
-            studioSection.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            studioSection.querySelectorAll('.studio-tab-content').forEach(content => {
-                content.classList.remove('active');
-                content.style.display = 'none';
-            });
-            
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-            const target = document.getElementById(tabId);
-            if (target) {
-                target.classList.add('active');
-                target.style.display = 'block';
-            }
-        }
-    </script>
+    </main>
 </body>
 </html>
