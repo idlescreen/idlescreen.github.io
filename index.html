@@ -80,11 +80,19 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 4rem 5vw;
+            padding: 0 5vw 4rem 5vw;
             z-index: 10;
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .glass-panel {
@@ -135,6 +143,126 @@
             box-shadow: 0 10px 20px rgba(92,225,230,0.3);
         }
 
+        .install-container {
+            margin-top: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            transition: border-color 0.3s;
+            max-width: 100%;
+        }
+        
+        .install-container:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .install-code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #d4d4d8;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow-x: auto;
+            flex: 1;
+            text-align: left;
+            margin-right: 1rem;
+        }
+
+        .install-code::-webkit-scrollbar {
+            height: 4px;
+        }
+        .install-code::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid transparent;
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--glass-border);
+        }
+
+        .gallery-section {
+            width: 100%;
+            max-width: 1400px;
+            margin: 2rem auto 4rem auto;
+            text-align: left;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
+        }
+        
+        .gallery-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        .video-card video {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+        
+        .video-card .label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: capitalize;
+            letter-spacing: 2px;
+            color: var(--text);
+        }
+
         @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
         }
@@ -147,11 +275,51 @@
         <a href="https://UberMetroid.github.io" class="back-link">← Ecosystem</a>
     </nav>
     <main>
-        <div class="glass-panel">
-            <h1>Next-Gen Background Computing</h1>
-            <p class="subtitle">Harnessing the power of dormant resources with beautiful, mesmerizing screensaver ecosystems.</p>
-            <a href="https://github.com/idlescreen/idlescreen" class="cta-btn">View Repository</a>
+        <div class="hero">
+            <div class="glass-panel">
+                <h1>Next-Gen Background Computing</h1>
+                <p class="subtitle">Harnessing the power of dormant resources with beautiful, mesmerizing screensaver ecosystems.</p>
+                <a href="https://github.com/idlescreen/idlescreen" class="cta-btn">View Repository</a>
+                
+                <div class="install-container">
+                    <span class="install-code" id="install-command">curl -sL https://idlescreen.org/install.sh | bash</span>
+                    <button class="copy-btn" onclick="copyInstallCmd()">Copy</button>
+                </div>
+            </div>
         </div>
+
+        <section class="gallery-section">
+            <h2 class="gallery-title">Ecosystem Preview</h2>
+            <div class="video-grid">
+                <div class="video-card"><video src="assets/videos/beams.mp4" autoplay loop muted playsinline></video><div class="label">Beams</div></div>
+                <div class="video-card"><video src="assets/videos/bursts.mp4" autoplay loop muted playsinline></video><div class="label">Bursts</div></div>
+                <div class="video-card"><video src="assets/videos/chaos.mp4" autoplay loop muted playsinline></video><div class="label">Chaos</div></div>
+                <div class="video-card"><video src="assets/videos/cosmos.mp4" autoplay loop muted playsinline></video><div class="label">Cosmos</div></div>
+                <div class="video-card"><video src="assets/videos/glyphs.mp4" autoplay loop muted playsinline></video><div class="label">Glyphs</div></div>
+                <div class="video-card"><video src="assets/videos/gnats.mp4" autoplay loop muted playsinline></video><div class="label">Gnats</div></div>
+                <div class="video-card"><video src="assets/videos/hearth.mp4" autoplay loop muted playsinline></video><div class="label">Hearth</div></div>
+                <div class="video-card"><video src="assets/videos/radar.mp4" autoplay loop muted playsinline></video><div class="label">Radar</div></div>
+                <div class="video-card"><video src="assets/videos/ripple.mp4" autoplay loop muted playsinline></video><div class="label">Ripple</div></div>
+                <div class="video-card"><video src="assets/videos/storm.mp4" autoplay loop muted playsinline></video><div class="label">Storm</div></div>
+            </div>
+        </section>
     </main>
+
+    <script>
+        function copyInstallCmd() {
+            const cmd = document.getElementById('install-command').innerText;
+            navigator.clipboard.writeText(cmd).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.style.color = 'var(--secondary)';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.color = 'var(--text)';
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
