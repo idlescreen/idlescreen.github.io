@@ -1,325 +1,1390 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next-Gen Background Computing</title>
-    <meta name="description" content="Harnessing the power of dormant resources with beautiful, mesmerizing screensaver ecosystems.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IdleScreen // Modular Wayland Screensavers [EST. 1982]</title>
+    <meta name="description" content="IdleScreen — Modular Wayland idle host and procedural screensaver plugins for Linux [EST. 1982]. Zero-waste compute, layer-shell rendering, and 10 procedural plugins." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <style>
-        :root {
-            --bg: #030305;
-            --text: #f0f0f5;
-            --glass-bg: rgba(20, 20, 25, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --primary: #a2d2ff;
-            --secondary: #ffafcc;
-        }
+      /* ==========================================================================
+         1982 TERMINAL DESIGN SYSTEM (PURE MONOSPACE // ZERO MAC/APPLE FLUFF)
+         ========================================================================== */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg-void: #070a0f;
+        --bg-window: #0a0e17;
+        --bg-bar: #0d131e;
+        --bg-titlebar: #111827;
+        --bg-card: #0d131f;
+        --bg-card-inner: #0b101b;
+        --bg-btn: #131b2e;
+        --bg-btn-hover: #1a253d;
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
         
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
+        --color-green: #34d399;
+        --color-green-dim: #0d2820;
+        --color-amber: #f59e0b;
+        --color-cyan: #38bdf8;
+        
+        --border-subtle: 1px solid #1e293b;
+        --border-active: 1px solid #34d399;
+        --border-accent: 1px solid #334155;
+        
+        --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
+      }
+
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+        background-color: var(--bg-void);
+        color: var(--text-primary);
+        font-family: var(--font-mono);
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.6;
+        background-color: var(--bg-void);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Skip Link for Accessibility */
+      .skip-link {
+        position: fixed;
+        top: -100px;
+        left: 20px;
+        background: var(--color-green);
+        color: #04100c;
+        padding: 8px 16px;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        z-index: 1000;
+        border: 1px solid var(--color-green);
+        border-radius: 0;
+        transition: top 0.1s ease;
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .skip-link:focus {
+        top: 16px;
+      }
+
+      .terminal-container {
+        width: 100%;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 clamp(8px, 2.5vw, 24px);
+        box-sizing: border-box;
+      }
+
+      /* ==========================================================================
+         TERMINAL MASTHEAD STATUS BAR
+         ========================================================================== */
+      .terminal-masthead {
+        background: var(--bg-bar);
+        border-bottom: var(--border-subtle);
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .masthead-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .terminal-branding {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+      }
+
+      .prompt-sigil {
+        color: var(--color-green);
+        font-weight: 800;
+        user-select: none;
+      }
+
+      .brand-title {
+        color: var(--text-primary);
+        letter-spacing: 0.12em;
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      .vintage-badge {
+        color: var(--color-amber);
+        font-size: 0.74rem;
+        font-weight: 600;
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid var(--color-amber);
+        border-radius: 0;
+        padding: 2px 8px;
+        letter-spacing: 0.08em;
+      }
+
+      .terminal-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+        letter-spacing: 0.05em;
+        flex-wrap: wrap;
+      }
+
+      .meta-item {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      /* ==========================================================================
+         TERMINAL WINDOW & CHROME (CRISP SQUARE 90° - ZERO APPLE DOTS)
+         ========================================================================== */
+      .terminal-main {
+        flex: 1 0 auto;
+        padding: clamp(20px, 4vw, 40px) 0 48px;
+      }
+
+      .terminal-window {
+        background: var(--bg-window);
+        border: var(--border-subtle);
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .window-titlebar {
+        background: var(--bg-titlebar);
+        border-bottom: var(--border-subtle);
+        padding: 8px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        user-select: none;
+        font-family: var(--font-mono);
+      }
+
+      .term-status-badge {
+        font-size: 0.74rem;
+        color: var(--color-green);
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+
+      .window-title {
+        font-size: 0.78rem;
+        color: #cbd5e1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+        flex: 1 1 auto;
+      }
+
+      .term-status-online {
+        font-size: 0.72rem;
+        color: var(--color-amber);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+
+      .window-body {
+        padding: clamp(12px, 2.5vw, 36px);
+      }
+
+      /* ==========================================================================
+         HERO SECTION & ASCII BANNER
+         ========================================================================== */
+      .terminal-hero {
+        margin-bottom: 24px;
+      }
+
+      .ascii-banner {
+        font-family: var(--font-mono);
+        color: var(--color-green);
+        font-size: clamp(0.55rem, 1.25vw, 0.85rem);
+        line-height: 1.3;
+        margin: 0 0 20px;
+        overflow-x: auto;
+        white-space: pre;
+        border-left: 3px solid var(--color-green);
+        padding-left: 12px;
+        user-select: none;
+      }
+
+      .terminal-title {
+        font-family: var(--font-mono);
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+      }
+
+      .terminal-intro {
+        font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        max-width: 920px;
+        margin-bottom: 24px;
+      }
+
+      /* Terminal Action Buttons */
+      .terminal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .term-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 8px 16px;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        border: var(--border-accent);
+        border-radius: 0;
+        background: var(--bg-btn);
+        color: #cbd5e1;
+        transition: border-color 0.1s ease, color 0.1s ease, background-color 0.1s ease;
+        box-sizing: border-box;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .term-btn:hover {
+        border-color: var(--color-green);
+        color: var(--color-green);
+        background: var(--bg-btn-hover);
+      }
+
+      .term-btn-primary {
+        background: var(--color-green-dim);
+        border-color: var(--color-green);
+        color: var(--color-green);
+      }
+
+      .term-btn-primary:hover {
+        background: var(--color-green);
+        color: #04100c;
+      }
+
+      /* Terminal Quick Install Box */
+      .terminal-install-box {
+        background: #090e15;
+        border: var(--border-subtle);
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .install-cmd-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .install-prompt {
+        color: var(--color-amber);
+        font-weight: 700;
+        user-select: none;
+        flex-shrink: 0;
+      }
+
+      .install-code {
+        color: #e2e8f0;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        user-select: all;
+      }
+
+      .copy-action-btn {
+        background: var(--bg-btn);
+        border: var(--border-accent);
+        color: var(--color-green);
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        font-weight: 700;
+        padding: 6px 12px;
+        min-height: 36px;
+        cursor: pointer;
+        border-radius: 0;
+        transition: all 0.1s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .copy-action-btn:hover {
+        border-color: var(--color-green);
+        background: var(--color-green);
+        color: #04100c;
+      }
+
+      /* 4 Core Architectural Tenets */
+      .terminal-tenets-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .tenet-item {
+        display: flex;
+        gap: 14px;
+        background: #0e1422;
+        border: var(--border-subtle);
+        border-radius: 0;
+        padding: 16px;
+        transition: border-color 0.15s ease;
+      }
+
+      .tenet-item:hover {
+        border-color: #334155;
+      }
+
+      .tenet-num {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--color-amber);
+        font-family: var(--font-mono);
+        user-select: none;
+      }
+
+      .tenet-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .tenet-text strong {
+        font-size: 0.88rem;
+        color: #f1f5f9;
+        font-weight: 700;
+      }
+
+      .tenet-text span {
+        font-size: 0.78rem;
+        color: var(--text-secondary);
+        line-height: 1.45;
+      }
+
+      /* Terminal Section Divider */
+      .terminal-divider {
+        text-align: center;
+        margin: 36px 0 28px;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        letter-spacing: 0.15em;
+        font-family: var(--font-mono);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+      }
+
+      .terminal-divider::before,
+      .terminal-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #1e293b;
+        margin: 0 16px;
+      }
+
+      /* ==========================================================================
+         SCREENSAVER GRID & TERMINAL NODE CARDS
+         ========================================================================== */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+        gap: 20px;
+      }
+
+      .term-card {
+        background: var(--bg-card);
+        border: var(--border-subtle);
+        border-radius: 0;
+        padding: clamp(12px, 2.5vw, 20px);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition: border-color 0.15s ease;
+        outline: none;
+        box-sizing: border-box;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .term-card:hover,
+      .term-card:focus-visible {
+        border-color: var(--color-green);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: var(--border-subtle);
+        padding-bottom: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .card-node-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        letter-spacing: 0.05em;
+      }
+
+      .term-prompt {
+        color: var(--color-green);
+        font-weight: 700;
+        user-select: none;
+      }
+
+      .card-id {
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+
+      .term-badge {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        border-radius: 0;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--color-green);
+        background: var(--color-green-dim);
+        border: 1px solid var(--color-green);
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1 0 auto;
+      }
+
+      .title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .card-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .card-sub-badge {
+        font-size: 0.74rem;
+        color: var(--color-amber);
+      }
+
+      /* Video Preview Frame: Crisp Square 1px Border */
+      .saver-video-frame {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border: 1px solid #1e293b;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .saver-video-frame video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        background: #000;
+      }
+
+      .card-desc {
+        font-size: 0.84rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      /* Terminal CLI Snippet */
+      .saver-cmd-snippet {
+        background: #080c14;
+        border: 1px solid #1e293b;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 0.78rem;
+        color: #cbd5e1;
+        cursor: pointer;
+        user-select: all;
+        transition: border-color 0.1s ease;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .saver-cmd-snippet:hover {
+        border-color: var(--color-green);
+      }
+
+      .cmd-text {
+        font-family: var(--font-mono);
+        color: var(--color-amber);
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .cmd-copy-hint {
+        color: var(--text-muted);
+        font-size: 0.68rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        flex-shrink: 0;
+      }
+
+      .card-metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.74rem;
+        border-top: 1px dashed #1e293b;
+        padding-top: 8px;
+      }
+
+      .term-metric {
+        display: inline-flex;
+        gap: 4px;
+      }
+
+      .metric-key {
+        color: var(--text-muted);
+      }
+
+      .metric-val {
+        color: var(--color-amber);
+        font-weight: 600;
+      }
+
+      .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .term-tag {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        background: #141c2e;
+        padding: 2px 8px;
+        border-radius: 0;
+        border: var(--border-subtle);
+      }
+
+      .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: var(--border-subtle);
+      }
+
+      .card-actions .term-btn {
+        flex: 1 1 auto;
+        justify-content: center;
+        font-size: 0.75rem;
+        min-height: 40px;
+        padding: 6px 12px;
+      }
+
+      /* ==========================================================================
+         TERMINAL FOOTER
+         ========================================================================== */
+      .terminal-footer {
+        background: var(--bg-bar);
+        border-top: var(--border-subtle);
+        padding: 20px 0;
+        margin-top: 48px;
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .footer-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .footer-sep {
+        color: #334155;
+        user-select: none;
+      }
+
+      .term-link {
+        color: var(--color-green);
+        text-decoration: none;
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        transition: text-decoration 0.15s ease;
+      }
+
+      .term-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Accessible Focus */
+      :focus-visible {
+        outline: 2px solid var(--color-green) !important;
+        outline-offset: 2px !important;
+      }
+
+      /* ==========================================================================
+         RESPONSIVENESS & ZERO OVERFLOW
+         ========================================================================== */
+      @media (max-width: 768px) {
+        .terminal-meta {
+          font-size: 0.68rem;
+          gap: 6px 10px;
         }
 
-        .bg-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background-image: url('assets/bg.jpg');
-            background-size: cover;
-            background-position: center;
-            transform: scale(1.05);
-        }
-        
-        .bg-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(3,3,5,0.9) 0%, rgba(3,3,5,0.4) 50%, rgba(3,3,5,0.9) 100%);
+        .window-titlebar {
+          flex-wrap: wrap;
+          gap: 6px;
         }
 
-        nav {
-            padding: 2.5rem 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .back-link {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        .back-link:hover { opacity: 1; }
-
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 0 5vw 4rem 5vw;
-            z-index: 10;
+        .terminal-actions {
+          flex-direction: column;
         }
 
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
+        .terminal-actions .term-btn {
+          width: 100%;
         }
 
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 4rem 3rem;
-            max-width: 800px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            opacity: 0;
-            transform: translateY(40px);
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .terminal-install-box {
+          flex-direction: column;
+          align-items: stretch;
+          padding: 12px;
         }
 
-        h1 {
-            font-size: clamp(3rem, 5vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-        
-        .subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            font-weight: 300;
-            color: #b4b4c4;
-            max-width: 600px;
-            margin: 0 auto 2.5rem auto;
-        }
-        
-        .cta-btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: #000;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(92,225,230,0.3);
-        }
-
-        .install-container {
-            margin-top: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            transition: border-color 0.3s;
-            max-width: 100%;
-        }
-        
-        .install-container:hover {
-            border-color: rgba(255, 255, 255, 0.2);
+        .install-cmd-wrap {
+          min-width: 0;
+          max-width: 100%;
+          overflow-x: auto;
         }
 
         .install-code {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            color: #d4d4d8;
-            font-size: 0.95rem;
-            white-space: nowrap;
-            overflow-x: auto;
-            flex: 1;
-            text-align: left;
-            margin-right: 1rem;
+          white-space: normal;
+          word-break: break-all;
+          font-size: 0.8rem;
         }
 
-        .install-code::-webkit-scrollbar {
-            height: 4px;
-        }
-        .install-code::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
+        .copy-action-btn {
+          width: 100%;
         }
 
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid transparent;
-            color: var(--text);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 400;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+        .gallery-grid {
+          grid-template-columns: 1fr;
         }
 
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--glass-border);
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .ascii-banner {
+          font-size: 0.52rem;
         }
 
-        .gallery-section {
-            width: 100%;
-            max-width: 1400px;
-            margin: 2rem auto 4rem auto;
-            text-align: left;
-            opacity: 0;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
-        }
-        
-        .gallery-title {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            text-align: center;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text);
+        .terminal-title {
+          font-size: 1.6rem;
         }
 
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .video-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .card-actions {
+          flex-direction: column;
         }
 
-        .video-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            z-index: 2;
+        .card-actions .term-btn {
+          width: 100%;
         }
 
-        .video-card video {
-            width: 100%;
-            display: block;
-            object-fit: cover;
-            aspect-ratio: 16/9;
-            background: #000;
+        .saver-cmd-snippet {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
         }
-        
-        .video-card .label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 2rem 1.5rem 1.5rem 1.5rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-transform: capitalize;
-            letter-spacing: 2px;
-            color: var(--text);
-        }
+      }
 
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
         }
+      }
     </style>
-</head>
-<body>
-    <div class="bg-container"><div class="bg-overlay"></div></div>
-    <nav>
-        <div class="logo">idlescreen</div>
-        <a href="https://UberMetroid.github.io" class="back-link">← Ecosystem</a>
-    </nav>
-    <main>
-        <div class="hero">
-            <div class="glass-panel">
-                <h1>Ambient by Design</h1>
-                <p class="subtitle">A pure, composable screensaver engine. We don't lock, dim, or track you — we just render beautiful content while you're away and yield back cleanly.</p>
-                <a href="https://github.com/idlescreen/idlescreen" class="cta-btn">View Repository</a>
-                
-                <div class="install-container">
-                    <span class="install-code" id="install-command">curl -fsSL https://idlescreen.github.io/packages/install.sh | sh</span>
-                    <button class="copy-btn" onclick="copyInstallCmd()">Copy</button>
-                </div>
-            </div>
-        </div>
+  </head>
+  <body class="terminal-body">
+    <!-- Accessible Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to Content</a>
 
-        <section class="gallery-section">
-            <h2 class="gallery-title">Ecosystem Preview</h2>
-            <div class="video-grid">
-                <div class="video-card"><video src="assets/videos/beams.mp4" autoplay loop muted playsinline></video><div class="label">Beams</div></div>
-                <div class="video-card"><video src="assets/videos/bursts.mp4" autoplay loop muted playsinline></video><div class="label">Bursts</div></div>
-                <div class="video-card"><video src="assets/videos/chaos.mp4" autoplay loop muted playsinline></video><div class="label">Chaos</div></div>
-                <div class="video-card"><video src="assets/videos/cosmos.mp4" autoplay loop muted playsinline></video><div class="label">Cosmos</div></div>
-                <div class="video-card"><video src="assets/videos/glyphs.mp4" autoplay loop muted playsinline></video><div class="label">Glyphs</div></div>
-                <div class="video-card"><video src="assets/videos/gnats.mp4" autoplay loop muted playsinline></video><div class="label">Gnats</div></div>
-                <div class="video-card"><video src="assets/videos/hearth.mp4" autoplay loop muted playsinline></video><div class="label">Hearth</div></div>
-                <div class="video-card"><video src="assets/videos/radar.mp4" autoplay loop muted playsinline></video><div class="label">Radar</div></div>
-                <div class="video-card"><video src="assets/videos/ripple.mp4" autoplay loop muted playsinline></video><div class="label">Ripple</div></div>
-                <div class="video-card"><video src="assets/videos/storm.mp4" autoplay loop muted playsinline></video><div class="label">Storm</div></div>
+    <!-- Masthead Status Bar -->
+    <header class="terminal-masthead">
+      <div class="terminal-container masthead-inner">
+        <div class="terminal-branding">
+          <span class="prompt-sigil" aria-hidden="true">&gt;&gt;</span>
+          <span class="brand-title">IDLESCREEN</span>
+          <span class="vintage-badge">[WAYLAND IDLE HOST]</span>
+        </div>
+        <div class="terminal-meta">
+          <span class="meta-item">PROTOCOL: ext-idle-notifier-v1</span>
+          <span class="meta-item">SURFACE: wlr-layer-shell</span>
+          <span class="meta-item">STATUS: ACTIVE [1982]</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="terminal-main">
+      <div class="terminal-container">
+        <div class="terminal-window">
+          <div class="window-titlebar">
+            <span class="term-status-badge" aria-hidden="true">[TERM: tty1]</span>
+            <span class="window-title">sys@idlescreen:~# cat /etc/idlescreen/manifest [release 1982-2026]</span>
+            <span class="term-status-online" aria-hidden="true">[SYS_OK]</span>
+          </div>
+
+          <div class="window-body">
+            <!-- Hero Manifesto -->
+            <section id="hero" class="terminal-hero">
+              <pre class="ascii-banner" aria-hidden="true">
+================================================================================
+  IDLESCREEN // MODULAR WAYLAND IDLE HOST & PROCEDURAL SCREENSAVERS
+================================================================================</pre>
+              <h1 class="terminal-title">Ambient by Design</h1>
+              <p class="terminal-intro">
+                Modular Wayland idle host and procedural screensaver plugins for Linux.
+                Watches compositor idle signals over ext-idle-notifier-v1, launches lightweight graphics onto layer-shell surfaces across multi-monitor outputs, and yields compute back instantaneously on user input.
+              </p>
+
+              <div class="terminal-actions">
+                <a href="https://github.com/idlescreen/idle" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                  <span>[ GITHUB: @IDLESCREEN/IDLE ↗ ]</span>
+                </a>
+                <a href="https://ubermetroid.github.io" target="_blank" rel="noopener noreferrer" class="term-btn">
+                  <span>[ ECOSYSTEM: UBERMETROID ↗ ]</span>
+                </a>
+                <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="term-btn">
+                  <span>[ PACKAGES (APT/RPM) ↗ ]</span>
+                </a>
+              </div>
+
+              <!-- Terminal Quick Install Shell Box -->
+              <div class="terminal-install-box">
+                <div class="install-cmd-wrap">
+                  <span class="install-prompt">sys@idlescreen:~#</span>
+                  <code class="install-code" id="install-cmd">curl -fsSL https://idlescreen.github.io/packages/install.sh | sh</code>
+                </div>
+                <button class="copy-action-btn" onclick="copySnippet('install-cmd', this)">[ COPY INSTALL ]</button>
+              </div>
+
+              <!-- 4 Architectural Principles -->
+              <div class="terminal-tenets-bar">
+                <div class="tenet-item">
+                  <span class="tenet-num">01</span>
+                  <div class="tenet-text">
+                    <strong>Protocol Zero-Overhead</strong>
+                    <span>Listens to ext-idle-notifier-v1 with zero render cycles while active.</span>
+                  </div>
+                </div>
+                <div class="tenet-item">
+                  <span class="tenet-num">02</span>
+                  <div class="tenet-text">
+                    <strong>Layer-Shell Surface Engine</strong>
+                    <span>Multi-monitor layer-shell surface creation with instant input yield.</span>
+                  </div>
+                </div>
+                <div class="tenet-item">
+                  <span class="tenet-num">03</span>
+                  <div class="tenet-text">
+                    <strong>Cellular Rasterization</strong>
+                    <span>Native C and Rust procedural modules with locked 60 FPS frame budgets.</span>
+                  </div>
+                </div>
+                <div class="tenet-item">
+                  <span class="tenet-num">04</span>
+                  <div class="tenet-text">
+                    <strong>Pluggable Tooling Ecology</strong>
+                    <span>Instant CLI preview, live terminal TUI, and COSMIC panel applet.</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div class="terminal-divider">
+              <span>-- REGISTERED SCREENSAVER PLUGINS (10 ACTIVE NODES) --</span>
             </div>
-        </section>
+
+            <!-- Screensavers Showcase Grid: All 10 Plugins -->
+            <section id="plugins" class="gallery-section">
+              <div class="gallery-grid">
+
+                <!-- 01. Beams -->
+                <article class="term-card" id="saver-beams" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_01 // BEAMS</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Beams</h2>
+                      <span class="card-sub-badge">Vector Acceleration</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/beams.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Crossing vector beams across a high-contrast field. Calculates real-time ray intersections with phosphor persistence decay.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview beams', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview beams</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.15%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Vector Grid</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#vector</span>
+                      <span class="term-tag">#phosphor</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-beams" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-beams ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 02. Cosmos -->
+                <article class="term-card" id="saver-cosmos" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_02 // COSMOS</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Cosmos</h2>
+                      <span class="card-sub-badge">Celestial Kinematics</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/cosmos.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Starfield and nebula-style deep-space celestial kinematics. Simulates gravitational velocity vectors and star parallax across depth planes.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview cosmos', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview cosmos</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.22%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">N-Body Gravitation</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#gravity</span>
+                      <span class="term-tag">#3d-depth</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-cosmos" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-cosmos ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 03. Bursts -->
+                <article class="term-card" id="saver-bursts" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_03 // BURSTS</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Bursts</h2>
+                      <span class="card-sub-badge">Shockwave Dynamics</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/bursts.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">High-velocity explosive shockwave patterns, expanding rings, and kinetic particle dissipation with zero memory accumulation.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview bursts', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview bursts</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.18%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Kinetic Shockwave</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#kinetic</span>
+                      <span class="term-tag">#particles</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-bursts" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-bursts ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 04. Storm -->
+                <article class="term-card" id="saver-storm" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_04 // STORM</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Storm</h2>
+                      <span class="card-sub-badge">Atmospheric Plasma</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/storm.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Dense atmospheric particulate clouds with stochastic dielectric breakdown arcs and lightning flash illumination.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview storm', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview storm</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.25%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Dielectric Arcs</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#plasma</span>
+                      <span class="term-tag">#stochastic</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-storm" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-storm ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 05. Chaos -->
+                <article class="term-card" id="saver-chaos" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_05 // CHAOS</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Chaos</h2>
+                      <span class="card-sub-badge">Strange Attractors</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/chaos.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Strange-attractor non-linear dynamical systems. Integrates three-dimensional differential equations into phosphor phase-space trajectories.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview chaos', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview chaos</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.14%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Lorenz / Attractor</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#chaos</span>
+                      <span class="term-tag">#phase-space</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-chaos" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-chaos ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 06. Hearth -->
+                <article class="term-card" id="saver-hearth" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_06 // HEARTH</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Hearth</h2>
+                      <span class="card-sub-badge">Thermodynamics</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/hearth.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Warm ember and fire-like ambient cellular convection. Simulates heat dissipation, buoyant updraft, and cooling cinder particles.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview hearth', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview hearth</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.19%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Thermal Convection</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#thermal</span>
+                      <span class="term-tag">#cellular</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-hearth" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-hearth ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 07. Ripple -->
+                <article class="term-card" id="saver-ripple" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_07 // RIPPLE</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Ripple</h2>
+                      <span class="card-sub-badge">Wave Equations</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/ripple.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">2D discrete wave equation solver. Generates interference ripples, harmonic standing waves, and surface refraction across the display.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview ripple', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview ripple</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.17%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">2D Wave Mechanics</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#wave</span>
+                      <span class="term-tag">#interference</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-ripple" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-ripple ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 08. Radar -->
+                <article class="term-card" id="saver-radar" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_08 // RADAR</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Radar</h2>
+                      <span class="card-sub-badge">Polar Telemetry</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/radar.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">360-degree polar coordinate radar sweep with simulated phosphor persistence, range rings, and synthetic target Doppler blips.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview radar', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview radar</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.12%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Polar Coordinate Sweep</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#radar</span>
+                      <span class="term-tag">#polar</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-radar" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-radar ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 09. Glyphs -->
+                <article class="term-card" id="saver-glyphs" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_09 // GLYPHS</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Glyphs</h2>
+                      <span class="card-sub-badge">Cryptographic Rain</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/glyphs.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Cryptographic ASCII character streams and descending digital rain with variable phosphor luminosity and glyph mutators.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview glyphs', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview glyphs</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.16%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">ASCII Matrix Stream</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#glyphs</span>
+                      <span class="term-tag">#matrix</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-glyphs" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-glyphs ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+                <!-- 10. Gnats -->
+                <article class="term-card" id="saver-gnats" tabindex="0">
+                  <div class="card-header">
+                    <div class="card-node-info">
+                      <span class="term-prompt">&gt;</span>
+                      <span class="card-id">PLUGIN_10 // GNATS</span>
+                    </div>
+                    <span class="term-badge">[ ACTIVE // v1.2 ]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="title-row">
+                      <h2 class="card-title">Gnats</h2>
+                      <span class="card-sub-badge">Boid Swarm Ecology</span>
+                    </div>
+                    <div class="saver-video-frame">
+                      <video src="assets/videos/gnats.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                    </div>
+                    <p class="card-desc">Multi-agent autonomous boid flocking simulation. Agents compute cohesion, separation, and alignment vectors in real-time.</p>
+                    <div class="saver-cmd-snippet" onclick="copyText('idlescreen preview gnats', this)" title="Click to copy CLI command">
+                      <code>&gt; <span class="cmd-text">idlescreen preview gnats</span></code>
+                      <span class="cmd-copy-hint">[COPY]</span>
+                    </div>
+                    <div class="card-metrics">
+                      <div class="term-metric"><span class="metric-key">FRAME:</span><span class="metric-val">60 FPS</span></div>
+                      <div class="term-metric"><span class="metric-key">CPU:</span><span class="metric-val">0.20%</span></div>
+                      <div class="term-metric"><span class="metric-key">MATH:</span><span class="metric-val">Reynolds Boids</span></div>
+                    </div>
+                    <div class="card-tags">
+                      <span class="term-tag">#wayland</span>
+                      <span class="term-tag">#boids</span>
+                      <span class="term-tag">#swarms</span>
+                    </div>
+                  </div>
+                  <div class="card-actions">
+                    <a href="https://github.com/idlescreen/idle-saver-gnats" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-primary">
+                      <span>[ SOURCE: idle-saver-gnats ↗ ]</span>
+                    </a>
+                  </div>
+                </article>
+
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
     </main>
 
+    <!-- Terminal Footer -->
+    <footer class="terminal-footer">
+      <div class="terminal-container footer-inner">
+        <div class="footer-meta">
+          <span>IDLESCREEN &copy; 1982-2026 // MODULAR WAYLAND COMPUTING</span>
+          <span class="footer-sep">|</span>
+          <span>STATIC DEPLOYMENT // ZERO TRACKING</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/idlescreen" target="_blank" rel="noopener noreferrer" class="term-link">
+            <span>github.com/idlescreen ↗</span>
+          </a>
+          <span class="footer-sep">|</span>
+          <a href="https://ubermetroid.github.io" target="_blank" rel="noopener noreferrer" class="term-link">
+            <span>ubermetroid.github.io ↗</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Dependency-Free Interactive Utilities -->
     <script>
-        function copyInstallCmd() {
-            const cmd = document.getElementById('install-command').innerText;
-            navigator.clipboard.writeText(cmd).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                const originalText = btn.innerText;
-                btn.innerText = 'Copied!';
-                btn.style.color = 'var(--secondary)';
-                
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.color = 'var(--text)';
-                }, 2000);
-            });
+      // 1. Copy install command helper
+      function copySnippet(elementId, btnElement) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const original = btnElement.innerText;
+          btnElement.innerText = '[ COPIED! ]';
+          setTimeout(() => { btnElement.innerText = original; }, 1800);
+        });
+      }
+
+      // 2. Copy CLI preview snippet helper
+      function copyText(text, containerElement) {
+        navigator.clipboard.writeText(text).then(() => {
+          const hint = containerElement.querySelector('.cmd-copy-hint');
+          if (hint) {
+            const original = hint.innerText;
+            hint.innerText = '[COPIED!]';
+            hint.style.color = 'var(--color-green)';
+            setTimeout(() => {
+              hint.innerText = original;
+              hint.style.color = '';
+            }, 1800);
+          }
+        });
+      }
+
+      // 3. Tenet 2 Zero-Waste Compute: Pause offscreen videos via IntersectionObserver
+      if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.saver-video-frame video').forEach(video => {
+          videoObserver.observe(video);
+        });
+      }
+
+      // 4. Reduced-Motion Safeguard: Pause all videos when reduced motion is preferred
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function handleMotionPreference(e) {
+        if (e.matches) {
+          document.querySelectorAll('.saver-video-frame video').forEach(v => v.pause());
         }
+      }
+      mediaQuery.addEventListener('change', handleMotionPreference);
+      if (mediaQuery.matches) {
+        handleMotionPreference(mediaQuery);
+      }
+
+      console.log(
+        '%c[IDLESCREEN // 1982 TERMINAL ACTIVE]\n%cWayland Idle Host | 10 Procedural Screensavers Registered',
+        'color: #34d399; font-weight: bold; font-family: monospace; font-size: 12px;',
+        'color: #f59e0b; font-family: monospace; font-size: 11px;'
+      );
     </script>
-</body>
+  </body>
 </html>
