@@ -11,7 +11,7 @@ Visit <https://idlescreen.github.io>. The install command surfaces the
 [`packages`](https://github.com/idlescreen/packages) channel:
 
 ```sh
-curl -fsSL https://idlescreen.github.io/packages/install.sh | sh
+curl -fsSL https://idlescreen.github.io/install.sh | sh
 ```
 
 ## License
