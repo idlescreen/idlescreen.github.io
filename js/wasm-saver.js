@@ -92,7 +92,7 @@
       canvas.hidden = false;
       const stage = canvas.closest(".saver-stage");
       const video = stage && stage.querySelector("video");
-      if (video) { video.pause(); video.hidden = true; }
+      if (video) { video.pause(); video.style.visibility = "hidden"; }
       const panel = canvas.closest(".saver-panel");
       if (panel) {
         const vidBadge = panel.querySelector(".saver-badge:not(.saver-badge-live)");

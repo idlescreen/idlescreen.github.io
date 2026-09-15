@@ -30,7 +30,7 @@
     video.loop = true;
     video.playsInline = true;
     video.setAttribute("playsinline", "");
-    video.preload = "auto";
+    video.preload = "metadata";
     stage.appendChild(video);
     if (s.live) {
       const canvas = document.createElement("canvas");

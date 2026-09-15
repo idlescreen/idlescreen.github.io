@@ -9,14 +9,10 @@
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          window._ioFired = (window._ioFired || 0) + 1;
-          if (e.isIntersecting) window._ioTrue = (window._ioTrue || 0) + 1;
-          const v = e.target;
           if (e.isIntersecting && !reduced.matches) {
-            v.play().then(() => { window._playOk = (window._playOk || 0) + 1; })
-                    .catch((err) => { window._playErr = err.name; });
+            e.target.play().catch(() => {});
           } else {
-            v.pause();
+            e.target.pause();
           }
         });
       },
