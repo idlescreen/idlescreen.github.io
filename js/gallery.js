@@ -23,7 +23,7 @@
     stage.className = "saver-stage";
     const video = document.createElement("video");
     video.className = "saver-media";
-    video.src = "assets/videos/" + s.video + ".mp4";
+    video.src = "assets/videos/" + s.id + ".mp4";
     video.autoplay = true;
     video.muted = true;
     video.setAttribute("muted", "");
