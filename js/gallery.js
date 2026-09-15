@@ -22,7 +22,14 @@
     stage.className = "saver-stage";
     const video = document.createElement("video");
     video.className = "saver-media";
-    video.src = "assets/videos/" + s.video + ".mp4";
+    const webm = document.createElement("source");
+    webm.src = "assets/videos/" + s.video + ".webm";
+    webm.type = "video/webm";
+    const mp4 = document.createElement("source");
+    mp4.src = "assets/videos/" + s.video + ".mp4";
+    mp4.type = "video/mp4";
+    video.appendChild(webm);
+    video.appendChild(mp4);
     video.muted = true;
     video.loop = true;
     video.playsInline = true;

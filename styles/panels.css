@@ -8,9 +8,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 1080px;
+  max-width: 980px;
   margin: 0 auto;
-  padding: 64px 56px;
+  padding: 64px 80px;
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.45s ease, transform 0.45s ease;
