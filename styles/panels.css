@@ -1,7 +1,4 @@
 /* panels.css — fullport sections, labels, nav arrows */
-#gallery {
-  display: contents; /* generated panels must be layout children of .scroll-port */
-}
 .panel {
   min-height: 100%;
   scroll-snap-align: start;

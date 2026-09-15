@@ -1,7 +1,8 @@
 // gallery.js — builds saver panels from the SAVERS manifest
 (function buildGallery() {
-  const mount = document.getElementById("gallery");
-  if (!mount || typeof SAVERS === "undefined") return;
+  const port = document.querySelector(".scroll-port");
+  const outro = document.getElementById("outro");
+  if (!port || !outro || typeof SAVERS === "undefined") return;
 
   SAVERS.forEach((s, i) => {
     const sec = document.createElement("section");
@@ -22,14 +23,7 @@
     stage.className = "saver-stage";
     const video = document.createElement("video");
     video.className = "saver-media";
-    const webm = document.createElement("source");
-    webm.src = "assets/videos/" + s.video + ".webm";
-    webm.type = "video/webm";
-    const mp4 = document.createElement("source");
-    mp4.src = "assets/videos/" + s.video + ".mp4";
-    mp4.type = "video/mp4";
-    video.appendChild(webm);
-    video.appendChild(mp4);
+    video.src = "assets/videos/" + s.video + ".mp4";
     video.autoplay = true;
     video.muted = true;
     video.setAttribute("muted", "");
@@ -83,6 +77,6 @@
     stage.appendChild(overlay);
     sec.appendChild(stage);
 
-    mount.appendChild(sec);
+    port.insertBefore(sec, outro);
   });
 })();

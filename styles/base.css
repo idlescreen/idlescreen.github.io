@@ -104,13 +104,6 @@ body.terminal-body {
   scroll-snap-type: y proximity;
   scrollbar-width: thin;
   scrollbar-color: #40341f var(--bg-void);
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 56px,
-    black calc(100% - 56px),
-    transparent
-  );
 }
 .scroll-port::-webkit-scrollbar {
   width: 8px;
