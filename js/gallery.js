@@ -30,10 +30,13 @@
     mp4.type = "video/mp4";
     video.appendChild(webm);
     video.appendChild(mp4);
+    video.autoplay = true;
     video.muted = true;
+    video.setAttribute("muted", "");
     video.loop = true;
     video.playsInline = true;
-    video.preload = "metadata";
+    video.setAttribute("playsinline", "");
+    video.preload = "auto";
     stage.appendChild(video);
     if (s.live) {
       const canvas = document.createElement("canvas");
