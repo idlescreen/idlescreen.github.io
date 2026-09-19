@@ -1,6 +1,10 @@
 # idlescreen.github.io
 
-[![studio2201 gate](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/studio2201.yml/badge.svg)](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/studio2201.yml)
+[![snip](https://img.shields.io/github/actions/workflow/status/idlescreen/idlescreen.github.io/snip.yml?label=snip&logo=shield)](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/snip.yml)
+[![vigil](https://img.shields.io/github/actions/workflow/status/idlescreen/idlescreen.github.io/vigil.yml?label=vigil&logo=shield)](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/vigil.yml)
+[![aegis](https://img.shields.io/github/actions/workflow/status/idlescreen/idlescreen.github.io/aegis.yml?label=aegis&logo=shield)](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/aegis.yml)
+[![proven](https://img.shields.io/github/actions/workflow/status/idlescreen/idlescreen.github.io/proven.yml?label=proven&logo=shield)](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/proven.yml)
+[![boneyard](https://img.shields.io/github/actions/workflow/status/idlescreen/idlescreen.github.io/boneyard.yml?label=boneyard&logo=shield)](https://github.com/idlescreen/idlescreen.github.io/actions/workflows/boneyard.yml)
 
 The product site — landing page, saver showcase, and the documented
 install entry point. Part of
