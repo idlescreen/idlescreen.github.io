@@ -1,0 +1,112 @@
+/* styles/gallery-controls.css — interactive control bar for screensaver gallery */
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 14px;
+  background: rgba(12, 10, 22, 0.92);
+  border: 1px solid rgba(255, 176, 0, 0.25);
+  border-radius: 4px;
+  margin-top: 10px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 11px;
+  color: var(--text-secondary, #a8a0b8);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gallery-ctrl-label {
+  color: var(--text-muted, #726a85);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.gallery-ctrl-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 176, 0, 0.3);
+  color: var(--text-primary, #e2dceb);
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-family: inherit;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.gallery-ctrl-btn:hover {
+  border-color: var(--phosphor, #ffb000);
+  color: var(--phosphor, #ffb000);
+  background: rgba(255, 176, 0, 0.12);
+  box-shadow: 0 0 8px rgba(255, 176, 0, 0.25);
+}
+
+.gallery-ctrl-btn.active {
+  border-color: var(--hot, #ffd447);
+  background: rgba(255, 212, 71, 0.18);
+  color: var(--hot, #ffd447);
+}
+
+.gallery-accent-picker {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.gallery-accent-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  padding: 0;
+  display: inline-block;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gallery-accent-dot:hover,
+.gallery-accent-dot.active {
+  transform: scale(1.28);
+  border-color: #fff;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.gallery-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gallery-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.gallery-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--phosphor, #ffb000);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--phosphor, #ffb000);
+  transition: transform 0.1s ease;
+}
+
+.gallery-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}

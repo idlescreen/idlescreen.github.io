@@ -48,6 +48,12 @@
       const bytes = await (await fetch(canvas.dataset.wasm)).arrayBuffer();
       const { instance } = await WebAssembly.instantiate(bytes, {});
       const ex = instance.exports;
+      if (ex.saver_set_accent) {
+        window.idleSaverSetAccent = (r, g, b) => ex.saver_set_accent(r, g, b);
+      }
+      if (ex.saver_set_audio_bands) {
+        window.idleSaverSetAudioBands = (b, l, m, t) => ex.saver_set_audio_bands(b, l, m, t);
+      }
       const ctx = canvas.getContext("2d");
       const tiles = new Map();
       let host = 0, cols = 0, rows = 0, cellW = 10, running = false, last = 0;
