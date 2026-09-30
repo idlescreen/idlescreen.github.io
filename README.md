@@ -40,6 +40,8 @@ Visit <https://idlescreen.github.io>. The install command surfaces the
 curl -fsSL https://idlescreen.github.io/install.sh | sh
 ```
 
+The installer detects your Wayland desktop environment, configures package repositories (APT/DNF), deploys packages, and safely preserves existing user configurations in `~/.config/idlescreen/config.yaml` and `~/.config/idle/config.yaml`.
+
 ## License
 
 Apache-2.0 · © 2026 IdleScreen
