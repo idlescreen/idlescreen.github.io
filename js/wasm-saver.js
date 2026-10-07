@@ -43,6 +43,16 @@
     }
   }
 
+  let sharedModulePromise = null;
+  function getModule(url) {
+    if (!sharedModulePromise) {
+      sharedModulePromise = fetch(url)
+        .then((r) => r.arrayBuffer())
+        .then((bytes) => WebAssembly.compile(bytes));
+    }
+    return sharedModulePromise;
+  }
+
   function createSaver(ex, saverId, cols, rows) {
     if (saverId && ex.saver_new_named && ex.saver_alloc) {
       const name = new TextEncoder().encode(saverId);
@@ -55,12 +65,10 @@
 
   async function arm(canvas) {
     try {
-      const bytes = await (await fetch(canvas.dataset.wasm)).arrayBuffer();
-      const { instance } = await WebAssembly.instantiate(bytes, {});
+      const module = await getModule(canvas.dataset.wasm);
+      const instance = await WebAssembly.instantiate(module, {});
       const ex = instance.exports;
-      // Each saver gets its own module so the host can select which one to
-      // run. saver_new() falls back to the compiled-in default; prefer
-      // saver_new_named() so a shared build can serve more than one.
+      // Each saver gets its own module instance and selects by name.
       const saverId = canvas.dataset.saver || "";
       if (ex.saver_set_accent) {
         window.idleSaverSetAccent = (r, g, b) => ex.saver_set_accent(r, g, b);
@@ -70,10 +78,12 @@
       }
       const ctx = canvas.getContext("2d");
       const tiles = new Map();
+      const stage = canvas.closest(".saver-stage");
       let host = 0, cols = 0, rows = 0, cellW = 10, running = false, last = 0;
 
       function fit() {
-        const w = canvas.clientWidth, h = canvas.clientHeight;
+        const w = canvas.clientWidth || (stage && stage.clientWidth) || 0;
+        const h = canvas.clientHeight || (stage && stage.clientHeight) || 0;
         if (!w || !h) return;
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         canvas.width = Math.round(w * dpr);
@@ -105,12 +115,11 @@
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return; // stay on the paused video fallback
       }
+      canvas.hidden = false;
       fit();
       if (!host) return;
 
       // Success — take over from the video
-      canvas.hidden = false;
-      const stage = canvas.closest(".saver-stage");
       const video = stage && stage.querySelector("video");
       if (video) { video.pause(); video.style.visibility = "hidden"; }
       const panel = canvas.closest(".saver-panel");
@@ -134,7 +143,7 @@
         },
         { root: document.querySelector(".scroll-port"), threshold: 0.15 }
       );
-      io.observe(canvas);
+      io.observe(stage || canvas);
       let rt;
       window.addEventListener("resize", () => {
         clearTimeout(rt);
@@ -152,11 +161,16 @@
       entries.forEach((e) => {
         if (e.isIntersecting) {
           lazy.unobserve(e.target);
-          arm(e.target);
+          const c = e.target.querySelector("canvas.saver-canvas[data-wasm]");
+          if (c) arm(c);
         }
       });
     },
-    { root: document.querySelector(".scroll-port"), rootMargin: "200px" }
+    { root: document.querySelector(".scroll-port"), rootMargin: "300px" }
   );
-  canvases.forEach((c) => lazy.observe(c));
+  canvases.forEach((c) => {
+    const stage = c.closest(".saver-stage");
+    if (stage) lazy.observe(stage);
+    else lazy.observe(c);
+  });
 })();
