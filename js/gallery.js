@@ -37,6 +37,7 @@
       canvas.className = "saver-canvas";
       canvas.hidden = true;
       canvas.dataset.wasm = s.live;
+      canvas.dataset.saver = s.id;
       stage.appendChild(canvas);
     }
     const overlay = document.createElement("div");

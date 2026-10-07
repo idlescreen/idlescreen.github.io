@@ -43,11 +43,25 @@
     }
   }
 
+  function createSaver(ex, saverId, cols, rows) {
+    if (saverId && ex.saver_new_named && ex.saver_alloc) {
+      const name = new TextEncoder().encode(saverId);
+      const ptr = ex.saver_alloc(name.length);
+      new Uint8Array(ex.memory.buffer, ptr, name.length).set(name);
+      return ex.saver_new_named(ptr, name.length, cols, rows);
+    }
+    return ex.saver_new(cols, rows);
+  }
+
   async function arm(canvas) {
     try {
       const bytes = await (await fetch(canvas.dataset.wasm)).arrayBuffer();
       const { instance } = await WebAssembly.instantiate(bytes, {});
       const ex = instance.exports;
+      // Each saver gets its own module so the host can select which one to
+      // run. saver_new() falls back to the compiled-in default; prefer
+      // saver_new_named() so a shared build can serve more than one.
+      const saverId = canvas.dataset.saver || "";
       if (ex.saver_set_accent) {
         window.idleSaverSetAccent = (r, g, b) => ex.saver_set_accent(r, g, b);
       }
@@ -71,7 +85,7 @@
         const nRows = Math.min(90, Math.floor(canvas.height / (CELL_H * dpr)));
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         if (!host) {
-          host = ex.saver_new(nCols, nRows);
+          host = createSaver(ex, saverId, nCols, nRows);
         } else if (nCols !== cols || nRows !== rows) {
           ex.saver_resize(host, nCols, nRows);
         }

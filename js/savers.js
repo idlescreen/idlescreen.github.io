@@ -47,5 +47,5 @@ const SAVERS = [
   { num: "12", id: "ascii", name: "ASCII", sub: "Terminal Glyph Field",
     desc: "Block-letter logo rendered on a character grid with six text effects. Noise resolves, rains, ripples, and ignites into your own wordmark.",
     frame: "60 FPS", cpu: "0.11%", math: "Character Grid",
-    tags: ["wayland", "ascii", "terminal"] },
+    tags: ["wayland", "ascii", "terminal"], live: "assets/wasm/ascii.wasm" },
 ];
