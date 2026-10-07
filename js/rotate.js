@@ -1,7 +1,7 @@
 // rotate.js — hero title rotates through program facts
 const HEADLINES = [
   "Ambient by Design",
-  "11 Procedural Savers",
+  "12 Procedural Savers",
   "Zero Cycles While Active",
   "Stable C ABI, Any Language",
   "Locked 60 FPS",
