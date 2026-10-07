@@ -51,7 +51,7 @@ if (port && navUp && navDown) {
 }
 
 console.log(
-  "%c[IDLESCREEN // 1982 TERMINAL ACTIVE]\n%cWayland Idle Host | 12 Procedural Savers Registered | ascii.wasm armed",
+  "%c[IDLESCREEN // 1982 TERMINAL ACTIVE]\n%cWayland Idle Host | 12 Procedural Savers Registered | idlescreen.wasm · 12 savers live",
   "color: #ffb000; font-weight: bold;",
   "color: #a89f8b;"
 );
