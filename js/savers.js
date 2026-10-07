@@ -44,4 +44,8 @@ const SAVERS = [
     desc: "Slow aurora-borealis curtains over a twinkling starfield. Column-swept exponential falloff with periodic brightening surges.",
     frame: "60 FPS", cpu: "0.12%", math: "Field Falloff",
     tags: ["wayland", "aurora", "field"] },
+  { num: "12", id: "ascii", name: "ASCII", sub: "Terminal Glyph Field",
+    desc: "Block-letter logo rendered on a character grid with six text effects. Noise resolves, rains, ripples, and ignites into your own wordmark.",
+    frame: "60 FPS", cpu: "0.11%", math: "Character Grid",
+    tags: ["wayland", "ascii", "terminal"] },
 ];
