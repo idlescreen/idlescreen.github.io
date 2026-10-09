@@ -23,7 +23,7 @@ INSTALLER_URL="${IDLESCREEN_INSTALLER_URL:-${REPO_BASE}/install.sh}"
 
 # Pinned SHA-256 hash of the packages channel installer.
 # Maintained and synchronized by packages/scripts/sync_installer_checksums.sh.
-EXPECTED_INSTALLER_HASH="${IDLESCREEN_INSTALLER_HASH:-6f4b85b66086fcdbc6a4186a7c2cb1f3ac0444f7cafd20b276b7545e34f81aa9}"
+EXPECTED_INSTALLER_HASH="${IDLESCREEN_INSTALLER_HASH:-ded8870a6b220dbdec2921cc768226e4b8a3acdd4733761d82b941b123308282}"
 
 # Handle immediate flags (--verify-self, -h, --help) before network calls
 case "${1:-}" in
@@ -80,6 +80,19 @@ if ! command -v curl >/dev/null 2>&1; then
     exit 1
 fi
 
+# Fetch a remote file with retries on transient errors (503, 5xx, 429, network drops)
+fetch_file() {
+    _url="$1"
+    _out="$2"
+    if curl --retry-all-errors --help >/dev/null 2>&1; then
+        curl -fsSL --retry 5 --retry-delay 2 --retry-all-errors "$_url" -o "$_out"
+    elif curl --retry-connrefused --help >/dev/null 2>&1; then
+        curl -fsSL --retry 5 --retry-delay 2 --retry-connrefused "$_url" -o "$_out"
+    else
+        curl -fsSL --retry 5 --retry-delay 2 "$_url" -o "$_out"
+    fi
+}
+
 _dir="$(mktemp -d)"
 cleanup() {
     if [ -n "$_dir" ] && [ -d "$_dir" ]; then
@@ -88,7 +101,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-curl -fsSL "$INSTALLER_URL" -o "$_dir/install.sh" \
+fetch_file "$INSTALLER_URL" "$_dir/install.sh" \
     || { echo "install: failed to download $INSTALLER_URL" >&2; exit 1; }
 
 # Cryptographically verify the downstream installer before running

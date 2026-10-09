@@ -189,6 +189,60 @@ if [ -f "$PKG_INSTALL" ]; then
     fi
 fi
 
+# 11. Downstream installer download resilience: retry on transient HTTP 503 and succeed
+if command -v python3 >/dev/null 2>&1; then
+    PORT_FILE="$TMP/server_port"
+    python3 -c "
+import http.server
+import socketserver
+
+attempts = 0
+class Handler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        global attempts
+        attempts += 1
+        if attempts <= 2:
+            self.send_response(503)
+            self.send_header('Content-Type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(b'Service Unavailable')
+        else:
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/plain')
+            self.end_headers()
+            with open('$GOOD_TARGET', 'rb') as f:
+                self.wfile.write(f.read())
+    def log_message(self, *args):
+        pass
+
+httpd = socketserver.TCPServer(('127.0.0.1', 0), Handler)
+with open('$PORT_FILE', 'w') as f:
+    f.write(str(httpd.server_address[1]))
+httpd.serve_forever()
+" &
+    _srv_pid=$!
+    for _ in 1 2 3 4 5 6 7 8 9 10; do
+        if [ -s "$PORT_FILE" ]; then break; fi
+        sleep 0.1
+    done
+    RETRY_TEST_PORT=$(cat "$PORT_FILE")
+    RETRY_OUT="$TMP/retry.out"
+    _retry_rc=0
+    IDLESCREEN_INSTALLER_URL="http://127.0.0.1:${RETRY_TEST_PORT}/install.sh" \
+    IDLESCREEN_INSTALLER_HASH="$GOOD_HASH" \
+    "$SCRIPT" --retry-test-arg > "$RETRY_OUT" 2>&1 || _retry_rc=$?
+    kill "$_srv_pid" 2>/dev/null || true
+    wait "$_srv_pid" 2>/dev/null || true
+
+    if [ "$_retry_rc" -eq 0 ] && grep -q 'GOOD_INSTALLER_EXECUTED with args: --retry-test-arg' "$RETRY_OUT"; then
+        echo "ok: downstream installer download retries on transient 503 and succeeds"
+    else
+        echo "FAIL: downstream installer failed to recover from transient 503 (rc=$_retry_rc):"
+        sed 's/^/    /' "$RETRY_OUT"
+        fail=$((fail + 1))
+    fi
+fi
+
 if [ "$fail" -eq 0 ]; then
     echo "all forwarder checks passed"
     exit 0
