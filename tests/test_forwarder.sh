@@ -164,6 +164,7 @@ PIPED_VERIFY_OUT="$TMP/piped-verify.out"
     cd "$SH_COLLISION_DIR"
     export IDLESCREEN_INSTALLER_URL="file://$GOOD_TARGET"
     export IDLESCREEN_INSTALLER_HASH="$GOOD_HASH"
+    # shellcheck disable=SC2002
     cat "$SCRIPT" | sh -s -- --verify > "$PIPED_VERIFY_OUT" 2>&1
 )
 
