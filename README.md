@@ -40,7 +40,15 @@ Visit <https://idlescreen.github.io>. The install command surfaces the
 curl -fsSL https://idlescreen.github.io/install.sh | sh
 ```
 
-The installer detects your Wayland desktop environment, configures package repositories (APT/DNF), deploys packages, and safely preserves existing user configurations in `~/.config/idlescreen/config.yaml` and `~/.config/idle/config.yaml`.
+To verify before running:
+
+```sh
+curl -fsSL https://idlescreen.github.io/install.sh -o install.sh
+./install.sh --verify
+./install.sh
+```
+
+The canonical installer forwards securely to the package channel installer (`https://idlescreen.github.io/packages/install.sh`), enforcing cryptographic SHA-256 validation before execution. The channel installer verifies all modular bootstrap components, configures package repositories (DNF/APT/pacman), deploys packages, and safely preserves existing user configurations in `~/.config/idlescreen/config.yaml` and `~/.config/idle/config.yaml`.
 
 ## License
 
