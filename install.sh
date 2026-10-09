@@ -23,7 +23,7 @@ INSTALLER_URL="${IDLESCREEN_INSTALLER_URL:-${REPO_BASE}/install.sh}"
 
 # Pinned SHA-256 hash of the packages channel installer.
 # Maintained and synchronized by packages/scripts/sync_installer_checksums.sh.
-EXPECTED_INSTALLER_HASH="${IDLESCREEN_INSTALLER_HASH:-4c4f955831bc629cec6cf950b7ebe6b9a9bc5e6c16789b2ce35739b8a9e50c04}"
+EXPECTED_INSTALLER_HASH="${IDLESCREEN_INSTALLER_HASH:-e46b69613fc1a9f0d975725dd4dc968ccc89616c0d40d66e680e7d5e2c7df690}"
 
 # Handle immediate flags (--verify-self, -h, --help) before network calls
 case "${1:-}" in
@@ -52,7 +52,8 @@ case "${1:-}" in
         else
             _actual=$(shasum -a 256 "$_script_path" 2>/dev/null | awk '{print $1}')
         fi
-        if [ "$_actual" != "$_expected" ]; then
+        _expected_lower=$(printf '%s' "$_expected" | tr '[:upper:]' '[:lower:]')
+        if [ "$_actual" != "$_expected_lower" ]; then
             echo "verify-self: FAIL — expected $_expected, got $_actual" >&2
             exit 1
         fi
@@ -91,7 +92,12 @@ curl -fsSL "$INSTALLER_URL" -o "$_dir/install.sh" \
     || { echo "install: failed to download $INSTALLER_URL" >&2; exit 1; }
 
 # Cryptographically verify the downstream installer before running
-if [ -n "$EXPECTED_INSTALLER_HASH" ] && [ "${IDLESCREEN_SKIP_VERIFY:-0}" != "1" ]; then
+if [ "${IDLESCREEN_SKIP_VERIFY:-0}" != "1" ]; then
+    if [ -z "$EXPECTED_INSTALLER_HASH" ] || [ "${#EXPECTED_INSTALLER_HASH}" -ne 64 ]; then
+        echo "install: EXPECTED_INSTALLER_HASH is empty or invalid (${EXPECTED_INSTALLER_HASH:-empty})" >&2
+        exit 1
+    fi
+
     if command -v sha256sum >/dev/null 2>&1; then
         _dl_hash=$(sha256sum "$_dir/install.sh" | awk '{print $1}')
     elif command -v shasum >/dev/null 2>&1; then
@@ -101,7 +107,8 @@ if [ -n "$EXPECTED_INSTALLER_HASH" ] && [ "${IDLESCREEN_SKIP_VERIFY:-0}" != "1" 
         exit 1
     fi
 
-    if [ "$_dl_hash" != "$EXPECTED_INSTALLER_HASH" ]; then
+    _expected_dl_hash=$(printf '%s' "$EXPECTED_INSTALLER_HASH" | tr '[:upper:]' '[:lower:]')
+    if [ "$_dl_hash" != "$_expected_dl_hash" ]; then
         echo "install: hash mismatch on packages/install.sh!" >&2
         echo "install: expected $EXPECTED_INSTALLER_HASH, got $_dl_hash" >&2
         exit 1
@@ -109,20 +116,26 @@ if [ -n "$EXPECTED_INSTALLER_HASH" ] && [ "${IDLESCREEN_SKIP_VERIFY:-0}" != "1" 
 fi
 
 if [ "${1:-}" = "--verify" ] || [ "${1:-}" = "-V" ] || [ "${1:-}" = "verify" ]; then
-    if [ -f "$0" ]; then
-        if command -v sha256sum >/dev/null 2>&1; then
-            _self_hash=$(sha256sum "$0" 2>/dev/null | awk '{print $1}')
-        elif command -v shasum >/dev/null 2>&1; then
-            _self_hash=$(shasum -a 256 "$0" 2>/dev/null | awk '{print $1}')
-        else
-            _self_hash=""
-        fi
-        if [ -n "$_self_hash" ]; then
-            echo "=== SHA-256 of canonical entry forwarder ($0) ==="
-            echo "$_self_hash  $0"
-            echo ""
-        fi
-    fi
+    _bname="$(basename "$0" 2>/dev/null || echo "")"
+    case "$_bname" in
+        sh|bash|dash|ash|zsh|-*|"") ;;
+        *)
+            if [ -f "$0" ]; then
+                if command -v sha256sum >/dev/null 2>&1; then
+                    _self_hash=$(sha256sum "$0" 2>/dev/null | awk '{print $1}')
+                elif command -v shasum >/dev/null 2>&1; then
+                    _self_hash=$(shasum -a 256 "$0" 2>/dev/null | awk '{print $1}')
+                else
+                    _self_hash=""
+                fi
+                if [ -n "$_self_hash" ]; then
+                    echo "=== SHA-256 of canonical entry forwarder ($0) ==="
+                    echo "$_self_hash  $0"
+                    echo ""
+                fi
+            fi
+            ;;
+    esac
 fi
 
 sh "$_dir/install.sh" "$@"

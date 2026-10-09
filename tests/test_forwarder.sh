@@ -65,6 +65,15 @@ else
     fail=$((fail + 1))
 fi
 
+# 6b. --verify-self with uppercase hash: must exit 0
+HASH_UPPER=$(printf '%s' "$HASH" | tr '[:lower:]' '[:upper:]')
+if "$SCRIPT" --verify-self "$HASH_UPPER" "$SCRIPT" >/dev/null 2>&1; then
+    echo "ok: --verify-self with uppercase hash accepts"
+else
+    echo "FAIL: --verify-self with uppercase hash returned non-zero"
+    fail=$((fail + 1))
+fi
+
 # 7. Downstream hash verification: tampered downstream installer must fail closed
 FAKE_TARGET="$TMP/fake_installer.sh"
 echo 'echo "I AM FAKE"' > "$FAKE_TARGET"
@@ -80,13 +89,43 @@ else
     fail=$((fail + 1))
 fi
 
-# 8. Downstream hash verification: valid downstream installer succeeds and receives arguments
+# 7b. Downstream hash verification: empty or invalid IDLESCREEN_INSTALLER_HASH must fail closed
+BAD_HASH_OUT="$TMP/bad_hash.out"
+_bad_hash_rc=0
+IDLESCREEN_INSTALLER_URL="file://$FAKE_TARGET" \
+IDLESCREEN_INSTALLER_HASH="deadbeef" \
+"$SCRIPT" > "$BAD_HASH_OUT" 2>&1 || _bad_hash_rc=$?
+
+if [ "$_bad_hash_rc" -ne 0 ] && grep -q 'EXPECTED_INSTALLER_HASH is empty or invalid' "$BAD_HASH_OUT"; then
+    echo "ok: invalid short installer hash fails closed before download/exec"
+else
+    echo "FAIL: invalid short installer hash did not fail closed (rc=$_bad_hash_rc)"
+    sed 's/^/    /' "$BAD_HASH_OUT"
+    fail=$((fail + 1))
+fi
+
+# 7c. IDLESCREEN_SKIP_VERIFY=1 explicitly allows unverified execution
+SKIP_OUT="$TMP/skip.out"
 GOOD_TARGET="$TMP/good_installer.sh"
 cat > "$GOOD_TARGET" <<'EOF'
 #!/bin/sh
 echo "GOOD_INSTALLER_EXECUTED with args: $*"
 exit 0
 EOF
+IDLESCREEN_INSTALLER_URL="file://$GOOD_TARGET" \
+IDLESCREEN_INSTALLER_HASH="" \
+IDLESCREEN_SKIP_VERIFY="1" \
+"$SCRIPT" > "$SKIP_OUT" 2>&1
+
+if grep -q 'GOOD_INSTALLER_EXECUTED' "$SKIP_OUT"; then
+    echo "ok: IDLESCREEN_SKIP_VERIFY=1 allows explicit unverified execution"
+else
+    echo "FAIL: IDLESCREEN_SKIP_VERIFY=1 failed to execute:"
+    sed 's/^/    /' "$SKIP_OUT"
+    fail=$((fail + 1))
+fi
+
+# 8. Downstream hash verification: valid downstream installer succeeds and receives arguments
 GOOD_HASH=$(sha256sum "$GOOD_TARGET" | awk '{print $1}')
 GOOD_OUT="$TMP/good.out"
 IDLESCREEN_INSTALLER_URL="file://$GOOD_TARGET" \
@@ -113,6 +152,40 @@ else
     echo "FAIL: --verify did not print forwarder hash:"
     sed 's/^/    /' "$VERIFY_OUT"
     fail=$((fail + 1))
+fi
+
+# 9b. --verify when piped does not hash a dummy ./sh in CWD
+SH_COLLISION_DIR="$TMP/sh-collision"
+mkdir -p "$SH_COLLISION_DIR"
+echo "# DUMMY SHELL" > "$SH_COLLISION_DIR/sh"
+chmod +x "$SH_COLLISION_DIR/sh"
+PIPED_VERIFY_OUT="$TMP/piped-verify.out"
+(
+    cd "$SH_COLLISION_DIR"
+    export IDLESCREEN_INSTALLER_URL="file://$GOOD_TARGET"
+    export IDLESCREEN_INSTALLER_HASH="$GOOD_HASH"
+    cat "$SCRIPT" | sh -s -- --verify > "$PIPED_VERIFY_OUT" 2>&1
+)
+
+if grep -q 'canonical entry forwarder (sh)' "$PIPED_VERIFY_OUT"; then
+    echo "FAIL: piped --verify mistakenly hashed ./sh in CWD"
+    sed 's/^/    /' "$PIPED_VERIFY_OUT"
+    fail=$((fail + 1))
+else
+    echo "ok: piped --verify correctly ignores dummy ./sh in CWD"
+fi
+
+# 10. Cross-repository sync check: if ../packages/install.sh exists, EXPECTED_INSTALLER_HASH must match
+PKG_INSTALL="$SCRIPT_DIR/../packages/install.sh"
+if [ -f "$PKG_INSTALL" ]; then
+    PKG_HASH=$(sha256sum "$PKG_INSTALL" | awk '{print $1}')
+    PINNED_HASH=$(grep '^EXPECTED_INSTALLER_HASH=' "$SCRIPT" | sed -E 's/.*:-?([a-f0-9]{64}).*/\1/')
+    if [ "$PKG_HASH" = "$PINNED_HASH" ]; then
+        echo "ok: EXPECTED_INSTALLER_HASH matches ../packages/install.sh ($PKG_HASH)"
+    else
+        echo "FAIL: EXPECTED_INSTALLER_HASH drift (forwarder has $PINNED_HASH, packages has $PKG_HASH)"
+        fail=$((fail + 1))
+    fi
 fi
 
 if [ "$fail" -eq 0 ]; then
