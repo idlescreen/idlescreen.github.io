@@ -6,7 +6,7 @@ set -eu
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT INT TERM
 
-SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+SCRIPT_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
 SCRIPT="$SCRIPT_DIR/install.sh"
 fail=0
 
