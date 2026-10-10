@@ -6,7 +6,7 @@
     <title>IdleScreen // Modular Wayland Screensavers [EST. 1982]</title>
     <meta
       name="description"
-      content="IdleScreen — high-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree punchy ASCII scenes, dynamic 60-144 FPS monitor matching, 400% responsive font scaling, and mathematical extras."
+      content="IdleScreen — high-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree punchy ASCII scenes, dynamic Host OS/DE/Kernel tri-rotation, 60-144 FPS monitor matching, 400% responsive font scaling, and universal distro &amp; init support."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base.css" />
@@ -34,13 +34,13 @@
           <h1 class="terminal-title"><span id="hero-title">Ambient by Design</span><span class="term-cursor" aria-hidden="true">_</span></h1>
           <p class="terminal-intro">
             IdleScreen watches compositor idle signals over
-            <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notifier-v1</span>
+            <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notify-v1</span>
             (and GNOME Mutter IdleMonitor), launches lightweight graphics onto
             <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
             surfaces across every monitor, and yields the instant you touch
-            the keyboard. Ships with a built-in high-performance ASCII screensaver
-            featuring 37 standalone in-tree scenes, dynamic 60–144 Hz monitor refresh rate matching,
-            responsive 400% multi-cell font scaling, and an optional extras package for mathematical screensavers.
+            the keyboard. Powered by a high-performance in-tree ASCII screensaver engine featuring 37 standalone scenes,
+            dynamic in-tree ASCII tri-rotation between Host OS, Desktop Environment, and Linux Kernel,
+            dynamic 60–144 Hz monitor refresh rate matching, and responsive 400% multi-cell font scaling.
           </p>
 
           <div class="terminal-install-box">
@@ -62,18 +62,257 @@
             <span class="tenet-chip">NATIVE WAYLAND SCALING</span>
             <span class="tenet-chip">DYNAMIC 60-144 FPS</span>
             <span class="tenet-chip">37 IN-TREE PUNCHY SCENES</span>
+            <span class="tenet-chip">OS / DE / KERNEL TRI-ROTATION</span>
             <span class="tenet-chip">400% FONT SCALING</span>
             <span class="tenet-chip">MULTI-MONITOR</span>
           </div>
         </section>
 
-        <!-- Saver panels are generated from js/savers.js, inserted before #outro -->
+        <!-- Panel 1: Ecosystem & Compatibility -->
+        <section class="panel" id="ecosystem">
+          <p class="panel-label">-- UNIVERSAL LINUX COMPATIBILITY // ZERO-OVERHEAD DISPATCH --</p>
+          <h2 class="section-title">Built for Every Distro, DE, and Init</h2>
+          <p class="section-intro">
+            IdleScreen is engineered from the metal up in Rust to integrate natively across the entire modern Linux landscape without runtime bloat or desktop-specific lock-in.
+          </p>
+
+          <div class="ecosystem-grid">
+            <!-- Card 1: Host OSes -->
+            <div class="eco-card">
+              <div class="eco-card-header">
+                <span class="eco-badge">[ 01 // HOST OS ]</span>
+                <h3 class="eco-title">Supported Distributions</h3>
+              </div>
+              <p class="eco-desc">
+                Autonomous multi-probe detection with zero external dependencies via <code>/etc/os-release</code>, <code>/etc/lsb-release</code>, <code>/etc/issue</code>, and kernel <code>uname(2)</code>.
+              </p>
+              <div class="eco-pill-list">
+                <span class="eco-pill"><b class="pill-dot">●</b> Fedora / RHEL</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Debian / Ubuntu</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Arch / Endeavour / CachyOS</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Alpine Linux</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> openSUSE</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Void Linux</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Gentoo</span>
+              </div>
+              <div class="eco-spec-row">
+                <span class="eco-spec-key">DETECTION:</span>
+                <span class="eco-spec-val">Multi-probe hierarchy (os-release, lsb, uname)</span>
+              </div>
+            </div>
+
+            <!-- Card 2: Desktop Environments & Compositors -->
+            <div class="eco-card">
+              <div class="eco-card-header">
+                <span class="eco-badge">[ 02 // COMPOSITORS &amp; DESKTOPS ]</span>
+                <h3 class="eco-title">Wayland &amp; Compositors</h3>
+              </div>
+              <p class="eco-desc">
+                Native Wayland surface overlay and per-output refresh rate matching over layer-shell, yielding instantly on the first human keystroke or pointer event.
+              </p>
+              <div class="eco-pill-list">
+                <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter IdleMonitor)</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp)</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> River</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Labwc</span>
+              </div>
+              <div class="eco-spec-row">
+                <span class="eco-spec-key">PROTOCOLS:</span>
+                <span class="eco-spec-val">wlr-layer-shell &amp; ext-idle-notify-v1</span>
+              </div>
+            </div>
+
+            <!-- Card 3: Init Systems -->
+            <div class="eco-card">
+              <div class="eco-card-header">
+                <span class="eco-badge">[ 03 // INIT &amp; SUPERVISORS ]</span>
+                <h3 class="eco-title">All Init Systems</h3>
+              </div>
+              <p class="eco-desc">
+                Runs under any supervision architecture with zero-timeout D-Bus activation, clean SIGTERM dispatch, and zero CPU usage while the user is actively working.
+              </p>
+              <div class="eco-pill-list">
+                <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service + D-Bus)</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> OpenRC</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> runit</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> dinit</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> s6</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Standalone supervisor loop</span>
+              </div>
+              <div class="eco-spec-row">
+                <span class="eco-spec-key">D-BUS:</span>
+                <span class="eco-spec-val">org.freedesktop.ScreenSaver zero-timeout activation</span>
+              </div>
+            </div>
+
+            <!-- Card 4: ASCII Tri-Rotation -->
+            <div class="eco-card eco-card-highlight">
+              <div class="eco-card-header">
+                <span class="eco-badge eco-badge-hot">[ 04 // TRI-ROTATION ENGINE ]</span>
+                <h3 class="eco-title">ASCII Tri-Rotation</h3>
+              </div>
+              <p class="eco-desc">
+                Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 37 punchy effects with 400% font scaling.
+              </p>
+
+              <div class="tri-rotation-demo" id="tri-rotation-demo">
+                <div class="tri-rot-header">
+                  <span class="tri-rot-label">CYCLE PREVIEW:</span>
+                  <span class="tri-rot-state" id="tri-rot-mode">HOST OS</span>
+                </div>
+                <div class="tri-rot-display">
+                  <span class="tri-rot-prompt">&gt;</span>
+                  <span class="tri-rot-text" id="tri-rot-text">Fedora Linux 41</span>
+                </div>
+                <div class="tri-rot-controls">
+                  <button class="tri-rot-btn" onclick="cycleTriRotation('os')">OS</button>
+                  <button class="tri-rot-btn" onclick="cycleTriRotation('de')">DE</button>
+                  <button class="tri-rot-btn" onclick="cycleTriRotation('kernel')">KERNEL</button>
+                  <button class="tri-rot-btn tri-rot-btn-auto" id="tri-rot-auto" onclick="toggleTriRotationAuto()">CYCLE [AUTO: ON]</button>
+                </div>
+              </div>
+
+              <div class="eco-spec-row">
+                <span class="eco-spec-key">FEATURES:</span>
+                <span class="eco-spec-val">400% font scaling • Dynamic 60–144 Hz display matching</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Panel 2: Featured 3 Random Scenes Showcase -->
+        <section class="panel saver-panel" id="showcase">
+          <div class="showcase-topbar">
+            <div class="showcase-title-wrap">
+              <span class="saver-idx" id="showcase-idx">[ SCENE 01 / 37 ]</span>
+              <h2 class="saver-name" id="showcase-name">FIREWORKS</h2>
+              <span class="saver-sub" id="showcase-sub">// Aerial Pyrotechnic Bursts</span>
+              <span class="saver-badge">IN-TREE SCENE</span>
+            </div>
+
+            <!-- 3 Random Featured Tabs + Reroll + Quick Select -->
+            <div class="showcase-slots-wrap">
+              <span class="slots-label">FEATURED [3 RANDOM]:</span>
+              <div class="showcase-slots" id="showcase-slots">
+                <!-- Rendered by gallery.js -->
+              </div>
+              <button class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 37 in-tree scenes">[ 🎲 REROLL 3 ]</button>
+
+              <div class="quick-picker-wrap">
+                <select id="quick-scene-select" class="quick-scene-select" aria-label="Select any of the 37 in-tree ASCII scenes">
+                  <!-- Populated by gallery.js -->
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="saver-stage" id="showcase-stage">
+            <video class="saver-media" id="showcase-video" autoplay muted loop playsinline preload="metadata"></video>
+            
+            <div class="saver-nav-arrows">
+              <button class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous featured scene">&#9664;</button>
+              <button class="stage-nav-btn stage-nav-next" id="stage-next" aria-label="Next featured scene">&#9654;</button>
+            </div>
+
+            <div class="saver-overlay">
+              <p class="saver-desc" id="showcase-desc"></p>
+              <div class="saver-metrics" id="showcase-metrics">
+                <span>FRAME <b id="metric-frame">60–144 FPS</b></span>
+                <span>CPU <b id="metric-cpu">0.08%</b></span>
+                <span>MATH <b id="metric-math">Ballistic Trajectories</b></span>
+              </div>
+              <div class="saver-footrow">
+                <code class="saver-cmd" id="showcase-cmd" title="Click to copy">&gt; idlescreen preview fireworks <span class="cmd-copy-hint">[COPY]</span></code>
+                <div class="saver-tags" id="showcase-tags"></div>
+                <a class="saver-src" id="showcase-src" target="_blank" rel="noopener noreferrer" href="#">[ SOURCE: fireworks.rs &#8599; ]</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Panel 3: All 37 In-Tree ASCII Scenes Matrix -->
+        <section class="panel" id="scene-matrix">
+          <div class="matrix-header">
+            <p class="panel-label">-- ALL 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH --</p>
+            <div class="matrix-title-row">
+              <h2 class="section-title matrix-title">The 37 In-Tree ASCII Matrix</h2>
+              <span class="matrix-count-badge" id="matrix-count">[ 37 / 37 SCENES ]</span>
+            </div>
+            <p class="matrix-intro">
+              Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
+            </p>
+
+            <div class="matrix-controls-bar">
+              <div class="matrix-search-wrap">
+                <span class="search-prompt">&gt;</span>
+                <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 37 ASCII scenes" />
+                <button id="matrix-search-clear" class="search-clear-btn" aria-label="Clear search" hidden>&times;</button>
+              </div>
+              <div class="matrix-filter-chips" id="matrix-filter-chips">
+                <button class="filter-chip active" data-filter="all">ALL (37)</button>
+                <button class="filter-chip" data-filter="particles">PARTICLES</button>
+                <button class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL</button>
+                <button class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA</button>
+                <button class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO</button>
+                <button class="filter-chip" data-filter="motion">KINETIC &amp; WAVE</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="matrix-grid" id="matrix-grid">
+            <!-- 37 cards populated by gallery.js -->
+          </div>
+        </section>
+
         <noscript>
           <section class="panel">
             <p class="panel-label">-- 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH --</p>
             <p class="noscript-note">
-              Built-in ASCII engine featuring 37 decomposed in-tree scenes in crates/idlescreen/src/ascii/scenes/ with dynamic 60-144 FPS monitor matching and 400% font scaling, plus 10 optional mathematical screensavers in idlescreen-extras.
+              Built-in ASCII engine featuring 37 decomposed in-tree scenes in crates/idlescreen/src/ascii/scenes/ with dynamic 60-144 FPS monitor matching, dynamic Host OS / DE / Linux Kernel tri-rotation, and 400% responsive font scaling.
             </p>
+            <div style="margin-top: 20px; font-size: 12px; color: var(--text-secondary); line-height: 1.8;">
+              <code>idlescreen preview fireworks</code> •
+              <code>idlescreen preview matrix</code> •
+              <code>idlescreen preview synthgrid</code> •
+              <code>idlescreen preview blackhole</code> •
+              <code>idlescreen preview thunderstorm</code> •
+              <code>idlescreen preview beams</code> •
+              <code>idlescreen preview rain</code> •
+              <code>idlescreen preview waves</code> •
+              <code>idlescreen preview binarypath</code> •
+              <code>idlescreen preview bouncyballs</code> •
+              <code>idlescreen preview bubbles</code> •
+              <code>idlescreen preview burn</code> •
+              <code>idlescreen preview colorshift</code> •
+              <code>idlescreen preview crumble</code> •
+              <code>idlescreen preview decrypt</code> •
+              <code>idlescreen preview errorcorrect</code> •
+              <code>idlescreen preview expand</code> •
+              <code>idlescreen preview highlight</code> •
+              <code>idlescreen preview laseretch</code> •
+              <code>idlescreen preview middleout</code> •
+              <code>idlescreen preview orbittingvolley</code> •
+              <code>idlescreen preview overflow</code> •
+              <code>idlescreen preview pour</code> •
+              <code>idlescreen preview print</code> •
+              <code>idlescreen preview random_sequence</code> •
+              <code>idlescreen preview rings</code> •
+              <code>idlescreen preview scattered</code> •
+              <code>idlescreen preview slice</code> •
+              <code>idlescreen preview slide</code> •
+              <code>idlescreen preview smoke</code> •
+              <code>idlescreen preview spotlights</code> •
+              <code>idlescreen preview spray</code> •
+              <code>idlescreen preview swarm</code> •
+              <code>idlescreen preview sweep</code> •
+              <code>idlescreen preview unstable</code> •
+              <code>idlescreen preview vhstape</code> •
+              <code>idlescreen preview wipe</code>
+            </div>
           </section>
         </noscript>
 

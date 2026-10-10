@@ -1,5 +1,5 @@
-// savers.js — the complete 37 in-tree ASCII scenes + 10 mathematical extras manifest.
-// Panels are dynamically generated from this table.
+// savers.js — the complete 37 in-tree ASCII scenes manifest.
+// Showcase and matrix are rendered from this table.
 const SAVERS = [
   // ==========================================
   // 37 IN-TREE PUNCHY ASCII SCENES (CORE v4.x)
@@ -332,101 +332,8 @@ const SAVERS = [
     desc: "Clean directional transition wiping across the screen with sharp phosphor boundary and sub-pixel glyph replacement.",
     frame: "60–144 FPS", cpu: "0.06%", math: "Linear Spatial Mask",
     badge: "IN-TREE SCENE",
-    tags: ["in-tree", "ascii", "transition", "wipe.rs"],
+    tags: ["in-tree", "ascii", "transition", "motion", "wipe.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/wipe.rs",
     sourceLabel: "[ SOURCE: wipe.rs ↗ ]",
     video: "assets/videos/ascii.mp4" },
-
-  // ==========================================
-  // MATHEMATICAL EXTRAS (idlescreen-extras)
-  // ==========================================
-  { num: "+01", id: "aurora", name: "AURORA", sub: "Ion Curtain Drift (Extras)",
-    desc: "Slow aurora-borealis curtains over a twinkling starfield. Column-swept exponential falloff with periodic brightening surges.",
-    frame: "60 FPS", cpu: "0.12%", math: "Field Falloff",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "aurora", "field"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/aurora.mp4" },
-
-  { num: "+02", id: "bursts", name: "BURSTS", sub: "Shockwave Dynamics (Extras)",
-    desc: "High-velocity explosive shockwave patterns, expanding rings, and kinetic particle dissipation with zero memory accumulation.",
-    frame: "60 FPS", cpu: "0.18%", math: "Kinetic Shockwave",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "kinetic", "particles"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/bursts.mp4" },
-
-  { num: "+03", id: "chaos", name: "CHAOS", sub: "Strange Attractors (Extras)",
-    desc: "Strange-attractor non-linear dynamical systems. Integrates three-dimensional differential equations into phosphor phase-space trajectories.",
-    frame: "60 FPS", cpu: "0.14%", math: "Lorenz / Attractor",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "chaos", "phase"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/chaos.mp4" },
-
-  { num: "+04", id: "cosmos", name: "COSMOS", sub: "Celestial Kinematics (Extras)",
-    desc: "Starfield and nebula deep-space kinematics. Simulates gravitational velocity vectors and star parallax across depth planes.",
-    frame: "60 FPS", cpu: "0.22%", math: "N-Body Gravitation",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "gravity", "3d"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/cosmos.mp4" },
-
-  { num: "+05", id: "glyphs", name: "GLYPHS", sub: "Cryptographic Rain (Extras)",
-    desc: "Cryptographic ASCII character streams and descending digital rain with variable phosphor luminosity and glyph mutators.",
-    frame: "60 FPS", cpu: "0.16%", math: "ASCII Matrix Stream",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "glyphs", "matrix"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/glyphs.mp4" },
-
-  { num: "+06", id: "gnats", name: "GNATS", sub: "Boid Swarm Ecology (Extras)",
-    desc: "Multi-agent autonomous boid flocking simulation. Agents compute cohesion, separation, and alignment vectors in real-time.",
-    frame: "60 FPS", cpu: "0.20%", math: "Reynolds Boids",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "boids", "swarms"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/gnats.mp4" },
-
-  { num: "+07", id: "hearth", name: "HEARTH", sub: "Thermodynamics (Extras)",
-    desc: "Warm ember and fire-like ambient cellular convection. Simulates heat dissipation, buoyant updraft, and cooling cinder particles.",
-    frame: "60 FPS", cpu: "0.19%", math: "Thermal Convection",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "thermal", "cellular"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/hearth.mp4" },
-
-  { num: "+08", id: "radar", name: "RADAR", sub: "Polar Telemetry (Extras)",
-    desc: "360-degree polar coordinate radar sweep with simulated phosphor persistence, range rings, and synthetic target Doppler blips.",
-    frame: "60 FPS", cpu: "0.12%", math: "Polar Coordinate Sweep",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "radar", "polar"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/radar.mp4" },
-
-  { num: "+09", id: "ripple", name: "RIPPLE", sub: "Wave Equations (Extras)",
-    desc: "2D discrete wave equation solver. Generates interference ripples, harmonic standing waves, and surface refraction across the display.",
-    frame: "60 FPS", cpu: "0.17%", math: "2D Wave Mechanics",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "wave", "interference"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/ripple.mp4" },
-
-  { num: "+10", id: "storm", name: "STORM", sub: "Atmospheric Plasma (Extras)",
-    desc: "Dense atmospheric particulate clouds with stochastic dielectric breakdown arcs and lightning flash illumination.",
-    frame: "60 FPS", cpu: "0.25%", math: "Dielectric Arcs",
-    badge: "EXTRAS SAVER",
-    tags: ["extras", "plasma", "stochastic"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/tree/master/crates/idlescreen-extras",
-    sourceLabel: "[ SOURCE: idlescreen-extras ↗ ]",
-    video: "assets/videos/storm.mp4" },
 ];

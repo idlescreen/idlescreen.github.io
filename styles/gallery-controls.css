@@ -15,6 +15,24 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
+.saver-stage > .gallery-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin-top: 0;
+  z-index: 15;
+  background: rgba(13, 10, 6, 0.88);
+  backdrop-filter: blur(6px);
+  border: var(--border-subtle);
+}
+
+@media (max-width: 640px) {
+  .saver-stage > .gallery-controls {
+    position: static;
+    margin: 8px 0;
+  }
+}
+
 .gallery-ctrl-group {
   display: flex;
   align-items: center;

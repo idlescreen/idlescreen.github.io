@@ -71,6 +71,221 @@
   pointer-events: none;
 }
 
+/* Section Headers */
+.section-title {
+  font-size: clamp(22px, 3.5vw, 34px);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.section-intro {
+  color: var(--text-secondary);
+  font-size: 13px;
+  max-width: 820px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* Ecosystem & Compatibility Grid */
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.eco-card {
+  background: var(--bg-card);
+  border: var(--border-accent);
+  border-radius: 6px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.eco-card:hover {
+  border-color: var(--phosphor);
+  transform: translateY(-2px);
+}
+
+.eco-card-highlight {
+  border-color: rgba(255, 176, 0, 0.4);
+  background: linear-gradient(145deg, rgba(28, 21, 10, 0.6) 0%, rgba(18, 14, 8, 0.95) 100%);
+}
+
+.eco-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.eco-badge {
+  color: var(--phosphor);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.eco-badge-hot {
+  color: var(--hot);
+}
+
+.eco-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.eco-desc {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.eco-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.eco-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-btn);
+  border: var(--border-subtle);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.pill-dot {
+  color: var(--phosphor);
+  font-size: 9px;
+}
+
+.eco-spec-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+  border-top: var(--border-subtle);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+.eco-spec-key {
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  flex-shrink: 0;
+}
+
+.eco-spec-val {
+  color: var(--hot);
+  line-height: 1.4;
+}
+
+/* Dynamic Tri-Rotation interactive demo box */
+.tri-rotation-demo {
+  background: #000;
+  border: 1px solid var(--phosphor);
+  border-radius: 5px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 0 16px rgba(255, 176, 0, 0.1);
+}
+
+.tri-rot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+}
+
+.tri-rot-label {
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.tri-rot-state {
+  color: var(--hot);
+  font-weight: 700;
+  background: var(--phosphor-dim);
+  border: 1px solid var(--hot);
+  border-radius: 3px;
+  padding: 1px 6px;
+  letter-spacing: 1px;
+}
+
+.tri-rot-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  min-height: 24px;
+}
+
+.tri-rot-prompt {
+  color: var(--phosphor);
+}
+
+.tri-rot-text {
+  color: var(--text-primary);
+  transition: opacity 0.15s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tri-rot-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.tri-rot-btn {
+  background: var(--bg-btn);
+  border: var(--border-subtle);
+  border-radius: 3px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tri-rot-btn:hover {
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+}
+
+.tri-rot-btn-auto {
+  margin-left: auto;
+  border-color: var(--phosphor);
+  color: var(--hot);
+}
+
+@media (max-width: 768px) {
+  .ecosystem-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
   .panel {
     padding: 60px 18px;

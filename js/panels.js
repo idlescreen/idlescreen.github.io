@@ -51,7 +51,7 @@ if (port && navUp && navDown) {
 }
 
 console.log(
-  "%c[IDLESCREEN // 1982 TERMINAL ACTIVE]\n%cWayland Idle Host | 37 In-Tree ASCII Scenes + 10 Extras Registered | Dynamic 60–144 FPS",
+  "%c[IDLESCREEN // 1982 TERMINAL ACTIVE]\n%cWayland Idle Host | 37 In-Tree ASCII Scenes | Dynamic 60–144 FPS",
   "color: #ffb000; font-weight: bold;",
   "color: #a89f8b;"
 );

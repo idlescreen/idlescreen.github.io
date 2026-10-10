@@ -1,12 +1,14 @@
 // rotate.js — hero title rotates through program facts
 const HEADLINES = [
   "Ambient by Design",
-  "12 Procedural Savers",
+  "37 In-Tree ASCII Scenes",
+  "Host OS • DE • Kernel Tri-Rotation",
+  "Dynamic 60–144 Hz Matching",
   "Zero Cycles While Active",
-  "Stable C ABI, Any Language",
-  "Locked 60 FPS",
+  "GNOME • KDE • COSMIC • Hyprland",
+  "systemd • OpenRC • runit • s6",
+  "400% Responsive Font Scaling",
   "Multi-Monitor Layer-Shell",
-  "Written in Rust",
   "Yields on First Input",
 ];
 
