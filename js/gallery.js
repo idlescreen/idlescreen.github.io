@@ -9,21 +9,26 @@
     sec.className = "panel saver-panel";
     sec.id = "saver-" + s.id;
 
+    const isExtras = s.badge === "EXTRAS SAVER";
+    const idxLabel = isExtras
+      ? "[ EXTRAS " + s.num + " ]"
+      : "[ SCENE " + s.num + " / 37 ]";
+
     const head = document.createElement("div");
     head.className = "saver-head";
     head.innerHTML =
-      '<span class="saver-idx">[ ' + s.num + " / " + SAVERS.length + " ]</span>" +
+      '<span class="saver-idx">' + idxLabel + "</span>" +
       '<h2 class="saver-name">' + s.name + "</h2>" +
       '<span class="saver-sub">// ' + s.sub + "</span>" +
       '<span class="saver-badge saver-badge-live" hidden>LIVE // WASM</span>' +
-      '<span class="saver-badge">VIDEO</span>';
+      '<span class="saver-badge">' + (s.badge || "IN-TREE SCENE") + '</span>';
     sec.appendChild(head);
 
     const stage = document.createElement("div");
     stage.className = "saver-stage";
     const video = document.createElement("video");
     video.className = "saver-media";
-    video.src = "assets/videos/" + s.id + ".mp4";
+    video.src = s.video || ("assets/videos/" + s.id + ".mp4");
     video.autoplay = true;
     video.muted = true;
     video.setAttribute("muted", "");
@@ -31,6 +36,10 @@
     video.playsInline = true;
     video.setAttribute("playsinline", "");
     video.preload = "metadata";
+    video.onerror = function() {
+      this.onerror = null;
+      this.src = "assets/videos/ascii.mp4";
+    };
     stage.appendChild(video);
     if (s.live) {
       const canvas = document.createElement("canvas");
@@ -65,10 +74,10 @@
     });
     const src = document.createElement("a");
     src.className = "saver-src";
-    src.href = "https://github.com/idlescreen/savers";
+    src.href = s.sourceUrl || ("https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/" + s.id + ".rs");
     src.target = "_blank";
     src.rel = "noopener noreferrer";
-    src.textContent = "[ SOURCE \u2197 ]";
+    src.textContent = s.sourceLabel || ("[ SOURCE: " + s.id + ".rs \u2197 ]");
     const footRow = document.createElement("div");
     footRow.className = "saver-footrow";
     footRow.appendChild(cmd);

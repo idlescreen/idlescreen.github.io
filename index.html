@@ -6,7 +6,7 @@
     <title>IdleScreen // Modular Wayland Screensavers [EST. 1982]</title>
     <meta
       name="description"
-      content="IdleScreen — modular Wayland idle host and procedural screensaver plugins for Linux. Zero-waste compute, layer-shell rendering, 13 procedural plugins written in Rust."
+      content="IdleScreen — high-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree punchy ASCII scenes, dynamic 60-144 FPS monitor matching, 400% responsive font scaling, and mathematical extras."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base.css" />
@@ -21,7 +21,7 @@
     <div class="terminal-window">
       <header class="window-titlebar">
         <span class="term-status-badge">[IDLE: tty0]</span>
-        <span class="window-title">idle@host:~# idlescreen list --release 1982-2026</span>
+        <span class="window-title">idle@host:~# idlescreen list --scenes 37-in-tree</span>
         <span class="term-status-dim">[CORE: v4.1.9]</span>
         <span class="term-status-online">[SYS_OK]</span>
       </header>
@@ -30,7 +30,7 @@
 
         <!-- Panel 0: overview -->
         <section class="panel" id="overview">
-          <p class="hero-eyebrow">MODULAR WAYLAND IDLE HOST // PROCEDURAL SCREENSAVERS</p>
+          <p class="hero-eyebrow">HIGH-PERFORMANCE WAYLAND SCREENSAVER SUITE // 37 IN-TREE SCENES</p>
           <h1 class="terminal-title"><span id="hero-title">Ambient by Design</span><span class="term-cursor" aria-hidden="true">_</span></h1>
           <p class="terminal-intro">
             IdleScreen watches compositor idle signals over
@@ -39,8 +39,8 @@
             <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
             surfaces across every monitor, and yields the instant you touch
             the keyboard. Ships with a built-in high-performance ASCII screensaver
-            with dynamic Host OS, Desktop Environment, and Linux Kernel tri-rotation across 37 effects,
-            and an optional extras package for legacy mathematical screensavers.
+            featuring 37 standalone in-tree scenes, dynamic 60–144 Hz monitor refresh rate matching,
+            responsive 400% multi-cell font scaling, and an optional extras package for mathematical screensavers.
           </p>
 
           <div class="terminal-install-box">
@@ -60,7 +60,9 @@
             <span class="tenet-chip">ZERO CYCLES WHILE ACTIVE</span>
             <span class="tenet-chip">ALL INIT SYSTEMS</span>
             <span class="tenet-chip">NATIVE WAYLAND SCALING</span>
-            <span class="tenet-chip">LOCKED 60-144 FPS</span>
+            <span class="tenet-chip">DYNAMIC 60-144 FPS</span>
+            <span class="tenet-chip">37 IN-TREE PUNCHY SCENES</span>
+            <span class="tenet-chip">400% FONT SCALING</span>
             <span class="tenet-chip">MULTI-MONITOR</span>
           </div>
         </section>
@@ -68,11 +70,9 @@
         <!-- Saver panels are generated from js/savers.js, inserted before #outro -->
         <noscript>
           <section class="panel">
-            <p class="panel-label">-- SCREENSAVERS --</p>
+            <p class="panel-label">-- 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH --</p>
             <p class="noscript-note">
-              Built-in ASCII engine with dynamic Host OS, DE, and Kernel tri-rotation across 37 effects,
-              plus 11 mathematical extras: aurora, beams, bursts, chaos, cosmos, glyphs, gnats,
-              hearth, radar, ripple, storm.
+              Built-in ASCII engine featuring 37 decomposed in-tree scenes in crates/idlescreen/src/ascii/scenes/ with dynamic 60-144 FPS monitor matching and 400% font scaling, plus 10 optional mathematical screensavers in idlescreen-extras.
             </p>
           </section>
         </noscript>
@@ -81,7 +81,7 @@
         <section class="panel" id="outro">
           <p class="panel-label">-- IDLE WHEN YOU ARE. WORKING WHEN YOU'RE NOT. --</p>
           <div class="outro-links">
-            <a href="https://github.com/idlescreen/savers" target="_blank" rel="noopener noreferrer" class="term-btn">[ SOURCE: IDLE-SAVERS &#8599; ]</a>
+            <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="term-btn">[ SOURCE: IDLESCREEN MONOREPO &#8599; ]</a>
             <a href="https://github.com/idlescreen" target="_blank" rel="noopener noreferrer" class="term-btn">[ ORG: @IDLESCREEN &#8599; ]</a>
             <a href="https://studio2201.com" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-dim">[ STUDIO2201 &#8599; ]</a>
           </div>
