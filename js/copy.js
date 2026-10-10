@@ -1,9 +1,14 @@
-// copy.js — clipboard with terminal feedback
+// copy.js — clipboard with visual feedback
 function copySnippet(elementId, btn) {
   const el = document.getElementById(elementId);
   if (!el) return;
   const text = (el.innerText || el.textContent || "").trim();
+  copyDirect(text, btn);
+}
+
+function copyDirect(text, btn) {
   const showFeedback = () => {
+    if (!btn) return;
     const original = btn.innerText;
     btn.innerText = "[ COPIED! ]";
     btn.style.borderColor = "var(--phosphor)";
@@ -14,6 +19,7 @@ function copySnippet(elementId, btn) {
       btn.style.color = "";
     }, 1600);
   };
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(showFeedback).catch(() => {
       fallbackCopy(text, showFeedback);
@@ -53,5 +59,5 @@ function fallbackCopy(text, onDone) {
     document.execCommand("copy");
   } catch (e) {}
   document.body.removeChild(ta);
-  onDone();
+  if (onDone) onDone();
 }

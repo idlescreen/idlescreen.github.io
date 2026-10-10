@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IdleScreen // Modular Wayland Screensavers [EST. 1982]</title>
+    <title>IdleScreen // High-Performance Wayland Screensavers &amp; Idle Daemon</title>
     <meta
       name="description"
-      content="IdleScreen — high-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree punchy ASCII scenes, dynamic Host OS/DE/Kernel tri-rotation, 60-144 FPS monitor matching, 400% responsive font scaling, and universal distro &amp; init support."
+      content="IdleScreen — high-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree punchy ASCII scenes, dynamic Host OS/DE/Kernel tri-rotation, 60–144 FPS monitor matching, 400% responsive font scaling, and universal distro &amp; init support."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base.css" />
@@ -15,196 +15,156 @@
     <link rel="stylesheet" href="/styles/saver.css" />
     <link rel="stylesheet" href="/styles/gallery-controls.css" />
   </head>
-  <body class="terminal-body">
+  <body>
     <a href="#overview" class="skip-link">Skip to Content</a>
 
-    <div class="terminal-window">
-      <header class="window-titlebar">
-        <span class="term-status-badge">[IDLE: tty0]</span>
-        <span class="window-title">idle@host:~# idlescreen list --scenes 37-in-tree</span>
-        <span class="term-status-dim">[CORE: v4.1.9]</span>
-        <span class="term-status-online">[SYS_OK]</span>
-      </header>
+    <!-- Sticky Top Navigation Bar (Omarchy Style) -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand-wrap">
+          <a href="#overview" class="brand-link" aria-label="IdleScreen Homepage">
+            <span class="brand-logo-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+                <polyline points="7 8 10 10 7 12"></polyline>
+                <line x1="13" y1="12" x2="16" y2="12"></line>
+              </svg>
+            </span>
+            <span class="brand-name">IdleScreen</span>
+          </a>
+          <span class="brand-badge" title="Daemon Core v4.1.9 Online">CORE: v4.1.9</span>
+        </div>
 
-      <main id="main-content" class="scroll-port" tabindex="-1">
+        <nav class="site-nav" aria-label="Main Navigation">
+          <a href="#overview" class="nav-link active">Overview</a>
+          <a href="#showcase" class="nav-link">Featured</a>
+          <a href="#scene-matrix" class="nav-link">37 Scenes</a>
+          <a href="#ecosystem" class="nav-link">Ecosystem</a>
+          <a href="#install" class="nav-link">Install</a>
+        </nav>
 
-        <!-- Panel 0: overview -->
-        <section class="panel" id="overview">
-          <p class="hero-eyebrow">HIGH-PERFORMANCE WAYLAND SCREENSAVER SUITE // 37 IN-TREE SCENES</p>
-          <h1 class="terminal-title"><span id="hero-title">Ambient by Design</span><span class="term-cursor" aria-hidden="true">_</span></h1>
-          <p class="terminal-intro">
-            IdleScreen watches compositor idle signals over
-            <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notify-v1</span>
-            (and GNOME Mutter IdleMonitor), launches lightweight graphics onto
-            <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
-            surfaces across every monitor, and yields the instant you touch
-            the keyboard. Powered by a high-performance in-tree ASCII screensaver engine featuring 37 standalone scenes,
-            dynamic in-tree ASCII tri-rotation between Host OS, Desktop Environment, and Linux Kernel,
-            dynamic 60–144 Hz monitor refresh rate matching, and responsive 400% multi-cell font scaling.
-          </p>
+        <div class="header-actions">
+          <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="GitHub Monorepo">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="Distro Package Repositories">Packages</a>
+          <a href="#install" class="nav-btn nav-btn-primary">Install</a>
+          <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
 
-          <div class="terminal-install-box">
-            <div class="install-cmd-wrap">
-              <span class="install-prompt">idle@host:~#</span>
-              <code class="install-code" id="install-cmd">curl -fsSL https://idlescreen.github.io/install.sh | sh</code>
-            </div>
-            <button class="copy-action-btn" onclick="copySnippet('install-cmd', this)">[ COPY INSTALL ]</button>
+      <!-- Mobile Navigation Drawer -->
+      <div class="mobile-nav" id="mobile-nav">
+        <a href="#overview" class="mobile-nav-link">Overview <span>→</span></a>
+        <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
+        <a href="#scene-matrix" class="mobile-nav-link">37 Scenes Matrix <span>→</span></a>
+        <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
+        <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
+        <div class="mobile-nav-actions">
+          <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">GitHub ↗</a>
+          <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">Packages ↗</a>
+          <a href="#install" class="nav-btn nav-btn-primary">Install</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <!-- Section 0: Overview / Hero -->
+      <section class="panel hero-section" id="overview">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+          HIGH-PERFORMANCE WAYLAND SCREENSAVER SUITE // 37 IN-TREE SCENES
+        </div>
+
+        <h1 class="hero-title"><span id="hero-title">Ambient by Design</span><span class="term-cursor" aria-hidden="true">_</span></h1>
+
+        <p class="hero-intro">
+          IdleScreen watches compositor idle signals over
+          <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notify-v1</span>
+          (and GNOME Mutter IdleMonitor), launches lightweight graphics onto
+          <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
+          surfaces across every monitor, and yields the instant you touch
+          the keyboard. Powered by a high-performance in-tree ASCII screensaver engine featuring 37 standalone scenes,
+          dynamic in-tree ASCII tri-rotation between Host OS, Desktop Environment, and Linux Kernel,
+          dynamic 60–144 Hz monitor refresh rate matching, and responsive 400% multi-cell font scaling.
+        </p>
+
+        <!-- High-Contrast Terminal Install Box -->
+        <div class="terminal-install-box">
+          <div class="install-cmd-wrap">
+            <span class="install-prompt">idle@host:~#</span>
+            <code class="install-code" id="install-cmd">curl -fsSL https://idlescreen.github.io/install.sh | sh</code>
           </div>
+          <button type="button" class="copy-action-btn" onclick="copySnippet('install-cmd', this)" aria-label="Copy install script command">[ COPY INSTALL ]</button>
+        </div>
 
-          <div class="terminal-actions">
-            <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="term-btn">[ GITHUB: @IDLESCREEN &#8599; ]</a>
-            <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-dim">[ PACKAGES: APT/RPM &#8599; ]</a>
+        <div class="hero-actions">
+          <a href="#install" class="btn btn-primary">Quick Install ↓</a>
+          <a href="#showcase" class="btn btn-secondary">Featured Scenes ↓</a>
+          <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub Monorepo ↗</a>
+          <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Packages (APT/RPM/AUR) ↗</a>
+        </div>
+
+        <!-- Tenets Strip -->
+        <div class="tenets-strip">
+          <span class="tenet-chip">⚡ ZERO CYCLES WHILE ACTIVE</span>
+          <span class="tenet-chip">🖥️ ALL INIT SYSTEMS</span>
+          <span class="tenet-chip">🪟 NATIVE WAYLAND LAYER-SHELL</span>
+          <span class="tenet-chip">🎯 DYNAMIC 60–144 FPS</span>
+          <span class="tenet-chip">🎨 37 IN-TREE PUNCHY SCENES</span>
+          <span class="tenet-chip">🔄 OS / DE / KERNEL TRI-ROTATION</span>
+          <span class="tenet-chip">📐 400% FONT SCALING</span>
+          <span class="tenet-chip">📺 MULTI-MONITOR</span>
+        </div>
+      </section>
+
+      <!-- Section 1: Featured 3 Random Scenes Showcase -->
+      <section class="panel saver-panel" id="showcase">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            INTERACTIVE SHOWCASE // ZERO-OVERHEAD DISPATCH
           </div>
-
-          <div class="tenets-strip">
-            <span class="tenet-chip">ZERO CYCLES WHILE ACTIVE</span>
-            <span class="tenet-chip">ALL INIT SYSTEMS</span>
-            <span class="tenet-chip">NATIVE WAYLAND SCALING</span>
-            <span class="tenet-chip">DYNAMIC 60-144 FPS</span>
-            <span class="tenet-chip">37 IN-TREE PUNCHY SCENES</span>
-            <span class="tenet-chip">OS / DE / KERNEL TRI-ROTATION</span>
-            <span class="tenet-chip">400% FONT SCALING</span>
-            <span class="tenet-chip">MULTI-MONITOR</span>
-          </div>
-        </section>
-
-        <!-- Panel 1: Ecosystem & Compatibility -->
-        <section class="panel" id="ecosystem">
-          <p class="panel-label">-- UNIVERSAL LINUX COMPATIBILITY // ZERO-OVERHEAD DISPATCH --</p>
-          <h2 class="section-title">Built for Every Distro, DE, and Init</h2>
+          <h2 class="section-title">Featured ASCII Scenes</h2>
           <p class="section-intro">
-            IdleScreen is engineered from the metal up in Rust to integrate natively across the entire modern Linux landscape without runtime bloat or desktop-specific lock-in.
+            Live preview of in-tree ASCII screensavers rendered with dynamic 60–144 Hz display refresh matching, responsive 400% multi-cell font scaling, and instant input-yield.
           </p>
+        </div>
 
-          <div class="ecosystem-grid">
-            <!-- Card 1: Host OSes -->
-            <div class="eco-card">
-              <div class="eco-card-header">
-                <span class="eco-badge">[ 01 // HOST OS ]</span>
-                <h3 class="eco-title">Supported Distributions</h3>
-              </div>
-              <p class="eco-desc">
-                Autonomous multi-probe detection with zero external dependencies via <code>/etc/os-release</code>, <code>/etc/lsb-release</code>, <code>/etc/issue</code>, and kernel <code>uname(2)</code>.
-              </p>
-              <div class="eco-pill-list">
-                <span class="eco-pill"><b class="pill-dot">●</b> Fedora / RHEL</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Debian / Ubuntu</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Arch Linux / EndeavourOS / CachyOS</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Alpine Linux</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> openSUSE</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Void Linux</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Gentoo</span>
-              </div>
-              <div class="eco-spec-row">
-                <span class="eco-spec-key">DETECTION:</span>
-                <span class="eco-spec-val">Multi-probe hierarchy (os-release, lsb, uname)</span>
-              </div>
-            </div>
-
-            <!-- Card 2: Desktop Environments & Compositors -->
-            <div class="eco-card">
-              <div class="eco-card-header">
-                <span class="eco-badge">[ 02 // COMPOSITORS &amp; DESKTOPS ]</span>
-                <h3 class="eco-title">Wayland &amp; Compositors</h3>
-              </div>
-              <p class="eco-desc">
-                Native Wayland surface overlay and per-output refresh rate matching over layer-shell, yielding instantly on the first human keystroke or pointer event.
-              </p>
-              <div class="eco-pill-list">
-                <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter)</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp)</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> River</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Labwc</span>
-              </div>
-              <div class="eco-spec-row">
-                <span class="eco-spec-key">PROTOCOLS:</span>
-                <span class="eco-spec-val">wlr-layer-shell &amp; ext-idle-notify-v1</span>
-              </div>
-            </div>
-
-            <!-- Card 3: Init Systems -->
-            <div class="eco-card">
-              <div class="eco-card-header">
-                <span class="eco-badge">[ 03 // INIT &amp; SUPERVISORS ]</span>
-                <h3 class="eco-title">All Init Systems</h3>
-              </div>
-              <p class="eco-desc">
-                Runs under any supervision architecture with zero-timeout D-Bus activation, clean SIGTERM dispatch, and zero CPU usage while the user is actively working.
-              </p>
-              <div class="eco-pill-list">
-                <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service with zero-timeout D-Bus activation)</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> OpenRC</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> runit</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> dinit</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> s6</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Standalone supervisor loop</span>
-              </div>
-              <div class="eco-spec-row">
-                <span class="eco-spec-key">D-BUS:</span>
-                <span class="eco-spec-val">org.freedesktop.ScreenSaver zero-timeout activation</span>
-              </div>
-            </div>
-
-            <!-- Card 4: ASCII Tri-Rotation -->
-            <div class="eco-card eco-card-highlight">
-              <div class="eco-card-header">
-                <span class="eco-badge eco-badge-hot">[ 04 // TRI-ROTATION ENGINE ]</span>
-                <h3 class="eco-title">ASCII Tri-Rotation</h3>
-              </div>
-              <p class="eco-desc">
-                Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 37 punchy effects with 400% font scaling.
-              </p>
-
-              <div class="tri-rotation-demo" id="tri-rotation-demo">
-                <div class="tri-rot-header">
-                  <span class="tri-rot-label">CYCLE PREVIEW:</span>
-                  <span class="tri-rot-state" id="tri-rot-mode">HOST OS</span>
-                </div>
-                <div class="tri-rot-display">
-                  <span class="tri-rot-prompt">&gt;</span>
-                  <span class="tri-rot-text" id="tri-rot-text">Fedora Linux 41</span>
-                </div>
-                <div class="tri-rot-controls">
-                  <button class="tri-rot-btn active" data-mode="os" onclick="cycleTriRotation('os')">OS</button>
-                  <button class="tri-rot-btn" data-mode="de" onclick="cycleTriRotation('de')">DE</button>
-                  <button class="tri-rot-btn" data-mode="kernel" onclick="cycleTriRotation('kernel')">KERNEL</button>
-                  <button class="tri-rot-btn tri-rot-btn-auto" id="tri-rot-auto" onclick="toggleTriRotationAuto()">CYCLE [AUTO: ON]</button>
-                </div>
-              </div>
-
-              <div class="eco-spec-row">
-                <span class="eco-spec-key">FEATURES:</span>
-                <span class="eco-spec-val">400% font scaling • Dynamic 60–144 Hz display matching</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Panel 2: Featured 3 Random Scenes Showcase -->
-        <section class="panel saver-panel" id="showcase">
+        <div class="showcase-wrapper">
           <div class="showcase-topbar">
             <div class="showcase-title-wrap">
               <span class="saver-idx" id="showcase-idx">[ SCENE 01 / 37 ]</span>
-              <h2 class="saver-name" id="showcase-name">FIREWORKS</h2>
+              <h3 class="saver-name" id="showcase-name">FIREWORKS</h3>
               <span class="saver-sub" id="showcase-sub">// Aerial Pyrotechnic Bursts</span>
-              <span class="saver-badge">IN-TREE SCENE</span>
+              <div class="saver-badge-group">
+                <span class="saver-badge saver-badge-live">60–144 FPS DYNAMIC</span>
+                <span class="saver-badge">IN-TREE SCENE</span>
+              </div>
             </div>
 
             <!-- 3 Random Featured Tabs + Reroll + Quick Select -->
             <div class="showcase-slots-wrap">
               <span class="slots-label">FEATURED [3 RANDOM]:</span>
               <div class="showcase-slots" id="showcase-slots">
-                <!-- Rendered by gallery.js -->
+                <!-- Rendered dynamically by js/gallery.js -->
               </div>
-              <button class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 37 in-tree scenes">[ 🎲 REROLL 3 ]</button>
+              <button type="button" class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 37 in-tree scenes">[ 🎲 REROLL 3 ]</button>
 
               <div class="quick-picker-wrap">
                 <select id="quick-scene-select" class="quick-scene-select" aria-label="Select any of the 37 in-tree ASCII scenes">
-                  <!-- Populated by gallery.js -->
+                  <!-- Populated by js/gallery.js -->
                 </select>
               </div>
             </div>
@@ -212,147 +172,424 @@
 
           <div class="saver-stage" id="showcase-stage">
             <video class="saver-media" id="showcase-video" src="assets/videos/bursts.mp4" autoplay muted loop playsinline preload="metadata"></video>
-            
-            <div class="saver-nav-arrows">
-              <button class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous featured scene">&#9664;</button>
-              <button class="stage-nav-btn stage-nav-next" id="stage-next" aria-label="Next featured scene">&#9654;</button>
-            </div>
 
-            <div class="saver-overlay">
+            <div class="saver-nav-arrows">
+              <button type="button" class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous featured scene">&#9664;</button>
+              <button type="button" class="stage-nav-btn stage-nav-next" id="stage-next" aria-label="Next featured scene">&#9654;</button>
+            </div>
+          </div>
+
+          <div class="saver-overlay showcase-infobar">
+            <div class="showcase-info-top">
               <p class="saver-desc" id="showcase-desc">Rockets firing upward with luminous tracer tails, detonating into vibrant radial particle bursts with gravitic cascade and sparkle decay.</p>
               <div class="saver-metrics" id="showcase-metrics">
                 <span>FRAME <b id="metric-frame">60–144 FPS</b></span>
                 <span>CPU <b id="metric-cpu">0.08%</b></span>
                 <span>MATH <b id="metric-math">Ballistic Trajectories</b></span>
               </div>
-              <div class="saver-footrow">
-                <code class="saver-cmd" id="showcase-cmd" title="Click to copy">&gt; idlescreen preview fireworks <span class="cmd-copy-hint">[COPY]</span></code>
-                <div class="saver-tags" id="showcase-tags">
-                  <span class="saver-tag">#in-tree</span>
-                  <span class="saver-tag">#ascii</span>
-                  <span class="saver-tag">#particles</span>
-                  <span class="saver-tag">#pyrotechnic</span>
-                </div>
-                <a class="saver-src" id="showcase-src" target="_blank" rel="noopener noreferrer" href="https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/fireworks.rs">[ SOURCE: fireworks.rs &#8599; ]</a>
+            </div>
+            <div class="saver-footrow">
+              <code class="saver-cmd" id="showcase-cmd" title="Click to copy">&gt; idlescreen preview fireworks <span class="cmd-copy-hint">[COPY]</span></code>
+              <div class="saver-tags" id="showcase-tags">
+                <span class="saver-tag">#in-tree</span>
+                <span class="saver-tag">#ascii</span>
+                <span class="saver-tag">#particles</span>
+                <span class="saver-tag">#pyrotechnic</span>
               </div>
+              <a class="saver-src" id="showcase-src" target="_blank" rel="noopener noreferrer" href="https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/fireworks.rs">[ SOURCE: fireworks.rs ↗ ]</a>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <!-- Panel 3: All 37 In-Tree ASCII Scenes Matrix -->
-        <section class="panel" id="scene-matrix">
-          <div class="matrix-header">
-            <p class="panel-label">-- ALL 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH --</p>
-            <div class="matrix-title-row">
-              <h2 class="section-title matrix-title">The 37 In-Tree ASCII Matrix</h2>
-              <span class="matrix-count-badge" id="matrix-count">[ 37 / 37 SCENES ]</span>
+      <!-- Section 2: All 37 In-Tree ASCII Scenes Matrix -->
+      <section class="panel" id="scene-matrix">
+        <div class="matrix-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            ALL 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH
+          </div>
+          <div class="matrix-title-row">
+            <h2 class="section-title matrix-title">The 37 In-Tree ASCII Matrix</h2>
+            <span class="matrix-count-badge" id="matrix-count">[ 37 / 37 SCENES ]</span>
+          </div>
+          <p class="matrix-intro">
+            Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
+          </p>
+
+          <div class="matrix-controls-bar">
+            <div class="matrix-search-wrap">
+              <span class="search-prompt">&gt;</span>
+              <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 37 ASCII scenes" />
+              <button type="button" id="matrix-search-clear" class="search-clear-btn" aria-label="Clear search" hidden>&times;</button>
             </div>
-            <p class="matrix-intro">
-              Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
+            <div class="matrix-filter-chips" id="matrix-filter-chips">
+              <button type="button" class="filter-chip active" data-filter="all">ALL (37)</button>
+              <button type="button" class="filter-chip" data-filter="particles">PARTICLES (8)</button>
+              <button type="button" class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (7)</button>
+              <button type="button" class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (8)</button>
+              <button type="button" class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
+              <button type="button" class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="matrix-grid" id="matrix-grid">
+          <!-- 37 cards populated dynamically by js/gallery.js -->
+        </div>
+      </section>
+
+      <!-- Section 3: Ecosystem & Compatibility -->
+      <section class="panel" id="ecosystem">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            UNIVERSAL LINUX COMPATIBILITY // ZERO-OVERHEAD DISPATCH
+          </div>
+          <h2 class="section-title">Built for Every Distro, DE, and Init</h2>
+          <p class="section-intro">
+            IdleScreen is engineered from the metal up in Rust to integrate natively across the entire modern Linux landscape without runtime bloat or desktop-specific lock-in.
+          </p>
+        </div>
+
+        <div class="ecosystem-grid">
+          <!-- Card 1: Host OSes -->
+          <div class="eco-card">
+            <div class="eco-card-header">
+              <span class="eco-badge">[ 01 // HOST OS ]</span>
+              <h3 class="eco-title">Supported Distributions</h3>
+            </div>
+            <p class="eco-desc">
+              Autonomous multi-probe detection with zero external dependencies via <code>/etc/os-release</code>, <code>/etc/lsb-release</code>, <code>/etc/issue</code>, and kernel <code>uname(2)</code>.
+            </p>
+            <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> Fedora / RHEL</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Debian / Ubuntu</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Arch Linux / EndeavourOS / CachyOS</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Alpine Linux</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> openSUSE</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Void Linux</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Gentoo</span>
+            </div>
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">DETECTION:</span>
+              <span class="eco-spec-val">Multi-probe hierarchy (os-release, lsb, uname)</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Desktop Environments & Compositors -->
+          <div class="eco-card">
+            <div class="eco-card-header">
+              <span class="eco-badge">[ 02 // COMPOSITORS &amp; DESKTOPS ]</span>
+              <h3 class="eco-title">Wayland &amp; Compositors</h3>
+            </div>
+            <p class="eco-desc">
+              Native Wayland surface overlay and per-output refresh rate matching over layer-shell, yielding instantly on the first human keystroke or pointer event.
+            </p>
+            <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> River</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Labwc</span>
+            </div>
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">PROTOCOLS:</span>
+              <span class="eco-spec-val">wlr-layer-shell &amp; ext-idle-notify-v1</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Init Systems -->
+          <div class="eco-card">
+            <div class="eco-card-header">
+              <span class="eco-badge">[ 03 // INIT &amp; SUPERVISORS ]</span>
+              <h3 class="eco-title">All Init Systems</h3>
+            </div>
+            <p class="eco-desc">
+              Runs under any supervision architecture with zero-timeout D-Bus activation, clean SIGTERM dispatch, and zero CPU usage while the user is actively working.
+            </p>
+            <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service with zero-timeout D-Bus activation)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> OpenRC</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> runit</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> dinit</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> s6</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Standalone supervisor loop</span>
+            </div>
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">D-BUS:</span>
+              <span class="eco-spec-val">org.freedesktop.ScreenSaver zero-timeout activation</span>
+            </div>
+          </div>
+
+          <!-- Card 4: ASCII Tri-Rotation -->
+          <div class="eco-card eco-card-highlight">
+            <div class="eco-card-header">
+              <span class="eco-badge eco-badge-hot">[ 04 // TRI-ROTATION ENGINE ]</span>
+              <h3 class="eco-title">ASCII Tri-Rotation</h3>
+            </div>
+            <p class="eco-desc">
+              Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 37 punchy effects with 400% font scaling.
             </p>
 
-            <div class="matrix-controls-bar">
-              <div class="matrix-search-wrap">
-                <span class="search-prompt">&gt;</span>
-                <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 37 ASCII scenes" />
-                <button id="matrix-search-clear" class="search-clear-btn" aria-label="Clear search" hidden>&times;</button>
+            <div class="tri-rotation-demo" id="tri-rotation-demo">
+              <div class="tri-rot-header">
+                <span class="tri-rot-label">CYCLE PREVIEW:</span>
+                <span class="tri-rot-state" id="tri-rot-mode">HOST OS</span>
               </div>
-              <div class="matrix-filter-chips" id="matrix-filter-chips">
-                <button class="filter-chip active" data-filter="all">ALL (37)</button>
-                <button class="filter-chip" data-filter="particles">PARTICLES (8)</button>
-                <button class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (7)</button>
-                <button class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (8)</button>
-                <button class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
-                <button class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
+              <div class="tri-rot-display">
+                <span class="tri-rot-prompt">&gt;</span>
+                <span class="tri-rot-text" id="tri-rot-text">Fedora Linux 41</span>
+              </div>
+              <div class="tri-rot-controls">
+                <button type="button" class="tri-rot-btn active" data-mode="os" onclick="cycleTriRotation('os')">OS</button>
+                <button type="button" class="tri-rot-btn" data-mode="de" onclick="cycleTriRotation('de')">DE</button>
+                <button type="button" class="tri-rot-btn" data-mode="kernel" onclick="cycleTriRotation('kernel')">KERNEL</button>
+                <button type="button" class="tri-rot-btn tri-rot-btn-auto" id="tri-rot-auto" onclick="toggleTriRotationAuto()">CYCLE [AUTO: ON]</button>
               </div>
             </div>
-          </div>
 
-          <div class="matrix-grid" id="matrix-grid">
-            <!-- 37 cards populated by gallery.js -->
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">FEATURES:</span>
+              <span class="eco-spec-val">400% font scaling • Dynamic 60–144 Hz display matching</span>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <noscript>
-          <section class="panel">
-            <p class="panel-label">-- 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH --</p>
-            <p class="noscript-note">
-              Built-in ASCII engine featuring 37 decomposed in-tree scenes in crates/idlescreen/src/ascii/scenes/ with dynamic 60-144 FPS monitor matching, dynamic Host OS / DE / Linux Kernel tri-rotation, and 400% responsive font scaling.
+      <!-- Section 4: Installation & Package Channels -->
+      <section class="panel" id="install">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            DEPLOYMENT // PACKAGES &amp; VERIFICATION
+          </div>
+          <h2 class="section-title">Installation &amp; Package Channels</h2>
+          <p class="section-intro">
+            Be up and running in seconds. Available via standalone shell installer, native package repositories, or Rust Cargo.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <!-- Card 1: Shell Installer -->
+          <div class="install-card install-card-primary">
+            <div class="install-card-header">
+              <span class="install-badge install-badge-hot">[ 01 // RECOMMENDED ]</span>
+              <h3 class="install-title">Automated Shell Installer</h3>
+            </div>
+            <p class="install-desc">
+              Auto-detects your architecture, distribution, and init system. Installs binary to <code>~/.local/bin</code>, configures systemd user service if present, and sets up man pages.
             </p>
-            <div style="margin-top: 20px; font-size: 12px; color: var(--text-secondary); line-height: 1.8;">
-              <code>idlescreen preview fireworks</code> •
-              <code>idlescreen preview matrix</code> •
-              <code>idlescreen preview synthgrid</code> •
-              <code>idlescreen preview blackhole</code> •
-              <code>idlescreen preview thunderstorm</code> •
-              <code>idlescreen preview beams</code> •
-              <code>idlescreen preview rain</code> •
-              <code>idlescreen preview waves</code> •
-              <code>idlescreen preview binarypath</code> •
-              <code>idlescreen preview bouncyballs</code> •
-              <code>idlescreen preview bubbles</code> •
-              <code>idlescreen preview burn</code> •
-              <code>idlescreen preview colorshift</code> •
-              <code>idlescreen preview crumble</code> •
-              <code>idlescreen preview decrypt</code> •
-              <code>idlescreen preview errorcorrect</code> •
-              <code>idlescreen preview expand</code> •
-              <code>idlescreen preview highlight</code> •
-              <code>idlescreen preview laseretch</code> •
-              <code>idlescreen preview middleout</code> •
-              <code>idlescreen preview orbittingvolley</code> •
-              <code>idlescreen preview overflow</code> •
-              <code>idlescreen preview pour</code> •
-              <code>idlescreen preview print</code> •
-              <code>idlescreen preview random_sequence</code> •
-              <code>idlescreen preview rings</code> •
-              <code>idlescreen preview scattered</code> •
-              <code>idlescreen preview slice</code> •
-              <code>idlescreen preview slide</code> •
-              <code>idlescreen preview smoke</code> •
-              <code>idlescreen preview spotlights</code> •
-              <code>idlescreen preview spray</code> •
-              <code>idlescreen preview swarm</code> •
-              <code>idlescreen preview sweep</code> •
-              <code>idlescreen preview unstable</code> •
-              <code>idlescreen preview vhstape</code> •
-              <code>idlescreen preview wipe</code>
-            </div>
-          </section>
-        </noscript>
 
-        <!-- Final panel: links -->
-        <section class="panel" id="outro">
-          <p class="panel-label">-- IDLE WHEN YOU ARE. WORKING WHEN YOU'RE NOT. --</p>
-          <div class="outro-links">
-            <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="term-btn">[ SOURCE: IDLESCREEN MONOREPO &#8599; ]</a>
-            <a href="https://github.com/idlescreen" target="_blank" rel="noopener noreferrer" class="term-btn">[ ORG: @IDLESCREEN &#8599; ]</a>
-            <a href="https://studio2201.com" target="_blank" rel="noopener noreferrer" class="term-btn term-btn-dim">[ STUDIO2201 &#8599; ]</a>
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-script-cmd">curl -fsSL https://idlescreen.github.io/install.sh | sh</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-script-cmd', this)">[ COPY ]</button>
+            </div>
+
+            <div class="eco-spec-row" style="margin-top: 8px;">
+              <span class="eco-spec-key">VERIFY:</span>
+              <span class="eco-spec-val">Cryptographic SHA-256 integrity verification</span>
+            </div>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-verify-cmd">curl -fsSL https://idlescreen.github.io/install.sh | sh -s -- --verify</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-verify-cmd', this)">[ COPY ]</button>
+            </div>
+          </div>
+
+          <!-- Card 2: Native Package Channels -->
+          <div class="install-card">
+            <div class="install-card-header">
+              <span class="install-badge">[ 02 // DISTRO PACKAGES ]</span>
+              <h3 class="install-title">Native Package Channels</h3>
+            </div>
+            <p class="install-desc">
+              Pre-built packages maintained across major distributions with automatic updates.
+            </p>
+
+            <div class="install-channels-list">
+              <div class="install-channel-item">
+                <span class="channel-label">FEDORA / RHEL (COPR)</span>
+                <code class="channel-cmd">sudo dnf copr enable idlescreen/idlescreen &amp;&amp; sudo dnf install idlescreen</code>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">ARCH LINUX (AUR)</span>
+                <code class="channel-cmd">paru -S idlescreen  # or yay -S idlescreen</code>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">DEBIAN / UBUNTU (APT)</span>
+                <code class="channel-cmd">sudo apt install idlescreen</code>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">ALPINE LINUX (APK)</span>
+                <code class="channel-cmd">apk add idlescreen</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Rust Cargo & Source -->
+          <div class="install-card">
+            <div class="install-card-header">
+              <span class="install-badge">[ 03 // RUST TOOLCHAIN ]</span>
+              <h3 class="install-title">Build from Source</h3>
+            </div>
+            <p class="install-desc">
+              Compile from source with native SIMD acceleration directly using the Cargo toolchain.
+            </p>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-cargo-cmd">cargo install idlescreen</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-cargo-cmd', this)">[ COPY ]</button>
+            </div>
+
+            <p class="install-desc" style="font-size: 12px; margin-top: 4px;">
+              Or build directly from the GitHub monorepo:
+            </p>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-git-cmd">git clone https://github.com/idlescreen/idlescreen &amp;&amp; cd idlescreen &amp;&amp; cargo build --release</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-git-cmd', this)">[ COPY ]</button>
+            </div>
+          </div>
+
+          <!-- Card 4: Quick Start Commands -->
+          <div class="install-card">
+            <div class="install-card-header">
+              <span class="install-badge">[ 04 // QUICK START ]</span>
+              <h3 class="install-title">Daemon Management</h3>
+            </div>
+            <p class="install-desc">
+              Essential commands to control the idle daemon and explore in-tree scenes.
+            </p>
+
+            <div class="install-channels-list">
+              <div class="install-channel-item">
+                <span class="channel-label">ENABLE &amp; START DAEMON (SYSTEMD)</span>
+                <code class="channel-cmd">systemctl --user enable --now idlescreen</code>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">PREVIEW SPECIFIC SCENE</span>
+                <code class="channel-cmd">idlescreen preview fireworks</code>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">LIST ALL 37 IN-TREE SCENES</span>
+                <code class="channel-cmd">idlescreen list --scenes</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Noscript Fallback -->
+      <noscript>
+        <section class="panel">
+          <div class="section-eyebrow">37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH</div>
+          <p class="section-intro">
+            Built-in ASCII engine featuring 37 decomposed in-tree scenes in <code>crates/idlescreen/src/ascii/scenes/</code> with dynamic 60-144 FPS monitor matching, dynamic Host OS / DE / Linux Kernel tri-rotation, and 400% responsive font scaling.
+          </p>
+          <div style="margin-top: 20px; font-size: 13px; color: var(--text-secondary); line-height: 2;">
+            <code>idlescreen preview fireworks</code> •
+            <code>idlescreen preview matrix</code> •
+            <code>idlescreen preview synthgrid</code> •
+            <code>idlescreen preview blackhole</code> •
+            <code>idlescreen preview thunderstorm</code> •
+            <code>idlescreen preview beams</code> •
+            <code>idlescreen preview rain</code> •
+            <code>idlescreen preview waves</code> •
+            <code>idlescreen preview binarypath</code> •
+            <code>idlescreen preview bouncyballs</code> •
+            <code>idlescreen preview bubbles</code> •
+            <code>idlescreen preview burn</code> •
+            <code>idlescreen preview colorshift</code> •
+            <code>idlescreen preview crumble</code> •
+            <code>idlescreen preview decrypt</code> •
+            <code>idlescreen preview errorcorrect</code> •
+            <code>idlescreen preview expand</code> •
+            <code>idlescreen preview highlight</code> •
+            <code>idlescreen preview laseretch</code> •
+            <code>idlescreen preview middleout</code> •
+            <code>idlescreen preview orbittingvolley</code> •
+            <code>idlescreen preview overflow</code> •
+            <code>idlescreen preview pour</code> •
+            <code>idlescreen preview print</code> •
+            <code>idlescreen preview random_sequence</code> •
+            <code>idlescreen preview rings</code> •
+            <code>idlescreen preview scattered</code> •
+            <code>idlescreen preview slice</code> •
+            <code>idlescreen preview slide</code> •
+            <code>idlescreen preview smoke</code> •
+            <code>idlescreen preview spotlights</code> •
+            <code>idlescreen preview spray</code> •
+            <code>idlescreen preview swarm</code> •
+            <code>idlescreen preview sweep</code> •
+            <code>idlescreen preview unstable</code> •
+            <code>idlescreen preview vhstape</code> •
+            <code>idlescreen preview wipe</code>
           </div>
         </section>
-      </main>
+      </noscript>
+    </main>
 
-      <nav class="panel-nav" aria-label="Section navigation">
-        <button class="nav-arrow nav-up" id="nav-up" aria-label="Previous section">&#9650;</button>
-        <button class="nav-arrow nav-down" id="nav-down" aria-label="Next section">&#9660;</button>
-      </nav>
+    <!-- Omarchy Inspired Clean Technical Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="brand-logo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                  <polyline points="7 8 10 10 7 12"></polyline>
+                  <line x1="13" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </span>
+              <span class="footer-logo-text">IdleScreen</span>
+            </div>
+            <p class="footer-tagline">
+              High-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree ASCII scenes, zero active cycles, and universal compatibility.
+            </p>
+          </div>
 
-      <footer class="window-statusbar">
-        <span>IDLESCREEN &copy; 1982-2026 // ZERO TRACKING</span>
-        <span class="footer-links">
-          <a href="https://github.com/idlescreen" target="_blank" rel="noopener noreferrer">[ GITHUB ]</a>
-          <a href="https://studio2201.com" target="_blank" rel="noopener noreferrer">[ STUDIO2201 ]</a>
-          <a href="https://idlescreen.github.io/install.sh">[ INSTALL SCRIPT ]</a>
-        </span>
-      </footer>
-    </div>
+          <div class="footer-links-grid">
+            <div class="footer-col">
+              <span class="footer-col-title">Navigation</span>
+              <a href="#overview">Overview</a>
+              <a href="#showcase">Featured Scenes</a>
+              <a href="#scene-matrix">37 Scenes Matrix</a>
+              <a href="#ecosystem">Ecosystem</a>
+              <a href="#install">Installation</a>
+            </div>
 
-    <noscript>
-      <style>
-        .panel { opacity: 1; transform: none; }
-        .panel-nav { display: none; }
-      </style>
-    </noscript>
+            <div class="footer-col">
+              <span class="footer-col-title">Resources</span>
+              <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer">GitHub Monorepo ↗</a>
+              <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer">Packages ↗</a>
+              <a href="https://idlescreen.github.io/install.sh" target="_blank" rel="noopener noreferrer">Install Script ↗</a>
+              <a href="https://github.com/idlescreen" target="_blank" rel="noopener noreferrer">Organization ↗</a>
+            </div>
+
+            <div class="footer-col">
+              <span class="footer-col-title">Project</span>
+              <a href="https://studio2201.com" target="_blank" rel="noopener noreferrer">Studio2201 ↗</a>
+              <a href="https://github.com/idlescreen/idlescreen/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">MIT License ↗</a>
+              <a href="https://github.com/idlescreen/idlescreen/releases" target="_blank" rel="noopener noreferrer">Releases ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>&copy; 1982–2026 Studio2201 &amp; Contributors // ZERO TRACKING</span>
+          <span>Engineered in Rust for Modern Linux Wayland</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="/js/copy.js"></script>
     <script src="/js/rotate.js"></script>
     <script src="/js/savers.js"></script>

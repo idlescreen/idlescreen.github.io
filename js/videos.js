@@ -16,7 +16,7 @@
           }
         });
       },
-      { root: document.querySelector(".scroll-port"), threshold: 0.1 }
+      { root: null, threshold: 0.1 }
     );
     vids.forEach((v) => io.observe(v));
   }
