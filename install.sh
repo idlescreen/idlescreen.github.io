@@ -23,7 +23,7 @@ INSTALLER_URL="${IDLESCREEN_INSTALLER_URL:-${REPO_BASE}/install.sh}"
 
 # Pinned SHA-256 hash of the packages channel installer.
 # Maintained and synchronized by packages/scripts/sync_installer_checksums.sh.
-EXPECTED_INSTALLER_HASH="${IDLESCREEN_INSTALLER_HASH:-5dd06c0854efcfe0dcfb4a912d16e90922e65a36c1e4136766b76fcbe9f13c0d}"
+EXPECTED_INSTALLER_HASH="${IDLESCREEN_INSTALLER_HASH:-1546e16b234e21e29e2da9897206c4382d42f2bed23a31cb5c34cb6c43b49a5e}"
 
 # Handle immediate flags (--verify-self, -h, --help) before network calls
 case "${1:-}" in
