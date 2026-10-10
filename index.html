@@ -89,7 +89,7 @@
               <div class="eco-pill-list">
                 <span class="eco-pill"><b class="pill-dot">●</b> Fedora / RHEL</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> Debian / Ubuntu</span>
-                <span class="eco-pill"><b class="pill-dot">●</b> Arch / Endeavour / CachyOS</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> Arch Linux / EndeavourOS / CachyOS</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> Alpine Linux</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> openSUSE</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> Void Linux</span>
@@ -111,7 +111,7 @@
                 Native Wayland surface overlay and per-output refresh rate matching over layer-shell, yielding instantly on the first human keystroke or pointer event.
               </p>
               <div class="eco-pill-list">
-                <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter IdleMonitor)</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter)</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp)</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
@@ -136,7 +136,7 @@
                 Runs under any supervision architecture with zero-timeout D-Bus activation, clean SIGTERM dispatch, and zero CPU usage while the user is actively working.
               </p>
               <div class="eco-pill-list">
-                <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service + D-Bus)</span>
+                <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service with zero-timeout D-Bus activation)</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> OpenRC</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> runit</span>
                 <span class="eco-pill"><b class="pill-dot">●</b> dinit</span>
@@ -169,9 +169,9 @@
                   <span class="tri-rot-text" id="tri-rot-text">Fedora Linux 41</span>
                 </div>
                 <div class="tri-rot-controls">
-                  <button class="tri-rot-btn" onclick="cycleTriRotation('os')">OS</button>
-                  <button class="tri-rot-btn" onclick="cycleTriRotation('de')">DE</button>
-                  <button class="tri-rot-btn" onclick="cycleTriRotation('kernel')">KERNEL</button>
+                  <button class="tri-rot-btn active" data-mode="os" onclick="cycleTriRotation('os')">OS</button>
+                  <button class="tri-rot-btn" data-mode="de" onclick="cycleTriRotation('de')">DE</button>
+                  <button class="tri-rot-btn" data-mode="kernel" onclick="cycleTriRotation('kernel')">KERNEL</button>
                   <button class="tri-rot-btn tri-rot-btn-auto" id="tri-rot-auto" onclick="toggleTriRotationAuto()">CYCLE [AUTO: ON]</button>
                 </div>
               </div>
@@ -211,7 +211,7 @@
           </div>
 
           <div class="saver-stage" id="showcase-stage">
-            <video class="saver-media" id="showcase-video" autoplay muted loop playsinline preload="metadata"></video>
+            <video class="saver-media" id="showcase-video" src="assets/videos/bursts.mp4" autoplay muted loop playsinline preload="metadata"></video>
             
             <div class="saver-nav-arrows">
               <button class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous featured scene">&#9664;</button>
@@ -219,7 +219,7 @@
             </div>
 
             <div class="saver-overlay">
-              <p class="saver-desc" id="showcase-desc"></p>
+              <p class="saver-desc" id="showcase-desc">Rockets firing upward with luminous tracer tails, detonating into vibrant radial particle bursts with gravitic cascade and sparkle decay.</p>
               <div class="saver-metrics" id="showcase-metrics">
                 <span>FRAME <b id="metric-frame">60–144 FPS</b></span>
                 <span>CPU <b id="metric-cpu">0.08%</b></span>
@@ -227,8 +227,13 @@
               </div>
               <div class="saver-footrow">
                 <code class="saver-cmd" id="showcase-cmd" title="Click to copy">&gt; idlescreen preview fireworks <span class="cmd-copy-hint">[COPY]</span></code>
-                <div class="saver-tags" id="showcase-tags"></div>
-                <a class="saver-src" id="showcase-src" target="_blank" rel="noopener noreferrer" href="#">[ SOURCE: fireworks.rs &#8599; ]</a>
+                <div class="saver-tags" id="showcase-tags">
+                  <span class="saver-tag">#in-tree</span>
+                  <span class="saver-tag">#ascii</span>
+                  <span class="saver-tag">#particles</span>
+                  <span class="saver-tag">#pyrotechnic</span>
+                </div>
+                <a class="saver-src" id="showcase-src" target="_blank" rel="noopener noreferrer" href="https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/fireworks.rs">[ SOURCE: fireworks.rs &#8599; ]</a>
               </div>
             </div>
           </div>
@@ -254,11 +259,11 @@
               </div>
               <div class="matrix-filter-chips" id="matrix-filter-chips">
                 <button class="filter-chip active" data-filter="all">ALL (37)</button>
-                <button class="filter-chip" data-filter="particles">PARTICLES</button>
-                <button class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL</button>
-                <button class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA</button>
-                <button class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO</button>
-                <button class="filter-chip" data-filter="motion">KINETIC &amp; WAVE</button>
+                <button class="filter-chip" data-filter="particles">PARTICLES (8)</button>
+                <button class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (7)</button>
+                <button class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (8)</button>
+                <button class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
+                <button class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
               </div>
             </div>
           </div>

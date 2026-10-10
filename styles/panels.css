@@ -274,6 +274,13 @@
   color: var(--phosphor);
 }
 
+.tri-rot-btn.active {
+  background: var(--phosphor-dim);
+  border-color: var(--phosphor);
+  color: var(--hot);
+  box-shadow: 0 0 8px rgba(255, 176, 0, 0.25);
+}
+
 .tri-rot-btn-auto {
   margin-left: auto;
   border-color: var(--phosphor);

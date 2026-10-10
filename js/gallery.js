@@ -8,18 +8,25 @@
   let featuredIndices = [];
   let currentSlot = 0; // 0, 1, 2
 
-  function pickRandomDistinct(count, max) {
-    const pool = Array.from({ length: max }, (_, i) => i);
+  function pickRandomDistinct(count, max, exclude = []) {
+    const pool = Array.from({ length: max }, (_, i) => i).filter((idx) => !exclude.includes(idx));
     const chosen = [];
-    for (let i = 0; i < count && pool.length > 0; i++) {
-      const idx = Math.floor(Math.random() * pool.length);
-      chosen.push(pool.splice(idx, 1)[0]);
+    while (chosen.length < count && pool.length > 0) {
+      const rIdx = Math.floor(Math.random() * pool.length);
+      chosen.push(pool.splice(rIdx, 1)[0]);
+    }
+    // Fallback if pool was smaller than count
+    if (chosen.length < count) {
+      for (let i = 0; i < max && chosen.length < count; i++) {
+        if (!chosen.includes(i)) chosen.push(i);
+      }
     }
     return chosen;
   }
 
   function rerollFeatured() {
-    featuredIndices = pickRandomDistinct(3, SAVERS.length);
+    // Pick 3 random distinct scenes, trying to avoid exact duplicates of current set
+    featuredIndices = pickRandomDistinct(3, SAVERS.length, featuredIndices);
     currentSlot = 0;
     renderSlots();
     loadSlot(0);
@@ -57,11 +64,20 @@
     picker.addEventListener("change", (e) => {
       const selectedIdx = parseInt(e.target.value, 10);
       if (!isNaN(selectedIdx) && SAVERS[selectedIdx]) {
-        featuredIndices[currentSlot] = selectedIdx;
-        renderSlots();
-        loadSlot(currentSlot);
+        selectScene(selectedIdx);
       }
     });
+  }
+
+  function selectScene(idx) {
+    const existingSlot = featuredIndices.indexOf(idx);
+    if (existingSlot !== -1) {
+      loadSlot(existingSlot);
+    } else {
+      featuredIndices[currentSlot] = idx;
+      renderSlots();
+      loadSlot(currentSlot);
+    }
   }
 
   function loadSlot(slotIdx) {
@@ -69,6 +85,12 @@
     const sceneIdx = featuredIndices[slotIdx];
     const s = SAVERS[sceneIdx];
     if (!s) return;
+
+    // Synchronize quick picker dropdown value
+    const picker = document.getElementById("quick-scene-select");
+    if (picker) {
+      picker.value = sceneIdx;
+    }
 
     // Update active slot styling
     const slotBtns = document.querySelectorAll(".showcase-slot");
@@ -103,15 +125,25 @@
       cmdEl.onclick = () => {
         if (typeof copyText === "function") {
           copyText(cmdText, cmdEl);
-        } else if (navigator.clipboard) {
-          navigator.clipboard.writeText(cmdText).then(() => {
+        } else {
+          const showHint = () => {
             const hint = cmdEl.querySelector(".cmd-copy-hint");
             if (hint) {
               const orig = hint.textContent;
               hint.textContent = "[COPIED!]";
               setTimeout(() => { hint.textContent = orig; }, 1500);
             }
-          });
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(cmdText).then(showHint).catch(() => {
+              if (typeof fallbackCopy === "function") fallbackCopy(cmdText, showHint);
+              else showHint();
+            });
+          } else if (typeof fallbackCopy === "function") {
+            fallbackCopy(cmdText, showHint);
+          } else {
+            showHint();
+          }
         }
       };
     }
@@ -164,6 +196,18 @@
     });
   }
 
+  // Keyboard navigation for featured showcase
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || e.target.tagName === "TEXTAREA") return;
+    if (e.key === "ArrowLeft") {
+      const next = (currentSlot - 1 + featuredIndices.length) % featuredIndices.length;
+      loadSlot(next);
+    } else if (e.key === "ArrowRight") {
+      const next = (currentSlot + 1) % featuredIndices.length;
+      loadSlot(next);
+    }
+  });
+
   // Reroll button
   const rerollBtn = document.getElementById("reroll-btn");
   if (rerollBtn) {
@@ -184,6 +228,23 @@
   const filterChips = document.querySelectorAll(".filter-chip");
   let activeFilter = "all";
 
+  function updateFilterCounts() {
+    filterChips.forEach((chip) => {
+      const filterKey = chip.getAttribute("data-filter");
+      let baseLabel = chip.getAttribute("data-label");
+      if (!baseLabel) {
+        baseLabel = chip.textContent.replace(/\s*\(\d+\)/, "").trim();
+        chip.setAttribute("data-label", baseLabel);
+      }
+      if (filterKey === "all") {
+        chip.textContent = `${baseLabel} (${SAVERS.length})`;
+      } else {
+        const count = SAVERS.filter((s) => (s.tags || []).includes(filterKey)).length;
+        chip.textContent = `${baseLabel} (${count})`;
+      }
+    });
+  }
+
   function renderMatrix() {
     if (!matrixGrid) return;
     matrixGrid.innerHTML = "";
@@ -194,6 +255,8 @@
       card.dataset.id = s.id;
       card.dataset.num = s.num;
       card.dataset.name = s.name.toLowerCase();
+      card.dataset.sub = (s.sub || "").toLowerCase();
+      card.dataset.desc = (s.desc || "").toLowerCase();
       card.dataset.tags = (s.tags || []).join(" ").toLowerCase();
       card.dataset.math = (s.math || "").toLowerCase();
 
@@ -219,9 +282,7 @@
       const prevBtnEl = card.querySelector(".matrix-btn-preview");
       if (prevBtnEl) {
         prevBtnEl.addEventListener("click", () => {
-          featuredIndices[currentSlot] = idx;
-          renderSlots();
-          loadSlot(currentSlot);
+          selectScene(idx);
           const showcaseEl = document.getElementById("showcase");
           if (showcaseEl) {
             showcaseEl.scrollIntoView({ behavior: "smooth" });
@@ -229,21 +290,32 @@
         });
       }
 
-      // Copy button click
+      // Copy button click with robust fallback
       const copyBtn = card.querySelector(".matrix-btn-copy");
       if (copyBtn) {
         copyBtn.addEventListener("click", () => {
           const cmd = copyBtn.getAttribute("data-cmd");
-          if (navigator.clipboard) {
-            navigator.clipboard.writeText(cmd).then(() => {
-              const orig = copyBtn.textContent;
-              copyBtn.textContent = "[ COPIED! ]";
-              copyBtn.classList.add("copied");
-              setTimeout(() => {
-                copyBtn.textContent = orig;
-                copyBtn.classList.remove("copied");
-              }, 1500);
+          const showDone = () => {
+            const orig = copyBtn.textContent;
+            copyBtn.textContent = "[ COPIED! ]";
+            copyBtn.classList.add("copied");
+            setTimeout(() => {
+              copyBtn.textContent = orig;
+              copyBtn.classList.remove("copied");
+            }, 1500);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(cmd).then(showDone).catch(() => {
+              if (typeof fallbackCopy === "function") {
+                fallbackCopy(cmd, showDone);
+              } else {
+                showDone();
+              }
             });
+          } else if (typeof fallbackCopy === "function") {
+            fallbackCopy(cmd, showDone);
+          } else {
+            showDone();
           }
         });
       }
@@ -251,6 +323,7 @@
       matrixGrid.appendChild(card);
     });
 
+    updateFilterCounts();
     filterMatrix();
   }
 
@@ -263,6 +336,8 @@
     cards.forEach((card) => {
       const name = card.dataset.name || "";
       const id = card.dataset.id || "";
+      const sub = card.dataset.sub || "";
+      const desc = card.dataset.desc || "";
       const tags = card.dataset.tags || "";
       const math = card.dataset.math || "";
       const num = card.dataset.num || "";
@@ -270,6 +345,8 @@
       const matchesQuery = !query ||
         name.includes(query) ||
         id.includes(query) ||
+        sub.includes(query) ||
+        desc.includes(query) ||
         tags.includes(query) ||
         math.includes(query) ||
         num.includes(query);
@@ -319,8 +396,8 @@
   }
 
   // Initialize
-  rerollFeatured();
   populateQuickPicker();
+  rerollFeatured();
   renderMatrix();
 
 })();
@@ -375,6 +452,12 @@
     const mode = MODES[currentModeIdx];
     const modeLabels = { os: "HOST OS", de: "DESKTOP ENV", kernel: "LINUX KERNEL" };
     modeEl.textContent = modeLabels[mode];
+
+    // Update active button styling
+    const modeBtns = document.querySelectorAll(".tri-rot-btn[data-mode]");
+    modeBtns.forEach((btn) => {
+      btn.classList.toggle("active", btn.getAttribute("data-mode") === mode);
+    });
 
     const targetText = TRI_DATA[mode][subIndices[mode]];
 
