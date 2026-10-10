@@ -22,7 +22,7 @@
       <header class="window-titlebar">
         <span class="term-status-badge">[IDLE: tty0]</span>
         <span class="window-title">idle@host:~# idlescreen list --release 1982-2026</span>
-        <span class="term-status-dim">[CORE: v3.6.0]</span>
+        <span class="term-status-dim">[CORE: v4.1.0]</span>
         <span class="term-status-online">[SYS_OK]</span>
       </header>
 
@@ -34,13 +34,13 @@
           <h1 class="terminal-title"><span id="hero-title">Ambient by Design</span><span class="term-cursor" aria-hidden="true">_</span></h1>
           <p class="terminal-intro">
             IdleScreen watches compositor idle signals over
-            <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notifier-v1</span>,
-            launches lightweight graphics onto
+            <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notifier-v1</span>
+            (and GNOME Mutter IdleMonitor), launches lightweight graphics onto
             <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
             surfaces across every monitor, and yields the instant you touch
-            the keyboard. Plugins expose a stable C ABI — write a saver in any
-            language that compiles to a shared library. The thirteen official
-            plugins are written in Rust.
+            the keyboard. Ships with a built-in high-performance ASCII screensaver
+            with dynamic Host OS, Desktop Environment, and Linux Kernel tri-rotation across 37 effects,
+            and an optional extras package for legacy mathematical screensavers.
           </p>
 
           <div class="terminal-install-box">
@@ -59,7 +59,7 @@
           <div class="tenets-strip">
             <span class="tenet-chip">ZERO CYCLES WHILE ACTIVE</span>
             <span class="tenet-chip">ALL INIT SYSTEMS</span>
-            <span class="tenet-chip">STABLE C ABI</span>
+            <span class="tenet-chip">NATIVE WAYLAND SCALING</span>
             <span class="tenet-chip">LOCKED 60-144 FPS</span>
             <span class="tenet-chip">MULTI-MONITOR</span>
           </div>
@@ -68,11 +68,11 @@
         <!-- Saver panels are generated from js/savers.js, inserted before #outro -->
         <noscript>
           <section class="panel">
-            <p class="panel-label">-- REGISTERED PLUGINS --</p>
+            <p class="panel-label">-- SCREENSAVERS --</p>
             <p class="noscript-note">
-              13 procedural savers: ascii, beams, cosmos, bursts, storm, chaos, hearth,
-              ripple, radar, glyphs, gnats, aurora, wasm-demo. Previews require
-              JavaScript; the plugins themselves don't.
+              Built-in ASCII engine with dynamic Host OS, DE, and Kernel tri-rotation across 37 effects,
+              plus 11 mathematical extras: aurora, beams, bursts, chaos, cosmos, glyphs, gnats,
+              hearth, radar, ripple, storm.
             </p>
           </section>
         </noscript>
