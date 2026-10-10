@@ -45,7 +45,7 @@ const SAVERS = [
     frame: "60 FPS", cpu: "0.12%", math: "Field Falloff",
     tags: ["wayland", "aurora", "field"], live: "assets/wasm/idlescreen.wasm" },
   { num: "12", id: "ascii", name: "ASCII", sub: "Terminal Glyph Field",
-    desc: "Block-letter logo rendered on a character grid with six text effects. Noise resolves, rains, ripples, and ignites into your own wordmark.",
-    frame: "60 FPS", cpu: "0.11%", math: "Character Grid",
+    desc: "Dynamic block-letter wordmark with 37 randomized text effects. Automatically detects and alternates between Host OS, Desktop Environment, and Linux Kernel version with smooth dissolves.",
+    frame: "144 FPS", cpu: "0.08%", math: "Character Grid",
     tags: ["wayland", "ascii", "terminal"], live: "assets/wasm/idlescreen.wasm" },
 ];

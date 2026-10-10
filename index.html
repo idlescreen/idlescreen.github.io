@@ -6,7 +6,7 @@
     <title>IdleScreen // Modular Wayland Screensavers [EST. 1982]</title>
     <meta
       name="description"
-      content="IdleScreen — modular Wayland idle host and procedural screensaver plugins for Linux. Zero-waste compute, layer-shell rendering, 12 procedural plugins written in Rust."
+      content="IdleScreen — modular Wayland idle host and procedural screensaver plugins for Linux. Zero-waste compute, layer-shell rendering, 13 procedural plugins written in Rust."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base.css" />
@@ -22,7 +22,7 @@
       <header class="window-titlebar">
         <span class="term-status-badge">[IDLE: tty0]</span>
         <span class="window-title">idle@host:~# idlescreen list --release 1982-2026</span>
-        <span class="term-status-dim">[CORE: v3.5.29]</span>
+        <span class="term-status-dim">[CORE: v3.6.0]</span>
         <span class="term-status-online">[SYS_OK]</span>
       </header>
 
@@ -39,7 +39,7 @@
             <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
             surfaces across every monitor, and yields the instant you touch
             the keyboard. Plugins expose a stable C ABI — write a saver in any
-            language that compiles to a shared library. The twelve official
+            language that compiles to a shared library. The thirteen official
             plugins are written in Rust.
           </p>
 
@@ -58,8 +58,9 @@
 
           <div class="tenets-strip">
             <span class="tenet-chip">ZERO CYCLES WHILE ACTIVE</span>
+            <span class="tenet-chip">ALL INIT SYSTEMS</span>
             <span class="tenet-chip">STABLE C ABI</span>
-            <span class="tenet-chip">LOCKED 60 FPS</span>
+            <span class="tenet-chip">LOCKED 60-144 FPS</span>
             <span class="tenet-chip">MULTI-MONITOR</span>
           </div>
         </section>
@@ -69,8 +70,8 @@
           <section class="panel">
             <p class="panel-label">-- REGISTERED PLUGINS --</p>
             <p class="noscript-note">
-              12 procedural savers: beams, cosmos, bursts, storm, chaos, hearth,
-              ripple, radar, glyphs, gnats, aurora, ascii. Previews require
+              13 procedural savers: ascii, beams, cosmos, bursts, storm, chaos, hearth,
+              ripple, radar, glyphs, gnats, aurora, wasm-demo. Previews require
               JavaScript; the plugins themselves don't.
             </p>
           </section>
