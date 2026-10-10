@@ -48,7 +48,7 @@ curl -fsSL https://idlescreen.github.io/install.sh -o install.sh
 ./install.sh
 ```
 
-The canonical installer forwards securely to the package channel installer (`https://idlescreen.github.io/packages/install.sh`), enforcing cryptographic SHA-256 validation before execution. The channel installer verifies all modular bootstrap components, configures package repositories (DNF/APT/pacman), deploys packages, and safely preserves existing user configurations in `~/.config/idlescreen/config.yaml` and `~/.config/idle/config.yaml`.
+The canonical installer forwards securely to the package channel installer (`https://idlescreen.github.io/packages/install.sh`), enforcing cryptographic SHA-256 validation before execution. The channel installer verifies all modular bootstrap components, configures package repositories (DNF/APT/pacman), deploys packages, and safely preserves existing user configurations in `~/.config/idlescreen/config.toml` (and legacy `config.yaml`).
 
 ## License
 
