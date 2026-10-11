@@ -18,10 +18,17 @@
   var targetY = -999;
   var rafPending = false;
 
+  function isTextTarget(el) {
+    if (window.IdleScreenIsText) return window.IdleScreenIsText(el);
+    if (!el || el === document.body || el === document.documentElement) return false;
+    var node = el.nodeType === 3 ? el.parentElement : el;
+    return !!(node && node.closest && node.closest('h1,h2,h3,h4,h5,h6,p,pre,code,li,span,a,button,label,.btn'));
+  }
+
   function setActiveCard(card) {
     if (activeCard === card) return;
     if (activeCard) {
-      activeCard.classList.remove('spotlight-active');
+      activeCard.classList.remove('spotlight-active', 'spotlight-over-text');
     }
     activeCard = card;
     if (activeCard) {
@@ -70,6 +77,9 @@
       card.style.setProperty('--mouse-x', x + 'px');
       card.style.setProperty('--mouse-y', y + 'px');
     }
+
+    var overText = isTextTarget(target);
+    card.classList.toggle('spotlight-over-text', overText);
 
     targetX = e.clientX;
     targetY = e.clientY;

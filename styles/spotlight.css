@@ -68,14 +68,8 @@
 }
 
 @keyframes spotlight-pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.35;
-    transform: scale(0.8);
-  }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.8); }
 }
 
 .spotlight-center-wrap {
@@ -114,12 +108,8 @@
 }
 
 @keyframes cue-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(4px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
 }
 
 @media (max-width: 768px) {
@@ -127,17 +117,9 @@
     height: calc(100svh - var(--header-height));
     min-height: 420px;
   }
-  .spotlight-overlay {
-    padding: 20px 16px 20px;
-  }
-  .spotlight-badge {
-    font-size: 10px;
-    padding: 4px 10px;
-  }
-  .spotlight-tagline {
-    font-size: 12px;
-    margin-top: 8px;
-  }
+  .spotlight-overlay { padding: 20px 16px 20px; }
+  .spotlight-badge { font-size: 10px; padding: 4px 10px; }
+  .spotlight-tagline { font-size: 12px; margin-top: 8px; }
 }
 
 /* Card Spotlight (CSS-Driven) — Dynamic Border Glow & Surface Illumination */
@@ -166,10 +148,23 @@
   --spotlight-inner: rgba(255, 176, 0, 0.055);
 }
 
+/* Attenuated Text-Reading Mode: Reduced Radius & Suppressed Glare over Text */
+.spotlight-card.spotlight-over-text {
+  --spotlight-radius: 120px;
+  --spotlight-border: rgba(255, 176, 0, 0.20);
+  --spotlight-glow: rgba(255, 212, 71, 0.38);
+  --spotlight-inner: rgba(255, 176, 0, 0.005);
+}
+
+.compare-card-opinionated.spotlight-over-text {
+  --spotlight-border: rgba(148, 163, 184, 0.16);
+  --spotlight-glow: rgba(203, 213, 225, 0.30);
+  --spotlight-inner: rgba(148, 163, 184, 0.004);
+}
+
 /* Border Spotlight Glow: Precisely masked to 1px border */
 .spotlight-card::after, .compare-card::after, .tui-showcase-container::after,
-.matrix-card::after, .install-card::after, .eco-card::after,
-.terminal-install-box::after, .showcase-wrapper::after {
+.matrix-card::after, .install-card::after, .eco-card::after, .terminal-install-box::after, .showcase-wrapper::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -194,9 +189,8 @@
 }
 
 /* Subtle Ambient Surface Highlight */
-.spotlight-card:not(.tui-showcase-container)::before,
-.compare-card::before, .matrix-card::before,
-.install-card::before, .eco-card::before, .terminal-install-box::before {
+.spotlight-card:not(.tui-showcase-container)::before, .compare-card::before,
+.matrix-card::before, .install-card::before, .eco-card::before, .terminal-install-box::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -216,14 +210,19 @@
 .spotlight-card:hover::after, .spotlight-card.spotlight-active::after,
 .compare-card:hover::after, .tui-showcase-container:hover::after,
 .matrix-card:hover::after, .install-card:hover::after,
-.eco-card:hover::after, .terminal-install-box:hover::after,
-.showcase-wrapper:hover::after,
+.eco-card:hover::after, .terminal-install-box:hover::after, .showcase-wrapper:hover::after,
 .spotlight-card:not(.tui-showcase-container):hover::before,
 .spotlight-card:not(.tui-showcase-container).spotlight-active::before,
 .compare-card:hover::before, .matrix-card:hover::before,
-.install-card:hover::before, .eco-card:hover::before,
-.terminal-install-box:hover::before {
+.install-card:hover::before, .eco-card:hover::before, .terminal-install-box:hover::before {
   opacity: 1;
+}
+
+/* Suppress surface glare over text elements */
+.spotlight-card.spotlight-over-text::before,
+.spotlight-card.spotlight-over-text:hover::before,
+.spotlight-card.spotlight-over-text.spotlight-active::before {
+  opacity: 0.15;
 }
 
 .matrix-card.spotlight-card:hover {
@@ -250,4 +249,3 @@
     transition: none;
   }
 }
-
