@@ -7,6 +7,8 @@
   --bg-surface-sunken: #070809;
   --bg-card: #121517;
   --bg-card-hover: #181d21;
+  --bg-glass: rgba(17, 20, 23, 0.88);
+  --bg-glass-elevated: rgba(24, 28, 32, 0.88);
   --bg-btn: #181c20;
   --bg-btn-hover: #22272c;
 

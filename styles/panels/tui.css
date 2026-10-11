@@ -1,6 +1,8 @@
 /* styles/panels/tui.css — interactive TUI director showcase container and screen mockup */
 .tui-showcase-container {
-  background: #070809;
+  background: rgba(17, 20, 23, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 30px;

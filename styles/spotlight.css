@@ -5,8 +5,7 @@
   height: calc(100vh - var(--header-height));
   height: calc(100dvh - var(--header-height));
   min-height: 440px;
-  background: #070809;
-  overflow: hidden;
+  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,16 +13,19 @@
   border-bottom: 1px solid var(--border-subtle);
   user-select: none;
   -webkit-user-select: none;
+  cursor: crosshair;
 }
 
 .spotlight-canvas {
-  position: absolute;
+  position: fixed;
+  inset: 0;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
   display: block;
-  cursor: crosshair;
 }
 
 .spotlight-overlay {
@@ -148,6 +150,8 @@
   --spotlight-glow: rgba(255, 212, 71, 0.9);
   --spotlight-inner: rgba(255, 176, 0, 0.035);
   position: relative;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .compare-card-opinionated {

@@ -58,7 +58,9 @@
 }
 
 .install-card {
-  background: var(--bg-surface);
+  background: rgba(17, 20, 23, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 24px;
@@ -76,7 +78,9 @@
 
 .install-card-primary {
   border-color: rgba(255, 176, 0, 0.35);
-  background: linear-gradient(175deg, rgba(24, 28, 32, 0.95) 0%, rgba(18, 21, 23, 0.98) 100%);
+  background: linear-gradient(175deg, rgba(24, 28, 32, 0.88) 0%, rgba(18, 21, 23, 0.92) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .install-card-header {

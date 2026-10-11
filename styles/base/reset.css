@@ -9,10 +9,11 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 16px);
   color-scheme: dark;
+  background-color: #070809;
 }
 
 body {
-  background-color: var(--bg-page);
+  background-color: transparent;
   color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.6;
