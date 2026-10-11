@@ -484,7 +484,109 @@
   box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
 }
 
-/* Matrix Cards Grid */
+/* Matrix View Toggle & Marquee Modes */
+.matrix-view-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.matrix-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.view-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.view-btn.active {
+  background: var(--bg-surface-elevated);
+  color: var(--phosphor);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.view-btn:hover:not(.active) {
+  color: #fff;
+}
+
+.marquee-hint {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* Marquee Viewport & Streams */
+.matrix-viewport.marquee-mode {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 10px 0;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.matrix-viewport.marquee-mode .matrix-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 0;
+}
+
+.matrix-viewport.marquee-mode .marquee-stream {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+}
+
+.matrix-viewport.marquee-mode .stream-left {
+  animation: stream-scroll-left 60s linear infinite;
+}
+
+.matrix-viewport.marquee-mode .stream-right {
+  animation: stream-scroll-right 60s linear infinite;
+}
+
+.matrix-viewport.marquee-mode:hover .marquee-stream {
+  animation-play-state: paused;
+}
+
+@keyframes stream-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes stream-scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.matrix-viewport.marquee-mode .matrix-card {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+/* Matrix Cards Grid (Default Grid Mode) */
 .matrix-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));

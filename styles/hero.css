@@ -166,12 +166,32 @@
   margin-bottom: 36px;
 }
 
-/* Tenets & Technical Specifications Strip */
-.tenets-strip {
+/* Tenets & Technical Specifications Scrolling Marquee */
+.tenets-marquee-wrap {
+  width: 100%;
+  max-width: 1000px;
+  overflow: hidden;
+  position: relative;
+  padding: 4px 0;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.tenets-track {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  max-width: 980px;
+  gap: 10px;
+  width: max-content;
+  animation: tenets-scroll 32s linear infinite;
+  will-change: transform;
+}
+
+.tenets-marquee-wrap:hover .tenets-track {
+  animation-play-state: paused;
+}
+
+@keyframes tenets-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .tenet-chip {
@@ -182,15 +202,17 @@
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
-  padding: 5px 11px;
+  padding: 6px 13px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.15s ease;
 }
 
 .tenet-chip:hover {
-  border-color: rgba(255, 176, 0, 0.3);
+  border-color: rgba(255, 176, 0, 0.4);
   color: #fff;
   background: var(--bg-surface-elevated);
 }

@@ -229,6 +229,11 @@
   const filterChips = document.querySelectorAll(".filter-chip");
   let activeFilter = "all";
 
+  const matrixViewport = document.getElementById("matrix-viewport");
+  const viewModeMarquee = document.getElementById("view-mode-marquee");
+  const viewModeGrid = document.getElementById("view-mode-grid");
+  let userViewMode = "marquee";
+
   function updateFilterCounts() {
     filterChips.forEach((chip) => {
       const filterKey = chip.getAttribute("data-filter");
@@ -246,132 +251,174 @@
     });
   }
 
-  function renderMatrix() {
-    if (!matrixGrid) return;
-    matrixGrid.innerHTML = "";
+  function buildCard(s, idx, isClone = false) {
+    const card = document.createElement("div");
+    card.className = "matrix-card" + (isClone ? " matrix-card-clone" : "");
+    if (isClone) {
+      card.setAttribute("data-clone", "true");
+      card.setAttribute("aria-hidden", "true");
+    }
+    card.dataset.id = s.id;
+    card.dataset.num = s.num;
+    card.dataset.name = s.name.toLowerCase();
+    card.dataset.sub = (s.sub || "").toLowerCase();
+    card.dataset.desc = (s.desc || "").toLowerCase();
+    card.dataset.tags = (s.tags || []).join(" ").toLowerCase();
+    card.dataset.math = (s.math || "").toLowerCase();
 
-    SAVERS.forEach((s, idx) => {
-      const card = document.createElement("div");
-      card.className = "matrix-card";
-      card.dataset.id = s.id;
-      card.dataset.num = s.num;
-      card.dataset.name = s.name.toLowerCase();
-      card.dataset.sub = (s.sub || "").toLowerCase();
-      card.dataset.desc = (s.desc || "").toLowerCase();
-      card.dataset.tags = (s.tags || []).join(" ").toLowerCase();
-      card.dataset.math = (s.math || "").toLowerCase();
+    card.innerHTML = `
+      <div class="matrix-card-top">
+        <span class="matrix-card-num">[ ${s.num} ]</span>
+        <span class="matrix-card-badge">${s.frame}</span>
+      </div>
+      <h3 class="matrix-card-title">${s.name}</h3>
+      <p class="matrix-card-sub">// ${s.sub}</p>
+      <p class="matrix-card-desc">${s.desc}</p>
+      <div class="matrix-card-math-box">
+        <span class="math-label">PHYSICS:</span> <span class="math-val">${s.math}</span>
+      </div>
+      <div class="matrix-card-actions">
+        <button class="matrix-btn matrix-btn-preview" data-idx="${idx}" title="Preview in showcase stage above">[ PREVIEW ]</button>
+        <button class="matrix-btn matrix-btn-copy" data-cmd="idlescreen preview ${s.id}" title="Copy preview command">[ COPY CMD ]</button>
+        <a class="matrix-btn matrix-btn-src" href="${s.sourceUrl}" target="_blank" rel="noopener noreferrer" title="View Rust source code">[ .rs ↗ ]</a>
+      </div>
+    `;
 
-      card.innerHTML = `
-        <div class="matrix-card-top">
-          <span class="matrix-card-num">[ ${s.num} ]</span>
-          <span class="matrix-card-badge">${s.frame}</span>
-        </div>
-        <h3 class="matrix-card-title">${s.name}</h3>
-        <p class="matrix-card-sub">// ${s.sub}</p>
-        <p class="matrix-card-desc">${s.desc}</p>
-        <div class="matrix-card-math-box">
-          <span class="math-label">PHYSICS:</span> <span class="math-val">${s.math}</span>
-        </div>
-        <div class="matrix-card-actions">
-          <button class="matrix-btn matrix-btn-preview" data-idx="${idx}" title="Preview in showcase stage above">[ PREVIEW ]</button>
-          <button class="matrix-btn matrix-btn-copy" data-cmd="idlescreen preview ${s.id}" title="Copy preview command">[ COPY CMD ]</button>
-          <a class="matrix-btn matrix-btn-src" href="${s.sourceUrl}" target="_blank" rel="noopener noreferrer" title="View Rust source code">[ .rs ↗ ]</a>
-        </div>
-      `;
+    // Preview button click
+    const prevBtnEl = card.querySelector(".matrix-btn-preview");
+    if (prevBtnEl) {
+      prevBtnEl.addEventListener("click", () => {
+        selectScene(idx);
+        const showcaseEl = document.getElementById("showcase");
+        if (showcaseEl) {
+          showcaseEl.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
 
-      // Preview button click
-      const prevBtnEl = card.querySelector(".matrix-btn-preview");
-      if (prevBtnEl) {
-        prevBtnEl.addEventListener("click", () => {
-          selectScene(idx);
-          const showcaseEl = document.getElementById("showcase");
-          if (showcaseEl) {
-            showcaseEl.scrollIntoView({ behavior: "smooth" });
-          }
-        });
-      }
+    // Copy button click with robust fallback
+    const copyBtn = card.querySelector(".matrix-btn-copy");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", () => {
+        const cmd = copyBtn.getAttribute("data-cmd");
+        const showDone = () => {
+          const orig = copyBtn.textContent;
+          copyBtn.textContent = "[ COPIED! ]";
+          copyBtn.classList.add("copied");
+          setTimeout(() => {
+            copyBtn.textContent = orig;
+            copyBtn.classList.remove("copied");
+          }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(cmd).then(showDone).catch(() => {
+            if (typeof fallbackCopy === "function") {
+              fallbackCopy(cmd, showDone);
+            } else {
+              showDone();
+            }
+          });
+        } else if (typeof fallbackCopy === "function") {
+          fallbackCopy(cmd, showDone);
+        } else {
+          showDone();
+        }
+      });
+    }
 
-      // Copy button click with robust fallback
-      const copyBtn = card.querySelector(".matrix-btn-copy");
-      if (copyBtn) {
-        copyBtn.addEventListener("click", () => {
-          const cmd = copyBtn.getAttribute("data-cmd");
-          const showDone = () => {
-            const orig = copyBtn.textContent;
-            copyBtn.textContent = "[ COPIED! ]";
-            copyBtn.classList.add("copied");
-            setTimeout(() => {
-              copyBtn.textContent = orig;
-              copyBtn.classList.remove("copied");
-            }, 1500);
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(cmd).then(showDone).catch(() => {
-              if (typeof fallbackCopy === "function") {
-                fallbackCopy(cmd, showDone);
-              } else {
-                showDone();
-              }
-            });
-          } else if (typeof fallbackCopy === "function") {
-            fallbackCopy(cmd, showDone);
-          } else {
-            showDone();
-          }
-        });
-      }
-
-      matrixGrid.appendChild(card);
-    });
-
-    updateFilterCounts();
-    filterMatrix();
+    return card;
   }
 
-  function filterMatrix() {
+  function renderMatrix() {
     if (!matrixGrid) return;
     const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
-    const cards = matrixGrid.querySelectorAll(".matrix-card");
-    let visibleCount = 0;
+    const isFiltered = query.length > 0 || activeFilter !== "all";
 
-    cards.forEach((card) => {
-      const name = card.dataset.name || "";
-      const id = card.dataset.id || "";
-      const sub = card.dataset.sub || "";
-      const desc = card.dataset.desc || "";
-      const tags = card.dataset.tags || "";
-      const math = card.dataset.math || "";
-      const num = card.dataset.num || "";
-
-      const matchesQuery = !query ||
-        name.includes(query) ||
-        id.includes(query) ||
-        sub.includes(query) ||
-        desc.includes(query) ||
-        tags.includes(query) ||
-        math.includes(query) ||
-        num.includes(query);
-
-      let matchesFilter = true;
-      if (activeFilter !== "all") {
-        matchesFilter = tags.includes(activeFilter);
+    if (userViewMode === "marquee" && !isFiltered) {
+      if (matrixViewport) matrixViewport.classList.add("marquee-mode");
+      if (viewModeMarquee) {
+        viewModeMarquee.classList.add("active");
+        viewModeMarquee.setAttribute("aria-pressed", "true");
       }
-
-      if (matchesQuery && matchesFilter) {
-        card.style.display = "";
-        visibleCount++;
-      } else {
-        card.style.display = "none";
+      if (viewModeGrid) {
+        viewModeGrid.classList.remove("active");
+        viewModeGrid.setAttribute("aria-pressed", "false");
       }
-    });
+      matrixGrid.innerHTML = "";
 
-    if (countBadge) {
-      countBadge.textContent = `[ ${visibleCount} / 37 SCENES ]`;
+      const stream1 = document.createElement("div");
+      stream1.className = "marquee-stream stream-left";
+      const stream2 = document.createElement("div");
+      stream2.className = "marquee-stream stream-right";
+
+      const half = Math.ceil(SAVERS.length / 2);
+      const group1 = SAVERS.slice(0, half);
+      const group2 = SAVERS.slice(half);
+
+      // Stream 1 original + clones for seamless infinite scroll
+      group1.forEach((s, i) => stream1.appendChild(buildCard(s, i)));
+      group1.forEach((s, i) => stream1.appendChild(buildCard(s, i, true)));
+
+      // Stream 2 original + clones for seamless infinite scroll
+      group2.forEach((s, i) => stream2.appendChild(buildCard(s, half + i)));
+      group2.forEach((s, i) => stream2.appendChild(buildCard(s, half + i, true)));
+
+      matrixGrid.appendChild(stream1);
+      matrixGrid.appendChild(stream2);
+
+      if (countBadge) countBadge.textContent = `[ 37 / 37 SCENES ]`;
+      if (searchClear) searchClear.hidden = true;
+    } else {
+      if (matrixViewport) matrixViewport.classList.remove("marquee-mode");
+      if (viewModeMarquee) {
+        viewModeMarquee.classList.toggle("active", userViewMode === "marquee" && !isFiltered);
+        viewModeMarquee.setAttribute("aria-pressed", userViewMode === "marquee" && !isFiltered ? "true" : "false");
+      }
+      if (viewModeGrid) {
+        viewModeGrid.classList.toggle("active", userViewMode === "grid" || isFiltered);
+        viewModeGrid.setAttribute("aria-pressed", userViewMode === "grid" || isFiltered ? "true" : "false");
+      }
+      matrixGrid.innerHTML = "";
+
+      let visibleCount = 0;
+      SAVERS.forEach((s, idx) => {
+        const name = s.name.toLowerCase();
+        const id = s.id.toLowerCase();
+        const sub = (s.sub || "").toLowerCase();
+        const desc = (s.desc || "").toLowerCase();
+        const tags = (s.tags || []).join(" ").toLowerCase();
+        const math = (s.math || "").toLowerCase();
+        const num = s.num.toLowerCase();
+
+        const matchesQuery = !query ||
+          name.includes(query) ||
+          id.includes(query) ||
+          sub.includes(query) ||
+          desc.includes(query) ||
+          tags.includes(query) ||
+          math.includes(query) ||
+          num.includes(query);
+
+        let matchesFilter = true;
+        if (activeFilter !== "all") {
+          matchesFilter = tags.includes(activeFilter);
+        }
+
+        const card = buildCard(s, idx);
+        if (matchesQuery && matchesFilter) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+        matrixGrid.appendChild(card);
+      });
+
+      if (countBadge) countBadge.textContent = `[ ${visibleCount} / 37 SCENES ]`;
+      if (searchClear) searchClear.hidden = !query;
     }
 
-    if (searchClear) {
-      searchClear.hidden = !query;
-    }
+    updateFilterCounts();
   }
 
   // Filter chips click
@@ -380,7 +427,7 @@
       filterChips.forEach((c) => c.classList.remove("active"));
       chip.classList.add("active");
       activeFilter = chip.getAttribute("data-filter") || "all";
-      filterMatrix();
+      renderMatrix();
     });
   });
 
@@ -391,14 +438,31 @@
         filterChips.forEach((c) => c.classList.toggle("active", c.getAttribute("data-filter") === "all"));
         activeFilter = "all";
       }
-      filterMatrix();
+      renderMatrix();
     });
   }
   if (searchClear) {
     searchClear.addEventListener("click", () => {
       searchInput.value = "";
-      filterMatrix();
+      renderMatrix();
       searchInput.focus();
+    });
+  }
+
+  // View mode switcher events
+  if (viewModeMarquee) {
+    viewModeMarquee.addEventListener("click", () => {
+      userViewMode = "marquee";
+      if (searchInput) searchInput.value = "";
+      activeFilter = "all";
+      filterChips.forEach((c) => c.classList.toggle("active", c.getAttribute("data-filter") === "all"));
+      renderMatrix();
+    });
+  }
+  if (viewModeGrid) {
+    viewModeGrid.addEventListener("click", () => {
+      userViewMode = "grid";
+      renderMatrix();
     });
   }
 

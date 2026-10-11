@@ -117,16 +117,26 @@
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub Monorepo ↗</a>
         </div>
 
-        <!-- Tenets Strip -->
-        <div class="tenets-strip">
-          <span class="tenet-chip">⚡ ZERO CYCLES WHILE ACTIVE</span>
-          <span class="tenet-chip">🐧 ANY DISTRO (FEDORA • DEBIAN • ARCH • ALPINE)</span>
-          <span class="tenet-chip">🪟 ANY DESKTOP (GNOME • KDE • COSMIC • HYPRLAND • SWAY)</span>
-          <span class="tenet-chip">⚙️ ANY INIT (SYSTEMD • OPENRC • RUNIT • S6)</span>
-          <span class="tenet-chip">🎯 DYNAMIC 60–144 FPS</span>
-          <span class="tenet-chip">🔄 OS / DE / KERNEL TRI-ROTATION</span>
-          <span class="tenet-chip">🛠️ TUI CONFIG: idlescreen tui</span>
-          <span class="tenet-chip">✨ AUTO-SETUP ON INSTALL</span>
+        <!-- Tenets Scrolling Marquee Strip -->
+        <div class="tenets-marquee-wrap" aria-label="Architecture Tenets">
+          <div class="tenets-track">
+            <span class="tenet-chip">⚡ ZERO CYCLES WHILE ACTIVE</span>
+            <span class="tenet-chip">🐧 ANY DISTRO (FEDORA • DEBIAN • ARCH • ALPINE)</span>
+            <span class="tenet-chip">🪟 ANY DESKTOP (GNOME • KDE • COSMIC • HYPRLAND • SWAY)</span>
+            <span class="tenet-chip">⚙️ ANY INIT (SYSTEMD • OPENRC • RUNIT • S6)</span>
+            <span class="tenet-chip">🎯 DYNAMIC 60–144 FPS</span>
+            <span class="tenet-chip">🔄 OS / DE / KERNEL TRI-ROTATION</span>
+            <span class="tenet-chip">🛠️ TUI CONFIG: idlescreen tui</span>
+            <span class="tenet-chip">✨ AUTO-SETUP ON INSTALL</span>
+            <span class="tenet-chip" aria-hidden="true">⚡ ZERO CYCLES WHILE ACTIVE</span>
+            <span class="tenet-chip" aria-hidden="true">🐧 ANY DISTRO (FEDORA • DEBIAN • ARCH • ALPINE)</span>
+            <span class="tenet-chip" aria-hidden="true">🪟 ANY DESKTOP (GNOME • KDE • COSMIC • HYPRLAND • SWAY)</span>
+            <span class="tenet-chip" aria-hidden="true">⚙️ ANY INIT (SYSTEMD • OPENRC • RUNIT • S6)</span>
+            <span class="tenet-chip" aria-hidden="true">🎯 DYNAMIC 60–144 FPS</span>
+            <span class="tenet-chip" aria-hidden="true">🔄 OS / DE / KERNEL TRI-ROTATION</span>
+            <span class="tenet-chip" aria-hidden="true">🛠️ TUI CONFIG: idlescreen tui</span>
+            <span class="tenet-chip" aria-hidden="true">✨ AUTO-SETUP ON INSTALL</span>
+          </div>
         </div>
       </section>
 
@@ -354,11 +364,19 @@
               <button type="button" class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
               <button type="button" class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
             </div>
+          <div class="matrix-view-toggle-bar">
+            <div class="matrix-view-toggle" role="group" aria-label="Matrix View Mode">
+              <button type="button" class="view-btn active" id="view-mode-marquee" aria-pressed="true">⚡ SCROLLING MARQUEE</button>
+              <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (37)</button>
+            </div>
+            <span class="marquee-hint">// Dual-stream live marquee · Hover to pause · Click card to preview in stage</span>
           </div>
         </div>
 
-        <div class="matrix-grid" id="matrix-grid">
-          <!-- 37 cards populated dynamically by js/gallery.js -->
+        <div class="matrix-viewport marquee-mode" id="matrix-viewport">
+          <div class="matrix-grid" id="matrix-grid">
+            <!-- 37 cards populated dynamically by js/gallery.js -->
+          </div>
         </div>
       </section>
 
