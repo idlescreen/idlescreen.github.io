@@ -154,9 +154,19 @@
             or abandon your init system just to enjoy that ambient craft?
             IdleScreen brings the same artisanal phosphor aesthetic to the system you already built.
           </p>
+
+          <!-- View Toggle Bar -->
+          <div class="omarchy-view-toggle-bar">
+            <div class="omarchy-view-toggle" role="group" aria-label="Philosophy layout view">
+              <button type="button" class="view-btn active" id="omarchy-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
+              <button type="button" class="view-btn" id="omarchy-view-grid" aria-pressed="false">[ ⊞ FULL COMPARISON (3) ]</button>
+            </div>
+            <span class="marquee-hint">PAUSE ON HOVER • HIGH CRAFT WITHOUT DISTRO-HOPPING</span>
+          </div>
         </div>
 
-        <div class="omarchy-compare-grid">
+        <div class="omarchy-viewport marquee-mode" id="omarchy-viewport">
+          <div class="omarchy-marquee-track" id="omarchy-track">
           <!-- Column 1: The Opinionated Way -->
           <div class="compare-card compare-card-opinionated">
             <div class="compare-header">
@@ -222,10 +232,9 @@
               // High craft everywhere. Zero compromise. Zero distro-hopping.
             </div>
           </div>
-        </div>
 
-        <!-- Interactive TUI Showcase Mockup -->
-        <div class="tui-showcase-container">
+          <!-- Interactive TUI Showcase Mockup -->
+          <div class="tui-showcase-container">
           <div class="tui-header-bar">
             <div class="tui-header-title-wrap">
               <span class="tui-tag">INTERACTIVE DIRECTOR</span>
@@ -255,7 +264,9 @@
             <a href="#install" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Get IdleScreen Now ↓</a>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
       <!-- Section 1: Featured 3 Random Scenes Showcase -->
       <section class="panel saver-panel" id="showcase">

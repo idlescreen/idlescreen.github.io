@@ -556,12 +556,78 @@
   background: radial-gradient(circle at 50% 0%, rgba(255, 176, 0, 0.03) 0%, transparent 60%);
 }
 
-.omarchy-compare-grid {
+.omarchy-view-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.omarchy-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.omarchy-viewport.marquee-mode {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 14px 0;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.omarchy-viewport.marquee-mode .omarchy-marquee-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: omarchy-marquee-scroll 50s linear infinite;
+  will-change: transform;
+  align-items: stretch;
+}
+
+.omarchy-viewport.marquee-mode:hover .omarchy-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes omarchy-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.omarchy-viewport.marquee-mode .compare-card {
+  width: 480px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.omarchy-viewport.marquee-mode .tui-showcase-container {
+  width: 720px;
+  max-width: 90vw;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+/* In grid mode */
+.omarchy-viewport:not(.marquee-mode) .omarchy-marquee-track {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
   gap: 24px;
-  margin-top: 36px;
-  margin-bottom: 36px;
+  margin-top: 24px;
+}
+
+.omarchy-viewport:not(.marquee-mode) .tui-showcase-container {
+  grid-column: 1 / -1;
+  margin-top: 0;
 }
 
 .compare-card {
