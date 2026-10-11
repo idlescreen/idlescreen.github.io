@@ -5,7 +5,9 @@
 }
 
 .showcase-wrapper {
-  background: var(--bg-surface);
+  background: rgba(17, 20, 23, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;

@@ -97,16 +97,18 @@
   }
 
   function onPointerMove(e) {
-    mouse.x = e.clientX * dpr;
-    mouse.y = e.clientY * dpr;
-    mouse.active = true;
+    var px = e.clientX * dpr, py = e.clientY * dpr;
+    if (smoothMouse.x < -1000) { smoothMouse.x = px; smoothMouse.y = py; }
+    mouse.x = px; mouse.y = py; mouse.active = true;
     lastPointerTime = performance.now();
     if (reducedMotion) render(performance.now());
   }
 
   function onPointerDown(e) {
+    var px = e.clientX * dpr, py = e.clientY * dpr;
+    if (smoothMouse.x < -1000) { smoothMouse.x = px; smoothMouse.y = py; }
     lastPointerTime = performance.now();
-    ripples.push({ x: e.clientX * dpr, y: e.clientY * dpr, born: performance.now(), maxR: 380 * dpr, dur: 950 });
+    ripples.push({ x: px, y: py, born: performance.now(), maxR: 380 * dpr, dur: 950 });
     if (ripples.length > 5) ripples.shift();
   }
 
@@ -144,7 +146,7 @@
     ctx.fillRect(0, 0, width, height);
 
     var sub = currentSubdued;
-    var mouseReach = (240 + 40 * sub) * dpr, mouseReachSq = mouseReach * mouseReach;
+    var mouseReach = (240 + 60 * sub) * dpr, mouseReachSq = mouseReach * mouseReach;
     var wanderReachSq = wander.reach * wander.reach, sec = t * 0.001, ringW = 28 * dpr;
 
     var activeRipples = ripples.map(function (rp) {
@@ -157,11 +159,11 @@
     var ambientWeight = 0.65 * (1 - smoothMouse.strength * 0.75) * (1 - sub);
 
     // Subdued alphas: ~12-15% of intro plasma opacity
-    var aFHigh = (0.24 * (1 - 0.86 * sub)).toFixed(3), aFLow = (0.08 * (1 - 0.86 * sub)).toFixed(3);
+    var aFHigh = (0.24 - 0.10 * sub).toFixed(3), aFLow = (0.08 - 0.03 * sub).toFixed(3);
     var colorFieldHigh = 'rgba(255, 176, 0, ' + aFHigh + ')', colorFieldLow = 'rgba(255, 176, 0, ' + aFLow + ')';
     var colorSpotHigh = sub < 0.05 ? '#ffd447' : 'rgba(255, 212, 71, ' + (1 - 0.35 * sub).toFixed(2) + ')';
     var colorSpotMid = sub < 0.05 ? '#ffb000' : 'rgba(255, 176, 0, ' + (1 - 0.45 * sub).toFixed(2) + ')';
-    var ditherThreshold = 0.74 + 0.12 * sub;
+    var ditherThreshold = 0.74 + 0.02 * sub;
 
     var stageRect = stage ? stage.getBoundingClientRect() : null;
     var introVisible = stageRect && stageRect.bottom > 0 && stageRect.top < window.innerHeight;
@@ -195,16 +197,21 @@
           }
         }
 
+        var wordDrawn = false;
         if (isWord && introVisible) {
           var lit = (0.45 + spot * 1.7 + ripGlow * 1.4) * (1 - sub);
           if (lit > 0.05) {
             ctx.fillStyle = lit > 1.35 ? '#ffffff' : lit > 0.92 ? '#ffd447' : lit > 0.6 ? '#ffb000' : '#b87700';
             ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
+            wordDrawn = true;
           }
-        } else if (!inWordBox) {
+        }
+
+        if (!wordDrawn) {
           var nx = c * 0.07 + sec * 0.16, ny = r * 0.07 - sec * 0.11;
           var nVal = 0.6 * sampleNoise(nx, ny) + 0.4 * sampleNoise(nx * 0.5 - sec * 0.08, ny * 0.5 + sec * 0.07);
           var energy = nVal * 0.75 + (0.5 + 0.5 * Math.sin(sec * 1.8 + (r * 37 + c * 11) % 6.283)) * 0.25;
+          if (inWordBox && introVisible) energy *= sub;
           var fieldVal = energy * 0.44 + spot * 0.85 + ripGlow * 0.95;
           var dither = BAYER[(r & 7) * 8 + (c & 7)] / 64;
 
@@ -230,6 +237,8 @@
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     document.addEventListener('pointerleave', function (e) { if (!e || !e.relatedTarget) mouse.active = false; }, { passive: true });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
+    window.addEventListener('pointerup', function (e) { if (e && e.pointerType === 'touch') mouse.active = false; }, { passive: true });
+    window.addEventListener('pointercancel', function () { mouse.active = false; }, { passive: true });
     window.addEventListener('blur', function () { mouse.active = false; }, { passive: true });
     document.addEventListener('visibilitychange', function () {
       isVisible = !document.hidden;
@@ -240,7 +249,5 @@
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
-  }
+  } else { start(); }
 })();

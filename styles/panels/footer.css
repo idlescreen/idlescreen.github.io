@@ -1,7 +1,9 @@
 /* styles/panels/footer.css — site footer, navigation columns, and copyright */
 .site-footer {
   border-top: 1px solid var(--border-subtle);
-  background: #08090a;
+  background: rgba(11, 13, 14, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 64px 24px 48px;
   margin-top: 60px;
 }
