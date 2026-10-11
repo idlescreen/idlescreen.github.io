@@ -20,6 +20,7 @@
   // 2. Active top navigation link tracking based on scroll position
   const navSections = [
     { id: "overview", el: document.getElementById("overview") },
+    { id: "omarchy-play", el: document.getElementById("omarchy-play") },
     { id: "showcase", el: document.getElementById("showcase") },
     { id: "scene-matrix", el: document.getElementById("scene-matrix") },
     { id: "ecosystem", el: document.getElementById("ecosystem") },

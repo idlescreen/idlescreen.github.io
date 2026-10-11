@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IdleScreen // High-Performance Wayland Screensavers &amp; Idle Daemon</title>
+    <title>IdleScreen // High-Craft Wayland Screensavers for Modern Linux</title>
     <meta
       name="description"
-      content="IdleScreen — high-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree punchy ASCII scenes, dynamic Host OS/DE/Kernel tri-rotation, 60–144 FPS monitor matching, 400% responsive font scaling, and universal distro &amp; init support."
+      content="IdleScreen — high-craft Wayland screensaver suite for Linux. A play on the Omarchy theme for everyone who doesn't want to change their OS, DE, or init. 37 in-tree ASCII scenes, Host OS/DE/Kernel tri-rotation, autosetup on install, and idlescreen tui."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base.css" />
@@ -39,6 +39,7 @@
 
         <nav class="site-nav" aria-label="Main Navigation">
           <a href="#overview" class="nav-link active">Overview</a>
+          <a href="#omarchy-play" class="nav-link">The Play</a>
           <a href="#showcase" class="nav-link">Featured</a>
           <a href="#scene-matrix" class="nav-link">37 Scenes</a>
           <a href="#ecosystem" class="nav-link">Ecosystem</a>
@@ -67,6 +68,7 @@
       <!-- Mobile Navigation Drawer -->
       <div class="mobile-nav" id="mobile-nav">
         <a href="#overview" class="mobile-nav-link">Overview <span>→</span></a>
+        <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
         <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
         <a href="#scene-matrix" class="mobile-nav-link">37 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
@@ -84,20 +86,16 @@
       <section class="panel hero-section" id="overview">
         <div class="hero-eyebrow">
           <span class="hero-eyebrow-dot" aria-hidden="true"></span>
-          HIGH-PERFORMANCE WAYLAND SCREENSAVER SUITE // 37 IN-TREE SCENES
+          A PLAY ON THE OMARCHY THEME // AMBIENT CRAFT FOR THE REST OF US
         </div>
 
-        <h1 class="hero-title"><span id="hero-title">Ambient by Design</span><span class="term-cursor" aria-hidden="true">_</span></h1>
+        <h1 class="hero-title"><span id="hero-title">Keep Your OS.<br>Keep Your Desktop.<br><span style="color: var(--phosphor);">Keep Your Init.</span></span><span class="term-cursor" aria-hidden="true">_</span></h1>
 
         <p class="hero-intro">
-          IdleScreen watches compositor idle signals over
-          <span class="t" tabindex="0" data-tip="the wayland protocol that tells a host when you stopped typing. idlescreen spends zero render cycles while you're active.">ext-idle-notify-v1</span>
-          (and GNOME Mutter IdleMonitor), launches lightweight graphics onto
-          <span class="t" tabindex="0" data-tip="a wayland protocol layer that places surfaces above/below your desktop — how a saver covers the screen without a window.">wlr-layer-shell</span>
-          surfaces across every monitor, and yields the instant you touch
-          the keyboard. Powered by a high-performance in-tree ASCII screensaver engine featuring 37 standalone scenes,
-          dynamic in-tree ASCII tri-rotation between Host OS, Desktop Environment, and Linux Kernel,
-          dynamic 60–144 Hz monitor refresh rate matching, and responsive 400% multi-cell font scaling.
+          You don't need to wipe your drive, switch distributions, or learn a bespoke tiling window manager just to experience high-craft ambient screensavers.
+          <strong>IdleScreen</strong> brings the aesthetic and precision of modern Linux ricing to whatever you're already running —
+          Fedora, Debian, Arch, Alpine, openSUSE, GNOME, KDE, COSMIC, Hyprland, Sway, systemd, or OpenRC.
+          Instant auto-setup on install, zero cycles while active, and effortlessly managed via <code>idlescreen tui</code>.
         </p>
 
         <!-- High-Contrast Terminal Install Box -->
@@ -108,24 +106,144 @@
           </div>
           <button type="button" class="copy-action-btn" onclick="copySnippet('install-cmd', this)" aria-label="Copy install script command">[ COPY INSTALL ]</button>
         </div>
+        <div class="install-subtext">
+          <span>⚡ Instant auto-setup on install · Auto-detects OS, DE &amp; Init · Tune anytime via <code>idlescreen tui</code></span>
+        </div>
 
         <div class="hero-actions">
           <a href="#install" class="btn btn-primary">Quick Install ↓</a>
-          <a href="#showcase" class="btn btn-secondary">Featured Scenes ↓</a>
+          <a href="#omarchy-play" class="btn btn-secondary">The "For Everyone Else" Play ↓</a>
+          <a href="#showcase" class="btn btn-ghost">Featured Scenes ↓</a>
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub Monorepo ↗</a>
-          <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Packages (APT/RPM/AUR) ↗</a>
         </div>
 
         <!-- Tenets Strip -->
         <div class="tenets-strip">
           <span class="tenet-chip">⚡ ZERO CYCLES WHILE ACTIVE</span>
-          <span class="tenet-chip">🖥️ ALL INIT SYSTEMS</span>
-          <span class="tenet-chip">🪟 NATIVE WAYLAND LAYER-SHELL</span>
+          <span class="tenet-chip">🐧 ANY DISTRO (FEDORA • DEBIAN • ARCH • ALPINE)</span>
+          <span class="tenet-chip">🪟 ANY DESKTOP (GNOME • KDE • COSMIC • HYPRLAND • SWAY)</span>
+          <span class="tenet-chip">⚙️ ANY INIT (SYSTEMD • OPENRC • RUNIT • S6)</span>
           <span class="tenet-chip">🎯 DYNAMIC 60–144 FPS</span>
-          <span class="tenet-chip">🎨 37 IN-TREE PUNCHY SCENES</span>
           <span class="tenet-chip">🔄 OS / DE / KERNEL TRI-ROTATION</span>
-          <span class="tenet-chip">📐 400% FONT SCALING</span>
-          <span class="tenet-chip">📺 MULTI-MONITOR</span>
+          <span class="tenet-chip">🛠️ TUI CONFIG: idlescreen tui</span>
+          <span class="tenet-chip">✨ AUTO-SETUP ON INSTALL</span>
+        </div>
+      </section>
+
+      <!-- Section: A Play on the Omarchy Theme -->
+      <section class="panel omarchy-section" id="omarchy-play">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            THE PHILOSOPHY // HIGH CRAFT WITHOUT THE DOGMA
+          </div>
+          <h2 class="section-title">A Play on the Omarchy Theme — For Everyone Else</h2>
+          <p class="section-intro">
+            Omarchy demonstrated that Linux ricing can be gorgeous, punchy, and deeply tactile.
+            But why should you have to repartition your storage drive, migrate distributions, adopt an opinionated window manager,
+            or abandon your init system just to enjoy that ambient craft?
+            IdleScreen brings the same artisanal phosphor aesthetic to the system you already built.
+          </p>
+        </div>
+
+        <div class="omarchy-compare-grid">
+          <!-- Column 1: The Opinionated Way -->
+          <div class="compare-card compare-card-opinionated">
+            <div class="compare-header">
+              <span class="compare-badge compare-badge-dim">[ THE OPINIONATED SETUP ]</span>
+              <h3 class="compare-header-title">The Dogmatic Way</h3>
+            </div>
+            <ul class="compare-list">
+              <li class="compare-item">
+                <span class="compare-item-icon icon-no">✕</span>
+                <div><strong>Drive Wipe Required:</strong> Demands an unpartitioned target drive and overrides your base installation.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-no">✕</span>
+                <div><strong>Enforced Desktop Workflow:</strong> Mandates an opinionated tiling compositor and forces 50+ new keyboard shortcuts on you.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-no">✕</span>
+                <div><strong>Init &amp; Shell Coupling:</strong> Tied to a single init architecture and specific configuration dotfile sprawl.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-no">✕</span>
+                <div><strong>High Maintenance Fragility:</strong> Upstream package churn risks breaking everyday development workflows.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-no">✕</span>
+                <div><strong>Distro Lock-in:</strong> If you don't run Arch Linux, you're out of luck.</div>
+              </li>
+            </ul>
+            <div class="compare-footer-note">
+              // Great if you want someone else to decide everything for you.
+            </div>
+          </div>
+
+          <!-- Column 2: The IdleScreen Way -->
+          <div class="compare-card compare-card-idlescreen">
+            <div class="compare-header">
+              <span class="compare-badge compare-badge-bright">[ THE IDLESCREEN WAY ]</span>
+              <h3 class="compare-header-title">Universal Linux Freedom</h3>
+            </div>
+            <ul class="compare-list">
+              <li class="compare-item">
+                <span class="compare-item-icon icon-yes">✓</span>
+                <div><strong>Keep Your Distribution:</strong> Native packages and first-class support for Fedora, Debian, Ubuntu, Arch, Alpine, openSUSE, and Void.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-yes">✓</span>
+                <div><strong>Keep Your Desktop:</strong> Seamless layer-shell integration across GNOME, KDE Plasma, COSMIC, Hyprland, Sway, River, and Wayfire.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-yes">✓</span>
+                <div><strong>Keep Your Init:</strong> Automatic daemon provisioning for systemd (user service), OpenRC, runit, dinit, s6, or standalone loop.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-yes">✓</span>
+                <div><strong>Instant Auto-Setup on Install:</strong> Single-line install auto-detects OS, DE, and Init. No manual wiring needed.</div>
+              </li>
+              <li class="compare-item">
+                <span class="compare-item-icon icon-yes">✓</span>
+                <div><strong>Everything in <code>idlescreen tui</code>:</strong> Want to tune dwell times, change scenes, or test previews? Just launch the interactive TUI.</div>
+              </li>
+            </ul>
+            <div class="compare-footer-note">
+              // High craft everywhere. Zero compromise. Zero distro-hopping.
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive TUI Showcase Mockup -->
+        <div class="tui-showcase-container">
+          <div class="tui-header-bar">
+            <div class="tui-header-title-wrap">
+              <span class="tui-tag">INTERACTIVE DIRECTOR</span>
+              <h3 class="tui-header-title">Zero Config Headaches: Just <code>idlescreen tui</code></h3>
+            </div>
+            <button type="button" class="copy-action-btn" onclick="copySnippet('tui-copy-cmd', this)">[ COPY: idlescreen tui ]</button>
+            <code id="tui-copy-cmd" style="display:none;">idlescreen tui</code>
+          </div>
+
+          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.1.9</span> <span class="tui-line-dim">─────────────────────────────────────────────────────┐</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> Fedora Linux 41    <span class="tui-line-cyan">Compositor:</span> Wayland (GNOME / Mutter)    <span class="tui-line-cyan">Kernel:</span> Linux 6.12.9    <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Screensaver</span>   <span class="tui-line-hot">► [ ascii ]</span>   [ fireworks ]   [ matrix ]   [ synthgrid ]        <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[2] Tri-Rotation Mode</span>    <span class="tui-line-green">► [ All 3 (Host OS • Desktop Env • Linux Kernel) ]</span>                  <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[3] Rotation Dwell</span>       <span class="tui-line-hot">◄ 4.5s ►</span> (Smooth phosphor fade between targets)                     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[4] Idle Activation</span>      <span class="tui-line-hot">◄ 5 mins ►</span> (Zero render cycles while active)                        <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[5] Monitor Matching</span>     <span class="tui-line-green">144 Hz Dynamic Refresh</span> (ext-idle-notify-v1 + layer-shell)           <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[6] CPU Throttle Budget</span>  <span class="tui-line-green">0.12% Core Cap</span> (Instant yield on keyboard/mouse interrupt)          <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-hot">[Enter]</span> Test Preview    <span class="tui-line-hot">[Tab]</span> Switch Field    <span class="tui-line-hot">[Space]</span> Toggle Mode    <span class="tui-line-hot">[Q]</span> Save &amp; Quit  <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">└───────────────────────────────────────────────────────────────────────────────────────┘</span></code></pre>
+
+          <div class="tui-actions-row">
+            <p class="tui-desc-text">
+              Auto-configured out of the box during install. Whenever you want to switch scenes, customize your wordmark, or tune idle dwell timeouts, you never have to parse obscure config files — just fire up <code>idlescreen tui</code>.
+            </p>
+            <a href="#install" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Get IdleScreen Now ↓</a>
+          </div>
         </div>
       </section>
 
@@ -289,12 +407,12 @@
               <h3 class="eco-title">Wayland &amp; Compositors</h3>
             </div>
             <p class="eco-desc">
-              Native Wayland surface overlay and per-output refresh rate matching over layer-shell, yielding instantly on the first human keystroke or pointer event.
+              Native Wayland surface overlay and per-output refresh rate matching over layer-shell. Auto-detects COSMIC, GNOME, KDE, or window managers on install, with instant input yield.
             </p>
             <div class="eco-pill-list">
               <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp / auto-setup)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
@@ -484,17 +602,24 @@
 
             <div class="install-channels-list">
               <div class="install-channel-item">
-                <span class="channel-label">ENABLE &amp; START DAEMON (SYSTEMD)</span>
+                <span class="channel-label">INTERACTIVE DASHBOARD (TUI)</span>
                 <div class="channel-cmd-row">
-                  <code class="channel-cmd" id="cmd-systemd">systemctl --user enable --now idlescreen</code>
-                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-systemd', this)" aria-label="Copy systemd enable command">[ COPY ]</button>
+                  <code class="channel-cmd" id="cmd-tui">idlescreen tui</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-tui', this)" aria-label="Copy TUI command">[ COPY ]</button>
                 </div>
               </div>
               <div class="install-channel-item">
                 <span class="channel-label">PREVIEW SPECIFIC SCENE</span>
                 <div class="channel-cmd-row">
-                  <code class="channel-cmd" id="cmd-preview">idlescreen preview fireworks</code>
+                  <code class="channel-cmd" id="cmd-preview">idlescreen preview ascii</code>
                   <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-preview', this)" aria-label="Copy preview command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">ENABLE &amp; START DAEMON (SYSTEMD)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-systemd">systemctl --user enable --now idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-systemd', this)" aria-label="Copy systemd enable command">[ COPY ]</button>
                 </div>
               </div>
               <div class="install-channel-item">
