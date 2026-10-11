@@ -3,8 +3,8 @@
   position: relative;
   width: 100%;
   height: calc(100vh - var(--header-height));
-  min-height: 480px;
-  max-height: 940px;
+  height: calc(100dvh - var(--header-height));
+  min-height: 440px;
   background: #070809;
   overflow: hidden;
   display: flex;
@@ -83,25 +83,6 @@
   justify-content: center;
   width: 100%;
   pointer-events: none;
-}
-
-.spotlight-wordmark-anchor {
-  width: 100%;
-  height: clamp(90px, 16vw, 170px);
-  pointer-events: none;
-}
-
-.spotlight-tagline {
-  color: var(--text-secondary);
-  font-size: clamp(13px, 1.4vw, 16px);
-  font-family: var(--font-mono);
-  max-width: 640px;
-  text-align: center;
-  line-height: 1.5;
-  margin-top: 12px;
-  letter-spacing: 0.02em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
-  pointer-events: auto;
 }
 
 .spotlight-scroll-cue {
