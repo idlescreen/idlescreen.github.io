@@ -1,0 +1,158 @@
+/* styles/spotlight.css — Omarchy-inspired interactive crazy background & spotlight stage */
+.spotlight-stage {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  min-height: 480px;
+  max-height: 940px;
+  background: #070809;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-subtle);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.spotlight-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+.spotlight-overlay {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 28px 24px 24px;
+}
+
+.spotlight-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 176, 0, 0.08);
+  border: 1px solid rgba(255, 176, 0, 0.28);
+  color: var(--hot);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.spotlight-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow: 0 0 8px var(--phosphor);
+  animation: spotlight-pulse 2.2s infinite ease-in-out;
+}
+
+@keyframes spotlight-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+.spotlight-center-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+.spotlight-wordmark-anchor {
+  width: 100%;
+  height: clamp(90px, 16vw, 170px);
+  pointer-events: none;
+}
+
+.spotlight-tagline {
+  color: var(--text-secondary);
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-family: var(--font-mono);
+  max-width: 640px;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+  pointer-events: auto;
+}
+
+.spotlight-scroll-cue {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.spotlight-scroll-cue:hover {
+  color: var(--hot);
+  transform: translateY(2px);
+}
+
+.scroll-cue-arrow {
+  font-size: 13px;
+  color: var(--phosphor);
+  animation: cue-bounce 2s infinite ease-in-out;
+}
+
+@keyframes cue-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@media (max-width: 768px) {
+  .spotlight-stage {
+    height: calc(100svh - var(--header-height));
+    min-height: 420px;
+  }
+  .spotlight-overlay {
+    padding: 20px 16px 20px;
+  }
+  .spotlight-badge {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+  .spotlight-tagline {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+}

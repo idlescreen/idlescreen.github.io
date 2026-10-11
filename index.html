@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/styles/base/mobile_nav.css" />
     <link rel="stylesheet" href="/styles/base/buttons.css" />
     <link rel="stylesheet" href="/styles/hero.css" />
+    <link rel="stylesheet" href="/styles/spotlight.css" />
     <link rel="stylesheet" href="/styles/saver/stage_header.css" />
     <link rel="stylesheet" href="/styles/saver/stage_viewport.css" />
     <link rel="stylesheet" href="/styles/saver/matrix_controls.css" />
@@ -36,7 +37,7 @@
     <header class="site-header">
       <div class="header-inner">
         <div class="brand-wrap">
-          <a href="#overview" class="brand-link" aria-label="IdleScreen Homepage">
+          <a href="#intro" class="brand-link" aria-label="IdleScreen Homepage">
             <span class="brand-logo-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
@@ -96,6 +97,31 @@
     </header>
 
     <main id="main-content" tabindex="-1">
+      <!-- Section: Spotlight Intro (Omarchy-Inspired Interactive Stage) -->
+      <section class="spotlight-stage" id="intro" aria-label="IdleScreen Spotlight Hero">
+        <canvas id="spotlight-canvas" class="spotlight-canvas" aria-hidden="true"></canvas>
+
+        <div class="spotlight-overlay">
+          <div class="spotlight-badge">
+            <span class="spotlight-badge-dot" aria-hidden="true"></span>
+            <span class="spotlight-badge-text">WAYLAND AMBIENT SUITE // OMARCHY AESTHETIC</span>
+          </div>
+
+          <div class="spotlight-center-wrap">
+            <h1 class="visually-hidden">idlescreen</h1>
+            <div class="spotlight-wordmark-anchor" aria-hidden="true"></div>
+            <p class="spotlight-tagline">
+              The malleable screensaver engine for modern Linux. Keep your OS. Keep your desktop.
+            </p>
+          </div>
+
+          <a href="#overview" class="spotlight-scroll-cue" aria-label="Scroll down to overview">
+            <span class="scroll-cue-text">SCROLL TO EXPLORE // KEEP YOUR OS</span>
+            <span class="scroll-cue-arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </section>
+
       <!-- Section 0: Overview / Hero -->
       <section class="panel hero-section" id="overview">
         <div class="hero-eyebrow">
@@ -808,6 +834,8 @@
     </footer>
 
     <!-- Modular Standard Browser Scripts -->
+    <script src="/js/spotlight/wordmark_data.js"></script>
+    <script src="/js/spotlight/spotlight_render.js"></script>
     <script src="/js/copy.js"></script>
     <script src="/js/rotate.js"></script>
     <script src="/js/catalog/scenes_primary.js"></script>
