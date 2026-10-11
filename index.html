@@ -512,9 +512,19 @@
           <p class="section-intro">
             Be up and running in seconds. Available via standalone shell installer, native package repositories, or Rust Cargo.
           </p>
+
+          <!-- View Toggle Bar -->
+          <div class="install-view-toggle-bar">
+            <div class="install-view-toggle" role="group" aria-label="Installation layout view">
+              <button type="button" class="view-btn active" id="install-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
+              <button type="button" class="view-btn" id="install-view-grid" aria-pressed="false">[ ⊞ ALL CHANNELS (4) ]</button>
+            </div>
+            <span class="marquee-hint">PAUSE ON HOVER • CLICK [ COPY ] TO CLIPBOARD</span>
+          </div>
         </div>
 
-        <div class="install-grid">
+        <div class="install-viewport marquee-mode" id="install-viewport">
+          <div class="install-grid" id="install-grid">
           <!-- Card 1: Shell Installer -->
           <div class="install-card install-card-primary">
             <div class="install-card-header">
@@ -657,7 +667,8 @@
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <!-- Noscript Fallback -->
       <noscript>

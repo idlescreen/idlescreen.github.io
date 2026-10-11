@@ -286,6 +286,58 @@
 /* ========================================================
    Installation & Package Channels (Omarchy Style Cards)
    ======================================================== */
+.install-view-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.install-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.install-viewport.marquee-mode {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 12px 0;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.install-viewport.marquee-mode .install-grid {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: install-marquee-scroll 50s linear infinite;
+  will-change: transform;
+}
+
+.install-viewport.marquee-mode:hover .install-grid {
+  animation-play-state: paused;
+}
+
+@keyframes install-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.install-viewport.marquee-mode .install-card {
+  width: 480px;
+  max-width: 85vw;
+  flex-shrink: 0;
+}
+
 .install-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
