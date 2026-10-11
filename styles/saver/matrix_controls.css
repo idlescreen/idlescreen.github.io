@@ -1,0 +1,175 @@
+/* styles/saver/matrix_controls.css — 37 scenes matrix header, search, filter chips, and view toggle */
+.matrix-header {
+  margin-bottom: 24px;
+}
+
+.matrix-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.matrix-title {
+  margin-bottom: 0;
+}
+
+.matrix-count-badge {
+  color: var(--hot);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border: 1px solid rgba(255, 176, 0, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 3px 9px;
+  background: var(--phosphor-dim);
+}
+
+.matrix-intro {
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.6;
+  max-width: 820px;
+  margin-bottom: 20px;
+}
+
+.matrix-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.matrix-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.search-prompt {
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.matrix-search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  width: 100%;
+}
+
+.search-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.search-clear-btn:hover {
+  color: var(--hot);
+}
+
+.matrix-filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-chip:hover {
+  border-color: var(--border-focus);
+  color: #fff;
+}
+
+.filter-chip.active {
+  border-color: var(--phosphor);
+  background: var(--phosphor-dim);
+  color: var(--hot);
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+}
+
+/* Matrix View Toggle */
+.matrix-view-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.matrix-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.view-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.view-btn.active {
+  background: var(--bg-surface-elevated);
+  color: var(--phosphor);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.view-btn:hover:not(.active) {
+  color: #fff;
+}
+
+.marquee-hint {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}

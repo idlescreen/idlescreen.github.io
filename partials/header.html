@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IdleScreen // High-Craft Wayland Screensavers for Modern Linux</title>
+    <meta
+      name="description"
+      content="IdleScreen — high-craft Wayland screensaver suite for Linux. A play on the Omarchy theme for everyone who doesn't want to change their OS, DE, or init. 37 in-tree ASCII scenes, Host OS/DE/Kernel tri-rotation, autosetup on install, and idlescreen tui."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles/base/tokens.css" />
+    <link rel="stylesheet" href="/styles/base/reset.css" />
+    <link rel="stylesheet" href="/styles/base/typography.css" />
+    <link rel="stylesheet" href="/styles/base/nav.css" />
+    <link rel="stylesheet" href="/styles/base/mobile_nav.css" />
+    <link rel="stylesheet" href="/styles/base/buttons.css" />
+    <link rel="stylesheet" href="/styles/hero.css" />
+    <link rel="stylesheet" href="/styles/saver/stage_header.css" />
+    <link rel="stylesheet" href="/styles/saver/stage_viewport.css" />
+    <link rel="stylesheet" href="/styles/saver/matrix_controls.css" />
+    <link rel="stylesheet" href="/styles/saver/matrix_card.css" />
+    <link rel="stylesheet" href="/styles/saver/marquee_streams.css" />
+    <link rel="stylesheet" href="/styles/gallery-controls.css" />
+    <link rel="stylesheet" href="/styles/panels/omarchy.css" />
+    <link rel="stylesheet" href="/styles/panels/tui.css" />
+    <link rel="stylesheet" href="/styles/panels/ecosystem.css" />
+    <link rel="stylesheet" href="/styles/panels/tri_rotation.css" />
+    <link rel="stylesheet" href="/styles/panels/install.css" />
+    <link rel="stylesheet" href="/styles/panels/footer.css" />
+  </head>
+  <body>
+    <a href="#overview" class="skip-link">Skip to Content</a>
+
+    <!-- Sticky Top Navigation Bar (Omarchy Style) -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand-wrap">
+          <a href="#overview" class="brand-link" aria-label="IdleScreen Homepage">
+            <span class="brand-logo-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+                <polyline points="7 8 10 10 7 12"></polyline>
+                <line x1="13" y1="12" x2="16" y2="12"></line>
+              </svg>
+            </span>
+            <span class="brand-name">IdleScreen</span>
+          </a>
+          <span class="brand-badge" title="Daemon Core v4.1.9 Online">CORE: v4.1.9</span>
+        </div>
+
+        <nav class="site-nav" aria-label="Main Navigation">
+          <a href="#overview" class="nav-link active">Overview</a>
+          <a href="#omarchy-play" class="nav-link">The Play</a>
+          <a href="#showcase" class="nav-link">Featured</a>
+          <a href="#scene-matrix" class="nav-link">37 Scenes</a>
+          <a href="#ecosystem" class="nav-link">Ecosystem</a>
+          <a href="#install" class="nav-link">Install</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="GitHub Monorepo">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="Distro Package Repositories">Packages</a>
+          <a href="#install" class="nav-btn nav-btn-primary">Install</a>
+          <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div class="mobile-nav" id="mobile-nav">
+        <a href="#overview" class="mobile-nav-link">Overview <span>→</span></a>
+        <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
+        <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
+        <a href="#scene-matrix" class="mobile-nav-link">37 Scenes Matrix <span>→</span></a>
+        <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
+        <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
+        <div class="mobile-nav-actions">
+          <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">GitHub ↗</a>
+          <a href="https://github.com/idlescreen/packages" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">Packages ↗</a>
+          <a href="#install" class="nav-btn nav-btn-primary">Install</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">

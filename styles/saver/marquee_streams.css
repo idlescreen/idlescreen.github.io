@@ -1,0 +1,50 @@
+/* styles/saver/marquee_streams.css — dual-opposing horizontal marquee streams */
+.matrix-viewport.marquee-mode {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 10px 0;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.matrix-viewport.marquee-mode .matrix-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 0;
+}
+
+.matrix-viewport.marquee-mode .marquee-stream {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+}
+
+.matrix-viewport.marquee-mode .stream-left {
+  animation: stream-scroll-left 60s linear infinite;
+}
+
+.matrix-viewport.marquee-mode .stream-right {
+  animation: stream-scroll-right 60s linear infinite;
+}
+
+.matrix-viewport.marquee-mode:hover .marquee-stream {
+  animation-play-state: paused;
+}
+
+@keyframes stream-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes stream-scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.matrix-viewport.marquee-mode .matrix-card {
+  width: 320px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,68 @@
+/* styles/base/typography.css — section structure, titles, eyebrows, and responsive typography */
+.panel,
+.page-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Subtle fade in for sections */
+.panel {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Section Header Structure */
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-eyebrow,
+.panel-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow: 0 0 6px var(--phosphor);
+}
+
+.section-title {
+  font-size: clamp(26px, 3.8vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.section-intro {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 800px;
+}
+
+@media (max-width: 640px) {
+  .panel,
+  .page-section {
+    padding: 56px 16px;
+  }
+}

@@ -1,0 +1,131 @@
+      <!-- Section 3: Ecosystem & Compatibility -->
+      <section class="panel" id="ecosystem">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            UNIVERSAL LINUX COMPATIBILITY // ZERO-OVERHEAD DISPATCH
+          </div>
+          <h2 class="section-title">Built for Every Distro, DE, and Init</h2>
+          <p class="section-intro">
+            IdleScreen is engineered from the metal up in Rust to integrate natively across the entire modern Linux landscape without runtime bloat or desktop-specific lock-in.
+          </p>
+
+          <!-- View Toggle Bar -->
+          <div class="ecosystem-view-toggle-bar">
+            <div class="ecosystem-view-toggle" role="group" aria-label="Ecosystem layout view">
+              <button type="button" class="view-btn active" id="ecosystem-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
+              <button type="button" class="view-btn" id="ecosystem-view-grid" aria-pressed="false">[ ⊞ ALL MODULES (4) ]</button>
+            </div>
+            <span class="marquee-hint">PAUSE ON HOVER • DYNAMIC HARDWARE MATCHING</span>
+          </div>
+        </div>
+
+        <div class="ecosystem-viewport marquee-mode" id="ecosystem-viewport">
+          <div class="ecosystem-grid" id="ecosystem-grid">
+          <!-- Card 1: Host OSes -->
+          <div class="eco-card">
+            <div class="eco-card-header">
+              <span class="eco-badge">[ 01 // HOST OS ]</span>
+              <h3 class="eco-title">Supported Distributions</h3>
+            </div>
+            <p class="eco-desc">
+              Autonomous multi-probe detection with zero external dependencies via <code>/etc/os-release</code>, <code>/etc/lsb-release</code>, <code>/etc/issue</code>, and kernel <code>uname(2)</code>.
+            </p>
+            <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> Fedora / RHEL</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Debian / Ubuntu</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Arch Linux / EndeavourOS / CachyOS</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Alpine Linux</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> openSUSE</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Void Linux</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Gentoo</span>
+            </div>
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">DETECTION:</span>
+              <span class="eco-spec-val">Multi-probe hierarchy (os-release, lsb, uname)</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Desktop Environments & Compositors -->
+          <div class="eco-card">
+            <div class="eco-card-header">
+              <span class="eco-badge">[ 02 // COMPOSITORS &amp; DESKTOPS ]</span>
+              <h3 class="eco-title">Wayland &amp; Compositors</h3>
+            </div>
+            <p class="eco-desc">
+              Native Wayland surface overlay and per-output refresh rate matching over layer-shell. Auto-detects COSMIC, GNOME, KDE, or window managers on install, with instant input yield.
+            </p>
+            <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp / auto-setup)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> River</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Labwc</span>
+            </div>
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">PROTOCOLS:</span>
+              <span class="eco-spec-val">wlr-layer-shell &amp; ext-idle-notify-v1</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Init Systems -->
+          <div class="eco-card">
+            <div class="eco-card-header">
+              <span class="eco-badge">[ 03 // INIT &amp; SUPERVISORS ]</span>
+              <h3 class="eco-title">All Init Systems</h3>
+            </div>
+            <p class="eco-desc">
+              Runs under any supervision architecture with zero-timeout D-Bus activation, clean SIGTERM dispatch, and zero CPU usage while the user is actively working.
+            </p>
+            <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service with zero-timeout D-Bus activation)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> OpenRC</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> runit</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> dinit</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> s6</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Standalone supervisor loop</span>
+            </div>
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">D-BUS:</span>
+              <span class="eco-spec-val">org.freedesktop.ScreenSaver zero-timeout activation</span>
+            </div>
+          </div>
+
+          <!-- Card 4: ASCII Tri-Rotation -->
+          <div class="eco-card eco-card-highlight">
+            <div class="eco-card-header">
+              <span class="eco-badge eco-badge-hot">[ 04 // TRI-ROTATION ENGINE ]</span>
+              <h3 class="eco-title">ASCII Tri-Rotation</h3>
+            </div>
+            <p class="eco-desc">
+              Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 37 punchy effects with 400% font scaling.
+            </p>
+
+            <div class="tri-rotation-demo" id="tri-rotation-demo">
+              <div class="tri-rot-header">
+                <span class="tri-rot-label">CYCLE PREVIEW:</span>
+                <span class="tri-rot-state" id="tri-rot-mode">HOST OS</span>
+              </div>
+              <div class="tri-rot-display">
+                <span class="tri-rot-prompt">&gt;</span>
+                <span class="tri-rot-text" id="tri-rot-text">Fedora Linux 41</span>
+              </div>
+              <div class="tri-rot-controls">
+                <button type="button" class="tri-rot-btn active" data-mode="os" onclick="cycleTriRotation('os')">OS</button>
+                <button type="button" class="tri-rot-btn" data-mode="de" onclick="cycleTriRotation('de')">DE</button>
+                <button type="button" class="tri-rot-btn" data-mode="kernel" onclick="cycleTriRotation('kernel')">KERNEL</button>
+                <button type="button" class="tri-rot-btn tri-rot-btn-auto" id="tri-rot-auto" onclick="toggleTriRotationAuto()">CYCLE [AUTO: ON]</button>
+              </div>
+            </div>
+
+            <div class="eco-spec-row">
+              <span class="eco-spec-key">FEATURES:</span>
+              <span class="eco-spec-val">400% font scaling • Dynamic 60–144 Hz display matching</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

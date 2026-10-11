@@ -1,0 +1,203 @@
+/* styles/saver/stage_header.css — showcase stage container, title, slot tabs, and picker */
+.saver-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-wrapper {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.55);
+}
+
+.showcase-topbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(18, 21, 23, 0.7);
+}
+
+.showcase-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.saver-idx {
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.saver-name {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.saver-sub {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+}
+
+.saver-badge-group {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.saver-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+.saver-badge-live {
+  color: var(--hot);
+  border-color: rgba(255, 176, 0, 0.4);
+  background: var(--phosphor-dim);
+  box-shadow: 0 0 12px rgba(255, 176, 0, 0.15);
+}
+
+/* 3 Random Featured Tabs + Reroll + Quick Select */
+.showcase-slots-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.slots-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.showcase-slots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.showcase-slot {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.showcase-slot:hover {
+  border-color: var(--border-focus);
+  color: #fff;
+}
+
+.showcase-slot.active {
+  border-color: var(--phosphor);
+  background: var(--phosphor-dim);
+  color: var(--hot);
+  box-shadow: 0 0 12px rgba(255, 176, 0, 0.2);
+}
+
+.slot-num {
+  font-size: 10px;
+  color: var(--phosphor);
+}
+
+.slot-name {
+  letter-spacing: 0.04em;
+}
+
+.reroll-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid rgba(255, 176, 0, 0.35);
+  border-radius: var(--radius-sm);
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.reroll-btn:hover {
+  background: var(--phosphor);
+  color: #0b0d0e;
+  box-shadow: 0 0 14px rgba(255, 176, 0, 0.4);
+}
+
+.reroll-btn.spinning {
+  transform: scale(0.95);
+  opacity: 0.7;
+}
+
+.quick-picker-wrap {
+  margin-left: auto;
+}
+
+.quick-scene-select {
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  max-width: 280px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.quick-scene-select:focus {
+  border-color: var(--phosphor);
+}
+
+@media (max-width: 640px) {
+  .showcase-topbar {
+    padding: 16px;
+  }
+  .quick-picker-wrap {
+    width: 100%;
+    margin-left: 0;
+  }
+  .quick-scene-select {
+    max-width: 100%;
+    width: 100%;
+  }
+  .saver-badge-group {
+    width: 100%;
+    margin-left: 0;
+  }
+}

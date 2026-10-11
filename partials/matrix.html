@@ -1,0 +1,44 @@
+      <!-- Section 2: All 37 In-Tree ASCII Scenes Matrix -->
+      <section class="panel" id="scene-matrix">
+        <div class="matrix-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            ALL 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH
+          </div>
+          <div class="matrix-title-row">
+            <h2 class="section-title matrix-title">The 37 In-Tree ASCII Matrix</h2>
+            <span class="matrix-count-badge" id="matrix-count">[ 37 / 37 SCENES ]</span>
+          </div>
+          <p class="matrix-intro">
+            Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
+          </p>
+
+          <div class="matrix-controls-bar">
+            <div class="matrix-search-wrap">
+              <span class="search-prompt">&gt;</span>
+              <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 37 ASCII scenes" />
+              <button type="button" id="matrix-search-clear" class="search-clear-btn" aria-label="Clear search" hidden>&times;</button>
+            </div>
+            <div class="matrix-filter-chips" id="matrix-filter-chips">
+              <button type="button" class="filter-chip active" data-filter="all">ALL (37)</button>
+              <button type="button" class="filter-chip" data-filter="particles">PARTICLES (8)</button>
+              <button type="button" class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (7)</button>
+              <button type="button" class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (8)</button>
+              <button type="button" class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
+              <button type="button" class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
+            </div>
+          <div class="matrix-view-toggle-bar">
+            <div class="matrix-view-toggle" role="group" aria-label="Matrix View Mode">
+              <button type="button" class="view-btn active" id="view-mode-marquee" aria-pressed="true">⚡ SCROLLING MARQUEE</button>
+              <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (37)</button>
+            </div>
+            <span class="marquee-hint">// Dual-stream live marquee · Hover to pause · Click card to preview in stage</span>
+          </div>
+        </div>
+
+        <div class="matrix-viewport marquee-mode" id="matrix-viewport">
+          <div class="matrix-grid" id="matrix-grid">
+            <!-- 37 cards populated dynamically by js/matrix/matrix_render.js -->
+          </div>
+        </div>
+      </section>

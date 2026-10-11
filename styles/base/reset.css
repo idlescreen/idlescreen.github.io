@@ -1,0 +1,58 @@
+/* styles/base/reset.css — browser reset, body defaults, and accessibility primitives */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 16px);
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility Skip Link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--phosphor);
+  color: #0b0d0e;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  z-index: 999;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(255, 176, 0, 0.4);
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* Code and Monospace Accents */
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+code {
+  color: var(--hot);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}

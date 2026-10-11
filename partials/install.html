@@ -1,0 +1,168 @@
+      <!-- Section 4: Installation & Package Channels -->
+      <section class="panel" id="install">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            DEPLOYMENT // PACKAGES &amp; VERIFICATION
+          </div>
+          <h2 class="section-title">Installation &amp; Package Channels</h2>
+          <p class="section-intro">
+            Be up and running in seconds. Available via standalone shell installer, native package repositories, or Rust Cargo.
+          </p>
+
+          <!-- View Toggle Bar -->
+          <div class="install-view-toggle-bar">
+            <div class="install-view-toggle" role="group" aria-label="Installation layout view">
+              <button type="button" class="view-btn active" id="install-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
+              <button type="button" class="view-btn" id="install-view-grid" aria-pressed="false">[ ⊞ ALL CHANNELS (4) ]</button>
+            </div>
+            <span class="marquee-hint">PAUSE ON HOVER • CLICK [ COPY ] TO CLIPBOARD</span>
+          </div>
+        </div>
+
+        <div class="install-viewport marquee-mode" id="install-viewport">
+          <div class="install-grid" id="install-grid">
+          <!-- Card 1: Shell Installer -->
+          <div class="install-card install-card-primary">
+            <div class="install-card-header">
+              <span class="install-badge install-badge-hot">[ 01 // RECOMMENDED ]</span>
+              <h3 class="install-title">Automated Shell Installer</h3>
+            </div>
+            <p class="install-desc">
+              Auto-detects your architecture, distribution, and init system. Installs binary to <code>~/.local/bin</code>, configures systemd user service if present, and sets up man pages.
+            </p>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-script-cmd">curl -fsSL https://idlescreen.github.io/install.sh | sh</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-script-cmd', this)">[ COPY ]</button>
+            </div>
+
+            <div class="eco-spec-row" style="margin-top: 8px;">
+              <span class="eco-spec-key">VERIFY:</span>
+              <span class="eco-spec-val">Cryptographic SHA-256 integrity verification</span>
+            </div>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-verify-cmd">curl -fsSL https://idlescreen.github.io/install.sh | sh -s -- --verify</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-verify-cmd', this)">[ COPY ]</button>
+            </div>
+          </div>
+
+          <!-- Card 2: Native Package Channels -->
+          <div class="install-card">
+            <div class="install-card-header">
+              <span class="install-badge">[ 02 // DISTRO PACKAGES ]</span>
+              <h3 class="install-title">Native Package Channels</h3>
+            </div>
+            <p class="install-desc">
+              Pre-built packages maintained across major distributions with automatic updates.
+            </p>
+
+            <div class="install-channels-list">
+              <div class="install-channel-item">
+                <span class="channel-label">FEDORA / RHEL (COPR)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-fedora">sudo dnf copr enable idlescreen/idlescreen &amp;&amp; sudo dnf install idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-fedora', this)" aria-label="Copy DNF Copr install command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">ARCH LINUX (PACMAN / AUR)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-arch">sudo pacman -S idlescreen  # or paru / yay -S idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-arch', this)" aria-label="Copy Arch install command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">DEBIAN / UBUNTU (APT)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-debian">sudo apt install idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-debian', this)" aria-label="Copy APT install command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">ALPINE LINUX (APK)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-alpine">apk add idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-alpine', this)" aria-label="Copy Alpine apk install command">[ COPY ]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Rust Cargo & Source -->
+          <div class="install-card">
+            <div class="install-card-header">
+              <span class="install-badge">[ 03 // RUST TOOLCHAIN ]</span>
+              <h3 class="install-title">Build from Source</h3>
+            </div>
+            <p class="install-desc">
+              Compile from source with native SIMD acceleration directly using the Cargo toolchain.
+            </p>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-cargo-cmd">cargo install idlescreen</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-cargo-cmd', this)">[ COPY ]</button>
+            </div>
+
+            <p class="install-desc" style="font-size: 12px; margin-top: 4px;">
+              Or build directly from the GitHub monorepo:
+            </p>
+
+            <div class="install-snippet-box">
+              <code class="install-snippet-code" id="inst-git-cmd">git clone https://github.com/idlescreen/idlescreen &amp;&amp; cd idlescreen &amp;&amp; cargo build --release</code>
+              <button type="button" class="install-copy-btn" onclick="copySnippet('inst-git-cmd', this)">[ COPY ]</button>
+            </div>
+          </div>
+
+          <!-- Card 4: Quick Start Commands & Verification -->
+          <div class="install-card">
+            <div class="install-card-header">
+              <span class="install-badge">[ 04 // QUICK START &amp; VERIFY ]</span>
+              <h3 class="install-title">Daemon Management</h3>
+            </div>
+            <p class="install-desc">
+              Essential commands to control the idle daemon, verify integrity, and explore in-tree scenes.
+            </p>
+
+            <div class="install-channels-list">
+              <div class="install-channel-item">
+                <span class="channel-label">INTERACTIVE DASHBOARD (TUI)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-tui">idlescreen tui</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-tui', this)" aria-label="Copy TUI command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">PREVIEW SPECIFIC SCENE</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-preview">idlescreen preview ascii</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-preview', this)" aria-label="Copy preview command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">ENABLE &amp; START DAEMON (SYSTEMD)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-systemd">systemctl --user enable --now idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-systemd', this)" aria-label="Copy systemd enable command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">LIST ALL 37 IN-TREE SCENES</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-list">idlescreen list --scenes</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-list', this)" aria-label="Copy list scenes command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">VERIFY INTEGRITY &amp; DIAGNOSTICS</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-verify">idlescreen --verify</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-verify', this)" aria-label="Copy verify command">[ COPY ]</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

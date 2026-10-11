@@ -1,0 +1,179 @@
+/* styles/saver/stage_viewport.css — showcase video/canvas player, arrows, and HUD overlay */
+.saver-stage {
+  position: relative;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saver-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.saver-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* Stage Nav Arrows */
+.saver-nav-arrows {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.stage-nav-btn {
+  pointer-events: auto;
+  width: 40px;
+  height: 40px;
+  background: rgba(11, 13, 14, 0.85);
+  border: 1px solid var(--border-focus);
+  border-radius: 50%;
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  backdrop-filter: blur(8px);
+}
+
+.stage-nav-btn:hover {
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+  background: rgba(18, 21, 23, 0.95);
+  box-shadow: 0 0 16px rgba(255, 176, 0, 0.3);
+  transform: scale(1.08);
+}
+
+/* Showcase Bottom Info Bar */
+.saver-overlay,
+.showcase-infobar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 24px;
+  background: rgba(18, 21, 23, 0.95);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.showcase-info-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.saver-desc {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  flex: 1;
+  min-width: 280px;
+}
+
+.saver-metrics {
+  display: flex;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.saver-metrics b {
+  color: var(--phosphor);
+  font-weight: 600;
+}
+
+.saver-footrow {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.saver-cmd {
+  color: #fff;
+  background: #070809;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.15s ease;
+}
+
+.saver-cmd:hover {
+  border-color: var(--phosphor);
+  box-shadow: 0 0 12px rgba(255, 176, 0, 0.15);
+}
+
+.saver-cmd .cmd-copy-hint {
+  color: var(--phosphor);
+  margin-left: 10px;
+  font-size: 11px;
+}
+
+.saver-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.saver-tag {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.saver-src {
+  margin-left: auto;
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.saver-src:hover {
+  color: var(--hot);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .saver-overlay,
+  .showcase-infobar {
+    padding: 16px;
+  }
+  .saver-src {
+    margin-left: 0;
+    width: 100%;
+  }
+}

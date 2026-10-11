@@ -9,11 +9,25 @@
       content="IdleScreen — high-craft Wayland screensaver suite for Linux. A play on the Omarchy theme for everyone who doesn't want to change their OS, DE, or init. 37 in-tree ASCII scenes, Host OS/DE/Kernel tri-rotation, autosetup on install, and idlescreen tui."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles/base.css" />
-    <link rel="stylesheet" href="/styles/panels.css" />
+    <link rel="stylesheet" href="/styles/base/tokens.css" />
+    <link rel="stylesheet" href="/styles/base/reset.css" />
+    <link rel="stylesheet" href="/styles/base/typography.css" />
+    <link rel="stylesheet" href="/styles/base/nav.css" />
+    <link rel="stylesheet" href="/styles/base/mobile_nav.css" />
+    <link rel="stylesheet" href="/styles/base/buttons.css" />
     <link rel="stylesheet" href="/styles/hero.css" />
-    <link rel="stylesheet" href="/styles/saver.css" />
+    <link rel="stylesheet" href="/styles/saver/stage_header.css" />
+    <link rel="stylesheet" href="/styles/saver/stage_viewport.css" />
+    <link rel="stylesheet" href="/styles/saver/matrix_controls.css" />
+    <link rel="stylesheet" href="/styles/saver/matrix_card.css" />
+    <link rel="stylesheet" href="/styles/saver/marquee_streams.css" />
     <link rel="stylesheet" href="/styles/gallery-controls.css" />
+    <link rel="stylesheet" href="/styles/panels/omarchy.css" />
+    <link rel="stylesheet" href="/styles/panels/tui.css" />
+    <link rel="stylesheet" href="/styles/panels/ecosystem.css" />
+    <link rel="stylesheet" href="/styles/panels/tri_rotation.css" />
+    <link rel="stylesheet" href="/styles/panels/install.css" />
+    <link rel="stylesheet" href="/styles/panels/footer.css" />
   </head>
   <body>
     <a href="#overview" class="skip-link">Skip to Content</a>
@@ -139,7 +153,6 @@
           </div>
         </div>
       </section>
-
       <!-- Section: A Play on the Omarchy Theme -->
       <section class="panel omarchy-section" id="omarchy-play">
         <div class="section-header">
@@ -267,7 +280,6 @@
       </div>
     </div>
   </section>
-
       <!-- Section 1: Featured 3 Random Scenes Showcase -->
       <section class="panel saver-panel" id="showcase">
         <div class="section-header">
@@ -297,13 +309,13 @@
             <div class="showcase-slots-wrap">
               <span class="slots-label">FEATURED [3 RANDOM]:</span>
               <div class="showcase-slots" id="showcase-slots">
-                <!-- Rendered dynamically by js/gallery.js -->
+                <!-- Rendered dynamically by js/showcase/stage_controls.js -->
               </div>
               <button type="button" class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 37 in-tree scenes">[ 🎲 REROLL 3 ]</button>
 
               <div class="quick-picker-wrap">
                 <select id="quick-scene-select" class="quick-scene-select" aria-label="Select any of the 37 in-tree ASCII scenes">
-                  <!-- Populated by js/gallery.js -->
+                  <!-- Populated by js/showcase/stage_controls.js -->
                 </select>
               </div>
             </div>
@@ -345,7 +357,6 @@
           </div>
         </div>
       </section>
-
       <!-- Section 2: All 37 In-Tree ASCII Scenes Matrix -->
       <section class="panel" id="scene-matrix">
         <div class="matrix-header">
@@ -386,11 +397,10 @@
 
         <div class="matrix-viewport marquee-mode" id="matrix-viewport">
           <div class="matrix-grid" id="matrix-grid">
-            <!-- 37 cards populated dynamically by js/gallery.js -->
+            <!-- 37 cards populated dynamically by js/matrix/matrix_render.js -->
           </div>
         </div>
       </section>
-
       <!-- Section 3: Ecosystem & Compatibility -->
       <section class="panel" id="ecosystem">
         <div class="section-header">
@@ -522,7 +532,6 @@
         </div>
       </div>
     </section>
-
       <!-- Section 4: Installation & Package Channels -->
       <section class="panel" id="install">
         <div class="section-header">
@@ -691,7 +700,6 @@
         </div>
       </div>
     </section>
-
       <!-- Noscript Fallback -->
       <noscript>
         <section class="panel">
@@ -798,11 +806,20 @@
       </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Modular Standard Browser Scripts -->
     <script src="/js/copy.js"></script>
     <script src="/js/rotate.js"></script>
-    <script src="/js/savers.js"></script>
-    <script src="/js/gallery.js"></script>
+    <script src="/js/catalog/scenes_primary.js"></script>
+    <script src="/js/catalog/scenes_secondary.js"></script>
+    <script src="/js/catalog/index.js"></script>
+    <script src="/js/matrix/matrix_card.js"></script>
+    <script src="/js/matrix/matrix_render.js"></script>
+    <script src="/js/matrix/matrix_filter.js"></script>
+    <script src="/js/showcase/stage_controls.js"></script>
+    <script src="/js/showcase/tri_rotation.js"></script>
+    <script src="/js/marquees/omarchy_marquee.js"></script>
+    <script src="/js/marquees/ecosystem_marquee.js"></script>
+    <script src="/js/marquees/install_marquee.js"></script>
     <script src="/js/gallery-controls.js"></script>
     <script src="/js/wasm-saver.js"></script>
     <script src="/js/videos.js"></script>

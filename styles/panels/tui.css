@@ -1,0 +1,122 @@
+/* styles/panels/tui.css — interactive TUI director showcase container and screen mockup */
+.tui-showcase-container {
+  background: #070809;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  margin-top: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.omarchy-viewport.marquee-mode .tui-showcase-container {
+  width: 720px;
+  max-width: 90vw;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+.omarchy-viewport:not(.marquee-mode) .tui-showcase-container {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.tui-showcase-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--phosphor), var(--cyan), transparent);
+}
+
+.tui-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tui-header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tui-tag {
+  background: var(--phosphor-dim);
+  border: 1px solid rgba(255, 176, 0, 0.3);
+  color: var(--hot);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.tui-header-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tui-screen-mock {
+  background: #020304;
+  border: 1px solid #1a2024;
+  border-radius: var(--radius-md);
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: #d1d5db;
+  line-height: 1.6;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.9);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.tui-line-dim {
+  color: #4b5563;
+}
+
+.tui-line-accent {
+  color: var(--phosphor);
+  font-weight: 600;
+}
+
+.tui-line-cyan {
+  color: var(--cyan);
+}
+
+.tui-line-hot {
+  color: var(--hot);
+}
+
+.tui-line-green {
+  color: #10b981;
+}
+
+.tui-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.tui-desc-text {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .tui-showcase-container {
+    padding: 18px;
+  }
+}

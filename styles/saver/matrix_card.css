@@ -1,0 +1,144 @@
+/* styles/saver/matrix_card.css — matrix grid layout and scene card component styling */
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.matrix-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.matrix-card:hover {
+  border-color: var(--phosphor);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 176, 0, 0.08);
+}
+
+.matrix-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.matrix-card-num {
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.matrix-card-badge {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.matrix-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.matrix-card-sub {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-top: -4px;
+}
+
+.matrix-card-desc {
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.matrix-card-math-box {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: #070809;
+  border: 1px solid var(--border-subtle);
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.math-label {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.math-val {
+  color: var(--hot);
+}
+
+.matrix-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.matrix-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.matrix-btn:hover {
+  border-color: var(--border-focus);
+  color: #fff;
+}
+
+.matrix-btn-preview {
+  border-color: rgba(255, 176, 0, 0.3);
+  color: var(--hot);
+  background: rgba(255, 176, 0, 0.06);
+}
+
+.matrix-btn-preview:hover {
+  background: var(--phosphor-dim);
+  border-color: var(--phosphor);
+  color: #fff;
+}
+
+.matrix-btn-copy.copied {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.matrix-btn-src {
+  margin-left: auto;
+}

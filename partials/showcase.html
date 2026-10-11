@@ -1,0 +1,77 @@
+      <!-- Section 1: Featured 3 Random Scenes Showcase -->
+      <section class="panel saver-panel" id="showcase">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            INTERACTIVE SHOWCASE // ZERO-OVERHEAD DISPATCH
+          </div>
+          <h2 class="section-title">Featured ASCII Scenes</h2>
+          <p class="section-intro">
+            Live preview of in-tree ASCII screensavers rendered with dynamic 60–144 Hz display refresh matching, responsive 400% multi-cell font scaling, and instant input-yield.
+          </p>
+        </div>
+
+        <div class="showcase-wrapper">
+          <div class="showcase-topbar">
+            <div class="showcase-title-wrap">
+              <span class="saver-idx" id="showcase-idx">[ SCENE 01 / 37 ]</span>
+              <h3 class="saver-name" id="showcase-name">FIREWORKS</h3>
+              <span class="saver-sub" id="showcase-sub">// Aerial Pyrotechnic Bursts</span>
+              <div class="saver-badge-group">
+                <span class="saver-badge saver-badge-live">60–144 FPS DYNAMIC</span>
+                <span class="saver-badge">IN-TREE SCENE</span>
+              </div>
+            </div>
+
+            <!-- 3 Random Featured Tabs + Reroll + Quick Select -->
+            <div class="showcase-slots-wrap">
+              <span class="slots-label">FEATURED [3 RANDOM]:</span>
+              <div class="showcase-slots" id="showcase-slots">
+                <!-- Rendered dynamically by js/showcase/stage_controls.js -->
+              </div>
+              <button type="button" class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 37 in-tree scenes">[ 🎲 REROLL 3 ]</button>
+
+              <div class="quick-picker-wrap">
+                <select id="quick-scene-select" class="quick-scene-select" aria-label="Select any of the 37 in-tree ASCII scenes">
+                  <!-- Populated by js/showcase/stage_controls.js -->
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="saver-stage" id="showcase-stage">
+            <canvas class="saver-canvas" id="showcase-canvas" data-wasm="assets/wasm/idlescreen.wasm" data-saver="beams" hidden></canvas>
+            <video class="saver-media" id="showcase-video" src="assets/videos/ascii.mp4" autoplay muted loop playsinline preload="metadata"></video>
+
+            <div class="saver-nav-arrows">
+              <button type="button" class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous featured scene">&#9664;</button>
+              <button type="button" class="stage-nav-btn stage-nav-next" id="stage-next" aria-label="Next featured scene">&#9654;</button>
+            </div>
+          </div>
+
+          <div class="showcase-controls-strip" id="showcase-controls-strip">
+            <!-- Telemetry & Parameter controls mounted here -->
+          </div>
+
+          <div class="saver-overlay showcase-infobar">
+            <div class="showcase-info-top">
+              <p class="saver-desc" id="showcase-desc">Rockets firing upward with luminous tracer tails, detonating into vibrant radial particle bursts with gravitic cascade and sparkle decay.</p>
+              <div class="saver-metrics" id="showcase-metrics">
+                <span>FRAME <b id="metric-frame">60–144 FPS</b></span>
+                <span>CPU <b id="metric-cpu">0.08%</b></span>
+                <span>MATH <b id="metric-math">Ballistic Trajectories</b></span>
+              </div>
+            </div>
+            <div class="saver-footrow">
+              <code class="saver-cmd" id="showcase-cmd" title="Click to copy">&gt; idlescreen preview fireworks <span class="cmd-copy-hint">[COPY]</span></code>
+              <div class="saver-tags" id="showcase-tags">
+                <span class="saver-tag">#in-tree</span>
+                <span class="saver-tag">#ascii</span>
+                <span class="saver-tag">#particles</span>
+                <span class="saver-tag">#pyrotechnic</span>
+              </div>
+              <a class="saver-src" id="showcase-src" target="_blank" rel="noopener noreferrer" href="https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/fireworks.rs">[ SOURCE: fireworks.rs ↗ ]</a>
+            </div>
+          </div>
+        </div>
+      </section>

@@ -1,0 +1,188 @@
+/* styles/panels/omarchy.css — Omarchy philosophy comparison section & cards */
+.omarchy-section {
+  position: relative;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 176, 0, 0.03) 0%, transparent 60%);
+}
+
+.omarchy-view-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.omarchy-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.omarchy-viewport.marquee-mode {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 14px 0;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.omarchy-viewport.marquee-mode .omarchy-marquee-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: omarchy-marquee-scroll 50s linear infinite;
+  will-change: transform;
+  align-items: stretch;
+}
+
+.omarchy-viewport.marquee-mode:hover .omarchy-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes omarchy-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.omarchy-viewport.marquee-mode .compare-card {
+  width: 480px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+/* In grid mode */
+.omarchy-viewport:not(.marquee-mode) .omarchy-marquee-track {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.compare-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.compare-card-opinionated {
+  background: rgba(18, 21, 23, 0.65);
+  border-color: #1a1e22;
+}
+
+.compare-card-opinionated .compare-header-title {
+  color: var(--text-muted);
+}
+
+.compare-card-idlescreen {
+  background: var(--bg-surface-elevated);
+  border: 1px solid rgba(255, 176, 0, 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(255, 176, 0, 0.06);
+}
+
+.compare-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.compare-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.compare-badge-dim {
+  background: #1a1e22;
+  color: #718096;
+}
+
+.compare-badge-bright {
+  background: var(--phosphor-dim);
+  color: var(--hot);
+  border: 1px solid rgba(255, 176, 0, 0.3);
+}
+
+.compare-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.compare-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.compare-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.compare-item-icon {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.icon-no {
+  color: #ef4444;
+}
+
+.icon-yes {
+  color: #10b981;
+}
+
+.compare-item strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.compare-footer-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .omarchy-viewport:not(.marquee-mode) .omarchy-marquee-track {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .compare-card {
+    padding: 18px;
+  }
+}
