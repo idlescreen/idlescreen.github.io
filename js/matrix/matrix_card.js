@@ -2,7 +2,7 @@
 (function initMatrixCard() {
   function buildMatrixCard(s, idx, isClone = false) {
     const card = document.createElement("div");
-    card.className = "matrix-card" + (isClone ? " matrix-card-clone" : "");
+    card.className = "matrix-card spotlight-card" + (isClone ? " matrix-card-clone" : "");
     if (isClone) {
       card.setAttribute("data-clone", "true");
       card.setAttribute("aria-hidden", "true");

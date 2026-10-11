@@ -137,3 +137,100 @@
     margin-top: 8px;
   }
 }
+
+/* Card Spotlight (CSS-Driven) — Dynamic Border Glow & Surface Illumination */
+.spotlight-card, .compare-card, .tui-showcase-container, .matrix-card,
+.install-card, .eco-card, .terminal-install-box, .showcase-wrapper {
+  --mouse-x: -999px;
+  --mouse-y: -999px;
+  --spotlight-radius: 350px;
+  --spotlight-border: rgba(255, 176, 0, 0.45);
+  --spotlight-glow: rgba(255, 212, 71, 0.9);
+  --spotlight-inner: rgba(255, 176, 0, 0.035);
+  position: relative;
+}
+
+.compare-card-opinionated {
+  --spotlight-border: rgba(148, 163, 184, 0.35);
+  --spotlight-glow: rgba(203, 213, 225, 0.75);
+  --spotlight-inner: rgba(148, 163, 184, 0.02);
+}
+
+.compare-card-idlescreen, .install-card-primary, .eco-card-highlight {
+  --spotlight-border: rgba(255, 176, 0, 0.65);
+  --spotlight-glow: rgba(255, 212, 71, 1);
+  --spotlight-inner: rgba(255, 176, 0, 0.055);
+}
+
+/* Border Spotlight Glow: Precisely masked to 1px border */
+.spotlight-card::after, .compare-card::after, .tui-showcase-container::after,
+.matrix-card::after, .install-card::after, .eco-card::after,
+.terminal-install-box::after, .showcase-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  box-sizing: border-box;
+  background: radial-gradient(
+    var(--spotlight-radius) circle at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-glow) 0%,
+    var(--spotlight-border) 25%,
+    rgba(255, 176, 0, 0.12) 50%,
+    transparent 75%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+/* Subtle Ambient Surface Highlight */
+.spotlight-card:not(.tui-showcase-container)::before,
+.compare-card::before, .matrix-card::before,
+.install-card::before, .eco-card::before, .terminal-install-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    calc(var(--spotlight-radius) * 1.1) circle at var(--mouse-x) var(--mouse-y),
+    var(--spotlight-inner) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+/* Hover & Active Reveal */
+.spotlight-card:hover::after, .spotlight-card.spotlight-active::after,
+.compare-card:hover::after, .tui-showcase-container:hover::after,
+.matrix-card:hover::after, .install-card:hover::after,
+.eco-card:hover::after, .terminal-install-box:hover::after,
+.showcase-wrapper:hover::after,
+.spotlight-card:not(.tui-showcase-container):hover::before,
+.spotlight-card:not(.tui-showcase-container).spotlight-active::before,
+.compare-card:hover::before, .matrix-card:hover::before,
+.install-card:hover::before, .eco-card:hover::before,
+.terminal-install-box:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-card::after, .spotlight-card::before,
+  .compare-card::after, .compare-card::before,
+  .matrix-card::after, .matrix-card::before,
+  .install-card::after, .install-card::before,
+  .eco-card::after, .eco-card::before,
+  .terminal-install-box::after, .terminal-install-box::before,
+  .showcase-wrapper::after {
+    transition: none;
+  }
+}
+
