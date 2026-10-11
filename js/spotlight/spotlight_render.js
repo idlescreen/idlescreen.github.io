@@ -49,22 +49,22 @@
            (noiseTable[y1 * N + x0] * (1 - sx) + noiseTable[y1 * N + x1] * sx) * sy;
   }
 
-  var TEXT_SEL = 'h1,h2,h3,h4,h5,h6,p,pre,code,kbd,samp,ul,ol,li,dl,dt,dd,table,thead,tbody,tfoot,tr,th,td,' +
-    'blockquote,figcaption,cite,label,input,textarea,button,select,.btn,.nav-btn,a,strong,em,b,i,mark,small,time,' +
-    'span:not([aria-hidden="true"]):not(.eyebrow-dot):not(.hero-eyebrow-dot):not(.pill-dot):not(.spotlight-badge-dot),' +
-    '.terminal-install-box,.tui-screen-mock,.tui-header-bar,.tui-desc-text,.tui-actions-row,' +
-    '.showcase-topbar,.showcase-infobar,.saver-desc,.saver-name,.saver-sub,.saver-cmd,.saver-tags,.saver-badge,.saver-metrics,' +
-    '.compare-item,.compare-header,.compare-footer-note,.install-snippet-box,.install-title,.install-desc,.install-subtext,.install-channel-item,' +
-    '.eco-title,.eco-desc,.eco-spec-row,.eco-pill,.matrix-title,.matrix-intro,.matrix-count-badge,.matrix-header,' +
-    '.hero-title,.hero-intro,.hero-eyebrow,.tenet-chip,.spotlight-badge,.spotlight-scroll-cue,.section-title,.section-intro,.section-eyebrow,' +
-    '.footer-tagline,.footer-col-title,.footer-links,.brand-name';
+  var TEXT_SEL = [
+    'h1, h2, h3, h4, h5, h6, p, pre, code, kbd, samp, ul, ol, li, dl, dt, dd, table, thead, tbody, tfoot, tr, th, td',
+    'blockquote, figcaption, cite, label, input, textarea, button, select, a, strong, em, b, i, mark, small, time',
+    '.compare-card, .matrix-card, .install-card, .eco-card, .terminal-install-box, .tui-screen-mock, .tui-actions-row',
+    '.showcase-topbar, .showcase-infobar, .showcase-controls-strip, .tenets-marquee-wrap, .site-header, .site-footer',
+    '.spotlight-badge, .spotlight-scroll-cue, .marquee-hint, .hero-eyebrow, .section-eyebrow, .section-header, .section-title, .section-intro'
+  ].join(', ');
 
   function isOverTextElement(target) {
     if (!target || target === document.body || target === document.documentElement || target === canvas) return false;
     var node = target.nodeType === 3 ? target.parentElement : target;
     if (!node || typeof node.closest !== 'function') return false;
-    var el = node.closest(TEXT_SEL);
-    return !!(el && el.textContent && el.textContent.trim().length > 0);
+    if (node.closest('#showcase-stage, .saver-stage')) return false;
+    if (node.id === 'spotlight-canvas' || node.id === 'intro') return false;
+    var match = node.closest(TEXT_SEL);
+    return !!(match && match.textContent && match.textContent.trim().length > 0);
   }
   window.IdleScreenIsText = isOverTextElement;
 

@@ -22,7 +22,9 @@
     if (window.IdleScreenIsText) return window.IdleScreenIsText(el);
     if (!el || el === document.body || el === document.documentElement) return false;
     var node = el.nodeType === 3 ? el.parentElement : el;
-    return !!(node && node.closest && node.closest('h1,h2,h3,h4,h5,h6,p,pre,code,li,span,a,button,label,.btn'));
+    if (!node || typeof node.closest !== 'function') return false;
+    if (node.closest('#showcase-stage, .saver-stage')) return false;
+    return !!(node.closest('h1,h2,h3,h4,h5,h6,p,pre,code,li,span,a,button,label,.btn,.spotlight-card'));
   }
 
   function setActiveCard(card) {
@@ -87,7 +89,13 @@
   }
 
   function handlePointerEnd(e) {
-    if (!e || e.pointerType === 'touch' || !e.relatedTarget) {
+    if (e && e.pointerType === 'touch') {
+      setActiveCard(null);
+    }
+  }
+
+  function handleDocumentLeave(e) {
+    if (!e || !e.relatedTarget) {
       setActiveCard(null);
     }
   }
@@ -103,7 +111,7 @@
     document.addEventListener('pointerdown', handlePointer, { passive: true });
     document.addEventListener('pointerup', handlePointerEnd, { passive: true });
     document.addEventListener('pointercancel', handlePointerEnd, { passive: true });
-    document.addEventListener('pointerleave', handlePointerEnd, { passive: true });
+    document.addEventListener('pointerleave', handleDocumentLeave, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('blur', function() { setActiveCard(null); }, { passive: true });
   }

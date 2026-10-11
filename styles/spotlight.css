@@ -19,8 +19,6 @@
 .spotlight-canvas {
   position: fixed;
   inset: 0;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   z-index: -1;
@@ -101,11 +99,7 @@
   transform: translateY(2px);
 }
 
-.scroll-cue-arrow {
-  font-size: 13px;
-  color: var(--phosphor);
-  animation: cue-bounce 2s infinite ease-in-out;
-}
+.scroll-cue-arrow { font-size: 13px; color: var(--phosphor); animation: cue-bounce 2s infinite ease-in-out; }
 
 @keyframes cue-bounce {
   0%, 100% { transform: translateY(0); }
@@ -113,16 +107,19 @@
 }
 
 @media (max-width: 768px) {
-  .spotlight-stage {
-    height: calc(100svh - var(--header-height));
-    min-height: 420px;
-  }
+  .spotlight-stage { height: calc(100svh - var(--header-height)); min-height: 420px; }
   .spotlight-overlay { padding: 20px 16px 20px; }
   .spotlight-badge { font-size: 10px; padding: 4px 10px; }
   .spotlight-tagline { font-size: 12px; margin-top: 8px; }
 }
 
 /* Card Spotlight (CSS-Driven) — Dynamic Border Glow & Surface Illumination */
+@property --spotlight-radius {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 350px;
+}
+
 .spotlight-card, .compare-card, .tui-showcase-container, .matrix-card,
 .install-card, .eco-card, .terminal-install-box, .showcase-wrapper {
   --mouse-x: -999px;
@@ -134,6 +131,7 @@
   position: relative;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: --spotlight-radius 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .compare-card-opinionated {
@@ -149,7 +147,7 @@
 }
 
 /* Attenuated Text-Reading Mode: Reduced Radius & Suppressed Glare over Text */
-.spotlight-card.spotlight-over-text {
+.spotlight-card.spotlight-over-text, .spotlight-over-text {
   --spotlight-radius: 120px;
   --spotlight-border: rgba(255, 176, 0, 0.20);
   --spotlight-glow: rgba(255, 212, 71, 0.38);
@@ -157,6 +155,7 @@
 }
 
 .compare-card-opinionated.spotlight-over-text {
+  --spotlight-radius: 120px;
   --spotlight-border: rgba(148, 163, 184, 0.16);
   --spotlight-glow: rgba(203, 213, 225, 0.30);
   --spotlight-inner: rgba(148, 163, 184, 0.004);
@@ -221,8 +220,10 @@
 /* Suppress surface glare over text elements */
 .spotlight-card.spotlight-over-text::before,
 .spotlight-card.spotlight-over-text:hover::before,
-.spotlight-card.spotlight-over-text.spotlight-active::before {
-  opacity: 0.15;
+.spotlight-card.spotlight-over-text.spotlight-active::before,
+.spotlight-over-text::before, .spotlight-over-text:hover::before,
+.spotlight-over-text.spotlight-active::before {
+  opacity: 0.12;
 }
 
 .matrix-card.spotlight-card:hover {
@@ -239,7 +240,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spotlight-card::after, .spotlight-card::before,
+  .spotlight-card, .spotlight-card::after, .spotlight-card::before,
   .compare-card::after, .compare-card::before,
   .matrix-card::after, .matrix-card::before,
   .install-card::after, .install-card::before,
