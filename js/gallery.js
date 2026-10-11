@@ -519,10 +519,11 @@
   const autoBtn = document.getElementById("tri-rot-auto");
 
   function updateDisplay(animate = true) {
-    if (!modeEl || !textEl) return;
     const mode = MODES[currentModeIdx];
     const modeLabels = { os: "HOST OS", de: "DESKTOP ENV", kernel: "LINUX KERNEL" };
-    modeEl.textContent = modeLabels[mode];
+    document.querySelectorAll(".tri-rot-state, #tri-rot-mode").forEach((el) => {
+      el.textContent = modeLabels[mode];
+    });
 
     // Update active button styling
     const modeBtns = document.querySelectorAll(".tri-rot-btn[data-mode]");
@@ -531,16 +532,19 @@
     });
 
     const targetText = TRI_DATA[mode][subIndices[mode]];
+    const textEls = document.querySelectorAll(".tri-rot-text, #tri-rot-text");
 
     if (!animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      textEl.textContent = targetText;
+      textEls.forEach((el) => { el.textContent = targetText; });
       return;
     }
 
-    textEl.style.opacity = "0.4";
+    textEls.forEach((el) => { el.style.opacity = "0.4"; });
     setTimeout(() => {
-      textEl.textContent = targetText;
-      textEl.style.opacity = "1";
+      textEls.forEach((el) => {
+        el.textContent = targetText;
+        el.style.opacity = "1";
+      });
     }, 120);
   }
 
@@ -563,7 +567,9 @@
   function startAuto() {
     stopAuto();
     autoTimer = setInterval(advanceCycle, 3200);
-    if (autoBtn) autoBtn.textContent = "CYCLE [AUTO: ON]";
+    document.querySelectorAll(".tri-rot-btn-auto, #tri-rot-auto").forEach((b) => {
+      b.textContent = "CYCLE [AUTO: ON]";
+    });
     isAuto = true;
   }
 
@@ -572,7 +578,9 @@
       clearInterval(autoTimer);
       autoTimer = null;
     }
-    if (autoBtn) autoBtn.textContent = "CYCLE [AUTO: OFF]";
+    document.querySelectorAll(".tri-rot-btn-auto, #tri-rot-auto").forEach((b) => {
+      b.textContent = "CYCLE [AUTO: OFF]";
+    });
     isAuto = false;
   }
 
@@ -646,4 +654,60 @@
 
   enableMarquee();
 })();
+
+// ========================================================
+// Ecosystem Marquee Controller
+// ========================================================
+(function initEcosystemMarquee() {
+  const viewport = document.getElementById("ecosystem-viewport");
+  const grid = document.getElementById("ecosystem-grid");
+  const btnMarquee = document.getElementById("ecosystem-view-marquee");
+  const btnGrid = document.getElementById("ecosystem-view-grid");
+
+  if (!viewport || !grid) return;
+
+  const originalCards = Array.from(grid.querySelectorAll(".eco-card:not([data-clone='true'])"));
+
+  function enableMarquee() {
+    viewport.classList.add("marquee-mode");
+    if (btnMarquee) {
+      btnMarquee.classList.add("active");
+      btnMarquee.setAttribute("aria-pressed", "true");
+    }
+    if (btnGrid) {
+      btnGrid.classList.remove("active");
+      btnGrid.setAttribute("aria-pressed", "false");
+    }
+    if (!grid.querySelector("[data-clone='true']")) {
+      originalCards.forEach((card) => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute("data-clone", "true");
+        grid.appendChild(clone);
+      });
+    }
+  }
+
+  function enableGrid() {
+    viewport.classList.remove("marquee-mode");
+    if (btnMarquee) {
+      btnMarquee.classList.remove("active");
+      btnMarquee.setAttribute("aria-pressed", "false");
+    }
+    if (btnGrid) {
+      btnGrid.classList.add("active");
+      btnGrid.setAttribute("aria-pressed", "true");
+    }
+    grid.querySelectorAll("[data-clone='true']").forEach((el) => el.remove());
+  }
+
+  if (btnMarquee) {
+    btnMarquee.addEventListener("click", enableMarquee);
+  }
+  if (btnGrid) {
+    btnGrid.addEventListener("click", enableGrid);
+  }
+
+  enableMarquee();
+})();
+
 

@@ -63,6 +63,58 @@
 /* ========================================================
    Universal Linux Compatibility Cards (Ecosystem)
    ======================================================== */
+.ecosystem-view-toggle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.ecosystem-view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.ecosystem-viewport.marquee-mode {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 12px 0;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.ecosystem-viewport.marquee-mode .ecosystem-grid {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: ecosystem-marquee-scroll 55s linear infinite;
+  will-change: transform;
+}
+
+.ecosystem-viewport.marquee-mode:hover .ecosystem-grid {
+  animation-play-state: paused;
+}
+
+@keyframes ecosystem-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ecosystem-viewport.marquee-mode .eco-card {
+  width: 480px;
+  max-width: 85vw;
+  flex-shrink: 0;
+}
+
 .ecosystem-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -391,9 +391,19 @@
           <p class="section-intro">
             IdleScreen is engineered from the metal up in Rust to integrate natively across the entire modern Linux landscape without runtime bloat or desktop-specific lock-in.
           </p>
+
+          <!-- View Toggle Bar -->
+          <div class="ecosystem-view-toggle-bar">
+            <div class="ecosystem-view-toggle" role="group" aria-label="Ecosystem layout view">
+              <button type="button" class="view-btn active" id="ecosystem-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
+              <button type="button" class="view-btn" id="ecosystem-view-grid" aria-pressed="false">[ ⊞ ALL MODULES (4) ]</button>
+            </div>
+            <span class="marquee-hint">PAUSE ON HOVER • DYNAMIC HARDWARE MATCHING</span>
+          </div>
         </div>
 
-        <div class="ecosystem-grid">
+        <div class="ecosystem-viewport marquee-mode" id="ecosystem-viewport">
+          <div class="ecosystem-grid" id="ecosystem-grid">
           <!-- Card 1: Host OSes -->
           <div class="eco-card">
             <div class="eco-card-header">
@@ -499,7 +509,8 @@
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <!-- Section 4: Installation & Package Channels -->
       <section class="panel" id="install">
