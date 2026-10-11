@@ -11,7 +11,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "particles", "pyrotechnic", "ballistic", "fireworks.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/fireworks.rs",
     sourceLabel: "[ SOURCE: fireworks.rs ↗ ]",
-    video: "assets/videos/bursts.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "02", id: "matrix", name: "MATRIX", sub: "Digital Rain Cascade",
     desc: "Iconic cascading streams of descending green characters with glowing phosphor leading heads, fading tails, and dynamic mutation.",
@@ -20,7 +20,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "crypto", "matrix", "phosphor", "cascade", "matrix.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/matrix.rs",
     sourceLabel: "[ SOURCE: matrix.rs ↗ ]",
-    video: "assets/videos/glyphs.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "03", id: "synthgrid", name: "SYNTHGRID", sub: "Retrowave Vector Horizon",
     desc: "3D perspective vector wireframe grid sweeping toward the camera under a glowing neon horizon with undulating topographic terrain.",
@@ -38,7 +38,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "motion", "gravity", "orbital", "relativity", "blackhole.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/blackhole.rs",
     sourceLabel: "[ SOURCE: blackhole.rs ↗ ]",
-    video: "assets/videos/cosmos.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "05", id: "thunderstorm", name: "THUNDERSTORM", sub: "Dielectric Lightning Discharge",
     desc: "Violent electrical storm simulation with branching dielectric lightning discharges, flash-bulb screen lighting, and driving rain.",
@@ -47,7 +47,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "fluid", "plasma", "lightning", "weather", "thunderstorm.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/thunderstorm.rs",
     sourceLabel: "[ SOURCE: thunderstorm.rs ↗ ]",
-    video: "assets/videos/storm.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "06", id: "beams", name: "BEAMS", sub: "Vector Acceleration",
     desc: "Crossing searchlight vector cones sweeping a high-contrast field. Calculates real-time ray intersections with phosphor persistence decay.",
@@ -56,7 +56,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "vector", "optics", "raytrace", "phosphor", "beams.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/beams.rs",
     sourceLabel: "[ SOURCE: beams.rs ↗ ]",
-    video: "assets/videos/beams.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "07", id: "rain", name: "RAIN", sub: "Atmospheric Downpour",
     desc: "Diagonal driving rain streaks across the screen with wind shear drift, splash particle impacts on bottom boundaries, and puddle ripples.",
@@ -65,7 +65,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "fluid", "weather", "downpour", "kinetics", "rain.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/rain.rs",
     sourceLabel: "[ SOURCE: rain.rs ↗ ]",
-    video: "assets/videos/ripple.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "08", id: "waves", name: "WAVES", sub: "Harmonic Wave Mechanics",
     desc: "Continuous 2D wave equations generating sinusoidal ripples, harmonic standing nodes, and surface refraction across character cells.",
@@ -74,7 +74,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "fluid", "motion", "wave", "harmonics", "waves.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/waves.rs",
     sourceLabel: "[ SOURCE: waves.rs ↗ ]",
-    video: "assets/videos/ripple.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "09", id: "binarypath", name: "BINARY PATH", sub: "Circuit Bus Interconnects",
     desc: "Microscopic PCB trace routing tracing binary ones and zeros along orthogonal bus interconnects with sub-pixel snap.",
@@ -110,7 +110,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "fluid", "fire", "plasma", "combustion", "burn.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/burn.rs",
     sourceLabel: "[ SOURCE: burn.rs ↗ ]",
-    video: "assets/videos/hearth.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "13", id: "colorshift", name: "COLOR SHIFT", sub: "HSV Chromatic Oscillation",
     desc: "Continuous radial HSV chromatic spectrum oscillation sweeping through terminal cells with smooth sinusoidal phase modulation.",
@@ -119,7 +119,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "vector", "optics", "chroma", "hsv", "colorshift.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/colorshift.rs",
     sourceLabel: "[ SOURCE: colorshift.rs ↗ ]",
-    video: "assets/videos/aurora.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "14", id: "crumble", name: "CRUMBLE", sub: "Seismic Structural Failure",
     desc: "Structural stress fractures propagating through character glyphs, collapsing the banner into tumbling debris under gravity.",
@@ -137,7 +137,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "crypto", "cipher", "entropy", "prng", "decrypt.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/decrypt.rs",
     sourceLabel: "[ SOURCE: decrypt.rs ↗ ]",
-    video: "assets/videos/glyphs.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "16", id: "errorcorrect", name: "ERROR CORRECT", sub: "Hamming Parity Scrubbing",
     desc: "Simulates memory parity corruption, ECC syndrome calculation, and automated bit-flip scrub passes across the terminal display.",
@@ -155,7 +155,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "motion", "shockwave", "radial", "impulse", "expand.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/expand.rs",
     sourceLabel: "[ SOURCE: expand.rs ↗ ]",
-    video: "assets/videos/bursts.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "18", id: "highlight", name: "HIGHLIGHT", sub: "Linear Optical Scanner",
     desc: "Ultra-bright collimated optical scan bar sweeping horizontally across text glyphs, creating high-phosphor persistence blooms.",
@@ -164,7 +164,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "vector", "optics", "specular", "scan", "highlight.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/highlight.rs",
     sourceLabel: "[ SOURCE: highlight.rs ↗ ]",
-    video: "assets/videos/beams.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "19", id: "laseretch", name: "LASER ETCH", sub: "Coherent Photon Beam",
     desc: "Industrial high-power vector laser etching glyph contours with incandescent spark splatter and burnished edge glow.",
@@ -173,7 +173,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "vector", "optics", "laser", "photon", "laseretch.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/laseretch.rs",
     sourceLabel: "[ SOURCE: laseretch.rs ↗ ]",
-    video: "assets/videos/beams.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "20", id: "middleout", name: "MIDDLE OUT", sub: "Bilateral Expansion Compression",
     desc: "Bilateral compression architecture unfolding and rendering glyphs symmetrically outward from the center column to display edges.",
@@ -191,7 +191,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "motion", "orbital", "ballistics", "gravity", "orbittingvolley.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/orbittingvolley.rs",
     sourceLabel: "[ SOURCE: orbittingvolley.rs ↗ ]",
-    video: "assets/videos/chaos.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "22", id: "overflow", name: "OVERFLOW", sub: "Hexadecimal Heap Cascade",
     desc: "Simulated memory buffer overrun cascading address offsets, raw hexadecimal dumps, and pointer corruption down the terminal rows.",
@@ -227,7 +227,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "crypto", "stochastic", "annealing", "entropy", "random_sequence.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/random_sequence.rs",
     sourceLabel: "[ SOURCE: random_sequence.rs ↗ ]",
-    video: "assets/videos/glyphs.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "26", id: "rings", name: "RINGS", sub: "Harmonic Acoustic Resonators",
     desc: "Expanding concentric shockwave rings radiating from multiple resonance nodes, producing acoustic interference patterns.",
@@ -236,7 +236,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "vector", "optics", "resonance", "bessel", "rings.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/rings.rs",
     sourceLabel: "[ SOURCE: rings.rs ↗ ]",
-    video: "assets/videos/ripple.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "27", id: "scattered", name: "SCATTERED", sub: "Brownian Particle Snapping",
     desc: "Chaotic Brownian particle drift dispersing glyphs across the field before magnetic coherence pulls every cell into position.",
@@ -245,7 +245,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "particles", "coherence", "brownian", "scattered.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/scattered.rs",
     sourceLabel: "[ SOURCE: scattered.rs ↗ ]",
-    video: "assets/videos/chaos.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "28", id: "slice", name: "SLICE", sub: "Horizontal Shear Tectonic",
     desc: "Alternating horizontal shear planes slicing across text rows in opposing directions with crisp sub-pixel alignment snap.",
@@ -272,7 +272,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "particles", "fluid", "gas", "convection", "smoke.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/smoke.rs",
     sourceLabel: "[ SOURCE: smoke.rs ↗ ]",
-    video: "assets/videos/hearth.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "31", id: "spotlights", name: "SPOTLIGHTS", sub: "Theatrical Dual Cones",
     desc: "Dual roving theatrical spotlight cones sweeping over a darkened field, revealing illuminated glyphs wherever beams intersect.",
@@ -281,7 +281,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "vector", "optics", "lighting", "searchlight", "spotlights.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/spotlights.rs",
     sourceLabel: "[ SOURCE: spotlights.rs ↗ ]",
-    video: "assets/videos/beams.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "32", id: "spray", name: "SPRAY", sub: "Pneumatic Aerosol Stencil",
     desc: "High-velocity aerosol droplet spray nozzle painting characters onto the terminal platen with stochastic mist splatter.",
@@ -299,7 +299,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "particles", "boids", "flocking", "agents", "swarm.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/swarm.rs",
     sourceLabel: "[ SOURCE: swarm.rs ↗ ]",
-    video: "assets/videos/gnats.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "34", id: "sweep", name: "SWEEP", sub: "Polar Azimuthal Radar",
     desc: "Rotating azimuthal radar sweep arm refreshing phosphor luminosity across cells with continuous exponential decay.",
@@ -308,7 +308,7 @@ const SAVERS = [
     tags: ["in-tree", "ascii", "motion", "radar", "angular", "azimuthal", "sweep.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/sweep.rs",
     sourceLabel: "[ SOURCE: sweep.rs ↗ ]",
-    video: "assets/videos/radar.mp4" },
+    video: "assets/videos/ascii.mp4" },
 
   { num: "35", id: "unstable", name: "UNSTABLE", sub: "Quantum State Fluctuations",
     desc: "Characters vibrating with quantum uncertainty, sporadic chromatic aberration, phase shifts, and high-frequency jitter.",

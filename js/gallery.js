@@ -169,14 +169,10 @@
     }
 
     if (videoEl) {
-      const targetSrc = s.video || `assets/videos/${s.id}.mp4`;
+      const targetSrc = "assets/videos/ascii.mp4";
       if (videoEl.getAttribute("data-current-src") !== targetSrc) {
         videoEl.setAttribute("data-current-src", targetSrc);
         videoEl.src = targetSrc;
-        videoEl.onerror = function() {
-          this.onerror = null;
-          this.src = "assets/videos/ascii.mp4";
-        };
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (!reduced && s.id !== "beams") {
           videoEl.play().catch(() => {});
