@@ -222,6 +222,19 @@
   opacity: 1;
 }
 
+.matrix-card.spotlight-card:hover {
+  border-color: var(--border-focus);
+}
+
+.tui-showcase-container.spotlight-card {
+  overflow: visible;
+}
+
+.tui-showcase-container::before {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .spotlight-card::after, .spotlight-card::before,
   .compare-card::after, .compare-card::before,

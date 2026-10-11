@@ -18,9 +18,23 @@
   var targetY = -999;
   var rafPending = false;
 
+  function setActiveCard(card) {
+    if (activeCard === card) return;
+    if (activeCard) {
+      activeCard.classList.remove('spotlight-active');
+    }
+    activeCard = card;
+    if (activeCard) {
+      activeCard.classList.add('spotlight-active');
+    }
+  }
+
   function updateActiveCard() {
     rafPending = false;
-    if (!activeCard) return;
+    if (!activeCard || !activeCard.isConnected) {
+      setActiveCard(null);
+      return;
+    }
 
     var rect = activeCard.getBoundingClientRect();
     var x = Math.round(targetX - rect.left);
@@ -44,12 +58,12 @@
 
     var card = target.closest(CARD_SELECTOR);
     if (!card) {
-      activeCard = null;
+      setActiveCard(null);
       return;
     }
 
     if (activeCard !== card) {
-      activeCard = card;
+      setActiveCard(card);
       var rect = card.getBoundingClientRect();
       var x = Math.round(e.clientX - rect.left);
       var y = Math.round(e.clientY - rect.top);
@@ -62,9 +76,9 @@
     scheduleUpdate();
   }
 
-  function handlePointerLeave(e) {
-    if (!e || !e.relatedTarget) {
-      activeCard = null;
+  function handlePointerEnd(e) {
+    if (!e || e.pointerType === 'touch' || !e.relatedTarget) {
+      setActiveCard(null);
     }
   }
 
@@ -77,8 +91,11 @@
   function setup() {
     document.addEventListener('pointermove', handlePointer, { passive: true });
     document.addEventListener('pointerdown', handlePointer, { passive: true });
-    document.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+    document.addEventListener('pointerup', handlePointerEnd, { passive: true });
+    document.addEventListener('pointercancel', handlePointerEnd, { passive: true });
+    document.addEventListener('pointerleave', handlePointerEnd, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('blur', function() { setActiveCard(null); }, { passive: true });
   }
 
   if (document.readyState === 'loading') {
