@@ -1,4 +1,4 @@
-// js/catalog/scenes_secondary.js — in-tree ASCII scenes catalog (20–37)
+// js/catalog/scenes_secondary.js — in-tree ASCII scenes catalog (20–38)
 window.SAVERS_SECONDARY = [
   { num: "20", id: "middleout", name: "MIDDLE OUT", sub: "Bilateral Expansion Compression",
     desc: "Bilateral compression architecture unfolding and rendering glyphs symmetrically outward from the center column to display edges.",
@@ -160,5 +160,14 @@ window.SAVERS_SECONDARY = [
     tags: ["in-tree", "ascii", "motion", "transition", "dissolve", "linear", "wipe.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/wipe.rs",
     sourceLabel: "[ SOURCE: wipe.rs ↗ ]",
+    video: "assets/videos/ascii.mp4" },
+
+  { num: "38", id: "spotlight_orbit", name: "SPOTLIGHT ORBIT", sub: "Keplerian Phosphor Orbit",
+    desc: "Signature yellow phosphor star beacon orbiting the idlescreen ASCII wordmark, casting dynamic radial luminescence across CRT cells.",
+    frame: "60–144 FPS", cpu: "0.05%", math: "Keplerian Orbital Luminescence",
+    badge: "IN-TREE SCENE",
+    tags: ["in-tree", "ascii", "vector", "optics", "orbit", "spotlight", "star", "spotlight_orbit.rs"],
+    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/spotlight_orbit.rs",
+    sourceLabel: "[ SOURCE: spotlight_orbit.rs ↗ ]",
     video: "assets/videos/ascii.mp4" }
 ];

@@ -1,4 +1,4 @@
-// js/matrix/matrix_render.js — dual-stream marquee and grid renderer for 37 scenes
+// js/matrix/matrix_render.js — dual-stream marquee and grid renderer for 38 scenes
 (function initMatrixRender() {
   let userViewMode = "marquee";
   let activeFilter = "all";
@@ -59,7 +59,7 @@
       matrixGrid.appendChild(stream1);
       matrixGrid.appendChild(stream2);
 
-      if (countBadge) countBadge.textContent = `[ 37 / 37 SCENES ]`;
+      if (countBadge) countBadge.textContent = `[ ${SAVERS.length} / ${SAVERS.length} SCENES ]`;
       if (searchClear) searchClear.hidden = true;
     } else {
       if (matrixViewport) matrixViewport.classList.remove("marquee-mode");
@@ -107,7 +107,7 @@
         matrixGrid.appendChild(card);
       });
 
-      if (countBadge) countBadge.textContent = `[ ${visibleCount} / 37 SCENES ]`;
+      if (countBadge) countBadge.textContent = `[ ${visibleCount} / ${SAVERS.length} SCENES ]`;
       if (searchClear) searchClear.hidden = !query;
     }
 

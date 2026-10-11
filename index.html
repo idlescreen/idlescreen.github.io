@@ -6,7 +6,7 @@
     <title>IdleScreen // High-Craft Wayland Screensavers for Modern Linux</title>
     <meta
       name="description"
-      content="IdleScreen — high-craft Wayland screensaver suite for Linux. A play on the Omarchy theme for everyone who doesn't want to change their OS, DE, or init. 37 in-tree ASCII scenes, Host OS/DE/Kernel tri-rotation, autosetup on install, and idlescreen tui."
+      content="IdleScreen — high-craft Wayland screensaver suite for Linux. A play on the Omarchy theme for everyone who doesn't want to change their OS, DE, or init. 38 in-tree ASCII scenes, Host OS/DE/Kernel tri-rotation, autosetup on install, and idlescreen tui."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base/tokens.css" />
@@ -75,7 +75,7 @@
       <div class="mobile-nav" id="mobile-nav">
         <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
         <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
-        <a href="#scene-matrix" class="mobile-nav-link">37 Scenes Matrix <span>→</span></a>
+        <a href="#scene-matrix" class="mobile-nav-link">38 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
         <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
         <div class="mobile-nav-actions">
@@ -305,7 +305,7 @@
         <div class="showcase-wrapper spotlight-card">
           <div class="showcase-topbar">
             <div class="showcase-title-wrap">
-              <span class="saver-idx" id="showcase-idx">[ SCENE 01 / 37 ]</span>
+              <span class="saver-idx" id="showcase-idx">[ SCENE 01 / 38 ]</span>
               <h3 class="saver-name" id="showcase-name">FIREWORKS</h3>
               <span class="saver-sub" id="showcase-sub">// Aerial Pyrotechnic Bursts</span>
               <div class="saver-badge-group">
@@ -320,10 +320,10 @@
               <div class="showcase-slots" id="showcase-slots">
                 <!-- Rendered dynamically by js/showcase/stage_controls.js -->
               </div>
-              <button type="button" class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 37 in-tree scenes">[ 🎲 REROLL 3 ]</button>
+              <button type="button" class="reroll-btn" id="reroll-btn" title="Pick 3 new random scenes from the 38 in-tree scenes">[ 🎲 REROLL 3 ]</button>
 
               <div class="quick-picker-wrap">
-                <select id="quick-scene-select" class="quick-scene-select" aria-label="Select any of the 37 in-tree ASCII scenes">
+                <select id="quick-scene-select" class="quick-scene-select" aria-label="Select any of the 38 in-tree ASCII scenes">
                   <!-- Populated by js/showcase/stage_controls.js -->
                 </select>
               </div>
@@ -366,16 +366,16 @@
           </div>
         </div>
       </section>
-      <!-- Section 2: All 37 In-Tree ASCII Scenes Matrix -->
+      <!-- Section 2: All 38 In-Tree ASCII Scenes Matrix -->
       <section class="panel" id="scene-matrix">
         <div class="matrix-header">
           <div class="section-eyebrow">
             <span class="eyebrow-dot" aria-hidden="true"></span>
-            ALL 37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH
+            ALL 38 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH
           </div>
           <div class="matrix-title-row">
-            <h2 class="section-title matrix-title">The 37 In-Tree ASCII Matrix</h2>
-            <span class="matrix-count-badge" id="matrix-count">[ 37 / 37 SCENES ]</span>
+            <h2 class="section-title matrix-title">The 38 In-Tree ASCII Matrix</h2>
+            <span class="matrix-count-badge" id="matrix-count">[ 38 / 38 SCENES ]</span>
           </div>
           <p class="matrix-intro">
             Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
@@ -384,13 +384,13 @@
           <div class="matrix-controls-bar">
             <div class="matrix-search-wrap">
               <span class="search-prompt">&gt;</span>
-              <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 37 ASCII scenes" />
+              <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 38 ASCII scenes" />
               <button type="button" id="matrix-search-clear" class="search-clear-btn" aria-label="Clear search" hidden>&times;</button>
             </div>
             <div class="matrix-filter-chips" id="matrix-filter-chips">
-              <button type="button" class="filter-chip active" data-filter="all">ALL (37)</button>
+              <button type="button" class="filter-chip active" data-filter="all">ALL (38)</button>
               <button type="button" class="filter-chip" data-filter="particles">PARTICLES (8)</button>
-              <button type="button" class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (7)</button>
+              <button type="button" class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (8)</button>
               <button type="button" class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (8)</button>
               <button type="button" class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
               <button type="button" class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
@@ -398,7 +398,7 @@
             <div class="matrix-view-toggle-bar">
               <div class="matrix-view-toggle" role="group" aria-label="Matrix View Mode">
                 <button type="button" class="view-btn active" id="view-mode-marquee" aria-pressed="true">⚡ SCROLLING MARQUEE</button>
-                <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (37)</button>
+                <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (38)</button>
               </div>
               <span class="marquee-hint">// Dual-stream live marquee · Hover to pause · Click card to preview in stage</span>
             </div>
@@ -407,7 +407,7 @@
 
         <div class="matrix-viewport marquee-mode" id="matrix-viewport">
           <div class="matrix-grid" id="matrix-grid">
-            <!-- 37 cards populated dynamically by js/matrix/matrix_render.js -->
+            <!-- 38 cards populated dynamically by js/matrix/matrix_render.js -->
           </div>
         </div>
       </section>
@@ -514,7 +514,7 @@
               <h3 class="eco-title">ASCII Tri-Rotation</h3>
             </div>
             <p class="eco-desc">
-              Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 37 punchy effects with 400% font scaling.
+              Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 38 punchy effects with 400% font scaling.
             </p>
 
             <div class="tri-rotation-demo" id="tri-rotation-demo">
@@ -692,7 +692,7 @@
                 </div>
               </div>
               <div class="install-channel-item">
-                <span class="channel-label">LIST ALL 37 IN-TREE SCENES</span>
+                <span class="channel-label">LIST ALL 38 IN-TREE SCENES</span>
                 <div class="channel-cmd-row">
                   <code class="channel-cmd" id="cmd-list">idlescreen list --scenes</code>
                   <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-list', this)" aria-label="Copy list scenes command">[ COPY ]</button>
@@ -713,9 +713,9 @@
       <!-- Noscript Fallback -->
       <noscript>
         <section class="panel">
-          <div class="section-eyebrow">37 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH</div>
+          <div class="section-eyebrow">38 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH</div>
           <p class="section-intro">
-            Built-in ASCII engine featuring 37 decomposed in-tree scenes in <code>crates/idlescreen/src/ascii/scenes/</code> with dynamic 60-144 FPS monitor matching, dynamic Host OS / DE / Linux Kernel tri-rotation, and 400% responsive font scaling.
+            Built-in ASCII engine featuring 38 decomposed in-tree scenes in <code>crates/idlescreen/src/ascii/scenes/</code> with dynamic 60-144 FPS monitor matching, dynamic Host OS / DE / Linux Kernel tri-rotation, and 400% responsive font scaling.
           </p>
           <div style="margin-top: 20px; font-size: 13px; color: var(--text-secondary); line-height: 2;">
             <code>idlescreen preview fireworks</code> •
@@ -754,7 +754,8 @@
             <code>idlescreen preview sweep</code> •
             <code>idlescreen preview unstable</code> •
             <code>idlescreen preview vhstape</code> •
-            <code>idlescreen preview wipe</code>
+            <code>idlescreen preview wipe</code> •
+            <code>idlescreen preview spotlight_orbit</code>
           </div>
         </section>
       </noscript>
@@ -778,7 +779,7 @@
               <span class="footer-logo-text">IdleScreen</span>
             </div>
             <p class="footer-tagline">
-              High-performance Wayland screensaver and idle daemon suite for Linux. 37 in-tree ASCII scenes, zero active cycles, and universal compatibility.
+              High-performance Wayland screensaver and idle daemon suite for Linux. 38 in-tree ASCII scenes, zero active cycles, and universal compatibility.
             </p>
           </div>
 
@@ -787,7 +788,7 @@
               <span class="footer-col-title">Navigation</span>
               <a href="#overview">Overview</a>
               <a href="#showcase">Featured Scenes</a>
-              <a href="#scene-matrix">37 Scenes Matrix</a>
+              <a href="#scene-matrix">38 Scenes Matrix</a>
               <a href="#ecosystem">Ecosystem</a>
               <a href="#install">Installation</a>
             </div>

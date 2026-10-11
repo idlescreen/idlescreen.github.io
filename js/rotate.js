@@ -1,7 +1,7 @@
 // rotate.js — hero title rotates through program facts
 const HEADLINES = [
   "Ambient by Design",
-  "37 In-Tree ASCII Scenes",
+  "38 In-Tree ASCII Scenes",
   "Host OS • DE • Kernel Tri-Rotation",
   "Dynamic 60–144 Hz Matching",
   "Zero Cycles While Active",

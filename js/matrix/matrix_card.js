@@ -1,4 +1,4 @@
-// js/matrix/matrix_card.js — card DOM builder for 37 in-tree ASCII scenes
+// js/matrix/matrix_card.js — card DOM builder for 38 in-tree ASCII scenes
 (function initMatrixCard() {
   function buildMatrixCard(s, idx, isClone = false) {
     const card = document.createElement("div");

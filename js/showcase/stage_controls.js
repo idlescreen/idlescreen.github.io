@@ -49,7 +49,7 @@
   function populateQuickPicker() {
     const picker = document.getElementById("quick-scene-select");
     if (!picker || typeof SAVERS === "undefined") return;
-    picker.innerHTML = '<option value="" disabled selected>— Jump to any of the 37 scenes —</option>';
+    picker.innerHTML = '<option value="" disabled selected>— Jump to any of the ' + SAVERS.length + ' scenes —</option>';
     SAVERS.forEach((s, idx) => {
       const opt = document.createElement("option");
       opt.value = idx;
@@ -104,7 +104,8 @@
     const srcEl = document.getElementById("showcase-src");
     const videoEl = document.getElementById("showcase-video");
 
-    if (idxEl) idxEl.textContent = `[ SCENE ${s.num} / 37 ]`;
+    const totalPad = SAVERS.length < 10 ? "0" + SAVERS.length : SAVERS.length;
+    if (idxEl) idxEl.textContent = `[ SCENE ${s.num} / ${totalPad} ]`;
     if (nameEl) nameEl.textContent = s.name;
     if (subEl) subEl.textContent = `// ${s.sub}`;
     if (descEl) descEl.textContent = s.desc;
@@ -150,7 +151,7 @@
         videoEl.setAttribute("data-current-src", targetSrc);
         videoEl.src = targetSrc;
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (!reduced && s.id !== "beams") {
+        if (!reduced && s.id !== "beams" && s.id !== "spotlight_orbit") {
           videoEl.play().catch(() => {});
         }
       }
