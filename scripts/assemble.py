@@ -22,11 +22,20 @@ PARTIAL_ORDER = [
 
 
 def assemble():
+    existing = {
+        f for f in os.listdir(PARTIALS_DIR)
+        if not f.startswith(".") and os.path.isfile(os.path.join(PARTIALS_DIR, f))
+    }
+    missing = set(PARTIAL_ORDER) - existing
+    if missing:
+        raise FileNotFoundError(f"Missing required partial(s): {sorted(missing)}")
+    extra = existing - set(PARTIAL_ORDER)
+    if extra:
+        raise ValueError(f"Unregistered partial(s) found: {sorted(extra)}. Update PARTIAL_ORDER.")
+
     parts = []
     for filename in PARTIAL_ORDER:
         path = os.path.join(PARTIALS_DIR, filename)
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"Missing required partial: {path}")
         with open(path, "r", encoding="utf-8") as f:
             parts.append(f.read())
     return "".join(parts)

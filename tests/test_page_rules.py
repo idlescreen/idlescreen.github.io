@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-CODE_EXTENSIONS = {".js", ".css", ".sh", ".py"}
+CODE_EXTENSIONS = {".js", ".css", ".sh", ".py", ".html"}
 EXCLUDE_DIRS = {".git", ".github"}
 EXEMPT_CODE_FILES = {"index.html"}  # index.html is the assembled artifact verified separately
 
@@ -57,9 +57,7 @@ def get_code_files():
             rel = os.path.relpath(path, REPO_ROOT)
             ext = os.path.splitext(f)[1]
 
-            # Include partials/*.html and recognized code extensions
-            is_code = ext in CODE_EXTENSIONS or (ext == ".html" and "partials" in rel)
-            if is_code and rel not in EXEMPT_CODE_FILES:
+            if ext in CODE_EXTENSIONS and rel not in EXEMPT_CODE_FILES:
                 code_files.append(path)
     return sorted(code_files)
 
@@ -90,6 +88,54 @@ def check_assembly_sync():
     if res.returncode != 0:
         return [f"index.html assembly drift:\n{res.stderr.strip()}"]
     return []
+
+
+def check_html_structure():
+    """Verify HTML5 tag balance in assembled index.html."""
+    from html.parser import HTMLParser
+
+    class TagBalanceValidator(HTMLParser):
+        VOID_TAGS = {
+            "area", "base", "br", "col", "embed", "hr", "img",
+            "input", "link", "meta", "param", "source", "track", "wbr"
+        }
+
+        def __init__(self):
+            super().__init__()
+            self.stack = []
+            self.issues = []
+
+        def handle_starttag(self, tag, attrs):
+            t = tag.lower()
+            if t not in self.VOID_TAGS:
+                self.stack.append((t, self.getpos()))
+
+        def handle_endtag(self, tag):
+            t = tag.lower()
+            if t in self.VOID_TAGS:
+                return
+            if not self.stack:
+                self.issues.append(f"Unexpected end tag </{t}> at line {self.getpos()[0]}")
+                return
+            last, pos = self.stack.pop()
+            if last != t:
+                self.issues.append(
+                    f"Mismatched tag: expected </{last}> (opened line {pos[0]}), got </{t}> at line {self.getpos()[0]}"
+                )
+
+    index_path = os.path.join(REPO_ROOT, "index.html")
+    if not os.path.exists(index_path):
+        return ["index.html not found for HTML structure check"]
+
+    with open(index_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    validator = TagBalanceValidator()
+    validator.feed(content)
+    if validator.stack:
+        for tag, pos in validator.stack:
+            validator.issues.append(f"Unclosed tag <{tag}> opened at line {pos[0]}")
+    return validator.issues
 
 
 def main():
@@ -126,11 +172,21 @@ def main():
     else:
         print("  PASS: index.html is fully synchronized with partials/.")
 
+    # 4. HTML Structure Check
+    print("Checking HTML well-formedness and tag balance...")
+    html_issues = check_html_structure()
+    if html_issues:
+        for err in html_issues:
+            print(f"  FAIL: {err}")
+        fails.extend(html_issues)
+    else:
+        print("  PASS: index.html has zero unclosed or mismatched HTML tags.")
+
     if fails:
         print(f"\nResult: FAILED with {len(fails)} violation(s).", file=sys.stderr)
         sys.exit(1)
     else:
-        print("\nResult: All page rules and directory density checks PASSED.")
+        print("\nResult: All page rules, assembly, and syntax checks PASSED.")
         sys.exit(0)
 
 
