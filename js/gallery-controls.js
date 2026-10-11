@@ -118,11 +118,16 @@
     sliderGroup.appendChild(slider);
     bar.appendChild(sliderGroup);
 
-    const stage = panel.querySelector(".saver-stage");
-    if (stage) {
-      stage.appendChild(bar);
+    const strip = panel.querySelector(".showcase-controls-strip");
+    if (strip) {
+      strip.appendChild(bar);
     } else {
-      panel.appendChild(bar);
+      const stage = panel.querySelector(".saver-stage");
+      if (stage) {
+        stage.appendChild(bar);
+      } else {
+        panel.appendChild(bar);
+      }
     }
   }
 

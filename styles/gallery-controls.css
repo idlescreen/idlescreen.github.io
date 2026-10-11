@@ -1,47 +1,39 @@
 /* styles/gallery-controls.css — Omarchy style telemetry & parameter controls */
-.gallery-controls {
+.showcase-controls-strip {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
   flex-wrap: wrap;
-  padding: 8px 14px;
-  background: rgba(18, 21, 23, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  margin-top: 10px;
+  padding: 10px 24px;
+  background: #0f1214;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-secondary);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
-.saver-stage > .gallery-controls {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  margin-top: 0;
-  z-index: 15;
-}
-
-@media (max-width: 640px) {
-  .saver-stage > .gallery-controls {
-    position: static;
-    margin: 8px 12px;
-  }
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .gallery-ctrl-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .gallery-ctrl-label {
   color: var(--text-muted);
   font-size: 10px;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -50,9 +42,9 @@
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   border-radius: var(--radius-sm);
-  padding: 3px 8px;
+  padding: 4px 10px;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.15s ease;
   outline: none;
@@ -62,7 +54,7 @@
   border-color: var(--phosphor);
   color: var(--phosphor);
   background: var(--phosphor-dim);
-  box-shadow: 0 0 8px rgba(255, 176, 0, 0.25);
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.25);
 }
 
 .gallery-ctrl-btn.active {
@@ -74,12 +66,12 @@
 .gallery-accent-picker {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .gallery-accent-dot {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.25);
   cursor: pointer;
@@ -98,13 +90,13 @@
 .gallery-slider-wrap {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .gallery-slider {
   -webkit-appearance: none;
   appearance: none;
-  width: 72px;
+  width: 80px;
   height: 4px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 2px;
@@ -115,8 +107,8 @@
 .gallery-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--phosphor);
   cursor: pointer;
@@ -126,4 +118,17 @@
 
 .gallery-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
+}
+
+@media (max-width: 640px) {
+  .showcase-controls-strip {
+    padding: 10px 16px;
+    gap: 12px;
+  }
+  .gallery-controls {
+    gap: 12px;
+  }
+  .gallery-ctrl-group {
+    gap: 6px;
+  }
 }

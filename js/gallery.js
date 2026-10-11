@@ -163,6 +163,11 @@
       srcEl.textContent = s.sourceLabel || `[ SOURCE: ${s.id}.rs ↗ ]`;
     }
 
+    window.idleCurrentSceneId = s.id;
+    if (window.idleSaverRunScene) {
+      window.idleSaverRunScene(s.id);
+    }
+
     if (videoEl) {
       const targetSrc = s.video || `assets/videos/${s.id}.mp4`;
       if (videoEl.getAttribute("data-current-src") !== targetSrc) {
@@ -173,7 +178,7 @@
           this.src = "assets/videos/ascii.mp4";
         };
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (!reduced) {
+        if (!reduced && s.id !== "beams") {
           videoEl.play().catch(() => {});
         }
       }
@@ -385,7 +390,13 @@
 
   // Search input events
   if (searchInput) {
-    searchInput.addEventListener("input", filterMatrix);
+    searchInput.addEventListener("input", () => {
+      if (searchInput.value.trim() && activeFilter !== "all") {
+        filterChips.forEach((c) => c.classList.toggle("active", c.getAttribute("data-filter") === "all"));
+        activeFilter = "all";
+      }
+      filterMatrix();
+    });
   }
   if (searchClear) {
     searchClear.addEventListener("click", () => {

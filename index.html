@@ -171,12 +171,17 @@
           </div>
 
           <div class="saver-stage" id="showcase-stage">
+            <canvas class="saver-canvas" id="showcase-canvas" data-wasm="assets/wasm/idlescreen.wasm" data-saver="beams" hidden></canvas>
             <video class="saver-media" id="showcase-video" src="assets/videos/bursts.mp4" autoplay muted loop playsinline preload="metadata"></video>
 
             <div class="saver-nav-arrows">
               <button type="button" class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous featured scene">&#9664;</button>
               <button type="button" class="stage-nav-btn stage-nav-next" id="stage-next" aria-label="Next featured scene">&#9654;</button>
             </div>
+          </div>
+
+          <div class="showcase-controls-strip" id="showcase-controls-strip">
+            <!-- Telemetry & Parameter controls mounted here -->
           </div>
 
           <div class="saver-overlay showcase-infobar">
@@ -413,19 +418,31 @@
             <div class="install-channels-list">
               <div class="install-channel-item">
                 <span class="channel-label">FEDORA / RHEL (COPR)</span>
-                <code class="channel-cmd">sudo dnf copr enable idlescreen/idlescreen &amp;&amp; sudo dnf install idlescreen</code>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-fedora">sudo dnf copr enable idlescreen/idlescreen &amp;&amp; sudo dnf install idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-fedora', this)" aria-label="Copy DNF Copr install command">[ COPY ]</button>
+                </div>
               </div>
               <div class="install-channel-item">
-                <span class="channel-label">ARCH LINUX (AUR)</span>
-                <code class="channel-cmd">paru -S idlescreen  # or yay -S idlescreen</code>
+                <span class="channel-label">ARCH LINUX (PACMAN / AUR)</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-arch">sudo pacman -S idlescreen  # or paru / yay -S idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-arch', this)" aria-label="Copy Arch install command">[ COPY ]</button>
+                </div>
               </div>
               <div class="install-channel-item">
                 <span class="channel-label">DEBIAN / UBUNTU (APT)</span>
-                <code class="channel-cmd">sudo apt install idlescreen</code>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-debian">sudo apt install idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-debian', this)" aria-label="Copy APT install command">[ COPY ]</button>
+                </div>
               </div>
               <div class="install-channel-item">
                 <span class="channel-label">ALPINE LINUX (APK)</span>
-                <code class="channel-cmd">apk add idlescreen</code>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-alpine">apk add idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-alpine', this)" aria-label="Copy Alpine apk install command">[ COPY ]</button>
+                </div>
               </div>
             </div>
           </div>
@@ -455,28 +472,44 @@
             </div>
           </div>
 
-          <!-- Card 4: Quick Start Commands -->
+          <!-- Card 4: Quick Start Commands & Verification -->
           <div class="install-card">
             <div class="install-card-header">
-              <span class="install-badge">[ 04 // QUICK START ]</span>
+              <span class="install-badge">[ 04 // QUICK START &amp; VERIFY ]</span>
               <h3 class="install-title">Daemon Management</h3>
             </div>
             <p class="install-desc">
-              Essential commands to control the idle daemon and explore in-tree scenes.
+              Essential commands to control the idle daemon, verify integrity, and explore in-tree scenes.
             </p>
 
             <div class="install-channels-list">
               <div class="install-channel-item">
                 <span class="channel-label">ENABLE &amp; START DAEMON (SYSTEMD)</span>
-                <code class="channel-cmd">systemctl --user enable --now idlescreen</code>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-systemd">systemctl --user enable --now idlescreen</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-systemd', this)" aria-label="Copy systemd enable command">[ COPY ]</button>
+                </div>
               </div>
               <div class="install-channel-item">
                 <span class="channel-label">PREVIEW SPECIFIC SCENE</span>
-                <code class="channel-cmd">idlescreen preview fireworks</code>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-preview">idlescreen preview fireworks</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-preview', this)" aria-label="Copy preview command">[ COPY ]</button>
+                </div>
               </div>
               <div class="install-channel-item">
                 <span class="channel-label">LIST ALL 37 IN-TREE SCENES</span>
-                <code class="channel-cmd">idlescreen list --scenes</code>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-list">idlescreen list --scenes</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-list', this)" aria-label="Copy list scenes command">[ COPY ]</button>
+                </div>
+              </div>
+              <div class="install-channel-item">
+                <span class="channel-label">VERIFY INTEGRITY &amp; DIAGNOSTICS</span>
+                <div class="channel-cmd-row">
+                  <code class="channel-cmd" id="cmd-verify">idlescreen --verify</code>
+                  <button type="button" class="install-copy-btn" onclick="copySnippet('cmd-verify', this)" aria-label="Copy verify command">[ COPY ]</button>
+                </div>
               </div>
             </div>
           </div>

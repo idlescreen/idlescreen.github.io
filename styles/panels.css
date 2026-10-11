@@ -423,6 +423,18 @@
   justify-content: space-between;
 }
 
+.channel-cmd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.channel-cmd-row .channel-cmd {
+  flex: 1;
+  min-width: 0;
+}
+
 .channel-cmd {
   color: var(--hot);
   font-family: var(--font-mono);

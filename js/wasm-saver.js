@@ -1,5 +1,5 @@
 // wasm-saver.js — runs the real Rust saver in-browser.
-// Loads assets/wasm/beams.wasm, ticks it per rAF, paints the packed
+// Loads assets/wasm/idlescreen.wasm, ticks it per rAF, paints the packed
 // TerminalCell buffer to canvas. Falls back to the mp4 on any failure.
 (function initWasmSavers() {
   const canvases = document.querySelectorAll("canvas.saver-canvas[data-wasm]");
@@ -48,9 +48,10 @@
       const name = new TextEncoder().encode(saverId);
       const ptr = ex.saver_alloc(name.length);
       new Uint8Array(ex.memory.buffer, ptr, name.length).set(name);
-      return ex.saver_new_named(ptr, name.length, cols, rows);
+      const host = ex.saver_new_named(ptr, name.length, cols, rows);
+      if (host) return host;
     }
-    return ex.saver_new(cols, rows);
+    return ex.saver_new ? ex.saver_new(cols, rows) : 0;
   }
 
   async function arm(canvas) {
@@ -58,19 +59,22 @@
       const bytes = await (await fetch(canvas.dataset.wasm)).arrayBuffer();
       const { instance } = await WebAssembly.instantiate(bytes, {});
       const ex = instance.exports;
-      // Each saver gets its own module so the host can select which one to
-      // run. saver_new() falls back to the compiled-in default; prefer
-      // saver_new_named() so a shared build can serve more than one.
-      const saverId = canvas.dataset.saver || "";
-      if (ex.saver_set_accent) {
-        window.idleSaverSetAccent = (r, g, b) => ex.saver_set_accent(r, g, b);
-      }
-      if (ex.saver_set_audio_bands) {
-        window.idleSaverSetAudioBands = (b, l, m, t) => ex.saver_set_audio_bands(b, l, m, t);
-      }
+
+      let currentActiveScene = canvas.dataset.saver || "beams";
+      let host = 0, cols = 0, rows = 0, cellW = 10, running = false, last = 0;
       const ctx = canvas.getContext("2d");
       const tiles = new Map();
-      let host = 0, cols = 0, rows = 0, cellW = 10, running = false, last = 0;
+
+      if (ex.saver_set_accent) {
+        window.idleSaverSetAccent = (r, g, b) => {
+          try { ex.saver_set_accent(r, g, b); } catch (e) {}
+        };
+      }
+      if (ex.saver_set_audio_bands) {
+        window.idleSaverSetAudioBands = (b, l, m, t) => {
+          try { ex.saver_set_audio_bands(b, l, m, t); } catch (e) {}
+        };
+      }
 
       function fit() {
         const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -85,7 +89,7 @@
         const nRows = Math.min(90, Math.floor(canvas.height / (CELL_H * dpr)));
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         if (!host) {
-          host = createSaver(ex, saverId, nCols, nRows);
+          host = createSaver(ex, currentActiveScene, nCols, nRows);
         } else if (nCols !== cols || nRows !== rows) {
           ex.saver_resize(host, nCols, nRows);
         }
@@ -102,29 +106,60 @@
         requestAnimationFrame(frame);
       }
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return; // stay on the paused video fallback
-      }
       fit();
-      if (!host) return;
 
-      // Success — take over from the video
-      canvas.hidden = false;
-      const stage = canvas.closest(".saver-stage");
-      const video = stage && stage.querySelector("video");
-      if (video) { video.pause(); video.style.visibility = "hidden"; }
-      const panel = canvas.closest(".saver-panel");
-      if (panel) {
-        const vidBadge = panel.querySelector(".saver-badge:not(.saver-badge-live)");
-        const liveBadge = panel.querySelector(".saver-badge-live");
-        if (vidBadge) vidBadge.hidden = true;
-        if (liveBadge) liveBadge.hidden = false;
+      function switchScene(sceneId) {
+        currentActiveScene = sceneId;
+        const stage = canvas.closest(".saver-stage");
+        const video = stage ? stage.querySelector("video") : null;
+        const panel = canvas.closest(".saver-panel") || document.getElementById("showcase");
+        const liveBadge = panel ? panel.querySelector(".saver-badge-live") : null;
+
+        const isWasmSupported = (sceneId === "beams");
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (isWasmSupported && !reduced) {
+          // Live WASM canvas takes over
+          canvas.hidden = false;
+          if (video) {
+            video.pause();
+            video.style.visibility = "hidden";
+          }
+          if (liveBadge) {
+            liveBadge.textContent = "LIVE WASM ENGINE";
+          }
+          if (!running) {
+            running = true;
+            last = 0;
+            requestAnimationFrame(frame);
+          }
+        } else {
+          // Fall back to video playback
+          canvas.hidden = true;
+          running = false;
+          if (video) {
+            video.style.visibility = "visible";
+            if (!reduced) {
+              video.play().catch(() => {});
+            }
+          }
+          if (liveBadge) {
+            liveBadge.textContent = "60–144 FPS DYNAMIC";
+          }
+        }
+      }
+
+      window.idleSaverRunScene = switchScene;
+
+      // Check current scene from gallery if already initialized
+      if (window.idleCurrentSceneId) {
+        switchScene(window.idleCurrentSceneId);
       }
 
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
-            if (e.isIntersecting && !running) {
+            if (e.isIntersecting && currentActiveScene === "beams" && !running) {
               running = true; last = 0;
               requestAnimationFrame(frame);
             } else if (!e.isIntersecting) {
@@ -132,21 +167,21 @@
             }
           });
         },
-        { root: document.querySelector(".scroll-port"), threshold: 0.15 }
+        { root: null, threshold: 0.15 }
       );
       io.observe(canvas);
+
       let rt;
       window.addEventListener("resize", () => {
         clearTimeout(rt);
         rt = setTimeout(fit, 200);
       });
     } catch (e) {
-      // wasm unavailable — the video keeps playing as the fallback
-      console.warn("[wasm-saver] init failed:", e);
+      console.warn("[wasm-saver] init fallback to video:", e);
     }
   }
 
-  // Arm only when a live-capable panel scrolls near
+  // Arm when showcase scrolls near or on initial load
   const lazy = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -156,7 +191,7 @@
         }
       });
     },
-    { root: document.querySelector(".scroll-port"), rootMargin: "200px" }
+    { root: null, rootMargin: "300px" }
   );
   canvases.forEach((c) => lazy.observe(c));
 })();
