@@ -28,7 +28,7 @@
   color: var(--hot);
   font-weight: 700;
   background: var(--phosphor-dim);
-  border: 1px solid rgba(255, 176, 0, 0.3);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.3);
   border-radius: 3px;
   padding: 2px 8px;
   letter-spacing: 0.06em;
@@ -85,11 +85,11 @@
   background: var(--phosphor-dim);
   border-color: var(--phosphor);
   color: var(--hot);
-  box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb, 255, 176, 0), 0.2);
 }
 
 .tri-rot-btn-auto {
   margin-left: auto;
-  border-color: rgba(255, 176, 0, 0.4);
+  border-color: rgba(var(--accent-rgb, 255, 176, 0), 0.4);
   color: var(--hot);
 }

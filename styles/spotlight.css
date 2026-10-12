@@ -45,8 +45,8 @@
   gap: 8px;
   padding: 5px 14px;
   border-radius: var(--radius-full);
-  background: rgba(255, 176, 0, 0.08);
-  border: 1px solid rgba(255, 176, 0, 0.28);
+  background: var(--phosphor-dim);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.28);
   color: var(--hot);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -125,9 +125,9 @@
   --mouse-x: -999px;
   --mouse-y: -999px;
   --spotlight-radius: 350px;
-  --spotlight-border: rgba(255, 176, 0, 0.45);
-  --spotlight-glow: rgba(255, 212, 71, 0.9);
-  --spotlight-inner: rgba(255, 176, 0, 0.035);
+  --spotlight-border: rgba(var(--accent-rgb, 255, 176, 0), 0.45);
+  --spotlight-glow: rgba(var(--hot-rgb, 255, 212, 71), 0.9);
+  --spotlight-inner: rgba(var(--accent-rgb, 255, 176, 0), 0.035);
   position: relative;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -141,17 +141,17 @@
 }
 
 .compare-card-idlescreen, .install-card-primary, .eco-card-highlight {
-  --spotlight-border: rgba(255, 176, 0, 0.65);
-  --spotlight-glow: rgba(255, 212, 71, 1);
-  --spotlight-inner: rgba(255, 176, 0, 0.055);
+  --spotlight-border: rgba(var(--accent-rgb, 255, 176, 0), 0.65);
+  --spotlight-glow: rgba(var(--hot-rgb, 255, 212, 71), 1);
+  --spotlight-inner: rgba(var(--accent-rgb, 255, 176, 0), 0.055);
 }
 
 /* Attenuated Text-Reading Mode: Reduced Radius & Suppressed Glare over Text */
 .spotlight-card.spotlight-over-text, .spotlight-over-text {
   --spotlight-radius: 120px;
-  --spotlight-border: rgba(255, 176, 0, 0.20);
-  --spotlight-glow: rgba(255, 212, 71, 0.38);
-  --spotlight-inner: rgba(255, 176, 0, 0.005);
+  --spotlight-border: rgba(var(--accent-rgb, 255, 176, 0), 0.20);
+  --spotlight-glow: rgba(var(--hot-rgb, 255, 212, 71), 0.38);
+  --spotlight-inner: rgba(var(--accent-rgb, 255, 176, 0), 0.005);
 }
 
 .compare-card-opinionated.spotlight-over-text {
@@ -174,7 +174,7 @@
     var(--spotlight-radius) circle at var(--mouse-x) var(--mouse-y),
     var(--spotlight-glow) 0%,
     var(--spotlight-border) 25%,
-    rgba(255, 176, 0, 0.12) 50%,
+    rgba(var(--accent-rgb, 255, 176, 0), 0.12) 50%,
     transparent 75%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);

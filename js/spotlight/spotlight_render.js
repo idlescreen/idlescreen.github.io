@@ -69,8 +69,7 @@
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dpr = 1, width = 0, height = 0, cellPx = 8, originX = 0, gridCols = 0, gridRows = 0;
   var wmWidth = 95, wmHeight = 19, wmRows = [];
-  var mouse = { x: -2000, y: -2000, active: false };
-  var smoothMouse = { x: -2000, y: -2000, strength: 0 };
+  var mouse = { x: -2000, y: -2000, active: false }, smoothMouse = { x: -2000, y: -2000, strength: 0 };
   var isOverText = false, smoothText = 0, lastPointerX = -2000, lastPointerY = -2000;
   var wander = { x: 0, y: 0, reach: 180 }, ripples = [], rafId = 0, isVisible = true;
   var currentSubdued = 0, targetSubdued = 0, lastPointerTime = 0, lastRender = 0;
@@ -169,11 +168,14 @@
       return { x: rp.x, y: rp.y, r: curR, minRSq: minR * minR, maxRSq: maxR * maxR, amp: Math.pow(1 - progress, 1.8) };
     });
     var ambientWeight = 0.65 * (1 - smoothMouse.strength * 0.75) * (1 - sub), glareCut = 1 - 0.65 * textDim;
+    var acc = window.idleCurrentAccent || [255, 176, 0], ar = acc[0], ag = acc[1], ab = acc[2];
+    var hr = Math.min(255, Math.round(ar + (255 - ar) * 0.4)), hg = Math.min(255, Math.round(ag + (255 - ag) * 0.4)), hb = Math.min(255, Math.round(ab + (255 - ab) * 0.4));
     var aFHigh = ((0.24 - 0.10 * sub) * (1 - 0.30 * textDim)).toFixed(3), aFLow = ((0.08 - 0.03 * sub) * (1 - 0.30 * textDim)).toFixed(3);
-    var colorFieldHigh = 'rgba(255, 176, 0, ' + aFHigh + ')', colorFieldLow = 'rgba(255, 176, 0, ' + aFLow + ')';
+    var colorFieldHigh = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFHigh + ')', colorFieldLow = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFLow + ')';
     var aHigh = ((1 - 0.35 * sub) * glareCut).toFixed(2), aMid = ((1 - 0.45 * sub) * glareCut).toFixed(2);
-    var colorSpotHigh = (sub < 0.05 && textDim < 0.05) ? '#ffd447' : 'rgba(255, 212, 71, ' + aHigh + ')';
-    var colorSpotMid = (sub < 0.05 && textDim < 0.05) ? '#ffb000' : 'rgba(255, 176, 0, ' + aMid + ')';
+    var hotRgb = hr + ',' + hg + ',' + hb, midRgb = ar + ',' + ag + ',' + ab;
+    var colorSpotHigh = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + hotRgb + ')') : ('rgba(' + hotRgb + ',' + aHigh + ')');
+    var colorSpotMid = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + midRgb + ')') : ('rgba(' + midRgb + ',' + aMid + ')');
     var ditherThreshold = 0.74 + 0.02 * sub + 0.08 * textDim;
 
     var stageRect = stage ? stage.getBoundingClientRect() : null;
@@ -204,7 +206,7 @@
         if (isWord && introVisible) {
           var lit = (0.45 + spot * 1.7 + ripGlow * 1.4) * (1 - sub) * (1 - 0.5 * textDim);
           if (lit > 0.05) {
-            ctx.fillStyle = lit > 1.35 ? '#ffffff' : lit > 0.92 ? '#ffd447' : lit > 0.6 ? '#ffb000' : '#b87700';
+            ctx.fillStyle = lit > 1.35 ? '#ffffff' : lit > 0.92 ? ('rgb(' + hotRgb + ')') : lit > 0.6 ? ('rgb(' + midRgb + ')') : ('rgb(' + Math.round(ar * 0.7) + ',' + Math.round(ag * 0.7) + ',' + Math.round(ab * 0.7) + ')');
             ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
             wordDrawn = true;
           }
@@ -227,6 +229,8 @@
     if (!reducedMotion && isVisible) rafId = requestAnimationFrame(render);
   }
 
+  window.idleRenderSpotlight = function () { render(performance.now()); };
+
   function start() {
     initWordmark(); resize(); updateScroll();
     currentSubdued = targetSubdued; isVisible = !document.hidden;
@@ -234,14 +238,10 @@
     window.addEventListener('resize', resize, { passive: true });
     window.addEventListener('scroll', function () { updateScroll(); if (reducedMotion) render(performance.now()); }, { passive: true });
     window.addEventListener('pointermove', onPointerMove, { passive: true });
-    ['pointerleave', 'mouseleave', 'mouseout'].forEach(function (ev) {
-      document.addEventListener(ev, onLeave, { passive: true });
-      window.addEventListener(ev, onLeave, { passive: true });
-    });
+    ['pointerleave', 'mouseleave', 'mouseout'].forEach(function (ev) { document.addEventListener(ev, onLeave, { passive: true }); window.addEventListener(ev, onLeave, { passive: true }); });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
     window.addEventListener('pointerup', function (e) { if (e && e.pointerType === 'touch') deactivate(); }, { passive: true });
-    window.addEventListener('pointercancel', deactivate, { passive: true });
-    window.addEventListener('blur', deactivate, { passive: true });
+    window.addEventListener('pointercancel', deactivate, { passive: true }); window.addEventListener('blur', deactivate, { passive: true });
     document.addEventListener('visibilitychange', function () {
       isVisible = !document.hidden;
       if (isVisible) { if (!rafId && !reducedMotion) rafId = requestAnimationFrame(render); }

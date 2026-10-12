@@ -29,6 +29,34 @@
     <link rel="stylesheet" href="/styles/panels/tri_rotation.css" />
     <link rel="stylesheet" href="/styles/panels/install.css" />
     <link rel="stylesheet" href="/styles/panels/footer.css" />
+    <script>
+      (function(){
+        try {
+          var k = localStorage.getItem("idlescreen_accent") || "amber";
+          var m = {
+            amber: ["#ffb000", "255, 176, 0", "#ffd447", "255, 212, 71", [255, 176, 0]],
+            cyan: ["#00e5ff", "0, 229, 255", "#80f4ff", "128, 244, 255", [0, 229, 255]],
+            violet: ["#bd93f9", "189, 147, 249", "#d9b8ff", "217, 184, 255", [189, 147, 249]],
+            emerald: ["#50fa7b", "80, 250, 123", "#a2ffbc", "162, 255, 188", [80, 250, 123]],
+            coral: ["#ff5555", "255, 85, 85", "#ff9999", "255, 153, 153", [255, 85, 85]]
+          };
+          var c = m[k.toLowerCase()] || m.amber;
+          var r = document.documentElement;
+          window.idleCurrentAccent = c[4];
+          window.idleCurrentAccentName = k;
+          r.style.setProperty("--phosphor", c[0]);
+          r.style.setProperty("--accent-rgb", c[1]);
+          r.style.setProperty("--phosphor-dim", "rgba(" + c[1] + ", 0.12)");
+          r.style.setProperty("--phosphor-glow", "rgba(" + c[1] + ", 0.28)");
+          r.style.setProperty("--border-accent", "rgba(" + c[1] + ", 0.35)");
+          r.style.setProperty("--hot", c[2]);
+          r.style.setProperty("--hot-rgb", c[3]);
+          r.style.setProperty("--spotlight-border", "rgba(" + c[1] + ", 0.45)");
+          r.style.setProperty("--spotlight-glow", "rgba(" + c[3] + ", 0.9)");
+          r.style.setProperty("--spotlight-inner", "rgba(" + c[1] + ", 0.035)");
+        } catch(e){}
+      })();
+    </script>
   </head>
   <body>
     <canvas id="spotlight-canvas" class="spotlight-canvas" aria-hidden="true"></canvas>
@@ -54,6 +82,13 @@
         </div>
 
         <div class="header-actions">
+          <div class="header-accent-picker" role="radiogroup" aria-label="Accent Palette">
+            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" aria-label="Amber Accent" title="Amber Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" aria-label="Cyan Accent" title="Cyan Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" aria-label="Violet Accent" title="Violet Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" aria-label="Emerald Accent" title="Emerald Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" aria-label="Coral Accent" title="Coral Accent"></button>
+          </div>
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="GitHub Monorepo">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
@@ -75,9 +110,19 @@
       <div class="mobile-nav" id="mobile-nav">
         <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
         <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
-        <a href="#scene-matrix" class="mobile-nav-link">38 Scenes Matrix <span>→</span></a>
+        <a href="#scene-matrix" class="mobile-nav-link">48 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
         <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
+        <div class="mobile-accent-wrap">
+          <span class="mobile-accent-title">ACCENT COLOR</span>
+          <div class="header-accent-picker" role="radiogroup" aria-label="Mobile Accent Palette">
+            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" aria-label="Amber Accent" title="Amber Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" aria-label="Cyan Accent" title="Cyan Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" aria-label="Violet Accent" title="Violet Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" aria-label="Emerald Accent" title="Emerald Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" aria-label="Coral Accent" title="Coral Accent"></button>
+          </div>
+        </div>
         <div class="mobile-nav-actions">
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">GitHub ↗</a>
           <a href="#install" class="nav-btn nav-btn-primary">Install</a>

@@ -51,7 +51,7 @@
 
 .tui-tag {
   background: var(--phosphor-dim);
-  border: 1px solid rgba(255, 176, 0, 0.3);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.3);
   color: var(--hot);
   font-family: var(--font-mono);
   font-size: 11px;

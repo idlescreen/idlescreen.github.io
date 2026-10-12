@@ -71,9 +71,9 @@
 
 .saver-badge-live {
   color: var(--hot);
-  border-color: rgba(255, 176, 0, 0.4);
+  border-color: rgba(var(--accent-rgb, 255, 176, 0), 0.4);
   background: var(--phosphor-dim);
-  box-shadow: 0 0 12px rgba(255, 176, 0, 0.15);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb, 255, 176, 0), 0.15);
 }
 
 /* 3 Random Featured Tabs + Reroll + Quick Select */
@@ -127,7 +127,7 @@
   border-color: var(--phosphor);
   background: var(--phosphor-dim);
   color: var(--hot);
-  box-shadow: 0 0 12px rgba(255, 176, 0, 0.2);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb, 255, 176, 0), 0.2);
 }
 
 .slot-num {
@@ -141,7 +141,7 @@
 
 .reroll-btn {
   background: var(--bg-surface-elevated);
-  border: 1px solid rgba(255, 176, 0, 0.35);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.35);
   border-radius: var(--radius-sm);
   color: var(--phosphor);
   font-family: var(--font-mono);
@@ -156,7 +156,7 @@
 .reroll-btn:hover {
   background: var(--phosphor);
   color: #0b0d0e;
-  box-shadow: 0 0 14px rgba(255, 176, 0, 0.4);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb, 255, 176, 0), 0.4);
 }
 
 .reroll-btn.spinning {

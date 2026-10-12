@@ -8,15 +8,22 @@
 
   function getCycleAlpha(t) {
     const cycle = (t * 0.001) % 3.2;
-    return (cycle < 0.8 || cycle > 2.4) ? 0.95 : Math.max(0.2, Math.abs(cycle - 1.6) / 1.6);
+    if (cycle < 0.6 || cycle >= 2.6) return 0.95;
+    if (cycle < 1.2) return 0.95 - 0.75 * ((cycle - 0.6) / 0.6);
+    if (cycle < 2.0) return 0.20;
+    return 0.20 + 0.75 * ((cycle - 2.0) / 0.6);
   }
 
-  function drawAsciiText(ctx, w, h, t, [ar, ag, ab], alpha = 0.8) {
+  function drawAsciiText(ctx, w, h, t, acc, alpha = 0.8) {
+    const [ar, ag, ab] = acc || [255, 176, 0];
     const wm = window.IdleScreenWordmark, cx = w * 0.5, cy = h * 0.5;
     const triEl = document.getElementById("tri-rot-text");
     const sysText = (triEl && triEl.textContent) ? triEl.textContent : "idlescreen";
     const useWordmark = (Math.floor(t * 0.001 / 3.2) % 2 === 0);
 
+    ctx.save();
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
     if (wm && wm.rows && useWordmark) {
       const cell = Math.max(2, Math.min(Math.floor((w * 0.82) / wm.width), Math.floor((h * 0.54) / wm.height)));
       const ox = Math.round((w - wm.width * cell) / 2);
@@ -34,6 +41,7 @@
       ctx.fillStyle = rgbStr(ar, ag, ab, alpha);
       ctx.fillText(sysText, cx, cy);
     }
+    ctx.restore();
   }
 
   window.IdleSceneText = { draw: drawAsciiText, alpha: getCycleAlpha, rgb: rgbStr, font: FONT };

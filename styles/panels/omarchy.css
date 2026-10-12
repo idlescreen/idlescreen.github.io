@@ -1,7 +1,7 @@
 /* styles/panels/omarchy.css — Omarchy philosophy comparison section & cards */
 .omarchy-section {
   position: relative;
-  background: radial-gradient(circle at 50% 0%, rgba(255, 176, 0, 0.03) 0%, transparent 60%);
+  background: radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb, 255, 176, 0), 0.03) 0%, transparent 60%);
 }
 
 .omarchy-view-toggle-bar {
@@ -90,8 +90,8 @@
 
 .compare-card-idlescreen {
   background: rgba(24, 28, 32, 0.88);
-  border: 1px solid rgba(255, 176, 0, 0.35);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(255, 176, 0, 0.06);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(var(--accent-rgb, 255, 176, 0), 0.06);
 }
 
 .compare-header {
@@ -119,7 +119,7 @@
 .compare-badge-bright {
   background: var(--phosphor-dim);
   color: var(--hot);
-  border: 1px solid rgba(255, 176, 0, 0.3);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.3);
 }
 
 .compare-header-title {

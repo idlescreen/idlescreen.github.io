@@ -54,7 +54,7 @@
   border-color: var(--phosphor);
   color: var(--phosphor);
   background: var(--phosphor-dim);
-  box-shadow: 0 0 10px rgba(255, 176, 0, 0.25);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb, 255, 176, 0), 0.25);
 }
 
 .gallery-ctrl-btn.active {

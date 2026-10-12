@@ -37,7 +37,7 @@ body {
   text-decoration: none;
   font-family: var(--font-mono);
   font-size: 13px;
-  box-shadow: 0 4px 16px rgba(255, 176, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb, 255, 176, 0), 0.4);
 }
 
 .skip-link:focus {

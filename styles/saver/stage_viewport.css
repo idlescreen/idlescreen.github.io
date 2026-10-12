@@ -61,7 +61,7 @@
   border-color: var(--phosphor);
   color: var(--phosphor);
   background: rgba(18, 21, 23, 0.95);
-  box-shadow: 0 0 16px rgba(255, 176, 0, 0.3);
+  box-shadow: 0 0 16px rgba(var(--accent-rgb, 255, 176, 0), 0.3);
   transform: scale(1.08);
 }
 
@@ -133,7 +133,7 @@
 
 .saver-cmd:hover {
   border-color: var(--phosphor);
-  box-shadow: 0 0 12px rgba(255, 176, 0, 0.15);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb, 255, 176, 0), 0.15);
 }
 
 .saver-cmd .cmd-copy-hint {

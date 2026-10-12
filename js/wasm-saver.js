@@ -148,6 +148,9 @@
           const ptr = ex.saver_tick(host, dt) / 4;
           const u32 = new Uint32Array(ex.memory.buffer);
           paintCells(ctx, u32, ptr, cols, rows, cellW, CELL_H, tiles, accent);
+          if (window.IdleSceneText && window.IdleSceneText.draw) {
+            window.IdleSceneText.draw(ctx, w, h, t, accent, window.IdleSceneText.alpha(t));
+          }
         } else if (window.IdleSceneSim) {
           window.IdleSceneSim.render(ctx, w, h, t, currentActiveScene, accent);
         }

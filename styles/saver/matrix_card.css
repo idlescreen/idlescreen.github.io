@@ -22,7 +22,7 @@
 .matrix-card:hover {
   border-color: var(--phosphor);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 176, 0, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--accent-rgb, 255, 176, 0), 0.08);
 }
 
 .matrix-card-top {
@@ -125,9 +125,9 @@
 }
 
 .matrix-btn-preview {
-  border-color: rgba(255, 176, 0, 0.3);
+  border-color: rgba(var(--accent-rgb, 255, 176, 0), 0.3);
   color: var(--hot);
-  background: rgba(255, 176, 0, 0.06);
+  background: rgba(var(--accent-rgb, 255, 176, 0), 0.06);
 }
 
 .matrix-btn-preview:hover {
