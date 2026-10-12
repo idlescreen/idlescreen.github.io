@@ -62,6 +62,10 @@
 
   function handlePointer(e) {
     if (!e) return;
+    if (e.clientX < 0 || e.clientY < 0 || e.clientX > window.innerWidth || e.clientY > window.innerHeight) {
+      setActiveCard(null);
+      return;
+    }
     var target = e.target;
     if (!target || typeof target.closest !== 'function') return;
 
@@ -110,10 +114,16 @@
     document.addEventListener('pointermove', handlePointer, { passive: true });
     document.addEventListener('pointerdown', handlePointer, { passive: true });
     document.addEventListener('pointerup', handlePointerEnd, { passive: true });
-    document.addEventListener('pointercancel', handlePointerEnd, { passive: true });
+    document.addEventListener('pointercancel', function() { setActiveCard(null); }, { passive: true });
     document.addEventListener('pointerleave', handleDocumentLeave, { passive: true });
+    document.addEventListener('mouseleave', handleDocumentLeave, { passive: true });
+    window.addEventListener('mouseleave', handleDocumentLeave, { passive: true });
+    document.addEventListener('mouseout', handleDocumentLeave, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('blur', function() { setActiveCard(null); }, { passive: true });
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) setActiveCard(null);
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {

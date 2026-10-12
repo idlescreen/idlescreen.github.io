@@ -49,13 +49,11 @@
            (noiseTable[y1 * N + x0] * (1 - sx) + noiseTable[y1 * N + x1] * sx) * sy;
   }
 
-  var TEXT_SEL = [
-    'h1, h2, h3, h4, h5, h6, p, pre, code, kbd, samp, ul, ol, li, dl, dt, dd, table, thead, tbody, tfoot, tr, th, td',
-    'blockquote, figcaption, cite, label, input, textarea, button, select, a, strong, em, b, i, mark, small, time',
-    '.compare-card, .matrix-card, .install-card, .eco-card, .terminal-install-box, .tui-screen-mock, .tui-actions-row',
-    '.showcase-topbar, .showcase-infobar, .showcase-controls-strip, .tenets-marquee-wrap, .site-header, .site-footer',
-    '.spotlight-badge, .spotlight-scroll-cue, .marquee-hint, .hero-eyebrow, .section-eyebrow, .section-header, .section-title, .section-intro'
-  ].join(', ');
+  var TEXT_SEL = 'h1,h2,h3,h4,h5,h6,p,pre,code,kbd,samp,ul,ol,li,dl,dt,dd,table,thead,tbody,tfoot,tr,th,td,' +
+    'blockquote,figcaption,cite,label,input,textarea,button,select,a,strong,em,b,i,mark,small,time,' +
+    '.compare-card,.matrix-card,.install-card,.eco-card,.terminal-install-box,.tui-screen-mock,.tui-actions-row,' +
+    '.showcase-topbar,.showcase-infobar,.showcase-controls-strip,.tenets-marquee-wrap,.site-header,.site-footer,' +
+    '.spotlight-badge,.spotlight-scroll-cue,.marquee-hint,.hero-eyebrow,.section-eyebrow,.section-header,.section-title,.section-intro';
 
   function isOverTextElement(target) {
     if (!target || target === document.body || target === document.documentElement || target === canvas) return false;
@@ -87,10 +85,8 @@
     width = Math.round(window.innerWidth * dpr); height = Math.round(window.innerHeight * dpr);
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
     var targetW = Math.min(width * 0.92, 980 * dpr);
-    cellPx = Math.max(3, Math.floor(targetW / wmWidth));
-    originX = Math.round((width - wmWidth * cellPx) / 2);
-    gridCols = Math.ceil(width / cellPx) + 1; gridRows = Math.ceil(height / cellPx) + 1;
-    wander.reach = 190 * dpr;
+    cellPx = Math.max(3, Math.floor(targetW / wmWidth)); originX = Math.round((width - wmWidth * cellPx) / 2);
+    gridCols = Math.ceil(width / cellPx) + 1; gridRows = Math.ceil(height / cellPx) + 1; wander.reach = 190 * dpr;
     if (reducedMotion) render(0);
   }
 
@@ -99,35 +95,51 @@
     var rect = stage.getBoundingClientRect(), stageH = stage.offsetHeight || window.innerHeight;
     var scrollPast = Math.max(0, -rect.top);
     targetSubdued = Math.min(1, Math.max(0, scrollPast / (stageH * 0.55)));
-    if (lastPointerX >= 0 && lastPointerY >= 0) {
-      isOverText = isOverTextElement(document.elementFromPoint(lastPointerX, lastPointerY));
-    }
+    if (lastPointerX >= 0 && lastPointerY >= 0) isOverText = isOverTextElement(document.elementFromPoint(lastPointerX, lastPointerY));
   }
 
+  function deactivate() {
+    if (!mouse.active && smoothMouse.strength <= 0) return;
+    mouse.active = isOverText = false;
+    if (reducedMotion) render(performance.now());
+  }
+  function onLeave(e) { if (!e || !e.relatedTarget) deactivate(); }
+
   function onPointerMove(e) {
+    if (!e) return;
+    if (e.clientX < 0 || e.clientY < 0 || e.clientX > window.innerWidth || e.clientY > window.innerHeight) {
+      deactivate(); return;
+    }
     var px = e.clientX * dpr, py = e.clientY * dpr;
     lastPointerX = e.clientX; lastPointerY = e.clientY;
     isOverText = isOverTextElement(e.target);
-    if (smoothMouse.x < -1000) { smoothMouse.x = px; smoothMouse.y = py; }
+    if (!mouse.active || smoothMouse.strength < 0.01 || smoothMouse.x < -1000) {
+      smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 0;
+    }
     mouse.x = px; mouse.y = py; mouse.active = true;
     lastPointerTime = performance.now();
     if (reducedMotion) render(performance.now());
   }
 
   function onPointerDown(e) {
+    if (!e) return;
     var px = e.clientX * dpr, py = e.clientY * dpr;
     lastPointerX = e.clientX; lastPointerY = e.clientY;
     isOverText = isOverTextElement(e.target);
-    if (smoothMouse.x < -1000) { smoothMouse.x = px; smoothMouse.y = py; }
+    if (!mouse.active || smoothMouse.strength < 0.01 || smoothMouse.x < -1000) {
+      smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 0;
+    }
+    mouse.x = px; mouse.y = py; mouse.active = true;
     lastPointerTime = performance.now();
-    ripples.push({ x: px, y: py, born: performance.now(), maxR: 380 * dpr, dur: 950 });
-    if (ripples.length > 5) ripples.shift();
+    ripples.push({ x: px, y: py, born: performance.now(), maxR: 380 * dpr, dur: 950 }); if (ripples.length > 5) ripples.shift();
   }
 
   function updateLights(t) {
     var target = mouse.active ? 1 : 0, targetText = (isOverText && mouse.active) ? 1 : 0;
     smoothMouse.x += (mouse.x - smoothMouse.x) * 0.24; smoothMouse.y += (mouse.y - smoothMouse.y) * 0.24;
     smoothMouse.strength += (target - smoothMouse.strength) * 0.12;
+    if (smoothMouse.strength < 0.005) smoothMouse.strength = 0;
+    else if (smoothMouse.strength > 0.995 && mouse.active) smoothMouse.strength = 1;
     smoothText += (targetText - smoothText) * 0.22;
     if (Math.abs(targetText - smoothText) < 0.005) smoothText = targetText;
     currentSubdued += (targetSubdued - currentSubdued) * 0.15;
@@ -142,7 +154,8 @@
     if (!isVisible && !reducedMotion) return;
     var isReading = currentSubdued > 0.75, pointerRecent = (t - lastPointerTime) < 1400, hasRipples = ripples.length > 0;
     var targetText = (isOverText && mouse.active) ? 1 : 0, textChanging = Math.abs(targetText - smoothText) > 0.005;
-    var transitioning = Math.abs(targetSubdued - currentSubdued) > 0.005 || textChanging;
+    var strengthTarget = mouse.active ? 1 : 0, strengthChanging = Math.abs(strengthTarget - smoothMouse.strength) > 0.005;
+    var transitioning = Math.abs(targetSubdued - currentSubdued) > 0.005 || textChanging || strengthChanging;
     if (isReading && !pointerRecent && !hasRipples && !transitioning) {
       if (t - lastRender < 48) { rafId = requestAnimationFrame(render); return; }
     }
@@ -158,8 +171,7 @@
       return { x: rp.x, y: rp.y, r: curR, minRSq: minR * minR, maxRSq: maxR * maxR, amp: Math.pow(1 - progress, 1.8) };
     });
     var ambientWeight = 0.65 * (1 - smoothMouse.strength * 0.75) * (1 - sub), glareCut = 1 - 0.65 * textDim;
-    var aFHigh = ((0.24 - 0.10 * sub) * (1 - 0.30 * textDim)).toFixed(3);
-    var aFLow = ((0.08 - 0.03 * sub) * (1 - 0.30 * textDim)).toFixed(3);
+    var aFHigh = ((0.24 - 0.10 * sub) * (1 - 0.30 * textDim)).toFixed(3), aFLow = ((0.08 - 0.03 * sub) * (1 - 0.30 * textDim)).toFixed(3);
     var colorFieldHigh = 'rgba(255, 176, 0, ' + aFHigh + ')', colorFieldLow = 'rgba(255, 176, 0, ' + aFLow + ')';
     var aHigh = ((1 - 0.35 * sub) * glareCut).toFixed(2), aMid = ((1 - 0.45 * sub) * glareCut).toFixed(2);
     var colorSpotHigh = (sub < 0.05 && textDim < 0.05) ? '#ffd447' : 'rgba(255, 212, 71, ' + aHigh + ')';
@@ -224,19 +236,20 @@
     window.addEventListener('resize', resize, { passive: true });
     window.addEventListener('scroll', function () { updateScroll(); if (reducedMotion) render(performance.now()); }, { passive: true });
     window.addEventListener('pointermove', onPointerMove, { passive: true });
-    document.addEventListener('pointerleave', function (e) { if (!e || !e.relatedTarget) mouse.active = isOverText = false; }, { passive: true });
+    ['pointerleave', 'mouseleave', 'mouseout'].forEach(function (ev) {
+      document.addEventListener(ev, onLeave, { passive: true });
+      window.addEventListener(ev, onLeave, { passive: true });
+    });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
-    window.addEventListener('pointerup', function (e) { if (e && e.pointerType === 'touch') mouse.active = isOverText = false; }, { passive: true });
-    window.addEventListener('pointercancel', function () { mouse.active = isOverText = false; }, { passive: true });
-    window.addEventListener('blur', function () { mouse.active = isOverText = false; }, { passive: true });
+    window.addEventListener('pointerup', function (e) { if (e && e.pointerType === 'touch') deactivate(); }, { passive: true });
+    window.addEventListener('pointercancel', deactivate, { passive: true });
+    window.addEventListener('blur', deactivate, { passive: true });
     document.addEventListener('visibilitychange', function () {
       isVisible = !document.hidden;
       if (isVisible) { if (!rafId && !reducedMotion) rafId = requestAnimationFrame(render); }
-      else if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+      else { deactivate(); if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else { start(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

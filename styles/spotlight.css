@@ -205,23 +205,23 @@
   z-index: 1;
 }
 
-/* Hover & Active Reveal */
-.spotlight-card:hover::after, .spotlight-card.spotlight-active::after,
-.compare-card:hover::after, .tui-showcase-container:hover::after,
-.matrix-card:hover::after, .install-card:hover::after,
-.eco-card:hover::after, .terminal-install-box:hover::after, .showcase-wrapper:hover::after,
-.spotlight-card:not(.tui-showcase-container):hover::before,
+/* Active Reveal */
+.spotlight-card.spotlight-active::after,
+.compare-card.spotlight-active::after, .tui-showcase-container.spotlight-active::after,
+.matrix-card.spotlight-active::after, .install-card.spotlight-active::after,
+.eco-card.spotlight-active::after, .terminal-install-box.spotlight-active::after,
+.showcase-wrapper.spotlight-active::after,
 .spotlight-card:not(.tui-showcase-container).spotlight-active::before,
-.compare-card:hover::before, .matrix-card:hover::before,
-.install-card:hover::before, .eco-card:hover::before, .terminal-install-box:hover::before {
+.compare-card.spotlight-active::before, .matrix-card.spotlight-active::before,
+.install-card.spotlight-active::before, .eco-card.spotlight-active::before,
+.terminal-install-box.spotlight-active::before {
   opacity: 1;
 }
 
 /* Suppress surface glare over text elements */
 .spotlight-card.spotlight-over-text::before,
-.spotlight-card.spotlight-over-text:hover::before,
 .spotlight-card.spotlight-over-text.spotlight-active::before,
-.spotlight-over-text::before, .spotlight-over-text:hover::before,
+.spotlight-over-text::before,
 .spotlight-over-text.spotlight-active::before {
   opacity: 0.12;
 }
