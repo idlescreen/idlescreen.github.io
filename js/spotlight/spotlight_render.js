@@ -163,6 +163,7 @@
       var minR = Math.max(0, curR - ringW), maxR = curR + ringW;
       return { x: rp.x, y: rp.y, r: curR, minRSq: minR * minR, maxRSq: maxR * maxR, amp: Math.pow(1 - progress, 1.8) };
     });
+    var ambientWeight = 0.65 * (1 - smoothMouse.strength * 0.75) * (1 - sub), glareCut = 1 - 0.65 * textDim;
     var acc = window.idleCurrentAccent || [255, 176, 0];
     if (!smoothAcc) smoothAcc = [acc[0], acc[1], acc[2]];
     smoothAcc[0] += (acc[0] - smoothAcc[0]) * 0.08;

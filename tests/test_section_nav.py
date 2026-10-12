@@ -108,6 +108,7 @@ def run_tests():
         sock = socket.create_connection(("127.0.0.1", PORT_CDP))
         ws_handshake(sock, "127.0.0.1", PORT_CDP, path)
         cdp = CDPClient(sock)
+        cdp.eval("window.__testErrors = []; window.addEventListener('error', e => window.__testErrors.push(e.message));")
 
         # 1. Section DOM order check
         order = cdp.eval("""(() => {
@@ -150,10 +151,14 @@ def run_tests():
         # 3. Down arrow navigation & theme cycling
         initial_accent = cdp.eval("window.idleCurrentAccentName")
         cdp.eval("document.getElementById('nav-arrow-down').click()")
-        time.sleep(0.3)
+        time.sleep(0.5)
         after_click_accent = cdp.eval("window.idleCurrentAccentName")
+        scroll_y = cdp.eval("window.scrollY")
+        errs = cdp.eval("window.__testErrors")
+        assert not errs, f"JavaScript runtime errors detected: {errs}"
         assert after_click_accent != initial_accent, f"Down click did not cycle accent: {after_click_accent}"
-        print(f"  PASS: Clicking down arrow transitioned accent: {initial_accent} -> {after_click_accent}")
+        assert scroll_y > 100, f"Down click did not scroll viewport (scrollY={scroll_y})"
+        print(f"  PASS: Clicking down arrow transitioned accent ({initial_accent} -> {after_click_accent}) and scrolled (scrollY={scroll_y}).")
 
         # 4. Keyboard ArrowDown and ArrowUp navigation & theme cycling
         cdp.eval("""(() => {

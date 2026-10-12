@@ -58,6 +58,21 @@
     }
   }
 
+  let isProgrammaticScroll = false;
+  let scrollTimer = null;
+
+  function endProgrammaticScroll() {
+    if (isProgrammaticScroll) {
+      isProgrammaticScroll = false;
+      if (scrollTimer) { clearTimeout(scrollTimer); scrollTimer = null; }
+      updateActiveNavOnScroll();
+    }
+  }
+
+  ["wheel", "touchstart", "scrollend"].forEach((ev) => {
+    window.addEventListener(ev, endProgrammaticScroll, { passive: true });
+  });
+
   function onSectionEntered(newId) {
     if (activeSectionId === null) {
       activeSectionId = newId;
@@ -65,12 +80,14 @@
     }
     if (newId !== activeSectionId) {
       activeSectionId = newId;
-      if (window.idleCycleRandomAccent) window.idleCycleRandomAccent();
+      if (!isProgrammaticScroll && window.idleCycleRandomAccent) {
+        window.idleCycleRandomAccent();
+      }
     }
   }
 
   function updateActiveNavOnScroll() {
-    if (!navSections.length) return;
+    if (!navSections.length || isProgrammaticScroll) return;
     const docHeight = document.documentElement.scrollHeight;
     const winHeight = window.innerHeight;
     const scrollY = window.scrollY || window.pageYOffset;
@@ -115,6 +132,10 @@
     if (idx < 0 || idx >= navSections.length) return;
     const target = navSections[idx];
     activeSectionId = target.id;
+    isProgrammaticScroll = true;
+    if (scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(endProgrammaticScroll, 750);
+
     if (window.idleCycleRandomAccent) window.idleCycleRandomAccent();
     setActiveNav(target.id);
     updateArrowButtons(target.id);
