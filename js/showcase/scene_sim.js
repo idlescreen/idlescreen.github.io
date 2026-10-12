@@ -105,10 +105,11 @@
     ctx.fillStyle = "rgba(0, 0, 0, 0.08)"; for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
   }
 
-  function renderGenericFallback(ctx, w, h, t, [ar, ag, ab]) {
+  function renderGenericFallback(ctx, w, h, t, acc) {
+    const [ar, ag, ab] = acc || [255, 176, 0];
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
     const sec = t * 0.001, cx = w * 0.5, cy = h * 0.5, glyphs = ["+", "*", "·", "✦", "✧", "#", "%"];
-    drawAsciiText(ctx, w, h, t, [ar, ag, ab], getCycleAlpha(t));
+    drawAsciiText(ctx, w, h, t, acc, getCycleAlpha(t));
     ctx.font = "14px " + FONT; ctx.textAlign = "center"; ctx.textBaseline = "middle";
     for (let i = 0; i < 40; i++) {
       const a = (i / 40) * Math.PI * 2 + sec * (0.4 + (i % 3) * 0.2), rad = 40 + ((i * 19 + sec * 50) % Math.min(w * 0.4, h * 0.4));
