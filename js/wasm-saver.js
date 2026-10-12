@@ -33,14 +33,18 @@
   function paintSpotlightOrbit(ctx, w, h, t) {
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
     const wm = window.IdleScreenWordmark;
-    if (!wm || !wm.rows) return;
-    const cell = Math.max(3, Math.min(Math.floor((w * 0.82) / wm.width), Math.floor((h * 0.54) / wm.height)));
-    const ox = Math.round((w - wm.width * cell) / 2), oy = Math.round((h - wm.height * cell) / 2);
     const cx = w * 0.5, cy = h * 0.5, sec = t * 0.001, angle = sec * 1.35;
-    const rx = (wm.width * cell) * 0.56 + 24, ry = (wm.height * cell) * 0.90 + 20;
-    const sx = cx + rx * Math.cos(angle), sy = cy + ry * Math.sin(angle);
-    const reach = Math.max(80, Math.min(w * 0.32, 220)), reachSq = reach * reach;
+    const reach = Math.max(70, Math.min(w * 0.32, 220)), reachSq = reach * reach;
     const starInFront = Math.sin(angle) >= 0;
+
+    let cell = 6, ox = 0, oy = 0, rx = w * 0.38, ry = h * 0.28;
+    if (wm && wm.rows) {
+      cell = Math.max(2, Math.min(Math.floor((w * 0.82) / wm.width), Math.floor((h * 0.54) / wm.height)));
+      ox = Math.round((w - wm.width * cell) / 2); oy = Math.round((h - wm.height * cell) / 2);
+      rx = Math.min((wm.width * cell) * 0.56 + 24, w * 0.47);
+      ry = Math.min((wm.height * cell) * 0.90 + 20, h * 0.44);
+    }
+    const sx = cx + rx * Math.cos(angle), sy = cy + ry * Math.sin(angle);
 
     ctx.strokeStyle = "rgba(255, 176, 0, 0.10)"; ctx.beginPath();
     ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
@@ -51,16 +55,26 @@
     }
 
     const drawWordmark = () => {
-      for (let r = 0; r < wm.height; r++) {
-        const row = wm.rows[r];
-        for (let c = 0; c < wm.width; c++) {
-          if (row[c] !== "1") continue;
-          const px = ox + c * cell, py = oy + r * cell;
-          const dx = px + cell * 0.5 - sx, dy = py + cell * 0.5 - sy, dsq = dx * dx + dy * dy;
-          const spot = dsq < reachSq ? Math.pow(1 - Math.sqrt(dsq) / reach, 2) : 0, lit = 0.18 + spot * 1.6;
-          ctx.fillStyle = lit > 1.25 ? "#ffffff" : lit > 0.88 ? "#ffd447" : lit > 0.52 ? "#ffb000" : lit > 0.28 ? "#b87700" : "#553700";
-          ctx.fillRect(px, py, cell - 0.6, cell - 0.6);
+      if (wm && wm.rows) {
+        for (let r = 0; r < wm.height; r++) {
+          const row = wm.rows[r];
+          for (let c = 0; c < wm.width; c++) {
+            if (row[c] !== "1") continue;
+            const px = ox + c * cell, py = oy + r * cell;
+            const dx = px + cell * 0.5 - sx, dy = py + cell * 0.5 - sy, dsq = dx * dx + dy * dy;
+            const spot = dsq < reachSq ? Math.pow(1 - Math.sqrt(dsq) / reach, 2) : 0, lit = 0.18 + spot * 1.6;
+            ctx.fillStyle = lit > 1.25 ? "#ffffff" : lit > 0.88 ? "#ffd447" : lit > 0.52 ? "#ffb000" : lit > 0.28 ? "#b87700" : "#553700";
+            ctx.fillRect(px, py, cell - 0.6, cell - 0.6);
+          }
         }
+      } else {
+        const text = "idlescreen", fs = Math.round(Math.min(w * 0.10, 64));
+        ctx.font = "bold " + fs + "px " + FONT_STACK;
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        const dx = cx - sx, dy = cy - sy, dsq = dx * dx + dy * dy;
+        const spot = dsq < reachSq ? Math.pow(1 - Math.sqrt(dsq) / reach, 2) : 0, lit = 0.25 + spot * 1.5;
+        ctx.fillStyle = lit > 1.1 ? "#ffffff" : lit > 0.7 ? "#ffd447" : lit > 0.4 ? "#ffb000" : "#b87700";
+        ctx.fillText(text, cx, cy);
       }
     };
 
@@ -202,7 +216,7 @@
           const isLive = (currentActiveScene === "spotlight_orbit" || currentActiveScene === "beams");
           if (e.isIntersecting && isLive && !running) {
             running = true; last = 0; requestAnimationFrame(frame);
-          } else if (!e.isIntersecting && currentActiveScene !== "spotlight_orbit") {
+          } else if (!e.isIntersecting) {
             running = false;
           }
         });
