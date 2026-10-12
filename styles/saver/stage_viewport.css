@@ -124,7 +124,8 @@
   transform: translateY(-1px);
 }
 
-.nav-btn-screensaver * {
+.nav-btn-screensaver *,
+#mobile-btn-fullscreen-saver * {
   pointer-events: none;
 }
 

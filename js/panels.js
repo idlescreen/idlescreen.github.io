@@ -179,6 +179,7 @@
 
   document.addEventListener("keydown", (e) => {
     if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+    if (window.idleFullscreenActive) return;
     const active = document.activeElement;
     const tag = active ? active.tagName : "";
     if (

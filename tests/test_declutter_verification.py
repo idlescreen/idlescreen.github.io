@@ -17,15 +17,10 @@ PORT_CDP = 9349
 
 def ws_handshake(sock, host, port, path):
     key = base64.b64encode(os.urandom(16)).decode("utf-8")
-    req = (f"GET {path} HTTP/1.1\r\n"
-           f"Host: {host}:{port}\r\n"
-           f"Upgrade: websocket\r\n"
-           f"Connection: Upgrade\r\n"
-           f"Sec-WebSocket-Key: {key}\r\n"
-           f"Sec-WebSocket-Version: 13\r\n\r\n")
+    req = (f"GET {path} HTTP/1.1\r\nHost: {host}:{port}\r\nUpgrade: websocket\r\n"
+           f"Connection: Upgrade\r\nSec-WebSocket-Key: {key}\r\nSec-WebSocket-Version: 13\r\n\r\n")
     sock.sendall(req.encode("utf-8"))
-    resp = sock.recv(4096)
-    assert b"101" in resp, f"Handshake failed: {resp}"
+    assert b"101" in sock.recv(4096)
 
 def send_frame(sock, text):
     data = text.encode("utf-8")
@@ -33,12 +28,8 @@ def send_frame(sock, text):
     frame = bytearray([0x81])
     mask = os.urandom(4)
     if length <= 125: frame.append(0x80 | length)
-    elif length <= 65535:
-        frame.append(0x80 | 126)
-        frame.extend(length.to_bytes(2, "big"))
-    else:
-        frame.append(0x80 | 127)
-        frame.extend(length.to_bytes(8, "big"))
+    elif length <= 65535: frame.extend([0x80 | 126] + list(length.to_bytes(2, "big")))
+    else: frame.extend([0x80 | 127] + list(length.to_bytes(8, "big")))
     frame.extend(mask)
     frame.extend(bytes(b ^ mask[i % 4] for i, b in enumerate(data)))
     sock.sendall(frame)
@@ -178,7 +169,7 @@ def run_tests():
         print("  PASS: Header button successfully renamed to 'Demo'.")
 
         cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-        time.sleep(0.4)
+        time.sleep(0.15)
         fs_display = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
         assert fs_display == "flex", f"Fullscreen overlay not displayed: {fs_display}"
         print("  PASS: Header Demo button launched fullscreen mode.")
@@ -196,30 +187,39 @@ def run_tests():
         init_scene = cdp.eval("document.getElementById('fullscreen-hud-idx').textContent")
         assert "SCENE" in init_scene, f"HUD scene index not formatted: {init_scene}"
 
-        # Verify launch immunity against micro-jitter
+        # Verify launch immunity against micro-jitter & rapid double-click
         cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 5, clientY: 5, bubbles: true }))")
         time.sleep(0.1)
+        cdp.eval("window.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }))")
+        time.sleep(0.1)
         assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-        print("  PASS: Screensaver immune to launch micro-jitter.")
+        print("  PASS: Screensaver immune to launch micro-jitter and rapid double-click.")
+
+        # Verify post-fullscreenchange geometry re-anchoring on stationary mouse
+        cdp.eval("Object.defineProperty(document, 'fullscreenElement', { value: document.documentElement, configurable: true })")
+        cdp.eval("document.dispatchEvent(new Event('fullscreenchange'))")
+        time.sleep(0.45)
+        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 101, clientY: 101, bubbles: true }))")
+        time.sleep(0.1)
+        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
+        print("  PASS: Post-fullscreenchange stationary mouse immune to baseline micro-delta.")
 
         # Verify intentional mouse movement exits
-        time.sleep(0.3)
-        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 300, clientY: 300, bubbles: true }))")
+        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 400, clientY: 400, bubbles: true }))")
         time.sleep(0.2)
         assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
         print("  PASS: Mouse movement immediately killed screensaver demo and exited fullscreen.")
 
         # Re-open and verify key press, click, and touch exit
-        for trigger_ev, desc in [
+        for ev, desc in [
             ("new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })", "Key press"),
             ("new MouseEvent('pointerdown', { bubbles: true })", "Mouse click"),
             ("new TouchEvent('touchstart', { bubbles: true })", "Touch event"),
         ]:
             cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-            time.sleep(0.3)
+            time.sleep(0.45)
             assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-            time.sleep(0.3)
-            cdp.eval(f"window.dispatchEvent({trigger_ev})")
+            cdp.eval(f"window.dispatchEvent({ev})")
             time.sleep(0.2)
             assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
             print(f"  PASS: {desc} immediately killed screensaver demo and exited fullscreen.")
@@ -228,9 +228,8 @@ def run_tests():
         cdp.eval("document.getElementById('menu-toggle').click()")
         time.sleep(0.2)
         cdp.eval("document.getElementById('mobile-btn-fullscreen-saver').click()")
-        time.sleep(0.3)
+        time.sleep(0.45)
         assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-        time.sleep(0.3)
         cdp.eval("window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }))")
         time.sleep(0.2)
         assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"

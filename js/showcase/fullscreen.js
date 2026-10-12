@@ -5,6 +5,7 @@
   let overlay = null, canvas = null, ctx = null;
   let initPointerX = -1, initPointerY = -1;
   const CYCLE_MS = 4000;
+  const IMMUNITY_MS = 400;
 
   function getSavers() {
     return window.SAVERS || (typeof SAVERS !== "undefined" ? SAVERS : []);
@@ -31,17 +32,14 @@
     overlay.id = "screensaver-fullscreen";
     overlay.setAttribute("aria-hidden", "true");
     overlay.style.display = "none";
-    overlay.innerHTML = `
-      <canvas class="fullscreen-canvas" id="fullscreen-canvas"></canvas>
-      <div class="fullscreen-hud" id="fullscreen-hud">
-        <div class="fullscreen-hud-info">
-          <span class="fullscreen-hud-idx" id="fullscreen-hud-idx">[ SCENE 01 / 48 ]</span>
-          <span class="fullscreen-hud-name" id="fullscreen-hud-name">FIREWORKS</span>
-          <span class="fullscreen-hud-sub" id="fullscreen-hud-sub">// Aerial Pyrotechnic Bursts</span>
-        </div>
-        <div class="fullscreen-hud-hint" id="fullscreen-hud-hint">Move mouse, click, tap, or press any key to exit</div>
-        <button type="button" class="fullscreen-hud-btn fullscreen-hud-exit" id="fs-exit" style="display:none;" aria-hidden="true">[ ✕ EXIT ]</button>
-      </div>`;
+    overlay.innerHTML =
+      '<canvas class="fullscreen-canvas" id="fullscreen-canvas"></canvas>' +
+      '<div class="fullscreen-hud" id="fullscreen-hud"><div class="fullscreen-hud-info">' +
+      '<span class="fullscreen-hud-idx" id="fullscreen-hud-idx">[ SCENE 01 / 48 ]</span>' +
+      '<span class="fullscreen-hud-name" id="fullscreen-hud-name">FIREWORKS</span>' +
+      '<span class="fullscreen-hud-sub" id="fullscreen-hud-sub">// Aerial Pyrotechnic Bursts</span></div>' +
+      '<div class="fullscreen-hud-hint" id="fullscreen-hud-hint">Move mouse, click, tap, or press any key to exit</div>' +
+      '<button type="button" class="fullscreen-hud-btn fullscreen-hud-exit" id="fs-exit" style="display:none;" aria-hidden="true">[ ✕ EXIT ]</button></div>';
     document.body.appendChild(overlay);
     canvas = document.getElementById("fullscreen-canvas");
     ctx = canvas ? canvas.getContext("2d") : null;
@@ -97,45 +95,54 @@
 
   function onPointerMove(e) {
     if (!isRunning) return;
-    const now = performance.now();
-    if (now - launchTime < 300) {
+    if (initPointerX < 0 || initPointerY < 0) {
       initPointerX = e.clientX;
       initPointerY = e.clientY;
       return;
     }
-    if (initPointerX >= 0 && initPointerY >= 0) {
-      const dx = Math.abs(e.clientX - initPointerX);
-      const dy = Math.abs(e.clientY - initPointerY);
-      if (dx < 12 && dy < 12) return;
+    const now = performance.now();
+    if (now - launchTime < IMMUNITY_MS) {
+      initPointerX = e.clientX;
+      initPointerY = e.clientY;
+      return;
     }
+    const dx = Math.abs(e.clientX - initPointerX);
+    const dy = Math.abs(e.clientY - initPointerY);
+    if (dx < 16 && dy < 16) return;
     closeScreensaver();
   }
 
   function onUserExitEvent() {
     if (!isRunning) return;
-    if (performance.now() - launchTime < 250) return;
+    if (performance.now() - launchTime < IMMUNITY_MS) return;
     closeScreensaver();
   }
 
+  const MOVE_EVS = ["pointermove", "mousemove"];
+  const EXIT_EVS = ["pointerdown", "mousedown", "click", "keydown", "touchstart", "wheel"];
+
   function attachExitListeners() {
     if (!isRunning) return;
-    ["pointermove", "mousemove"].forEach((ev) => window.addEventListener(ev, onPointerMove, { passive: true }));
-    ["pointerdown", "mousedown", "click", "keydown", "touchstart", "wheel"].forEach((ev) => {
-      window.addEventListener(ev, onUserExitEvent, { passive: true });
-    });
+    MOVE_EVS.forEach((ev) => window.addEventListener(ev, onPointerMove, { passive: true }));
+    EXIT_EVS.forEach((ev) => window.addEventListener(ev, onUserExitEvent, { passive: true }));
   }
 
   function detachExitListeners() {
-    ["pointermove", "mousemove"].forEach((ev) => window.removeEventListener(ev, onPointerMove));
-    ["pointerdown", "mousedown", "click", "keydown", "touchstart", "wheel"].forEach((ev) => {
-      window.removeEventListener(ev, onUserExitEvent);
-    });
+    MOVE_EVS.forEach((ev) => window.removeEventListener(ev, onPointerMove));
+    EXIT_EVS.forEach((ev) => window.removeEventListener(ev, onUserExitEvent));
   }
 
   function openScreensaver(e) {
     if (e && typeof e.stopPropagation === "function") e.stopPropagation();
+    if (e && typeof e.preventDefault === "function") e.preventDefault();
+    if (isRunning) return;
     createOverlay();
     if (!overlay || !canvas) return;
+
+    const mobNav = document.getElementById("mobile-nav");
+    if (mobNav) mobNav.classList.remove("open");
+    const menuToggle = document.getElementById("menu-toggle");
+    if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
 
     if (window.getCurrentShowcaseIndex) {
       currentIdx = window.getCurrentShowcaseIndex();
@@ -160,8 +167,7 @@
 
     const reqFs = document.documentElement.requestFullscreen ||
       document.documentElement.webkitRequestFullscreen ||
-      document.documentElement.mozRequestFullScreen ||
-      document.documentElement.msRequestFullscreen;
+      document.documentElement.mozRequestFullScreen || document.documentElement.msRequestFullscreen;
     if (reqFs) {
       try {
         const p = reqFs.call(document.documentElement);
@@ -205,9 +211,8 @@
     if (sc && window.idleSaverSetTargetCanvas) window.idleSaverSetTargetCanvas(sc);
     if (window.selectShowcaseScene) {
       window.selectShowcaseScene(currentIdx);
-    } else if (window.idleSaverRunScene) {
-      const savers = getSavers();
-      if (savers[currentIdx]) window.idleSaverRunScene(savers[currentIdx].id);
+    } else if (window.idleSaverRunScene && getSavers()[currentIdx]) {
+      window.idleSaverRunScene(getSavers()[currentIdx].id);
     }
     if (window.idleSaverSetPaused) window.idleSaverSetPaused(false);
     if (window.idleRenderSpotlight) window.idleRenderSpotlight();
@@ -242,9 +247,6 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupTriggers);
-  } else {
-    setupTriggers();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setupTriggers);
+  else setupTriggers();
 })();
