@@ -17,7 +17,6 @@
   const navSections = [
     { id: "intro", el: document.getElementById("intro") },
     { id: "overview", el: document.getElementById("overview") },
-    { id: "showcase", el: document.getElementById("showcase") },
     { id: "omarchy-play", el: document.getElementById("omarchy-play") },
     { id: "scene-matrix", el: document.getElementById("scene-matrix") },
     { id: "ecosystem", el: document.getElementById("ecosystem") },

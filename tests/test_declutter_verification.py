@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""tests/test_declutter_verification.py — deep verification of showcase declutter, marquee & fullscreen screensaver."""
+"""tests/test_declutter_verification.py — verification of showcase/demo removal & intact matrix/wordmark."""
 import base64
 import json
 import os
@@ -95,149 +95,55 @@ def run_tests():
         cdp = CDPClient(sock)
         cdp.eval("window.__testErrors = []; window.addEventListener('error', e => window.__testErrors.push(e.message));")
 
-        for _ in range(50):
-            if cdp.eval("document.readyState === 'complete' && Boolean(document.getElementById('scenes-marquee-track')) && document.querySelectorAll('.scene-chip').length === 96"):
-                break
-            time.sleep(0.1)
-
-        # 1. Declutter verification
-        declutter_check = cdp.eval("""(() => {
-            const showcase = document.getElementById("showcase");
-            if (!showcase) return { ok: false, reason: "showcase missing" };
-            const badSelectors = [
-                ".gallery-controls", ".showcase-controls-strip", ".gallery-slider",
-                ".metric-frame", ".metric-cpu", ".metric-math", ".gallery-accent-picker",
-                "#showcase-select", "#btn-reroll-3", ".featured-slots"
-            ];
-            for (const sel of badSelectors) {
-                if (showcase.querySelector(sel)) return { ok: false, reason: "Found clutter: " + sel };
-            }
-            const hasTitlebar = Boolean(document.getElementById("showcase-idx") &&
-                                        document.getElementById("showcase-name") &&
-                                        document.getElementById("stage-prev") &&
-                                        document.getElementById("stage-next"));
-            return { ok: hasTitlebar, hasTitlebar };
-        })()""")
-        assert declutter_check["ok"], f"Showcase declutter check failed: {declutter_check}"
-        print("  PASS: Showcase declutter verified (all clutter elements eliminated).")
-
-        # 2. 48-scene marquee strip verification
-        marquee_info = cdp.eval("""(() => {
-            const wrap = document.getElementById("scenes-marquee-wrap");
-            const track = document.getElementById("scenes-marquee-track");
-            const chips = Array.from(document.querySelectorAll(".scene-chip"));
-            const activeChips = chips.filter(c => c.classList.contains("active"));
+        # 1. Verify complete absence of Showcase section and Demo buttons
+        removal_check = cdp.eval("""(() => {
             return {
-                wrapExists: Boolean(wrap),
-                trackExists: Boolean(track),
-                chipCount: chips.length,
-                activeCount: activeChips.length,
-                firstActiveIdx: activeChips[0] ? activeChips[0].dataset.sceneIdx : null
+                showcaseExists: Boolean(document.getElementById("showcase")),
+                btnDemoHeader: Boolean(document.getElementById("btn-fullscreen-saver")),
+                btnDemoMobile: Boolean(document.getElementById("mobile-btn-fullscreen-saver")),
+                fullscreenOverlay: Boolean(document.getElementById("screensaver-fullscreen")),
+                scenesMarquee: Boolean(document.getElementById("scenes-marquee-wrap"))
             };
         })()""")
-        assert marquee_info["wrapExists"] and marquee_info["trackExists"], "Marquee missing"
-        assert marquee_info["chipCount"] == 96, f"Expected 96 chips (2 passes of 48), got {marquee_info['chipCount']}"
-        assert marquee_info["activeCount"] == 2, f"Expected 2 active chips (primary + clone), got {marquee_info['activeCount']}"
-        print("  PASS: 48-scene marquee strip populated (96 chips with synchronized active clones).")
+        assert not removal_check["showcaseExists"], f"Showcase section still in DOM: {removal_check}"
+        assert not removal_check["btnDemoHeader"], f"Demo button in header still in DOM: {removal_check}"
+        assert not removal_check["btnDemoMobile"], f"Demo button in mobile still in DOM: {removal_check}"
+        assert not removal_check["fullscreenOverlay"], f"Fullscreen overlay still in DOM: {removal_check}"
+        assert not removal_check["scenesMarquee"], f"Showcase scenes marquee still in DOM: {removal_check}"
+        print("  PASS: Showcase section, Demo buttons, and fullscreen overlay cleanly eliminated.")
 
-        # 3. Marquee chip click & stage sync
-        cdp.eval("""(() => {
-            const chip = document.querySelectorAll(".scene-chip")[1]; // Second chip (index 1 = matrix)
-            chip.click();
-        })()""")
-        time.sleep(0.3)
-        curr_scene = cdp.eval("window.idleCurrentSceneId")
-        name_text = cdp.eval("document.getElementById('showcase-name').textContent")
-        assert curr_scene == "matrix", f"Expected matrix scene, got {curr_scene}"
-        assert "MATRIX" in name_text, f"Expected MATRIX title, got {name_text}"
-        print("  PASS: Chip click immediately updates stage scene and titlebar.")
-
-        # 4. Duplicate IDLESCREEN ghosting check
+        # 2. Verify single IDLESCREEN wordmark at top and suppression on scroll
         top_ok = cdp.eval("document.getElementById('intro').getBoundingClientRect().top > -20")
-        card_bg = cdp.eval("window.getComputedStyle(document.querySelector('.showcase-wrapper')).backgroundColor")
-        cdp.eval("document.getElementById('showcase').scrollIntoView({ behavior: 'instant' })")
+        cdp.eval("window.scrollTo(0, 600)")
         time.sleep(0.3)
         scrolled_past = cdp.eval("document.getElementById('intro').getBoundingClientRect().top <= -20")
         assert top_ok, "Intro wordmark not active at top"
         assert scrolled_past, "Scrolled past intro check failed"
-        assert "rgb(7, 8, 9)" in card_bg, f"Showcase bg not solid opaque #070809: {card_bg}"
-        print("  PASS: Single-IDLESCREEN fix verified (background wordmark suppressed on scroll, opaque stage card).")
+        print("  PASS: Single-IDLESCREEN verified (background wordmark active at top, suppressed on scroll).")
 
-        # 5. Header Demo button, launch, and input-yield kill on mouse/key/click
-        btn_text = cdp.eval("document.getElementById('btn-fullscreen-saver').textContent.trim()")
-        assert "Demo" in btn_text, f"Expected button to be named Demo, got: {btn_text}"
-        print("  PASS: Header button successfully renamed to 'Demo'.")
-
-        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-        time.sleep(0.15)
-        fs_display = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_display == "flex", f"Fullscreen overlay not displayed: {fs_display}"
-        print("  PASS: Header Demo button launched fullscreen mode.")
-
-        # HUD elements present
-        hud_check = cdp.eval("""(() => {
-            const hud = document.getElementById("fullscreen-hud");
-            const idx = document.getElementById("fullscreen-hud-idx");
-            const hint = document.getElementById("fullscreen-hud-hint");
-            return Boolean(hud && idx && hint);
+        # 3. Verify 48-scene matrix remains intact and functional
+        matrix_check = cdp.eval("""(() => {
+            const matrix = document.getElementById("scene-matrix");
+            const cards = document.querySelectorAll(".matrix-card");
+            const count = document.getElementById("matrix-count");
+            const previewBtns = document.querySelectorAll(".matrix-btn-preview");
+            return {
+                matrixExists: Boolean(matrix),
+                cardCount: cards.length,
+                countText: count ? count.textContent : null,
+                previewBtnsCount: previewBtns.length
+            };
         })()""")
-        assert hud_check, "Fullscreen HUD elements missing"
+        assert matrix_check["matrixExists"], "Matrix section missing"
+        assert matrix_check["cardCount"] >= 48, f"Expected at least 48 matrix cards, got {matrix_check['cardCount']}"
+        assert "[ 48 / 48 SCENES ]" in matrix_check["countText"], f"Bad count badge: {matrix_check['countText']}"
+        assert matrix_check["previewBtnsCount"] == 0, f"Preview buttons should be removed, found: {matrix_check['previewBtnsCount']}"
+        print("  PASS: 48-scene matrix intact with copy/source actions and no preview buttons.")
 
-        # Verify HUD displays scene index
-        init_scene = cdp.eval("document.getElementById('fullscreen-hud-idx').textContent")
-        assert "SCENE" in init_scene, f"HUD scene index not formatted: {init_scene}"
-
-        # Verify launch immunity against micro-jitter & rapid double-click
-        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 5, clientY: 5, bubbles: true }))")
-        time.sleep(0.1)
-        cdp.eval("window.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }))")
-        time.sleep(0.1)
-        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-        print("  PASS: Screensaver immune to launch micro-jitter and rapid double-click.")
-
-        # Verify post-fullscreenchange geometry re-anchoring on stationary mouse
-        cdp.eval("Object.defineProperty(document, 'fullscreenElement', { value: document.documentElement, configurable: true })")
-        cdp.eval("document.dispatchEvent(new Event('fullscreenchange'))")
-        time.sleep(0.45)
-        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 101, clientY: 101, bubbles: true }))")
-        time.sleep(0.1)
-        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-        print("  PASS: Post-fullscreenchange stationary mouse immune to baseline micro-delta.")
-
-        # Verify intentional mouse movement exits
-        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 400, clientY: 400, bubbles: true }))")
-        time.sleep(0.2)
-        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
-        print("  PASS: Mouse movement immediately killed screensaver demo and exited fullscreen.")
-
-        # Re-open and verify key press, click, and touch exit
-        for ev, desc in [
-            ("new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })", "Key press"),
-            ("new MouseEvent('pointerdown', { bubbles: true })", "Mouse click"),
-            ("new TouchEvent('touchstart', { bubbles: true })", "Touch event"),
-        ]:
-            cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-            time.sleep(0.45)
-            assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-            cdp.eval(f"window.dispatchEvent({ev})")
-            time.sleep(0.2)
-            assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
-            print(f"  PASS: {desc} immediately killed screensaver demo and exited fullscreen.")
-
-        # Mobile drawer Demo button test
-        cdp.eval("document.getElementById('menu-toggle').click()")
-        time.sleep(0.2)
-        cdp.eval("document.getElementById('mobile-btn-fullscreen-saver').click()")
-        time.sleep(0.45)
-        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
-        cdp.eval("window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }))")
-        time.sleep(0.2)
-        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
-        print("  PASS: Mobile drawer Demo button launched and exited cleanly.")
-
-        # Check for zero runtime JavaScript errors
+        # 4. Check for zero runtime JavaScript errors
         errs = cdp.eval("window.__testErrors")
         assert not errs, f"JavaScript runtime errors occurred: {errs}"
+        print("  PASS: Zero JavaScript errors detected.")
 
     finally:
         chrome.terminate()
@@ -245,6 +151,6 @@ def run_tests():
         shutil.rmtree(user_dir, ignore_errors=True)
 
 if __name__ == "__main__":
-    print("Running headless Chrome showcase declutter & screensaver verification...")
+    print("Running headless Chrome removal & matrix verification...")
     run_tests()
-    print("Result: All declutter, marquee, wordmark, and fullscreen screensaver tests PASSED.")
+    print("Result: All removal, wordmark, and matrix tests PASSED.")

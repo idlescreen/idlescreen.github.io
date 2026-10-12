@@ -112,7 +112,7 @@ def run_tests():
 
         # 1. Section DOM order check
         order = cdp.eval("""(() => {
-            const expectedIds = ['intro', 'overview', 'showcase', 'omarchy-play', 'scene-matrix', 'ecosystem', 'install'];
+            const expectedIds = ['intro', 'overview', 'omarchy-play', 'scene-matrix', 'ecosystem', 'install'];
             const allNodes = Array.from(document.querySelectorAll('section[id], footer[id]'));
             const matched = expectedIds.map(id => document.getElementById(id));
             const positions = matched.map(el => el ? el.compareDocumentPosition(document.body) : null);

@@ -17,12 +17,9 @@
     <link rel="stylesheet" href="/styles/base/buttons.css" />
     <link rel="stylesheet" href="/styles/hero.css" />
     <link rel="stylesheet" href="/styles/spotlight.css" />
-    <link rel="stylesheet" href="/styles/saver/stage_header.css" />
-    <link rel="stylesheet" href="/styles/saver/stage_viewport.css" />
     <link rel="stylesheet" href="/styles/saver/matrix_controls.css" />
     <link rel="stylesheet" href="/styles/saver/matrix_card.css" />
     <link rel="stylesheet" href="/styles/saver/marquee_streams.css" />
-    <link rel="stylesheet" href="/styles/gallery-controls.css" />
     <link rel="stylesheet" href="/styles/panels/omarchy.css" />
     <link rel="stylesheet" href="/styles/panels/tui.css" />
     <link rel="stylesheet" href="/styles/panels/ecosystem.css" />
@@ -82,18 +79,10 @@
             </span>
             <span class="brand-name">IdleScreen</span>
           </a>
-          <span class="brand-badge" title="Daemon Core v4.1.20 Online">CORE: v4.1.20</span>
+          <span class="brand-badge" title="Daemon Core v4.1.21 Online">CORE: v4.1.21</span>
         </div>
 
         <div class="header-actions">
-          <button type="button" class="nav-btn nav-btn-screensaver" id="btn-fullscreen-saver" title="Launch Fullscreen Demo Mode" aria-label="Launch Fullscreen Demo Mode">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-            <span>Demo</span>
-          </button>
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="GitHub Monorepo">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
@@ -113,8 +102,6 @@
 
       <!-- Mobile Navigation Drawer -->
       <div class="mobile-nav" id="mobile-nav">
-        <button type="button" class="mobile-nav-link" id="mobile-btn-fullscreen-saver">Demo Mode <span>🖥️</span></button>
-        <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
         <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
         <a href="#scene-matrix" class="mobile-nav-link">48 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
@@ -200,45 +187,6 @@
             <span class="tenet-chip" aria-hidden="true">🔄 OS / DE / KERNEL TRI-ROTATION</span>
             <span class="tenet-chip" aria-hidden="true">🛠️ TUI CONFIG: idlescreen tui</span>
             <span class="tenet-chip" aria-hidden="true">✨ AUTO-SETUP ON INSTALL</span>
-          </div>
-        </div>
-      </section>
-      <!-- Section 1: 48 In-Tree Scenes Interactive Showcase -->
-      <section class="panel saver-panel" id="showcase">
-        <div class="section-header">
-          <div class="section-eyebrow">
-            <span class="eyebrow-dot" aria-hidden="true"></span>
-            INTERACTIVE SHOWCASE // 48 IN-TREE SCENES
-          </div>
-          <h2 class="section-title">Wayland Screensavers in Motion</h2>
-          <p class="section-intro">
-            Live preview of all 48 in-tree ASCII screensavers. Click any scene in the continuous marquee or use arrow keys to switch instantly.
-          </p>
-        </div>
-
-        <div class="showcase-wrapper spotlight-card">
-          <div class="showcase-topbar">
-            <div class="showcase-title-wrap">
-              <span class="saver-idx" id="showcase-idx">[ SCENE 01 / 48 ]</span>
-              <h3 class="saver-name" id="showcase-name">FIREWORKS</h3>
-              <span class="saver-sub" id="showcase-sub">// Aerial Pyrotechnic Bursts</span>
-            </div>
-            <div class="showcase-nav-inline">
-              <button type="button" class="stage-nav-btn stage-nav-prev" id="stage-prev" aria-label="Previous scene" title="Previous scene (Left Arrow)">&#9664;</button>
-              <button type="button" class="stage-nav-btn stage-nav-next" id="stage-next" aria-label="Next scene" title="Next scene (Right Arrow)">&#9654;</button>
-            </div>
-          </div>
-
-          <div class="saver-stage" id="showcase-stage">
-            <canvas class="saver-canvas" id="showcase-canvas" data-wasm="assets/wasm/idlescreen.wasm" data-saver="fireworks"></canvas>
-            <video class="saver-media" id="showcase-video" src="assets/videos/ascii.mp4" autoplay muted loop playsinline preload="metadata" style="display: none;"></video>
-          </div>
-
-          <!-- 48-Scene Continuous Interactive Marquee Strip -->
-          <div class="scenes-marquee-wrap" id="scenes-marquee-wrap" aria-label="Continuous 48-scene marquee">
-            <div class="scenes-marquee-track" id="scenes-marquee-track">
-              <!-- Dynamically populated twice by js/showcase/stage_controls.js for seamless wrap -->
-            </div>
           </div>
         </div>
       </section>
@@ -346,7 +294,7 @@
             <code id="tui-copy-cmd" style="display:none;">idlescreen tui</code>
           </div>
 
-          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.1.20</span> <span class="tui-line-dim">─────────────────────────────────────────────────────┐</span>
+          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.1.21</span> <span class="tui-line-dim">─────────────────────────────────────────────────────┐</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> FEDORA            <span class="tui-line-cyan">Compositor:</span> GNOME                       <span class="tui-line-cyan">Kernel:</span> LINUX           <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Screensaver</span>   <span class="tui-line-hot">► [ ascii ]</span>   [ fireworks ]   [ matrix ]   [ synthgrid ]        <span class="tui-line-dim">│</span>
@@ -381,7 +329,7 @@
             <span class="matrix-count-badge" id="matrix-count">[ 48 / 48 SCENES ]</span>
           </div>
           <p class="matrix-intro">
-            Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
+            Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Explore any scene below or copy its CLI preview command.
           </p>
 
           <div class="matrix-controls-bar">
@@ -403,7 +351,7 @@
                 <button type="button" class="view-btn active" id="view-mode-marquee" aria-pressed="true">⚡ SCROLLING MARQUEE</button>
                 <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (48)</button>
               </div>
-              <span class="marquee-hint">// Dual-stream live marquee · Hover to pause · Click card to preview in stage</span>
+              <span class="marquee-hint">// Dual-stream live marquee · Hover to pause · Click card to copy command</span>
             </div>
           </div>
         </div>
@@ -800,7 +748,6 @@
             <div class="footer-col">
               <span class="footer-col-title">Navigation</span>
               <a href="#overview">Overview</a>
-              <a href="#showcase">Featured Scenes</a>
               <a href="#omarchy-play">The Play</a>
               <a href="#scene-matrix">48 Scenes Matrix</a>
               <a href="#ecosystem">Ecosystem</a>
@@ -874,17 +821,12 @@
     <script src="/js/matrix/matrix_card.js"></script>
     <script src="/js/matrix/matrix_render.js"></script>
     <script src="/js/matrix/matrix_filter.js"></script>
-    <script src="/js/showcase/stage_controls.js"></script>
-    <script src="/js/showcase/fullscreen.js"></script>
-    <script src="/js/showcase/tri_rotation.js"></script>
+    <script src="/js/tri_rotation.js"></script>
     <script src="/js/marquees/omarchy_marquee.js"></script>
     <script src="/js/marquees/ecosystem_marquee.js"></script>
     <script src="/js/marquees/install_marquee.js"></script>
     <script src="/js/marquees/marquee_observer.js"></script>
     <script src="/js/gallery-controls.js"></script>
-    <script src="/js/showcase/procedural_scenes.js"></script>
-    <script src="/js/showcase/scene_sim.js"></script>
-    <script src="/js/wasm-saver.js"></script>
     <script src="/js/videos.js"></script>
     <script src="/js/panels.js"></script>
   </body>

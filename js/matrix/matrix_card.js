@@ -27,7 +27,6 @@
         <span class="math-label">PHYSICS:</span> <span class="math-val">${s.math}</span>
       </div>
       <div class="matrix-card-actions">
-        <button type="button" class="matrix-btn matrix-btn-preview" data-id="${s.id}" data-idx="${idx}" title="Preview in showcase stage above">[ PREVIEW ]</button>
         <button type="button" class="matrix-btn matrix-btn-copy" data-cmd="idlescreen preview ${s.id}" title="Copy preview command">[ COPY CMD ]</button>
         <a class="matrix-btn matrix-btn-src" href="${s.sourceUrl}" target="_blank" rel="noopener noreferrer" title="View Rust source code">[ .rs ↗ ]</a>
       </div>

@@ -17,23 +17,6 @@
   function setupEventDelegation(matrixGrid) {
     if (delegationAttached || !matrixGrid) return;
     matrixGrid.addEventListener("click", (e) => {
-      const prevBtn = e.target.closest(".matrix-btn-preview");
-      if (prevBtn) {
-        const sid = prevBtn.getAttribute("data-id");
-        let idx = -1;
-        if (sid && typeof SAVERS !== "undefined") {
-          idx = SAVERS.findIndex((s) => s.id === sid);
-        }
-        if (idx === -1) {
-          idx = parseInt(prevBtn.getAttribute("data-idx"), 10);
-        }
-        if (idx >= 0 && window.selectShowcaseScene) {
-          window.selectShowcaseScene(idx);
-        }
-        const showcaseEl = document.getElementById("showcase");
-        if (showcaseEl) showcaseEl.scrollIntoView({ behavior: "smooth" });
-        return;
-      }
 
       const copyBtn = e.target.closest(".matrix-btn-copy");
       if (copyBtn) {
