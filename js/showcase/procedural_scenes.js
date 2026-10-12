@@ -1,8 +1,12 @@
 // js/showcase/procedural_scenes.js — procedural renderers for interactive showcase
 (function initProceduralScenes() {
+  function getAcc(acc) {
+    return acc || window.idleCurrentAccent || [255, 176, 0];
+  }
+
   function textHelper(ctx, w, h, t, acc, mul = 0.75) {
     if (window.IdleSceneText) {
-      window.IdleSceneText.draw(ctx, w, h, t, acc, window.IdleSceneText.alpha(t) * mul);
+      window.IdleSceneText.draw(ctx, w, h, t, getAcc(acc), window.IdleSceneText.alpha(t) * mul);
     }
   }
 
@@ -13,7 +17,7 @@
   const FONT = 'ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace';
 
   function renderMatrix(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.7);
     const cellW = 12, cellH = 18, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
@@ -33,7 +37,7 @@
   }
 
   function renderSynthgrid(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
     const horizon = h * 0.42, cx = w * 0.5, sec = t * 0.001;
     ctx.strokeStyle = rgbStr(ar, ag, ab, 0.25); ctx.lineWidth = 1;
@@ -54,7 +58,7 @@
   }
 
   function renderRain(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.3)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.75);
     ctx.font = "14px " + FONT; const count = 55, sec = t * 0.001;
@@ -71,7 +75,7 @@
   }
 
   function renderWaves(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.7);
     const sec = t * 0.001, glyphs = ["~", "^", "v", "≈", "-", "·"];
@@ -87,7 +91,7 @@
   }
 
   function renderBinaryPath(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.7);
     const sec = t * 0.001, cellW = 16, cellH = 20, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
@@ -103,7 +107,7 @@
   }
 
   function renderVhsTape(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, jitter = Math.sin(sec * 45) * (Math.random() > 0.85 ? 12 : 2);
@@ -115,7 +119,7 @@
   }
 
   function renderBouncyBalls(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001; ctx.font = "bold 18px " + FONT; ctx.textAlign = "center";
@@ -128,7 +132,7 @@
   }
 
   function renderMiddleout(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.3)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, cx = w * 0.5, cy = h * 0.5, phase = (sec * 0.6) % 1.0;
@@ -142,7 +146,7 @@
   }
 
   function renderPrint(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.3)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.7);
     const sec = t * 0.001, cellW = 12, cellH = 18, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
@@ -159,7 +163,7 @@
   }
 
   function renderSlice(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, slices = 12, sliceH = h / slices;
@@ -172,7 +176,7 @@
   }
 
   function renderWipe(ctx, w, h, t, acc) {
-    const [ar, ag, ab] = acc;
+    const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
     textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, cellW = 14, cellH = 18, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);

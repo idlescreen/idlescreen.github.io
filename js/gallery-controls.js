@@ -47,6 +47,7 @@
       btn.classList.toggle("active", active);
       if (btn.hasAttribute("aria-checked")) btn.setAttribute("aria-checked", active ? "true" : "false");
       if (btn.hasAttribute("aria-pressed")) btn.setAttribute("aria-pressed", active ? "true" : "false");
+      btn.setAttribute("tabindex", active ? "0" : "-1");
     });
   }
 
@@ -103,17 +104,21 @@
 
     const picker = document.createElement("div");
     picker.className = "gallery-accent-picker";
+    picker.setAttribute("role", "radiogroup");
+    picker.setAttribute("aria-label", "Showcase Accent Palette");
     ACCENTS.forEach((a) => {
       const dot = document.createElement("button");
       dot.type = "button";
       dot.className = "gallery-accent-dot";
       dot.dataset.accentName = a.name;
+      dot.setAttribute("role", "radio");
+      dot.setAttribute("aria-checked", "false");
+      dot.setAttribute("tabindex", "-1");
       dot.style.setProperty("--swatch", a.hex);
       dot.style.backgroundColor = a.hex;
       dot.style.color = a.hex;
       dot.title = a.name + " Accent";
       dot.setAttribute("aria-label", a.name + " Accent");
-      dot.addEventListener("click", () => applyAccent(a));
       picker.appendChild(dot);
     });
     accentGroup.appendChild(picker);
@@ -190,7 +195,7 @@
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
       const btn = document.activeElement;
       if (!btn || !btn.matches("[data-accent-name]")) return;
       const group = btn.closest('[role="radiogroup"]');
@@ -199,10 +204,13 @@
       const idx = items.indexOf(btn);
       if (idx === -1) return;
       e.preventDefault();
-      const nextIdx = e.key === "ArrowRight" ? (idx + 1) % items.length : (idx - 1 + items.length) % items.length;
+      e.stopPropagation();
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      const isNext = e.key === "ArrowRight" || e.key === "ArrowDown";
+      const nextIdx = isNext ? (idx + 1) % items.length : (idx - 1 + items.length) % items.length;
       items[nextIdx].focus();
       items[nextIdx].click();
-    });
+    }, true);
 
     let current = null;
     try {

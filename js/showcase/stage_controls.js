@@ -174,7 +174,8 @@
     }
 
     document.addEventListener("keydown", (e) => {
-      if (["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)) return;
+      const tag = document.activeElement ? document.activeElement.tagName : "";
+      if (e.defaultPrevented || ["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(tag)) return;
       if (e.key === "ArrowLeft") {
         const next = (currentSlot - 1 + featuredIndices.length) % featuredIndices.length;
         loadSlot(next);

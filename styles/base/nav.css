@@ -156,17 +156,12 @@
   border-color: #fff;
   box-shadow: 0 0 8px var(--swatch, currentColor);
 }
-
 .accent-dot.active {
   transform: scale(1.28);
   border-color: #fff;
   box-shadow: 0 0 10px var(--swatch, currentColor), 0 0 2px #fff;
 }
-
-.accent-dot:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
+.accent-dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
 .nav-btn {
   display: inline-flex;
@@ -227,24 +222,21 @@
 }
 
 @media (max-width: 640px) {
-  .header-actions .nav-btn-ghost {
-    display: none;
-  }
-  .header-inner {
-    padding: 0 16px;
-  }
+  .header-actions .nav-btn-ghost { display: none; }
+  .header-inner { padding: 0 16px; }
 }
 
 @media (max-width: 480px) {
-  .brand-badge {
-    display: none;
-  }
-  .header-accent-picker {
-    gap: 4px;
-    padding: 2px 5px;
-  }
-  .accent-dot {
-    width: 12px;
-    height: 12px;
-  }
+  .brand-badge { display: none; }
+  .header-accent-picker { gap: 4px; padding: 2px 5px; }
+  .accent-dot { width: 12px; height: 12px; }
+}
+
+@media (max-width: 440px) {
+  .header-inner { padding: 0 10px; gap: 8px; }
+  .header-actions { gap: 6px; }
+  .header-actions .nav-btn-primary { display: none; }
+  .brand-name { font-size: 15px; }
+  .header-accent-picker { gap: 3px; padding: 2px 4px; }
+  .accent-dot { width: 11px; height: 11px; }
 }

@@ -125,9 +125,6 @@
   --mouse-x: -999px;
   --mouse-y: -999px;
   --spotlight-radius: 350px;
-  --spotlight-border: rgba(var(--accent-rgb, 255, 176, 0), 0.45);
-  --spotlight-glow: rgba(var(--hot-rgb, 255, 212, 71), 0.9);
-  --spotlight-inner: rgba(var(--accent-rgb, 255, 176, 0), 0.035);
   position: relative;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);

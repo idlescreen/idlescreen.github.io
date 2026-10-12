@@ -48,7 +48,7 @@
 
   function renderSpotlightOrbit(ctx, w, h, t, acc) {
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
-    const [ar, ag, ab] = acc, wm = window.IdleScreenWordmark;
+    const [ar, ag, ab] = acc || window.idleCurrentAccent || [255, 176, 0], wm = window.IdleScreenWordmark;
     const cx = w * 0.5, cy = h * 0.5, sec = t * 0.001, angle = sec * 1.35;
     const reach = Math.max(70, Math.min(w * 0.32, 220)), reachSq = reach * reach;
     const starInFront = Math.sin(angle) >= 0;

@@ -127,9 +127,9 @@
   window.idleSetCardSpotlightAccent = function(rgb, hotRgb) {
     if (!rgb) return;
     var root = document.documentElement;
-    root.style.setProperty('--spotlight-border', 'rgba(' + rgb.join(',') + ', 0.45)');
-    if (hotRgb) root.style.setProperty('--spotlight-glow', 'rgba(' + hotRgb.join(',') + ', 0.9)');
-    root.style.setProperty('--spotlight-inner', 'rgba(' + rgb.join(',') + ', 0.035)');
+    root.style.setProperty('--spotlight-border', 'rgba(' + rgb.join(', ') + ', 0.45)');
+    if (hotRgb) root.style.setProperty('--spotlight-glow', 'rgba(' + hotRgb.join(', ') + ', 0.9)');
+    root.style.setProperty('--spotlight-inner', 'rgba(' + rgb.join(', ') + ', 0.035)');
   };
 
   if (document.readyState === 'loading') {

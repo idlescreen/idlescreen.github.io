@@ -26,6 +26,11 @@
     if (activeSwitchFn) activeSwitchFn(id);
     else window.idleCurrentSceneId = id;
   };
+  let activeSaverSetAccent = null;
+  window.idleSaverSetAccent = function (r, g, b) {
+    window.idleCurrentAccent = [r, g, b];
+    if (activeSaverSetAccent) activeSaverSetAccent(r, g, b);
+  };
 
   function paintCells(ctx, u32, ptr, cols, rows, cellW, cellH, tiles, accent) {
     ctx.fillStyle = "#070809";
@@ -94,15 +99,14 @@
       let currentAccent = window.idleCurrentAccent || [255, 176, 0];
       const ctx = canvas.getContext("2d"), tiles = new Map();
 
-      window.idleSaverSetAccent = (r, g, b) => {
+      activeSaverSetAccent = (r, g, b) => {
         currentAccent = [r, g, b];
-        window.idleCurrentAccent = [r, g, b];
         tiles.clear();
         if (ex && ex.saver_set_accent) {
           try { ex.saver_set_accent(r, g, b); } catch (e) {}
         }
       };
-
+      if (window.idleCurrentAccent) currentAccent = window.idleCurrentAccent;
       if (currentAccent && ex && ex.saver_set_accent) {
         try { ex.saver_set_accent(currentAccent[0], currentAccent[1], currentAccent[2]); } catch (e) {}
       }

@@ -83,11 +83,11 @@
 
         <div class="header-actions">
           <div class="header-accent-picker" role="radiogroup" aria-label="Accent Palette">
-            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" aria-label="Amber Accent" title="Amber Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" aria-label="Cyan Accent" title="Cyan Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" aria-label="Violet Accent" title="Violet Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" aria-label="Emerald Accent" title="Emerald Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" aria-label="Coral Accent" title="Coral Accent"></button>
+            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" tabindex="0" aria-label="Amber Accent" title="Amber Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" tabindex="-1" aria-label="Cyan Accent" title="Cyan Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" tabindex="-1" aria-label="Violet Accent" title="Violet Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" tabindex="-1" aria-label="Emerald Accent" title="Emerald Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" tabindex="-1" aria-label="Coral Accent" title="Coral Accent"></button>
           </div>
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost" title="GitHub Monorepo">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
@@ -116,11 +116,11 @@
         <div class="mobile-accent-wrap">
           <span class="mobile-accent-title">ACCENT COLOR</span>
           <div class="header-accent-picker" role="radiogroup" aria-label="Mobile Accent Palette">
-            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" aria-label="Amber Accent" title="Amber Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" aria-label="Cyan Accent" title="Cyan Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" aria-label="Violet Accent" title="Violet Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" aria-label="Emerald Accent" title="Emerald Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" aria-label="Coral Accent" title="Coral Accent"></button>
+            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" tabindex="0" aria-label="Amber Accent" title="Amber Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" tabindex="-1" aria-label="Cyan Accent" title="Cyan Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" tabindex="-1" aria-label="Violet Accent" title="Violet Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" tabindex="-1" aria-label="Emerald Accent" title="Emerald Accent"></button>
+            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" tabindex="-1" aria-label="Coral Accent" title="Coral Accent"></button>
           </div>
         </div>
         <div class="mobile-nav-actions">
@@ -129,5 +129,21 @@
         </div>
       </div>
     </header>
+    <script>
+      (function(){
+        try {
+          var name = window.idleCurrentAccentName || "amber";
+          if (name && name.toLowerCase() !== "amber") {
+            var dots = document.querySelectorAll(".site-header [data-accent-name]");
+            for (var i = 0; i < dots.length; i++) {
+              var m = dots[i].dataset.accentName.toLowerCase() === name.toLowerCase();
+              dots[i].classList.toggle("active", m);
+              dots[i].setAttribute("aria-checked", m ? "true" : "false");
+              dots[i].setAttribute("tabindex", m ? "0" : "-1");
+            }
+          }
+        } catch(e){}
+      })();
+    </script>
 
     <main id="main-content" tabindex="-1">
