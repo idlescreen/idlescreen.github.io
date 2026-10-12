@@ -59,6 +59,9 @@
     }
     const drawWordmark = () => {
       if (wm && wm.rows) {
+        ctx.save();
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
         for (let r = 0; r < wm.height; r++) {
           for (let c = 0; c < wm.width; c++) {
             if (wm.rows[r][c] !== "1") continue;
@@ -69,6 +72,7 @@
             ctx.fillRect(px, py, cell - 0.6, cell - 0.6);
           }
         }
+        ctx.restore();
       }
     };
     const drawBeacon = () => {
@@ -95,7 +99,6 @@
     const [ar, ag, ab] = acc || [255, 176, 0];
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
     const sec = t * 0.001, cx = w * 0.5, cy = h * 0.5;
-    drawAsciiText(ctx, w, h, t, acc, getCycleAlpha(t));
     for (let i = 0; i < 40; i++) {
       const a = (i / 40) * Math.PI * 2 + sec * (0.4 + (i % 3) * 0.2), rad = 40 + ((i * 19 + sec * 50) % Math.min(w * 0.4, h * 0.4));
       ctx.fillStyle = rgbStr(ar, ag, ab, Math.max(0.12, 0.8 - rad / (w * 0.45)));

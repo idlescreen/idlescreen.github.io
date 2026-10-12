@@ -180,7 +180,7 @@
     var ditherThreshold = 0.74 + 0.02 * sub + 0.08 * textDim;
 
     var stageRect = stage ? stage.getBoundingClientRect() : null;
-    var wordmarkVisible = Boolean(stageRect && stageRect.top > -20 && targetSubdued < 0.05);
+    var wordmarkVisible = Boolean(stageRect && stageRect.top > -20 && targetSubdued < 0.05 && !window.idleFullscreenActive);
     var originY = stageRect
       ? Math.round((stageRect.top + stageRect.height * 0.5) * dpr - (wmHeight * cellPx) * 0.5)
       : Math.round((height - wmHeight * cellPx) * 0.5);

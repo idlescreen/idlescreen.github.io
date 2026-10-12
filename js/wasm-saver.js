@@ -95,9 +95,10 @@
       }
 
       let currentActiveScene = canvas.dataset.saver || "fireworks";
+      let targetCanvas = canvas;
       let host = 0, cols = 0, rows = 0, cellW = 10, running = false, last = 0;
       let currentAccent = window.idleCurrentAccent || [255, 176, 0];
-      const ctx = canvas.getContext("2d"), tiles = new Map();
+      let ctx = targetCanvas.getContext("2d"), tiles = new Map();
 
       activeSaverSetAccent = (r, g, b) => {
         currentAccent = [r, g, b];
@@ -118,15 +119,15 @@
       }
 
       function fit() {
-        const w = canvas.clientWidth || 800, h = canvas.clientHeight || 450;
+        const w = targetCanvas.clientWidth || 800, h = targetCanvas.clientHeight || 450;
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.round(w * dpr);
-        canvas.height = Math.round(h * dpr);
+        targetCanvas.width = Math.round(w * dpr);
+        targetCanvas.height = Math.round(h * dpr);
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.font = (CELL_H - 3) + "px " + FONT_STACK;
         cellW = Math.max(6, Math.ceil(ctx.measureText("M").width));
-        const nCols = Math.min(160, Math.floor(canvas.width / (cellW * dpr)));
-        const nRows = Math.min(90, Math.floor(canvas.height / (CELL_H * dpr)));
+        const nCols = Math.min(160, Math.floor(targetCanvas.width / (cellW * dpr)));
+        const nRows = Math.min(90, Math.floor(targetCanvas.height / (CELL_H * dpr)));
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         const isCustom = window.IdleSceneSim && window.IdleSceneSim.has(currentActiveScene);
@@ -143,7 +144,7 @@
         if (!running) return;
         const dt = Math.min(t - last || 16.7, 100);
         last = t;
-        const w = canvas.clientWidth || 800, h = canvas.clientHeight || 450;
+        const w = targetCanvas.clientWidth || 800, h = targetCanvas.clientHeight || 450;
         const accent = currentAccent || [255, 176, 0];
 
         if (window.IdleSceneSim && window.IdleSceneSim.has(currentActiveScene)) {
@@ -152,9 +153,6 @@
           const ptr = ex.saver_tick(host, dt) / 4;
           const u32 = new Uint32Array(ex.memory.buffer);
           paintCells(ctx, u32, ptr, cols, rows, cellW, CELL_H, tiles, accent);
-          if (window.IdleSceneText && window.IdleSceneText.draw) {
-            window.IdleSceneText.draw(ctx, w, h, t, accent, window.IdleSceneText.alpha(t));
-          }
         } else if (window.IdleSceneSim) {
           window.IdleSceneSim.render(ctx, w, h, t, currentActiveScene, accent);
         }
@@ -217,10 +215,20 @@
           requestAnimationFrame(frame);
         }
       };
+      window.idleSaverSetTargetCanvas = function (newCanvas) {
+        if (!newCanvas || newCanvas === targetCanvas) return;
+        targetCanvas = newCanvas;
+        ctx = targetCanvas.getContext("2d");
+        tiles.clear();
+        fit();
+        if (running) { last = 0; requestAnimationFrame(frame); }
+      };
+      window.idleSaverFit = fit;
       if (window.idleCurrentSceneId) switchScene(window.idleCurrentSceneId);
 
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
+          if (window.idleFullscreenActive) return;
           if (e.isIntersecting && !running) {
             running = true; last = 0; requestAnimationFrame(frame);
           } else if (!e.isIntersecting) {

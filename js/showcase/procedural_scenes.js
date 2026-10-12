@@ -4,11 +4,6 @@
     return acc || window.idleCurrentAccent || [255, 176, 0];
   }
 
-  function textHelper(ctx, w, h, t, acc, mul = 0.75) {
-    if (window.IdleSceneText) {
-      window.IdleSceneText.draw(ctx, w, h, t, getAcc(acc), window.IdleSceneText.alpha(t) * mul);
-    }
-  }
 
   function rgbStr(r, g, b, a = 1) {
     return window.IdleSceneText ? window.IdleSceneText.rgb(r, g, b, a) : `rgb(${r},${g},${b})`;
@@ -19,7 +14,6 @@
   function renderMatrix(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.7);
     const cellW = 12, cellH = 18, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
     ctx.font = "14px " + FONT; ctx.textAlign = "center"; ctx.textBaseline = "top";
     const chars = "0123456789ABCDEFｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈ";
@@ -45,7 +39,6 @@
     const sunR = Math.min(w * 0.16, 70), sunGrad = ctx.createLinearGradient(cx, horizon - sunR, cx, horizon);
     sunGrad.addColorStop(0, rgbStr(255, 255, 255, 0.9)); sunGrad.addColorStop(0.5, rgbStr(ar, ag, ab, 0.8)); sunGrad.addColorStop(1, rgbStr(ar, ag, ab, 0.1));
     ctx.fillStyle = sunGrad; ctx.beginPath(); ctx.arc(cx, horizon, sunR, Math.PI, 0); ctx.fill();
-    textHelper(ctx, w, h * 0.5, t, acc, 0.85);
     const speed = (sec * 60) % 36;
     for (let y = horizon + speed; y < h; y += Math.max(12, (y - horizon) * 0.35)) {
       ctx.strokeStyle = rgbStr(ar, ag, ab, Math.min(0.85, (y - horizon) / (h - horizon)));
@@ -60,7 +53,6 @@
   function renderRain(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.3)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.75);
     ctx.font = "14px " + FONT; const count = 55, sec = t * 0.001;
     for (let i = 0; i < count; i++) {
       const x = (Math.sin(i * 99) * 0.5 + 0.5) * w + (sec * 120) % w;
@@ -77,7 +69,6 @@
   function renderWaves(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.7);
     const sec = t * 0.001, glyphs = ["~", "^", "v", "≈", "-", "·"];
     ctx.font = "13px " + FONT; ctx.textAlign = "center";
     for (let line = 0; line < 12; line++) {
@@ -93,7 +84,6 @@
   function renderBinaryPath(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.7);
     const sec = t * 0.001, cellW = 16, cellH = 20, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
     ctx.font = "12px " + FONT; ctx.textAlign = "center";
     for (let r = 1; r < rows - 1; r += 2) {
@@ -109,7 +99,6 @@
   function renderVhsTape(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, jitter = Math.sin(sec * 45) * (Math.random() > 0.85 ? 12 : 2);
     ctx.font = "bold 28px " + FONT; ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillStyle = rgbStr(ar, ag, ab, 0.2); ctx.fillText("[ PLAY ▷ 00:42:19 SP ]", w * 0.5 - 3 + jitter, h * 0.32);
@@ -121,7 +110,6 @@
   function renderBouncyBalls(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001; ctx.font = "bold 18px " + FONT; ctx.textAlign = "center";
     for (let i = 0; i < 7; i++) {
       const vx = 90 + i * 25, vy = 110 + i * 35;
@@ -134,7 +122,6 @@
   function renderMiddleout(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.3)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, cx = w * 0.5, cy = h * 0.5, phase = (sec * 0.6) % 1.0;
     const spanX = phase * cx * 0.95, spanY = phase * cy * 0.8;
     ctx.font = "bold 14px " + FONT; ctx.textAlign = "center"; ctx.textBaseline = "middle";
@@ -148,7 +135,6 @@
   function renderPrint(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.3)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.7);
     const sec = t * 0.001, cellW = 12, cellH = 18, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
     const curRow = Math.floor((sec * 1.6) % Math.min(rows, 16)), headX = Math.floor((sec * cols * 2.4) % (cols + 10));
     ctx.font = "13px " + FONT; ctx.textAlign = "left"; ctx.textBaseline = "top";
@@ -165,7 +151,6 @@
   function renderSlice(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, slices = 12, sliceH = h / slices;
     ctx.font = "bold 15px " + FONT; ctx.textBaseline = "middle";
     for (let i = 0; i < slices; i++) {
@@ -178,7 +163,6 @@
   function renderWipe(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
-    textHelper(ctx, w, h, t, acc, 0.75);
     const sec = t * 0.001, cellW = 14, cellH = 18, cols = Math.floor(w / cellW), rows = Math.floor(h / cellH);
     const wipePos = (sec * 24) % (cols + rows + 12);
     ctx.font = "13px " + FONT; ctx.textAlign = "center"; ctx.textBaseline = "middle";

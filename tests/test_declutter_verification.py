@@ -163,51 +163,77 @@ def run_tests():
         assert "rgb(7, 8, 9)" in card_bg, f"Showcase bg not solid opaque #070809: {card_bg}"
         print("  PASS: Single-IDLESCREEN fix verified (background wordmark suppressed on scroll, opaque stage card).")
 
-        # 5. Header fullscreen screensaver launch, auto-hide, wake, and clean exit
+        # 5. Header Demo button, launch, and input-yield kill on mouse/key/click
+        btn_text = cdp.eval("document.getElementById('btn-fullscreen-saver').textContent.trim()")
+        assert "Demo" in btn_text, f"Expected button to be named Demo, got: {btn_text}"
+        print("  PASS: Header button successfully renamed to 'Demo'.")
+
         cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
         time.sleep(0.4)
         fs_display = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
         assert fs_display == "flex", f"Fullscreen overlay not displayed: {fs_display}"
-        print("  PASS: Header screensaver button launched fullscreen mode.")
+        print("  PASS: Header Demo button launched fullscreen mode.")
 
         # HUD elements present
         hud_check = cdp.eval("""(() => {
             const hud = document.getElementById("fullscreen-hud");
             const idx = document.getElementById("fullscreen-hud-idx");
-            const exit = document.getElementById("fs-exit");
-            return Boolean(hud && idx && exit);
+            const hint = document.getElementById("fullscreen-hud-hint");
+            return Boolean(hud && idx && hint);
         })()""")
         assert hud_check, "Fullscreen HUD elements missing"
 
-        # Inactivity auto-hide check
-        time.sleep(2.8)
-        is_hidden = cdp.eval("document.getElementById('screensaver-fullscreen').classList.contains('hud-hidden')")
-        assert is_hidden, "HUD did not auto-hide after 2.5s inactivity"
-        print("  PASS: Fullscreen HUD and cursor auto-hided after 2.5s.")
+        # Verify HUD displays scene index
+        init_scene = cdp.eval("document.getElementById('fullscreen-hud-idx').textContent")
+        assert "SCENE" in init_scene, f"HUD scene index not formatted: {init_scene}"
 
-        # Touch wakeup
-        cdp.eval("document.getElementById('screensaver-fullscreen').dispatchEvent(new TouchEvent('touchstart', { bubbles: true }))")
-        is_awake = not cdp.eval("document.getElementById('screensaver-fullscreen').classList.contains('hud-hidden')")
-        assert is_awake, "HUD did not wake up on touch"
-        print("  PASS: Fullscreen HUD woke up on touch activity.")
-
-        # Switch scene in screensaver & exit
-        cdp.eval("document.getElementById('fs-next').click()")
-        time.sleep(0.2)
-        cdp.eval("document.getElementById('fs-exit').click()")
+        # Verify mouse movement kills demo and exits fullscreen
         time.sleep(0.4)
+        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 300, clientY: 300, bubbles: true }))")
+        time.sleep(0.3)
+        fs_after_move = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_after_move == "none", f"Fullscreen did not exit on mouse move: {fs_after_move}"
+        print("  PASS: Mouse movement immediately killed screensaver demo and exited fullscreen.")
 
-        fs_after_exit = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_after_exit == "none", f"Fullscreen did not dismiss: {fs_after_exit}"
+        # Re-open and verify key press kills demo and exits fullscreen
+        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
+        time.sleep(0.4)
+        fs_display2 = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_display2 == "flex", "Fullscreen failed to re-open"
+        time.sleep(0.4)
+        cdp.eval("window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }))")
+        time.sleep(0.3)
+        fs_after_key = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_after_key == "none", f"Fullscreen did not exit on keydown: {fs_after_key}"
+        print("  PASS: Key press immediately killed screensaver demo and exited fullscreen.")
+
+        # Re-open and verify click kills demo and exits fullscreen
+        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
+        time.sleep(0.4)
+        fs_display3 = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_display3 == "flex", "Fullscreen failed to re-open for click test"
+        time.sleep(0.4)
+        cdp.eval("window.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }))")
+        time.sleep(0.3)
+        fs_after_click = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_after_click == "none", f"Fullscreen did not exit on click: {fs_after_click}"
+        print("  PASS: Mouse click immediately killed screensaver demo and exited fullscreen.")
+
+        # Re-open and verify touch kills demo and exits fullscreen
+        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
+        time.sleep(0.4)
+        fs_display4 = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_display4 == "flex", "Fullscreen failed to re-open for touch test"
+        time.sleep(0.4)
+        cdp.eval("window.dispatchEvent(new TouchEvent('touchstart', { bubbles: true }))")
+        time.sleep(0.3)
+        fs_after_touch = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
+        assert fs_after_touch == "none", f"Fullscreen did not exit on touch: {fs_after_touch}"
+        print("  PASS: Touch event immediately killed screensaver demo and exited fullscreen.")
 
         # Check for zero runtime JavaScript errors
         errs = cdp.eval("window.__testErrors")
         assert not errs, f"JavaScript runtime errors occurred: {errs}"
-
-        # Verify showcase scene synced back
-        showcase_idx = cdp.eval("window.getCurrentShowcaseIndex()")
-        assert showcase_idx == 2, f"Showcase index not synced back, expected 2, got {showcase_idx}"
-        print("  PASS: Fullscreen screensaver exited cleanly with 0 errors and synced state back to showcase.")
 
     finally:
         chrome.terminate()
