@@ -61,6 +61,15 @@
     if (found) applyAccent(found);
   };
 
+  window.idleCycleRandomAccent = function () {
+    const cur = (window.idleCurrentAccentName || "Amber").toLowerCase();
+    const pool = ACCENTS.filter((a) => a.name.toLowerCase() !== cur);
+    if (!pool.length) return null;
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    applyAccent(picked);
+    return picked;
+  };
+
   function triggerAudioPulse() {
     let bass = 1.0, mid = 0.7, treble = 0.4;
     const start = performance.now();

@@ -1,0 +1,85 @@
+/* styles/section_nav.css — floating right-side section navigation arrows */
+.section-nav-arrows {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 95;
+  pointer-events: auto;
+}
+
+.nav-arrow-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: rgba(18, 21, 23, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-accent);
+  color: var(--phosphor);
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 10px var(--phosphor-dim);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 0;
+}
+
+.nav-arrow-btn:hover {
+  background: rgba(24, 29, 33, 0.95);
+  border-color: var(--phosphor);
+  color: var(--hot);
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 16px var(--phosphor-glow);
+}
+
+.nav-arrow-btn:active {
+  transform: scale(0.95);
+}
+
+.nav-arrow-btn:focus-visible {
+  outline: 2px solid var(--phosphor);
+  outline-offset: 2px;
+}
+
+.nav-arrow-btn.disabled,
+.nav-arrow-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: var(--border-subtle);
+  color: var(--text-muted);
+  box-shadow: none;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .section-nav-arrows {
+    right: 12px;
+    gap: 8px;
+  }
+  .nav-arrow-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-nav-arrows {
+    right: 8px;
+  }
+  .nav-arrow-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+}

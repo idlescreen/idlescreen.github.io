@@ -12,8 +12,8 @@ OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "..", "index.html")
 PARTIAL_ORDER = [
     "header.html",
     "hero.html",
-    "omarchy.html",
     "showcase.html",
+    "omarchy.html",
     "matrix.html",
     "ecosystem.html",
     "install.html",

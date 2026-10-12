@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="/styles/panels/tri_rotation.css" />
     <link rel="stylesheet" href="/styles/panels/install.css" />
     <link rel="stylesheet" href="/styles/panels/footer.css" />
+    <link rel="stylesheet" href="/styles/section_nav.css" />
     <script>
       (function(){
         try {
@@ -78,7 +79,7 @@
             </span>
             <span class="brand-name">IdleScreen</span>
           </a>
-          <span class="brand-badge" title="Daemon Core v4.1.13 Online">CORE: v4.1.13</span>
+          <span class="brand-badge" title="Daemon Core v4.1.14 Online">CORE: v4.1.14</span>
         </div>
 
         <div class="header-actions">
@@ -108,8 +109,8 @@
 
       <!-- Mobile Navigation Drawer -->
       <div class="mobile-nav" id="mobile-nav">
-        <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
         <a href="#showcase" class="mobile-nav-link">Featured Scenes <span>→</span></a>
+        <a href="#omarchy-play" class="mobile-nav-link">The Play <span>→</span></a>
         <a href="#scene-matrix" class="mobile-nav-link">48 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
         <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
@@ -145,5 +146,11 @@
         } catch(e){}
       })();
     </script>
+
+    <!-- Floating Right-Side Section Navigation Arrows -->
+    <nav class="section-nav-arrows" id="section-nav-arrows" aria-label="Section quick navigation">
+      <button type="button" class="nav-arrow-btn" id="nav-arrow-up" aria-label="Scroll to previous section" title="Previous section (Up Arrow)">&#9650;</button>
+      <button type="button" class="nav-arrow-btn" id="nav-arrow-down" aria-label="Scroll to next section" title="Next section (Down Arrow)">&#9660;</button>
+    </nav>
 
     <main id="main-content" tabindex="-1">

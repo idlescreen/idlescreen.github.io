@@ -14,12 +14,8 @@
   var ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
 
-  var BAYER = [
-     0, 32,  8, 40,  2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44,  4, 36, 14, 46,  6, 38, 60, 28, 52, 20, 62, 30, 54, 22,
-     3, 35, 11, 43,  1, 33,  9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47,  7, 39, 13, 45,  5, 37, 63, 31, 55, 23, 61, 29, 53, 21
-  ];
-
-  var N = 128;
+  var BAYER = [0, 32, 8, 40, 2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44, 4, 36, 14, 46, 6, 38, 60, 28, 52, 20, 62, 30, 54, 22, 3, 35, 11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21];
+  var N = 128, smoothAcc = null;
   var noiseTable = (function () {
     var seed = 10407530, buf = new Float32Array(N * N);
     for (var i = 0; i < buf.length; i++) { seed = (seed * 1664525 + 1013904223) >>> 0; buf[i] = seed / 4294967296; }
@@ -167,8 +163,12 @@
       var minR = Math.max(0, curR - ringW), maxR = curR + ringW;
       return { x: rp.x, y: rp.y, r: curR, minRSq: minR * minR, maxRSq: maxR * maxR, amp: Math.pow(1 - progress, 1.8) };
     });
-    var ambientWeight = 0.65 * (1 - smoothMouse.strength * 0.75) * (1 - sub), glareCut = 1 - 0.65 * textDim;
-    var acc = window.idleCurrentAccent || [255, 176, 0], ar = acc[0], ag = acc[1], ab = acc[2];
+    var acc = window.idleCurrentAccent || [255, 176, 0];
+    if (!smoothAcc) smoothAcc = [acc[0], acc[1], acc[2]];
+    smoothAcc[0] += (acc[0] - smoothAcc[0]) * 0.08;
+    smoothAcc[1] += (acc[1] - smoothAcc[1]) * 0.08;
+    smoothAcc[2] += (acc[2] - smoothAcc[2]) * 0.08;
+    var ar = Math.round(smoothAcc[0]), ag = Math.round(smoothAcc[1]), ab = Math.round(smoothAcc[2]);
     var hr = Math.min(255, Math.round(ar + (255 - ar) * 0.4)), hg = Math.min(255, Math.round(ag + (255 - ag) * 0.4)), hb = Math.min(255, Math.round(ab + (255 - ab) * 0.4));
     var aFHigh = ((0.24 - 0.10 * sub) * (1 - 0.30 * textDim)).toFixed(3), aFLow = ((0.08 - 0.03 * sub) * (1 - 0.30 * textDim)).toFixed(3);
     var colorFieldHigh = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFHigh + ')', colorFieldLow = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFLow + ')';
