@@ -1,4 +1,4 @@
-// js/matrix/matrix_render.js — dual-stream marquee and grid renderer for 38 scenes
+// js/matrix/matrix_render.js — dual-stream marquee and grid renderer for 48 scenes
 (function initMatrixRender() {
   let userViewMode = "marquee";
   let activeFilter = "all";

@@ -8,34 +8,17 @@
   const FONT_STACK = 'ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace';
 
   const WASM_MAP = {
-    beams: "beams",
-    spotlights: "beams",
-    laseretch: "beams",
-    highlight: "beams",
-    fireworks: "bursts",
-    bursts: "bursts",
-    expand: "bursts",
-    spray: "bursts",
-    thunderstorm: "storm",
-    pour: "storm",
-    sweep: "radar",
-    radar: "radar",
-    rings: "ripple",
-    bubbles: "ripple",
-    overflow: "glyphs",
-    decrypt: "glyphs",
-    errorcorrect: "glyphs",
-    random_sequence: "glyphs",
-    swarm: "gnats",
-    burn: "hearth",
-    smoke: "hearth",
-    colorshift: "aurora",
-    unstable: "chaos",
-    scattered: "chaos",
-    crumble: "chaos",
-    slide: "chaos",
-    blackhole: "cosmos",
-    orbittingvolley: "cosmos"
+    aurora: "aurora", colorshift: "aurora",
+    beams: "beams", highlight: "beams", laseretch: "beams", spotlights: "beams",
+    bursts: "bursts", expand: "bursts", fireworks: "bursts", spray: "bursts",
+    chaos: "chaos", crumble: "chaos", scattered: "chaos", slide: "chaos", unstable: "chaos",
+    cosmos: "cosmos", blackhole: "cosmos", orbittingvolley: "cosmos",
+    glyphs: "glyphs", decrypt: "glyphs", errorcorrect: "glyphs", overflow: "glyphs", random_sequence: "glyphs",
+    gnats: "gnats", swarm: "gnats",
+    hearth: "hearth", burn: "hearth", smoke: "hearth",
+    radar: "radar", sweep: "radar",
+    ripple: "ripple", bubbles: "ripple", rings: "ripple",
+    storm: "storm", pour: "storm", thunderstorm: "storm"
   };
 
   let activeSwitchFn = null;

@@ -1,9 +1,10 @@
-// js/catalog/index.js — unified 38 in-tree ASCII scenes catalog
-// Combines scenes_primary (01–19) and scenes_secondary (20–38) into canonical window.SAVERS.
+// js/catalog/index.js — unified 48 in-tree ASCII scenes catalog
+// Combines scenes_primary (01–19), scenes_secondary (20–38), and scenes_tertiary (39–48) into canonical window.SAVERS.
 (function initCatalog() {
   const primary = window.SAVERS_PRIMARY || [];
   const secondary = window.SAVERS_SECONDARY || [];
-  const allSavers = primary.concat(secondary);
+  const tertiary = window.SAVERS_TERTIARY || [];
+  const allSavers = primary.concat(secondary, tertiary);
 
   // Expose on window and globalThis for zero-bundler browser standard imports
   window.SAVERS = allSavers;

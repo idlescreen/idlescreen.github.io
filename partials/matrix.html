@@ -1,13 +1,13 @@
-      <!-- Section 2: All 38 In-Tree ASCII Scenes Matrix -->
+      <!-- Section 2: All 48 In-Tree ASCII Scenes Matrix -->
       <section class="panel" id="scene-matrix">
         <div class="matrix-header">
           <div class="section-eyebrow">
             <span class="eyebrow-dot" aria-hidden="true"></span>
-            ALL 38 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH
+            ALL 48 IN-TREE ASCII SCENES // ZERO-OVERHEAD DISPATCH
           </div>
           <div class="matrix-title-row">
-            <h2 class="section-title matrix-title">The 38 In-Tree ASCII Matrix</h2>
-            <span class="matrix-count-badge" id="matrix-count">[ 38 / 38 SCENES ]</span>
+            <h2 class="section-title matrix-title">The 48 In-Tree ASCII Matrix</h2>
+            <span class="matrix-count-badge" id="matrix-count">[ 48 / 48 SCENES ]</span>
           </div>
           <p class="matrix-intro">
             Every effect is implemented in-tree in <code>crates/idlescreen/src/ascii/scenes/</code> with responsive 400% multi-cell font scaling, dynamic 60–144 Hz display refresh rate matching, and zero active cycles. Select any scene below to preview in the stage above, or copy its CLI preview command.
@@ -16,21 +16,21 @@
           <div class="matrix-controls-bar">
             <div class="matrix-search-wrap">
               <span class="search-prompt">&gt;</span>
-              <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 38 ASCII scenes" />
+              <input type="text" id="matrix-search" class="matrix-search-input" placeholder="filter by name, tag, or physics..." aria-label="Search 48 ASCII scenes" />
               <button type="button" id="matrix-search-clear" class="search-clear-btn" aria-label="Clear search" hidden>&times;</button>
             </div>
             <div class="matrix-filter-chips" id="matrix-filter-chips">
-              <button type="button" class="filter-chip active" data-filter="all">ALL (38)</button>
-              <button type="button" class="filter-chip" data-filter="particles">PARTICLES (8)</button>
-              <button type="button" class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (8)</button>
-              <button type="button" class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (8)</button>
-              <button type="button" class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (10)</button>
-              <button type="button" class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (10)</button>
+              <button type="button" class="filter-chip active" data-filter="all">ALL (48)</button>
+              <button type="button" class="filter-chip" data-filter="particles">PARTICLES (10)</button>
+              <button type="button" class="filter-chip" data-filter="vector">VECTOR &amp; OPTICAL (9)</button>
+              <button type="button" class="filter-chip" data-filter="fluid">FLUID &amp; PLASMA (11)</button>
+              <button type="button" class="filter-chip" data-filter="crypto">SYSTEM &amp; CRYPTO (11)</button>
+              <button type="button" class="filter-chip" data-filter="motion">KINETIC &amp; WAVE (13)</button>
             </div>
             <div class="matrix-view-toggle-bar">
               <div class="matrix-view-toggle" role="group" aria-label="Matrix View Mode">
                 <button type="button" class="view-btn active" id="view-mode-marquee" aria-pressed="true">⚡ SCROLLING MARQUEE</button>
-                <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (38)</button>
+                <button type="button" class="view-btn" id="view-mode-grid" aria-pressed="false">⊞ FULL GRID (48)</button>
               </div>
               <span class="marquee-hint">// Dual-stream live marquee · Hover to pause · Click card to preview in stage</span>
             </div>
@@ -39,7 +39,7 @@
 
         <div class="matrix-viewport marquee-mode" id="matrix-viewport">
           <div class="matrix-grid" id="matrix-grid">
-            <!-- 38 cards populated dynamically by js/matrix/matrix_render.js -->
+            <!-- 48 cards populated dynamically by js/matrix/matrix_render.js -->
           </div>
         </div>
       </section>
