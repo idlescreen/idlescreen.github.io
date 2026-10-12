@@ -3,9 +3,11 @@
 import base64
 import json
 import os
+import shutil
 import socket
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.request
 
@@ -79,16 +81,18 @@ class CDPClient:
         return res
 
 def run_tests():
+    user_dir = tempfile.mkdtemp()
     httpd = subprocess.Popen([sys.executable, "-m", "http.server", str(PORT_HTTP), "--bind", "127.0.0.1"],
                              cwd=REPO_ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(0.5)
 
     chrome = subprocess.Popen([
         "google-chrome", "--headless=new", f"--remote-debugging-port={PORT_CDP}",
+        f"--user-data-dir={user_dir}",
         "--no-sandbox", "--disable-gpu", "--window-size=1200,800",
         f"http://127.0.0.1:{PORT_HTTP}/index.html"
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(1.5)
+    time.sleep(1.0)
 
     try:
         with urllib.request.urlopen(f"http://127.0.0.1:{PORT_CDP}/json") as r:
@@ -99,6 +103,11 @@ def run_tests():
         ws_handshake(sock, "127.0.0.1", PORT_CDP, path)
         cdp = CDPClient(sock)
         cdp.eval("window.__testErrors = []; window.addEventListener('error', e => window.__testErrors.push(e.message));")
+
+        for _ in range(50):
+            if cdp.eval("document.readyState === 'complete' && Boolean(document.getElementById('scenes-marquee-track')) && document.querySelectorAll('.scene-chip').length === 96"):
+                break
+            time.sleep(0.1)
 
         # 1. Declutter verification
         declutter_check = cdp.eval("""(() => {
@@ -238,6 +247,7 @@ def run_tests():
     finally:
         chrome.terminate()
         httpd.terminate()
+        shutil.rmtree(user_dir, ignore_errors=True)
 
 if __name__ == "__main__":
     print("Running headless Chrome showcase declutter & screensaver verification...")

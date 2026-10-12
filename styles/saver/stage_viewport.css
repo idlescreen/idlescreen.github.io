@@ -216,4 +216,12 @@
     bottom: 16px;
     border-radius: var(--radius-md);
   }
+
+  .fullscreen-hud-hint {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding-left: 0;
+    padding-top: 6px;
+  }
 }
+
