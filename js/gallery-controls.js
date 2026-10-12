@@ -135,6 +135,9 @@
   function mount() {
     const panels = document.querySelectorAll(".saver-panel");
     panels.forEach(buildControls);
+    if (!window.idleCurrentAccent) {
+      applyAccent(ACCENTS[0].rgb);
+    }
   }
 
   if (document.readyState === "loading") {

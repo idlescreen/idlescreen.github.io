@@ -44,11 +44,13 @@
     else window.idleCurrentSceneId = id;
   };
 
-  function paintCells(ctx, u32, ptr, cellCount, cellW, cellH, tiles, accent) {
+  function paintCells(ctx, u32, ptr, cols, rows, cellW, cellH, tiles, accent) {
     ctx.fillStyle = "#070809";
     ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
-    const cols = Math.floor(ctx.canvas.clientWidth / cellW) || 1;
     const [ar, ag, ab] = accent || [255, 176, 0];
+    const cellCount = cols * rows;
+
+    if (tiles.size > 1200) tiles.clear();
 
     for (let i = 0; i < cellCount; i++) {
       const ch = u32[ptr + i * 3], fg = u32[ptr + i * 3 + 1], bg = u32[ptr + i * 3 + 2];
@@ -118,6 +120,10 @@
         }
       };
 
+      if (currentAccent && ex && ex.saver_set_accent) {
+        try { ex.saver_set_accent(currentAccent[0], currentAccent[1], currentAccent[2]); } catch (e) {}
+      }
+
       if (ex && ex.saver_set_audio_bands) {
         window.idleSaverSetAudioBands = (b, l, m, t) => {
           try { ex.saver_set_audio_bands(b, l, m, t); } catch (e) {}
@@ -158,7 +164,7 @@
         } else if (ex && host) {
           const ptr = ex.saver_tick(host, dt) / 4;
           const u32 = new Uint32Array(ex.memory.buffer);
-          paintCells(ctx, u32, ptr, cols * rows, cellW, CELL_H, tiles, accent);
+          paintCells(ctx, u32, ptr, cols, rows, cellW, CELL_H, tiles, accent);
         } else if (window.IdleSceneSim) {
           window.IdleSceneSim.render(ctx, w, h, t, currentActiveScene, accent);
         }
@@ -191,6 +197,8 @@
           host = 0;
         }
 
+        if (!cols || !rows) fit();
+
         if (ex && !isCustom && wasmName) {
           host = createSaver(ex, wasmName, cols, rows);
           tiles.clear();
@@ -219,7 +227,7 @@
             running = false;
           }
         });
-      }, { root: null, threshold: 0.15 });
+      }, { root: null, threshold: [0, 0.05] });
       io.observe(canvas);
 
       let rt;
