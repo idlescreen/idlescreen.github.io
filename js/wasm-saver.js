@@ -208,6 +208,7 @@
       activeSwitchFn = switchScene;
       window.idleSaverRunScene = switchScene;
       window.idleSaverSetPaused = function (paused) {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (paused) {
           running = false;
         } else if (!reduced && !running) {

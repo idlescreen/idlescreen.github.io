@@ -53,8 +53,16 @@
   100% { transform: translateX(calc(-50% - 4px)); }
 }
 
-.scenes-marquee-wrap:hover .scenes-marquee-track {
+.scenes-marquee-wrap:hover .scenes-marquee-track,
+.scenes-marquee-wrap:has(:focus-visible) .scenes-marquee-track {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scenes-marquee-track {
+    animation: none;
+    transform: none;
+  }
 }
 
 .scene-chip {

@@ -24,6 +24,7 @@
         chip.innerHTML = `<span class="scene-chip-num">[ ${s.num} ]</span><span class="scene-chip-name">${s.name}</span>`;
         chip.addEventListener("click", () => {
           selectScene(idx);
+          chip.blur();
         });
         track.appendChild(chip);
       });
@@ -84,16 +85,19 @@
   function setupControls() {
     const prevBtn = document.getElementById("stage-prev");
     const nextBtn = document.getElementById("stage-next");
-    const savers = getSavers();
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
+        const savers = getSavers();
+        if (!savers.length) return;
         const next = (currentIdx - 1 + savers.length) % savers.length;
         selectScene(next);
       });
     }
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
+        const savers = getSavers();
+        if (!savers.length) return;
         const next = (currentIdx + 1) % savers.length;
         selectScene(next);
       });
@@ -102,14 +106,19 @@
     document.addEventListener("keydown", (e) => {
       const tag = document.activeElement ? document.activeElement.tagName : "";
       if (e.defaultPrevented || ["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
+      if (document.activeElement && (document.activeElement.isContentEditable || ["PRE", "CODE"].includes(tag))) return;
       if (document.getElementById("screensaver-fullscreen") &&
           document.getElementById("screensaver-fullscreen").style.display !== "none") {
         return; // Handled by fullscreen mode
       }
+      const savers = getSavers();
+      if (!savers.length) return;
       if (e.key === "ArrowLeft") {
+        e.preventDefault();
         const next = (currentIdx - 1 + savers.length) % savers.length;
         selectScene(next);
       } else if (e.key === "ArrowRight") {
+        e.preventDefault();
         const next = (currentIdx + 1) % savers.length;
         selectScene(next);
       }

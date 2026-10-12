@@ -60,6 +60,14 @@
       resetCycleTimer();
     });
 
+    const hud = document.getElementById("fullscreen-hud");
+    if (hud) {
+      hud.addEventListener("pointerenter", () => {
+        if (idleTimer) clearTimeout(idleTimer);
+      });
+      hud.addEventListener("pointerleave", onUserActivity);
+    }
+
     const wakeEvents = ["mousemove", "pointermove", "touchstart", "keydown"];
     wakeEvents.forEach((ev) => overlay.addEventListener(ev, onUserActivity, { passive: true }));
   }
@@ -98,6 +106,8 @@
 
     updateHud();
     resetCycleTimer();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) render(performance.now());
   }
 
   function resetCycleTimer() {
@@ -129,7 +139,10 @@
       window.IdleSceneSim.render(ctx, w, h, t, s.id, acc);
     }
 
-    rafId = requestAnimationFrame(render);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced && isRunning) {
+      rafId = requestAnimationFrame(render);
+    }
   }
 
   function openScreensaver() {
@@ -158,12 +171,8 @@
 
     onUserActivity();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduced) {
-      resetCycleTimer();
-      rafId = requestAnimationFrame(render);
-    } else {
-      render(performance.now());
-    }
+    if (!reduced) resetCycleTimer();
+    render(performance.now());
   }
 
   function closeScreensaver() {
