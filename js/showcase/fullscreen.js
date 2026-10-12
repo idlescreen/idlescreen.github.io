@@ -149,7 +149,7 @@
     }
 
     isRunning = true;
-    window.idleFullscreenActive = true;
+    window.idleFullscreenActive = true; if (window.idleSyncMarqueeState) window.idleSyncMarqueeState();
     launchTime = performance.now();
     initPointerX = (e && typeof e.clientX === "number") ? e.clientX : -1;
     initPointerY = (e && typeof e.clientY === "number") ? e.clientY : -1;
@@ -182,7 +182,7 @@
   function closeScreensaver() {
     if (!isRunning) return;
     isRunning = false;
-    window.idleFullscreenActive = false;
+    window.idleFullscreenActive = false; if (window.idleSyncMarqueeState) window.idleSyncMarqueeState();
 
     if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
     if (hudTimer) { clearTimeout(hudTimer); hudTimer = null; }

@@ -27,55 +27,11 @@
         <span class="math-label">PHYSICS:</span> <span class="math-val">${s.math}</span>
       </div>
       <div class="matrix-card-actions">
-        <button type="button" class="matrix-btn matrix-btn-preview" data-idx="${idx}" title="Preview in showcase stage above">[ PREVIEW ]</button>
+        <button type="button" class="matrix-btn matrix-btn-preview" data-id="${s.id}" data-idx="${idx}" title="Preview in showcase stage above">[ PREVIEW ]</button>
         <button type="button" class="matrix-btn matrix-btn-copy" data-cmd="idlescreen preview ${s.id}" title="Copy preview command">[ COPY CMD ]</button>
         <a class="matrix-btn matrix-btn-src" href="${s.sourceUrl}" target="_blank" rel="noopener noreferrer" title="View Rust source code">[ .rs ↗ ]</a>
       </div>
     `;
-
-    // Preview button click
-    const prevBtnEl = card.querySelector(".matrix-btn-preview");
-    if (prevBtnEl) {
-      prevBtnEl.addEventListener("click", () => {
-        if (window.selectShowcaseScene) {
-          window.selectShowcaseScene(idx);
-        }
-        const showcaseEl = document.getElementById("showcase");
-        if (showcaseEl) {
-          showcaseEl.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    }
-
-    // Copy button click with clipboard fallback
-    const copyBtn = card.querySelector(".matrix-btn-copy");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", () => {
-        const cmd = copyBtn.getAttribute("data-cmd");
-        const showDone = () => {
-          const orig = copyBtn.textContent;
-          copyBtn.textContent = "[ COPIED! ]";
-          copyBtn.classList.add("copied");
-          setTimeout(() => {
-            copyBtn.textContent = orig;
-            copyBtn.classList.remove("copied");
-          }, 1500);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(cmd).then(showDone).catch(() => {
-            if (typeof fallbackCopy === "function") {
-              fallbackCopy(cmd, showDone);
-            } else {
-              showDone();
-            }
-          });
-        } else if (typeof fallbackCopy === "function") {
-          fallbackCopy(cmd, showDone);
-        } else {
-          showDone();
-        }
-      });
-    }
 
     return card;
   }

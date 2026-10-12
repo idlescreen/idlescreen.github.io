@@ -3,6 +3,7 @@
   let userViewMode = "marquee";
   let activeFilter = "all";
   let currentSearchQuery = "";
+  let delegationAttached = false;
 
   function setMatrixFilterState(filter, query) {
     if (filter !== undefined) activeFilter = filter;
@@ -11,6 +12,54 @@
 
   function getMatrixFilterState() {
     return { userViewMode, activeFilter, currentSearchQuery };
+  }
+
+  function setupEventDelegation(matrixGrid) {
+    if (delegationAttached || !matrixGrid) return;
+    matrixGrid.addEventListener("click", (e) => {
+      const prevBtn = e.target.closest(".matrix-btn-preview");
+      if (prevBtn) {
+        const sid = prevBtn.getAttribute("data-id");
+        let idx = -1;
+        if (sid && typeof SAVERS !== "undefined") {
+          idx = SAVERS.findIndex((s) => s.id === sid);
+        }
+        if (idx === -1) {
+          idx = parseInt(prevBtn.getAttribute("data-idx"), 10);
+        }
+        if (idx >= 0 && window.selectShowcaseScene) {
+          window.selectShowcaseScene(idx);
+        }
+        const showcaseEl = document.getElementById("showcase");
+        if (showcaseEl) showcaseEl.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      const copyBtn = e.target.closest(".matrix-btn-copy");
+      if (copyBtn) {
+        const cmd = copyBtn.getAttribute("data-cmd");
+        const showDone = () => {
+          const orig = copyBtn.textContent;
+          copyBtn.textContent = "[ COPIED! ]";
+          copyBtn.classList.add("copied");
+          setTimeout(() => {
+            copyBtn.textContent = orig;
+            copyBtn.classList.remove("copied");
+          }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(cmd).then(showDone).catch(() => {
+            if (typeof fallbackCopy === "function") fallbackCopy(cmd, showDone);
+            else showDone();
+          });
+        } else if (typeof fallbackCopy === "function") {
+          fallbackCopy(cmd, showDone);
+        } else {
+          showDone();
+        }
+      }
+    });
+    delegationAttached = true;
   }
 
   function renderMatrix() {
@@ -23,6 +72,7 @@
     const searchInput = document.getElementById("matrix-search");
 
     if (!matrixGrid || typeof SAVERS === "undefined" || !window.buildMatrixCard) return;
+    setupEventDelegation(matrixGrid);
 
     const query = (currentSearchQuery || (searchInput ? searchInput.value : "")).trim().toLowerCase();
     const isFiltered = query.length > 0 || activeFilter !== "all";
@@ -37,27 +87,32 @@
         viewModeGrid.classList.remove("active");
         viewModeGrid.setAttribute("aria-pressed", "false");
       }
-      matrixGrid.innerHTML = "";
 
-      const stream1 = document.createElement("div");
-      stream1.className = "marquee-stream stream-left";
-      const stream2 = document.createElement("div");
-      stream2.className = "marquee-stream stream-right";
+      const hasStreams = matrixGrid.querySelector(".marquee-stream");
+      if (!hasStreams) {
+        matrixGrid.innerHTML = "";
+        const stream1 = document.createElement("div");
+        stream1.className = "marquee-stream stream-left";
+        const stream2 = document.createElement("div");
+        stream2.className = "marquee-stream stream-right";
 
-      const half = Math.ceil(SAVERS.length / 2);
-      const group1 = SAVERS.slice(0, half);
-      const group2 = SAVERS.slice(half);
+        const half = Math.ceil(SAVERS.length / 2);
+        const group1 = SAVERS.slice(0, half);
+        const group2 = SAVERS.slice(half);
 
-      // Stream 1 original + clones for seamless infinite scroll
-      group1.forEach((s, i) => stream1.appendChild(window.buildMatrixCard(s, i)));
-      group1.forEach((s, i) => stream1.appendChild(window.buildMatrixCard(s, i, true)));
+        group1.forEach((s, i) => stream1.appendChild(window.buildMatrixCard(s, i)));
+        group1.forEach((s, i) => stream1.appendChild(window.buildMatrixCard(s, i, true)));
+        group2.forEach((s, i) => stream2.appendChild(window.buildMatrixCard(s, half + i)));
+        group2.forEach((s, i) => stream2.appendChild(window.buildMatrixCard(s, half + i, true)));
 
-      // Stream 2 original + clones for seamless infinite scroll
-      group2.forEach((s, i) => stream2.appendChild(window.buildMatrixCard(s, half + i)));
-      group2.forEach((s, i) => stream2.appendChild(window.buildMatrixCard(s, half + i, true)));
-
-      matrixGrid.appendChild(stream1);
-      matrixGrid.appendChild(stream2);
+        matrixGrid.appendChild(stream1);
+        matrixGrid.appendChild(stream2);
+      } else {
+        matrixGrid.querySelectorAll(".stream-left, .stream-right").forEach((el) => {
+          el.style.animationPlayState = "";
+        });
+      }
+      if (window.idleSyncMarqueeState) window.idleSyncMarqueeState();
 
       if (countBadge) countBadge.textContent = `[ ${SAVERS.length} / ${SAVERS.length} SCENES ]`;
       if (searchClear) searchClear.hidden = true;
@@ -71,10 +126,29 @@
         viewModeGrid.classList.toggle("active", userViewMode === "grid" || isFiltered);
         viewModeGrid.setAttribute("aria-pressed", userViewMode === "grid" || isFiltered ? "true" : "false");
       }
-      matrixGrid.innerHTML = "";
+
+      const hasStreams = matrixGrid.querySelector(".marquee-stream");
+      const cardMap = new Map();
+      if (!hasStreams) {
+        Array.from(matrixGrid.children).forEach((c) => {
+          if (c.dataset && c.dataset.id) cardMap.set(c.dataset.id, c);
+        });
+      }
+      const needsFullRebuild = hasStreams || cardMap.size !== SAVERS.length || matrixGrid.children.length !== SAVERS.length;
+      if (needsFullRebuild) {
+        matrixGrid.innerHTML = "";
+        cardMap.clear();
+        SAVERS.forEach((s, idx) => {
+          const card = window.buildMatrixCard(s, idx);
+          matrixGrid.appendChild(card);
+          cardMap.set(s.id, card);
+        });
+      }
 
       let visibleCount = 0;
-      SAVERS.forEach((s, idx) => {
+      SAVERS.forEach((s) => {
+        const card = cardMap.get(s.id);
+        if (!card) return;
         const name = s.name.toLowerCase();
         const id = s.id.toLowerCase();
         const sub = (s.sub || "").toLowerCase();
@@ -97,14 +171,12 @@
           matchesFilter = tags.includes(activeFilter);
         }
 
-        const card = window.buildMatrixCard(s, idx);
         if (matchesQuery && matchesFilter) {
           card.style.display = "";
           visibleCount++;
         } else {
           card.style.display = "none";
         }
-        matrixGrid.appendChild(card);
       });
 
       if (countBadge) countBadge.textContent = `[ ${visibleCount} / ${SAVERS.length} SCENES ]`;

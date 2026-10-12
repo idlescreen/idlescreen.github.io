@@ -96,6 +96,19 @@
     }
   }
 
+  let vhsScanPattern = null;
+  function getVhsScanPattern(ctx) {
+    if (!vhsScanPattern) {
+      const p = document.createElement("canvas");
+      p.width = 1; p.height = 4;
+      const pctx = p.getContext("2d");
+      pctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+      pctx.fillRect(0, 0, 1, 2);
+      vhsScanPattern = ctx.createPattern(p, "repeat");
+    }
+    return vhsScanPattern;
+  }
+
   function renderVhsTape(ctx, w, h, t, acc) {
     const [ar, ag, ab] = getAcc(acc);
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
@@ -104,7 +117,8 @@
     ctx.fillStyle = rgbStr(ar, ag, ab, 0.2); ctx.fillText("[ PLAY ▷ 00:42:19 SP ]", w * 0.5 - 3 + jitter, h * 0.32);
     ctx.fillStyle = rgbStr(ar, ag, ab, 0.9); ctx.fillText("[ PLAY ▷ 00:42:19 SP ]", w * 0.5 + jitter, h * 0.32);
     ctx.fillStyle = "rgba(255, 255, 255, 0.18)"; ctx.fillRect(0, (sec * 180) % h, w, 18);
-    ctx.fillStyle = "rgba(0, 0, 0, 0.25)"; for (let y = 0; y < h; y += 4) ctx.fillRect(0, y, w, 2);
+    const vhsP = getVhsScanPattern(ctx);
+    if (vhsP) { ctx.fillStyle = vhsP; ctx.fillRect(0, 0, w, h); }
   }
 
   function renderBouncyBalls(ctx, w, h, t, acc) {

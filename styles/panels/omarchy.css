@@ -67,9 +67,7 @@
 }
 
 .compare-card {
-  background: rgba(17, 20, 23, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(17, 20, 23, 0.95);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -80,7 +78,7 @@
 }
 
 .compare-card-opinionated {
-  background: rgba(18, 21, 23, 0.82);
+  background: rgba(18, 21, 23, 0.95);
   border-color: #1a1e22;
 }
 
@@ -89,7 +87,7 @@
 }
 
 .compare-card-idlescreen {
-  background: rgba(24, 28, 32, 0.88);
+  background: rgba(24, 28, 32, 0.95);
   border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.35);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(var(--accent-rgb, 255, 176, 0), 0.06);
 }

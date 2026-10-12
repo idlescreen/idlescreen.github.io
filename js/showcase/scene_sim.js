@@ -1,6 +1,5 @@
 // js/showcase/scene_sim.js — procedural ASCII simulation engine
 (function initSceneSim() {
-
   function rgbStr(r, g, b, a = 1) {
     return a < 1 ? `rgba(${r},${g},${b},${a.toFixed(2)})` : `rgb(${r},${g},${b})`;
   }
@@ -16,14 +15,11 @@
   function drawAsciiText(ctx, w, h, t, acc, alpha = 0.8) {
     const [ar, ag, ab] = acc || [255, 176, 0];
     const wm = window.IdleScreenWordmark;
-
     ctx.save();
-    ctx.shadowColor = "transparent";
-    ctx.shadowBlur = 0;
+    ctx.shadowColor = "transparent"; ctx.shadowBlur = 0;
     if (wm && wm.rows) {
       const cell = Math.max(2, Math.min(Math.floor((w * 0.82) / wm.width), Math.floor((h * 0.54) / wm.height)));
-      const ox = Math.round((w - wm.width * cell) / 2);
-      const oy = Math.round((h - wm.height * cell) / 2);
+      const ox = Math.round((w - wm.width * cell) / 2), oy = Math.round((h - wm.height * cell) / 2);
       ctx.fillStyle = rgbStr(ar, ag, ab, alpha);
       for (let r = 0; r < wm.height; r++) {
         for (let c = 0; c < wm.width; c++) {
@@ -35,6 +31,40 @@
   }
 
   window.IdleSceneText = { draw: drawAsciiText, alpha: getCycleAlpha, rgb: rgbStr };
+
+  let scanlinePattern = null;
+  function getScanlinePattern(ctx) {
+    if (!scanlinePattern) {
+      const cv = document.createElement("canvas");
+      cv.width = 1; cv.height = 3;
+      const pctx = cv.getContext("2d");
+      pctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+      pctx.fillRect(0, 0, 1, 1);
+      scanlinePattern = ctx.createPattern(cv, "repeat");
+    }
+    return scanlinePattern;
+  }
+
+  let cachedGlow = null, lastGlowKey = "";
+  function getBeaconGlow(r, ar, ag, ab) {
+    const key = `${Math.round(r)}_${ar}_${ag}_${ab}`;
+    if (!cachedGlow || lastGlowKey !== key) {
+      const off = document.createElement("canvas");
+      const size = Math.max(32, Math.round(r * 2));
+      off.width = size; off.height = size;
+      const octx = off.getContext("2d");
+      const half = size * 0.5;
+      const g = octx.createRadialGradient(half, half, 0, half, half, half);
+      g.addColorStop(0, rgbStr(255, 255, 255, 0.45));
+      g.addColorStop(0.25, rgbStr(ar, ag, ab, 0.25));
+      g.addColorStop(0.6, rgbStr(ar, ag, ab, 0.08));
+      g.addColorStop(1, rgbStr(ar, ag, ab, 0));
+      octx.fillStyle = g;
+      octx.beginPath(); octx.arc(half, half, half, 0, Math.PI * 2); octx.fill();
+      cachedGlow = off; lastGlowKey = key;
+    }
+    return cachedGlow;
+  }
 
   function renderSpotlightOrbit(ctx, w, h, t, acc) {
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
@@ -59,9 +89,7 @@
     }
     const drawWordmark = () => {
       if (wm && wm.rows) {
-        ctx.save();
-        ctx.shadowColor = "transparent";
-        ctx.shadowBlur = 0;
+        ctx.save(); ctx.shadowColor = "transparent"; ctx.shadowBlur = 0;
         for (let r = 0; r < wm.height; r++) {
           for (let c = 0; c < wm.width; c++) {
             if (wm.rows[r][c] !== "1") continue;
@@ -76,13 +104,19 @@
       }
     };
     const drawBeacon = () => {
-      const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, reach * 0.85);
-      grad.addColorStop(0, rgbStr(255, 255, 255, 0.45)); grad.addColorStop(0.25, rgbStr(ar, ag, ab, 0.25));
-      grad.addColorStop(0.6, rgbStr(ar, ag, ab, 0.08)); grad.addColorStop(1, rgbStr(ar, ag, ab, 0));
-      ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(sx, sy, reach * 0.85, 0, Math.PI * 2); ctx.fill();
+      const glowR = reach * 0.85;
+      const glowImg = getBeaconGlow(glowR, ar, ag, ab);
+      ctx.drawImage(glowImg, sx - glowR, sy - glowR, glowR * 2, glowR * 2);
       const pulse = 1 + 0.15 * Math.sin(sec * 6), starR = (8.5 + 2 * Math.sin(sec * 4.5)) * pulse;
       ctx.save(); ctx.translate(sx, sy); ctx.rotate(angle * 0.7);
-      ctx.fillStyle = rgbStr(ar, ag, ab); ctx.shadowColor = rgbStr(ar, ag, ab); ctx.shadowBlur = 14; ctx.beginPath();
+      ctx.shadowBlur = 0; ctx.shadowColor = "transparent";
+      ctx.fillStyle = rgbStr(ar, ag, ab, 0.35); ctx.beginPath();
+      for (let p = 0; p < 8; p++) {
+        const a = (p * Math.PI) / 4, r = (p % 2 === 0 ? starR * 1.4 : starR * 0.42) * 1.35;
+        p === 0 ? ctx.moveTo(r * Math.cos(a), r * Math.sin(a)) : ctx.lineTo(r * Math.cos(a), r * Math.sin(a));
+      }
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = rgbStr(ar, ag, ab); ctx.beginPath();
       for (let p = 0; p < 8; p++) {
         const a = (p * Math.PI) / 4, r = p % 2 === 0 ? starR * 1.4 : starR * 0.42;
         p === 0 ? ctx.moveTo(r * Math.cos(a), r * Math.sin(a)) : ctx.lineTo(r * Math.cos(a), r * Math.sin(a));
@@ -92,7 +126,8 @@
       ctx.restore();
     };
     if (!starInFront) { drawBeacon(); drawWordmark(); } else { drawWordmark(); drawBeacon(); }
-    ctx.fillStyle = "rgba(0, 0, 0, 0.08)"; for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
+    const sp = getScanlinePattern(ctx);
+    if (sp) { ctx.fillStyle = sp; ctx.fillRect(0, 0, w, h); }
   }
 
   function renderGenericFallback(ctx, w, h, t, acc) {

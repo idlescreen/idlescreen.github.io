@@ -24,6 +24,7 @@
     const filterChips = document.querySelectorAll(".filter-chip");
     const searchInput = document.getElementById("matrix-search");
     const searchClear = document.getElementById("matrix-search-clear");
+    let searchDebounceTimer = null;
 
     filterChips.forEach((chip) => {
       chip.addEventListener("click", () => {
@@ -39,25 +40,31 @@
       });
     });
 
+    function applySearch() {
+      const val = searchInput.value.trim();
+      if (val) {
+        filterChips.forEach((c) => c.classList.toggle("active", c.getAttribute("data-filter") === "all"));
+        if (window.setMatrixFilterState) {
+          window.setMatrixFilterState("all", val);
+        }
+      } else if (window.setMatrixFilterState) {
+        window.setMatrixFilterState(undefined, "");
+      }
+      if (window.renderMatrix) {
+        window.renderMatrix();
+      }
+    }
+
     if (searchInput) {
       searchInput.addEventListener("input", () => {
-        const val = searchInput.value.trim();
-        if (val) {
-          filterChips.forEach((c) => c.classList.toggle("active", c.getAttribute("data-filter") === "all"));
-          if (window.setMatrixFilterState) {
-            window.setMatrixFilterState("all", val);
-          }
-        } else if (window.setMatrixFilterState) {
-          window.setMatrixFilterState(undefined, "");
-        }
-        if (window.renderMatrix) {
-          window.renderMatrix();
-        }
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(applySearch, 150);
       });
     }
 
     if (searchClear && searchInput) {
       searchClear.addEventListener("click", () => {
+        clearTimeout(searchDebounceTimer);
         searchInput.value = "";
         if (window.setMatrixFilterState) {
           window.setMatrixFilterState(undefined, "");

@@ -7,9 +7,7 @@
 }
 
 .matrix-card {
-  background: rgba(17, 20, 23, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(17, 20, 23, 0.95);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 18px 20px;
