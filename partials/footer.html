@@ -116,6 +116,36 @@
       </div>
     </footer>
 
+    <!-- 8-Bit Retro Dock Bar: Left [▲ UP], Center [8-Bit Rainbow Palette], Right [▼ DOWN] -->
+    <nav class="footer-dock" id="footer-dock" aria-label="8-Bit Navigation and Theme Palette">
+      <div class="footer-dock-inner">
+        <div class="dock-side dock-left">
+          <button type="button" class="dock-arrow-btn dock-arrow-up" id="nav-arrow-up" aria-label="Scroll to previous section" title="Previous section (Up Arrow)">
+            <span class="pixel-bracket">[</span><span class="pixel-glyph">▲</span><span class="pixel-text">UP</span><span class="pixel-bracket">]</span>
+          </button>
+        </div>
+
+        <div class="dock-center">
+          <div class="footer-accent-picker" id="footer-accent-picker" role="radiogroup" aria-label="8-Bit Rainbow Palette">
+            <button type="button" class="dock-accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" tabindex="-1" aria-label="Coral Accent" title="Coral (8-bit Red)"></button>
+            <button type="button" class="dock-accent-dot" data-accent-name="Orange" style="--swatch:#ff7700;background-color:#ff7700;" role="radio" aria-checked="false" tabindex="-1" aria-label="Orange Accent" title="Orange (8-bit Orange)"></button>
+            <button type="button" class="dock-accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" tabindex="0" aria-label="Amber Accent" title="Amber (8-bit Phosphor)"></button>
+            <button type="button" class="dock-accent-dot" data-accent-name="Yellow" style="--swatch:#f1fa8c;background-color:#f1fa8c;" role="radio" aria-checked="false" tabindex="-1" aria-label="Yellow Accent" title="Yellow (8-bit Yellow)"></button>
+            <button type="button" class="dock-accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" tabindex="-1" aria-label="Emerald Accent" title="Emerald (8-bit Green)"></button>
+            <button type="button" class="dock-accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" tabindex="-1" aria-label="Cyan Accent" title="Cyan (8-bit Electric)"></button>
+            <button type="button" class="dock-accent-dot" data-accent-name="Blue" style="--swatch:#3b82f6;background-color:#3b82f6;" role="radio" aria-checked="false" tabindex="-1" aria-label="Blue Accent" title="Blue (8-bit Cobalt)"></button>
+            <button type="button" class="dock-accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" tabindex="-1" aria-label="Violet Accent" title="Violet (8-bit Purple)"></button>
+          </div>
+        </div>
+
+        <div class="dock-side dock-right">
+          <button type="button" class="dock-arrow-btn dock-arrow-down" id="nav-arrow-down" aria-label="Scroll to next section" title="Next section (Down Arrow)">
+            <span class="pixel-bracket">[</span><span class="pixel-text">DOWN</span><span class="pixel-glyph">▼</span><span class="pixel-bracket">]</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
     <!-- Modular Standard Browser Scripts -->
     <script src="/js/spotlight/wordmark_data.js"></script>
     <script src="/js/spotlight/spotlight_render.js"></script>

@@ -1,11 +1,14 @@
 // js/gallery-controls.js — interactive parameter and telemetry control bar for gallery showcase
 (function initGalleryControls() {
   const ACCENTS = [
-    { name: "Amber", hex: "#ffb000", rgb: [255, 176, 0], hot: "#ffd447", hotRgb: [255, 212, 71] },
-    { name: "Cyan", hex: "#00e5ff", rgb: [0, 229, 255], hot: "#80f4ff", hotRgb: [128, 244, 255] },
-    { name: "Violet", hex: "#bd93f9", rgb: [189, 147, 249], hot: "#d9b8ff", hotRgb: [217, 184, 255] },
-    { name: "Emerald", hex: "#50fa7b", rgb: [80, 250, 123], hot: "#a2ffbc", hotRgb: [162, 255, 188] },
     { name: "Coral", hex: "#ff5555", rgb: [255, 85, 85], hot: "#ff9999", hotRgb: [255, 153, 153] },
+    { name: "Orange", hex: "#ff7700", rgb: [255, 119, 0], hot: "#ffa040", hotRgb: [255, 160, 64] },
+    { name: "Amber", hex: "#ffb000", rgb: [255, 176, 0], hot: "#ffd447", hotRgb: [255, 212, 71] },
+    { name: "Yellow", hex: "#f1fa8c", rgb: [241, 250, 140], hot: "#ffffb0", hotRgb: [255, 255, 176] },
+    { name: "Emerald", hex: "#50fa7b", rgb: [80, 250, 123], hot: "#a2ffbc", hotRgb: [162, 255, 188] },
+    { name: "Cyan", hex: "#00e5ff", rgb: [0, 229, 255], hot: "#80f4ff", hotRgb: [128, 244, 255] },
+    { name: "Blue", hex: "#3b82f6", rgb: [59, 130, 246], hot: "#7cb3ff", hotRgb: [124, 179, 255] },
+    { name: "Violet", hex: "#bd93f9", rgb: [189, 147, 249], hot: "#d9b8ff", hotRgb: [217, 184, 255] },
   ];
 
   function applyAccent(a) {
@@ -109,7 +112,7 @@
     if (!current && window.idleCurrentAccent) {
       current = ACCENTS.find((a) => a.rgb[0] === window.idleCurrentAccent[0] && a.rgb[1] === window.idleCurrentAccent[1]);
     }
-    applyAccent(current || ACCENTS[0]);
+    applyAccent(current || ACCENTS.find((a) => a.name === "Amber") || ACCENTS[0]);
   }
 
   if (document.readyState === "loading") {

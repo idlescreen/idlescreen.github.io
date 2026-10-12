@@ -127,26 +127,36 @@ def run_tests():
         assert order["inOrder"], f"Sections not in expected order: {order['ids']}"
         print("  PASS: Section DOM order verified (intro -> overview -> showcase -> omarchy-play -> ...).")
 
-        # 2. Right-side arrows exist, fixed position, right side of viewport
-        nav_info = cdp.eval("""(() => {
-            const wrap = document.getElementById('section-nav-arrows');
+        # 2. Footer dock exists, fixed at bottom, UP on left, palette centered, DOWN on right
+        dock_info = cdp.eval("""(() => {
+            const dock = document.getElementById('footer-dock');
             const up = document.getElementById('nav-arrow-up');
             const down = document.getElementById('nav-arrow-down');
-            if (!wrap || !up || !down) return null;
-            const cs = getComputedStyle(wrap);
-            const rect = wrap.getBoundingClientRect();
+            const picker = document.getElementById('footer-accent-picker');
+            if (!dock || !up || !down || !picker) return null;
+            const cs = getComputedStyle(dock);
+            const dockRect = dock.getBoundingClientRect();
+            const upRect = up.getBoundingClientRect();
+            const downRect = down.getBoundingClientRect();
+            const pickerRect = picker.getBoundingClientRect();
+            const winW = window.innerWidth;
+            const winH = window.innerHeight;
             return {
                 position: cs.position,
-                right: rect.right,
-                windowWidth: window.innerWidth,
-                onRightSide: rect.right >= window.innerWidth - 40,
+                atBottom: dockRect.bottom >= winH - 5,
+                upOnLeft: upRect.left < winW / 2,
+                downOnRight: downRect.right > winW / 2,
+                pickerCentered: pickerRect.left >= upRect.right && pickerRect.right <= downRect.left,
                 hasUp: Boolean(up),
                 hasDown: Boolean(down)
             };
         })()""")
-        assert nav_info and nav_info["position"] == "fixed", f"Arrows wrap not fixed: {nav_info}"
-        assert nav_info["onRightSide"], f"Arrows not on right side: {nav_info}"
-        print("  PASS: Floating section nav arrows fixed to right side of viewport.")
+        assert dock_info and dock_info["position"] == "fixed", f"Dock not fixed at bottom: {dock_info}"
+        assert dock_info["atBottom"], f"Dock not at bottom: {dock_info}"
+        assert dock_info["upOnLeft"], f"Up arrow not on left side: {dock_info}"
+        assert dock_info["downOnRight"], f"Down arrow not on right side: {dock_info}"
+        assert dock_info["pickerCentered"], f"Palette picker not centered: {dock_info}"
+        print("  PASS: 8-bit footer dock verified (fixed at bottom, UP on left, palette centered, DOWN on right).")
 
         # 3. Down arrow navigation & theme cycling
         initial_accent = cdp.eval("window.idleCurrentAccentName")

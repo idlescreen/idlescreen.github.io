@@ -35,11 +35,14 @@
         try {
           var k = localStorage.getItem("idlescreen_accent") || "amber";
           var m = {
+            coral: ["#ff5555", "255, 85, 85", "#ff9999", "255, 153, 153", [255, 85, 85]],
+            orange: ["#ff7700", "255, 119, 0", "#ffa040", "255, 160, 64", [255, 119, 0]],
             amber: ["#ffb000", "255, 176, 0", "#ffd447", "255, 212, 71", [255, 176, 0]],
-            cyan: ["#00e5ff", "0, 229, 255", "#80f4ff", "128, 244, 255", [0, 229, 255]],
-            violet: ["#bd93f9", "189, 147, 249", "#d9b8ff", "217, 184, 255", [189, 147, 249]],
+            yellow: ["#f1fa8c", "241, 250, 140", "#ffffb0", "255, 255, 176", [241, 250, 140]],
             emerald: ["#50fa7b", "80, 250, 123", "#a2ffbc", "162, 255, 188", [80, 250, 123]],
-            coral: ["#ff5555", "255, 85, 85", "#ff9999", "255, 153, 153", [255, 85, 85]]
+            cyan: ["#00e5ff", "0, 229, 255", "#80f4ff", "128, 244, 255", [0, 229, 255]],
+            blue: ["#3b82f6", "59, 130, 246", "#7cb3ff", "124, 179, 255", [59, 130, 246]],
+            violet: ["#bd93f9", "189, 147, 249", "#d9b8ff", "217, 184, 255", [189, 147, 249]]
           };
           var c = m[k.toLowerCase()] || m.amber;
           var r = document.documentElement;
@@ -79,17 +82,10 @@
             </span>
             <span class="brand-name">IdleScreen</span>
           </a>
-          <span class="brand-badge" title="Daemon Core v4.1.16 Online">CORE: v4.1.16</span>
+          <span class="brand-badge" title="Daemon Core v4.1.17 Online">CORE: v4.1.17</span>
         </div>
 
         <div class="header-actions">
-          <div class="header-accent-picker" role="radiogroup" aria-label="Accent Palette">
-            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" tabindex="0" aria-label="Amber Accent" title="Amber Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" tabindex="-1" aria-label="Cyan Accent" title="Cyan Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" tabindex="-1" aria-label="Violet Accent" title="Violet Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" tabindex="-1" aria-label="Emerald Accent" title="Emerald Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" tabindex="-1" aria-label="Coral Accent" title="Coral Accent"></button>
-          </div>
           <button type="button" class="nav-btn nav-btn-screensaver" id="btn-fullscreen-saver" title="Launch Fullscreen Demo Mode" aria-label="Launch Fullscreen Demo Mode">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
@@ -123,43 +119,11 @@
         <a href="#scene-matrix" class="mobile-nav-link">48 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
         <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
-        <div class="mobile-accent-wrap">
-          <span class="mobile-accent-title">ACCENT COLOR</span>
-          <div class="header-accent-picker" role="radiogroup" aria-label="Mobile Accent Palette">
-            <button type="button" class="accent-dot active" data-accent-name="Amber" style="--swatch:#ffb000;background-color:#ffb000;" role="radio" aria-checked="true" tabindex="0" aria-label="Amber Accent" title="Amber Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Cyan" style="--swatch:#00e5ff;background-color:#00e5ff;" role="radio" aria-checked="false" tabindex="-1" aria-label="Cyan Accent" title="Cyan Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Violet" style="--swatch:#bd93f9;background-color:#bd93f9;" role="radio" aria-checked="false" tabindex="-1" aria-label="Violet Accent" title="Violet Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Emerald" style="--swatch:#50fa7b;background-color:#50fa7b;" role="radio" aria-checked="false" tabindex="-1" aria-label="Emerald Accent" title="Emerald Accent"></button>
-            <button type="button" class="accent-dot" data-accent-name="Coral" style="--swatch:#ff5555;background-color:#ff5555;" role="radio" aria-checked="false" tabindex="-1" aria-label="Coral Accent" title="Coral Accent"></button>
-          </div>
-        </div>
         <div class="mobile-nav-actions">
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">GitHub ↗</a>
           <a href="#install" class="nav-btn nav-btn-primary">Install</a>
         </div>
       </div>
     </header>
-    <script>
-      (function(){
-        try {
-          var name = window.idleCurrentAccentName || "amber";
-          if (name && name.toLowerCase() !== "amber") {
-            var dots = document.querySelectorAll(".site-header [data-accent-name]");
-            for (var i = 0; i < dots.length; i++) {
-              var m = dots[i].dataset.accentName.toLowerCase() === name.toLowerCase();
-              dots[i].classList.toggle("active", m);
-              dots[i].setAttribute("aria-checked", m ? "true" : "false");
-              dots[i].setAttribute("tabindex", m ? "0" : "-1");
-            }
-          }
-        } catch(e){}
-      })();
-    </script>
-
-    <!-- Floating Right-Side Section Navigation Arrows -->
-    <nav class="section-nav-arrows" id="section-nav-arrows" aria-label="Section quick navigation">
-      <button type="button" class="nav-arrow-btn" id="nav-arrow-up" aria-label="Scroll to previous section" title="Previous section (Up Arrow)">&#9650;</button>
-      <button type="button" class="nav-arrow-btn" id="nav-arrow-down" aria-label="Scroll to next section" title="Next section (Down Arrow)">&#9660;</button>
-    </nav>
 
     <main id="main-content" tabindex="-1">

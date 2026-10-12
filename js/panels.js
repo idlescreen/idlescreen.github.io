@@ -50,11 +50,13 @@
       const isTop = idx <= 0 && scrollY <= 20;
       navArrowUp.classList.toggle("disabled", isTop);
       navArrowUp.setAttribute("aria-disabled", isTop ? "true" : "false");
+      navArrowUp.disabled = isTop;
     }
     if (navArrowDown) {
       const isBottom = idx >= navSections.length - 1;
       navArrowDown.classList.toggle("disabled", isBottom);
       navArrowDown.setAttribute("aria-disabled", isBottom ? "true" : "false");
+      navArrowDown.disabled = isBottom;
     }
   }
 

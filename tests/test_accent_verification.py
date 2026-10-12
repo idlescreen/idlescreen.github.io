@@ -109,24 +109,26 @@ def run_tests():
         ws_handshake(sock, "127.0.0.1", PORT_CDP, path)
         cdp = CDPClient(sock)
 
-        # 1. Swatch presence in header & mobile
-        swatches = ["Amber", "Cyan", "Violet", "Emerald", "Coral"]
+        # 1. Swatch presence in footer dock
+        swatches = ["Coral", "Orange", "Amber", "Yellow", "Emerald", "Cyan", "Blue", "Violet"]
         for s in swatches:
-            h_btn = cdp.eval(f"Boolean(document.querySelector('.site-header [data-accent-name=\"{s}\"]'))")
-            m_btn = cdp.eval(f"Boolean(document.querySelector('#mobile-nav [data-accent-name=\"{s}\"]'))")
-            assert h_btn and m_btn, f"Swatch {s} missing in header/mobile"
-        print("  PASS: All 5 swatches present in header and mobile drawer.")
+            f_btn = cdp.eval(f"Boolean(document.querySelector('.footer-accent-picker [data-accent-name=\"{s}\"]'))")
+            assert f_btn, f"Swatch {s} missing in footer accent picker"
+        print("  PASS: All 8 rainbow swatches present in footer dock.")
 
         # 2. Click each swatch and verify universal application
         expected = {
-            "Cyan": ("#00e5ff", "0, 229, 255", "#80f4ff"),
-            "Violet": ("#bd93f9", "189, 147, 249", "#d9b8ff"),
-            "Emerald": ("#50fa7b", "80, 250, 123", "#a2ffbc"),
             "Coral": ("#ff5555", "255, 85, 85", "#ff9999"),
+            "Orange": ("#ff7700", "255, 119, 0", "#ffa040"),
             "Amber": ("#ffb000", "255, 176, 0", "#ffd447"),
+            "Yellow": ("#f1fa8c", "241, 250, 140", "#ffffb0"),
+            "Emerald": ("#50fa7b", "80, 250, 123", "#a2ffbc"),
+            "Cyan": ("#00e5ff", "0, 229, 255", "#80f4ff"),
+            "Blue": ("#3b82f6", "59, 130, 246", "#7cb3ff"),
+            "Violet": ("#bd93f9", "189, 147, 249", "#d9b8ff"),
         }
         for name, (hex_val, rgb_val, hot_val) in expected.items():
-            cdp.eval(f"document.querySelector('.site-header [data-accent-name=\"{name}\"]').click()")
+            cdp.eval(f"document.querySelector('.footer-accent-picker [data-accent-name=\"{name}\"]').click()")
             props = cdp.eval("""(() => {
                 const cs = getComputedStyle(document.documentElement);
                 const card = document.querySelector('.spotlight-card');
@@ -147,12 +149,12 @@ def run_tests():
             assert rgb_val in props["spotlightBorder"], f"Spotlight border missing rgb: {props['spotlightBorder']}"
             assert rgb_val in props["cardBorder"], f"Card spotlight border not updating: {props['cardBorder']}"
             assert props["ls"] == name.lower(), f"LocalStorage out of sync: {props['ls']}"
-        print("  PASS: Universal accent variables and card spotlight borders updated.")
+        print("  PASS: Universal accent variables and card spotlight borders updated across all 8 colors.")
 
         # 3. Radiogroup keyboard navigation & no stage slot cycling conflict
         initial_slot = cdp.eval("document.getElementById('showcase-idx') ? document.getElementById('showcase-idx').textContent : ''")
         cdp.eval("""(() => {
-            const amber = document.querySelector('.site-header [data-accent-name=\"Amber\"]');
+            const amber = document.querySelector('.footer-accent-picker [data-accent-name=\"Amber\"]');
             amber.focus();
             const ev = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
             document.dispatchEvent(ev);
@@ -160,8 +162,8 @@ def run_tests():
         after_slot = cdp.eval("document.getElementById('showcase-idx') ? document.getElementById('showcase-idx').textContent : ''")
         assert initial_slot == after_slot, "Arrow navigation conflicted with showcase stage slots!"
         active_acc = cdp.eval("window.idleCurrentAccentName")
-        assert active_acc.lower() == "cyan", f"ArrowRight did not advance to Cyan, got {active_acc}"
-        print("  PASS: Keyboard navigation works cleanly without slot conflict.")
+        assert active_acc.lower() == "yellow", f"ArrowRight did not advance to Yellow, got {active_acc}"
+        print("  PASS: Keyboard navigation works cleanly across 8-bit palette.")
 
         # 4. Simulation engines robustness without arguments
         sim_ok = cdp.eval("""(() => {
@@ -208,7 +210,7 @@ def run_tests():
         time.sleep(1.0)
         reloaded = cdp.eval("""(() => {
             const cs = getComputedStyle(document.documentElement);
-            const activeDot = document.querySelector('.site-header [data-accent-name=\"Emerald\"]');
+            const activeDot = document.querySelector('.footer-accent-picker [data-accent-name="Emerald"]');
             return {
                 phosphor: cs.getPropertyValue('--phosphor').trim(),
                 active: activeDot ? activeDot.classList.contains('active') : false,
