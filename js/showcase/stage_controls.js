@@ -145,16 +145,15 @@
       window.idleSaverRunScene(s.id);
     }
 
+    const canvasEl = document.getElementById("showcase-canvas");
+    if (canvasEl) {
+      canvasEl.hidden = false;
+      canvasEl.style.display = "block";
+    }
     if (videoEl) {
-      const targetSrc = "assets/videos/ascii.mp4";
-      if (videoEl.getAttribute("data-current-src") !== targetSrc) {
-        videoEl.setAttribute("data-current-src", targetSrc);
-        videoEl.src = targetSrc;
-        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (!reduced && s.id !== "beams" && s.id !== "spotlight_orbit") {
-          videoEl.play().catch(() => {});
-        }
-      }
+      videoEl.pause();
+      videoEl.style.display = "none";
+      videoEl.style.visibility = "hidden";
     }
   }
 

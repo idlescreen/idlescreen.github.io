@@ -9,6 +9,7 @@
   ];
 
   function applyAccent(rgb) {
+    window.idleCurrentAccent = rgb;
     document.documentElement.style.setProperty("--phosphor", `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`);
     document.documentElement.style.setProperty("--accent-rgb", `${rgb[0]},${rgb[1]},${rgb[2]}`);
     if (window.idleSaverSetAccent) {
