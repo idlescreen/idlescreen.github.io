@@ -124,6 +124,10 @@
   transform: translateY(-1px);
 }
 
+.nav-btn-screensaver * {
+  pointer-events: none;
+}
+
 /* Browser Fullscreen Screensaver Mode */
 .screensaver-fullscreen {
   position: fixed;

@@ -196,49 +196,45 @@ def run_tests():
         init_scene = cdp.eval("document.getElementById('fullscreen-hud-idx').textContent")
         assert "SCENE" in init_scene, f"HUD scene index not formatted: {init_scene}"
 
-        # Verify mouse movement kills demo and exits fullscreen
-        time.sleep(0.4)
-        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 300, clientY: 300, bubbles: true }))")
+        # Verify launch immunity against micro-jitter
+        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 5, clientY: 5, bubbles: true }))")
+        time.sleep(0.1)
+        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
+        print("  PASS: Screensaver immune to launch micro-jitter.")
+
+        # Verify intentional mouse movement exits
         time.sleep(0.3)
-        fs_after_move = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_after_move == "none", f"Fullscreen did not exit on mouse move: {fs_after_move}"
+        cdp.eval("window.dispatchEvent(new MouseEvent('mousemove', { clientX: 300, clientY: 300, bubbles: true }))")
+        time.sleep(0.2)
+        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
         print("  PASS: Mouse movement immediately killed screensaver demo and exited fullscreen.")
 
-        # Re-open and verify key press kills demo and exits fullscreen
-        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-        time.sleep(0.4)
-        fs_display2 = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_display2 == "flex", "Fullscreen failed to re-open"
-        time.sleep(0.4)
+        # Re-open and verify key press, click, and touch exit
+        for trigger_ev, desc in [
+            ("new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })", "Key press"),
+            ("new MouseEvent('pointerdown', { bubbles: true })", "Mouse click"),
+            ("new TouchEvent('touchstart', { bubbles: true })", "Touch event"),
+        ]:
+            cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
+            time.sleep(0.3)
+            assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
+            time.sleep(0.3)
+            cdp.eval(f"window.dispatchEvent({trigger_ev})")
+            time.sleep(0.2)
+            assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
+            print(f"  PASS: {desc} immediately killed screensaver demo and exited fullscreen.")
+
+        # Mobile drawer Demo button test
+        cdp.eval("document.getElementById('menu-toggle').click()")
+        time.sleep(0.2)
+        cdp.eval("document.getElementById('mobile-btn-fullscreen-saver').click()")
+        time.sleep(0.3)
+        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "flex"
+        time.sleep(0.3)
         cdp.eval("window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true }))")
-        time.sleep(0.3)
-        fs_after_key = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_after_key == "none", f"Fullscreen did not exit on keydown: {fs_after_key}"
-        print("  PASS: Key press immediately killed screensaver demo and exited fullscreen.")
-
-        # Re-open and verify click kills demo and exits fullscreen
-        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-        time.sleep(0.4)
-        fs_display3 = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_display3 == "flex", "Fullscreen failed to re-open for click test"
-        time.sleep(0.4)
-        cdp.eval("window.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true }))")
-        time.sleep(0.3)
-        fs_after_click = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_after_click == "none", f"Fullscreen did not exit on click: {fs_after_click}"
-        print("  PASS: Mouse click immediately killed screensaver demo and exited fullscreen.")
-
-        # Re-open and verify touch kills demo and exits fullscreen
-        cdp.eval("document.getElementById('btn-fullscreen-saver').click()")
-        time.sleep(0.4)
-        fs_display4 = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_display4 == "flex", "Fullscreen failed to re-open for touch test"
-        time.sleep(0.4)
-        cdp.eval("window.dispatchEvent(new TouchEvent('touchstart', { bubbles: true }))")
-        time.sleep(0.3)
-        fs_after_touch = cdp.eval("document.getElementById('screensaver-fullscreen').style.display")
-        assert fs_after_touch == "none", f"Fullscreen did not exit on touch: {fs_after_touch}"
-        print("  PASS: Touch event immediately killed screensaver demo and exited fullscreen.")
+        time.sleep(0.2)
+        assert cdp.eval("document.getElementById('screensaver-fullscreen').style.display") == "none"
+        print("  PASS: Mobile drawer Demo button launched and exited cleanly.")
 
         # Check for zero runtime JavaScript errors
         errs = cdp.eval("window.__testErrors")

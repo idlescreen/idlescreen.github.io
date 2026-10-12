@@ -1,13 +1,8 @@
 // js/showcase/fullscreen.js — dedicated full-monitor screensaver demo engine
 (function initFullscreenScreensaver() {
-  let isRunning = false;
-  let currentIdx = 0;
-  let cycleTimer = null;
-  let hudTimer = null;
-  let attachTimer = null;
-  let overlay = null;
-  let canvas = null;
-  let ctx = null;
+  let isRunning = false, currentIdx = 0, launchTime = 0;
+  let cycleTimer = null, hudTimer = null;
+  let overlay = null, canvas = null, ctx = null;
   let initPointerX = -1, initPointerY = -1;
   const CYCLE_MS = 4000;
 
@@ -31,13 +26,11 @@
       ctx = canvas ? canvas.getContext("2d") : null;
       return;
     }
-
     overlay = document.createElement("div");
     overlay.className = "screensaver-fullscreen";
     overlay.id = "screensaver-fullscreen";
     overlay.setAttribute("aria-hidden", "true");
     overlay.style.display = "none";
-
     overlay.innerHTML = `
       <canvas class="fullscreen-canvas" id="fullscreen-canvas"></canvas>
       <div class="fullscreen-hud" id="fullscreen-hud">
@@ -48,9 +41,7 @@
         </div>
         <div class="fullscreen-hud-hint" id="fullscreen-hud-hint">Move mouse, click, tap, or press any key to exit</div>
         <button type="button" class="fullscreen-hud-btn fullscreen-hud-exit" id="fs-exit" style="display:none;" aria-hidden="true">[ ✕ EXIT ]</button>
-      </div>
-    `;
-
+      </div>`;
     document.body.appendChild(overlay);
     canvas = document.getElementById("fullscreen-canvas");
     ctx = canvas ? canvas.getContext("2d") : null;
@@ -73,8 +64,8 @@
     const idxEl = document.getElementById("fullscreen-hud-idx");
     const nameEl = document.getElementById("fullscreen-hud-name");
     const subEl = document.getElementById("fullscreen-hud-sub");
-    const totalPad = savers.length < 10 ? "0" + savers.length : savers.length;
-    if (idxEl) idxEl.textContent = `[ SCENE ${s.num} / ${totalPad} ]`;
+    const pad = savers.length < 10 ? "0" + savers.length : savers.length;
+    if (idxEl) idxEl.textContent = `[ SCENE ${s.num} / ${pad} ]`;
     if (nameEl) nameEl.textContent = s.name;
     if (subEl) subEl.textContent = `// ${s.sub}`;
     scheduleHudHide(2000);
@@ -83,11 +74,9 @@
   function switchScene(deltaOrIdx, isRelative = false) {
     const savers = getSavers();
     if (!savers.length) return;
-    if (isRelative) {
-      currentIdx = (currentIdx + deltaOrIdx + savers.length) % savers.length;
-    } else {
-      currentIdx = (deltaOrIdx + savers.length) % savers.length;
-    }
+    currentIdx = isRelative
+      ? (currentIdx + deltaOrIdx + savers.length) % savers.length
+      : (deltaOrIdx + savers.length) % savers.length;
     updateHud();
     const s = savers[currentIdx];
     if (s && window.idleSaverRunScene) {
@@ -103,52 +92,44 @@
   function resetCycleTimer() {
     if (cycleTimer) clearInterval(cycleTimer);
     if (!isRunning) return;
-    cycleTimer = setInterval(() => {
-      switchScene(1, true);
-    }, CYCLE_MS);
+    cycleTimer = setInterval(() => { switchScene(1, true); }, CYCLE_MS);
   }
 
   function onPointerMove(e) {
     if (!isRunning) return;
-    if (initPointerX < 0 || initPointerY < 0) {
+    const now = performance.now();
+    if (now - launchTime < 300) {
       initPointerX = e.clientX;
       initPointerY = e.clientY;
       return;
     }
-    const dx = Math.abs(e.clientX - initPointerX);
-    const dy = Math.abs(e.clientY - initPointerY);
-    if (dx < 4 && dy < 4) return;
+    if (initPointerX >= 0 && initPointerY >= 0) {
+      const dx = Math.abs(e.clientX - initPointerX);
+      const dy = Math.abs(e.clientY - initPointerY);
+      if (dx < 12 && dy < 12) return;
+    }
     closeScreensaver();
   }
 
   function onUserExitEvent() {
     if (!isRunning) return;
+    if (performance.now() - launchTime < 250) return;
     closeScreensaver();
   }
 
   function attachExitListeners() {
-    attachTimer = null;
     if (!isRunning) return;
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("mousemove", onPointerMove, { passive: true });
-    window.addEventListener("pointerdown", onUserExitEvent, { passive: true });
-    window.addEventListener("mousedown", onUserExitEvent, { passive: true });
-    window.addEventListener("click", onUserExitEvent, { passive: true });
-    window.addEventListener("keydown", onUserExitEvent, { passive: true });
-    window.addEventListener("touchstart", onUserExitEvent, { passive: true });
-    window.addEventListener("wheel", onUserExitEvent, { passive: true });
+    ["pointermove", "mousemove"].forEach((ev) => window.addEventListener(ev, onPointerMove, { passive: true }));
+    ["pointerdown", "mousedown", "click", "keydown", "touchstart", "wheel"].forEach((ev) => {
+      window.addEventListener(ev, onUserExitEvent, { passive: true });
+    });
   }
 
   function detachExitListeners() {
-    if (attachTimer) { clearTimeout(attachTimer); attachTimer = null; }
-    window.removeEventListener("pointermove", onPointerMove);
-    window.removeEventListener("mousemove", onPointerMove);
-    window.removeEventListener("pointerdown", onUserExitEvent);
-    window.removeEventListener("mousedown", onUserExitEvent);
-    window.removeEventListener("click", onUserExitEvent);
-    window.removeEventListener("keydown", onUserExitEvent);
-    window.removeEventListener("touchstart", onUserExitEvent);
-    window.removeEventListener("wheel", onUserExitEvent);
+    ["pointermove", "mousemove"].forEach((ev) => window.removeEventListener(ev, onPointerMove));
+    ["pointerdown", "mousedown", "click", "keydown", "touchstart", "wheel"].forEach((ev) => {
+      window.removeEventListener(ev, onUserExitEvent);
+    });
   }
 
   function openScreensaver(e) {
@@ -162,6 +143,7 @@
 
     isRunning = true;
     window.idleFullscreenActive = true;
+    launchTime = performance.now();
     initPointerX = (e && typeof e.clientX === "number") ? e.clientX : -1;
     initPointerY = (e && typeof e.clientY === "number") ? e.clientY : -1;
 
@@ -172,19 +154,19 @@
     updateHud();
     scheduleHudHide(2500);
 
-    if (window.idleSaverSetTargetCanvas) {
-      window.idleSaverSetTargetCanvas(canvas);
-    }
-
+    if (window.idleSaverSetTargetCanvas) window.idleSaverSetTargetCanvas(canvas);
     window.addEventListener("resize", resize, { passive: true });
-    attachTimer = setTimeout(attachExitListeners, 60);
+    attachExitListeners();
 
     const reqFs = document.documentElement.requestFullscreen ||
       document.documentElement.webkitRequestFullscreen ||
       document.documentElement.mozRequestFullScreen ||
       document.documentElement.msRequestFullscreen;
     if (reqFs) {
-      try { reqFs.call(document.documentElement).catch(() => {}); } catch (err) {}
+      try {
+        const p = reqFs.call(document.documentElement);
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      } catch (err) {}
     }
 
     switchScene(currentIdx, false);
@@ -208,16 +190,19 @@
       overlay.classList.remove("hud-hidden");
     }
 
-    const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-    const exitFs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+    const fsEl = document.fullscreenElement || document.webkitFullscreenElement ||
+      document.mozFullScreenElement || document.msFullscreenElement;
+    const exitFs = document.exitFullscreen || document.webkitExitFullscreen ||
+      document.mozCancelFullScreen || document.msExitFullscreen;
     if (fsEl && exitFs) {
-      try { exitFs.call(document).catch(() => {}); } catch (err) {}
+      try {
+        const p = exitFs.call(document);
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      } catch (err) {}
     }
 
     const sc = document.getElementById("showcase-canvas");
-    if (sc && window.idleSaverSetTargetCanvas) {
-      window.idleSaverSetTargetCanvas(sc);
-    }
+    if (sc && window.idleSaverSetTargetCanvas) window.idleSaverSetTargetCanvas(sc);
     if (window.selectShowcaseScene) {
       window.selectShowcaseScene(currentIdx);
     } else if (window.idleSaverRunScene) {
@@ -230,8 +215,16 @@
 
   ["fullscreenchange", "webkitfullscreenchange", "mozfullscreenchange", "MSFullscreenChange"].forEach((ev) => {
     document.addEventListener(ev, () => {
-      const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-      if (!fsEl && isRunning) closeScreensaver();
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement ||
+        document.mozFullScreenElement || document.msFullscreenElement;
+      if (!fsEl && isRunning) {
+        closeScreensaver();
+      } else if (fsEl && isRunning) {
+        launchTime = performance.now();
+        initPointerX = -1;
+        initPointerY = -1;
+        resize();
+      }
     });
   });
 
@@ -244,6 +237,7 @@
   function setupTriggers() {
     const sel = "#btn-fullscreen-saver, #btn-fullscreen-demo, #mobile-btn-fullscreen-saver, #mobile-btn-fullscreen-demo";
     document.querySelectorAll(sel).forEach((btn) => {
+      btn.removeEventListener("click", openScreensaver);
       btn.addEventListener("click", openScreensaver);
     });
   }
