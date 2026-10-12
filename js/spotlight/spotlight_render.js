@@ -48,7 +48,7 @@
   var TEXT_SEL = 'h1,h2,h3,h4,h5,h6,p,pre,code,kbd,samp,ul,ol,li,dl,dt,dd,table,thead,tbody,tfoot,tr,th,td,' +
     'blockquote,figcaption,cite,label,input,textarea,button,select,a,strong,em,b,i,mark,small,time,' +
     '.compare-card,.matrix-card,.install-card,.eco-card,.terminal-install-box,.tui-screen-mock,.tui-actions-row,' +
-    '.showcase-topbar,.showcase-infobar,.showcase-controls-strip,.tenets-marquee-wrap,.site-header,.site-footer,' +
+    '.showcase-topbar,.scenes-marquee-wrap,.tenets-marquee-wrap,.site-header,.site-footer,' +
     '.spotlight-badge,.spotlight-scroll-cue,.marquee-hint,.hero-eyebrow,.section-eyebrow,.section-header,.section-title,.section-intro';
 
   function isOverTextElement(target) {
@@ -180,14 +180,14 @@
     var ditherThreshold = 0.74 + 0.02 * sub + 0.08 * textDim;
 
     var stageRect = stage ? stage.getBoundingClientRect() : null;
-    var introVisible = stageRect && stageRect.bottom > 0 && stageRect.top < window.innerHeight;
+    var wordmarkVisible = Boolean(stageRect && stageRect.top > -20 && targetSubdued < 0.05);
     var originY = stageRect
       ? Math.round((stageRect.top + stageRect.height * 0.5) * dpr - (wmHeight * cellPx) * 0.5)
       : Math.round((height - wmHeight * cellPx) * 0.5);
 
     for (var r = 0; r < gridRows; r++) {
       var py = r * cellPx, wmRow = Math.floor((py - originY) / cellPx);
-      var hasWordRow = introVisible && wmRow >= 0 && wmRow < wmHeight;
+      var hasWordRow = wordmarkVisible && wmRow >= 0 && wmRow < wmHeight;
       for (var c = 0; c < gridCols; c++) {
         var px = c * cellPx, wmCol = Math.floor((px - originX) / cellPx);
         var inWordBox = hasWordRow && wmCol >= 0 && wmCol < wmWidth;
@@ -204,7 +204,7 @@
           if (dsqR >= rp.minRSq && dsqR <= rp.maxRSq) ripGlow = Math.max(ripGlow, (1 - Math.abs(Math.sqrt(dsqR) - rp.r) / ringW) * rp.amp);
         }
         var wordDrawn = false;
-        if (isWord && introVisible) {
+        if (isWord && wordmarkVisible) {
           var lit = (0.45 + spot * 1.7 + ripGlow * 1.4) * (1 - sub) * (1 - 0.5 * textDim);
           if (lit > 0.05) {
             ctx.fillStyle = lit > 1.35 ? '#ffffff' : lit > 0.92 ? ('rgb(' + hotRgb + ')') : lit > 0.6 ? ('rgb(' + midRgb + ')') : ('rgb(' + Math.round(ar * 0.7) + ',' + Math.round(ag * 0.7) + ',' + Math.round(ab * 0.7) + ')');
@@ -216,7 +216,7 @@
           var nx = c * 0.07 + sec * 0.16, ny = r * 0.07 - sec * 0.11;
           var nVal = 0.6 * sampleNoise(nx, ny) + 0.4 * sampleNoise(nx * 0.5 - sec * 0.08, ny * 0.5 + sec * 0.07);
           var energy = nVal * 0.75 + (0.5 + 0.5 * Math.sin(sec * 1.8 + (r * 37 + c * 11) % 6.283)) * 0.25;
-          if (inWordBox && introVisible) energy *= sub;
+          if (inWordBox && wordmarkVisible) energy *= sub;
           var fieldVal = energy * 0.44 + spot * 0.85 + ripGlow * 0.95, dither = BAYER[(r & 7) * 8 + (c & 7)] / 64;
           if (fieldVal > dither * ditherThreshold) {
             ctx.fillStyle = (spot > 0.38 || ripGlow > 0.4) ? colorSpotHigh :

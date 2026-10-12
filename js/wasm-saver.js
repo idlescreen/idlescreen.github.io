@@ -207,6 +207,15 @@
 
       activeSwitchFn = switchScene;
       window.idleSaverRunScene = switchScene;
+      window.idleSaverSetPaused = function (paused) {
+        if (paused) {
+          running = false;
+        } else if (!reduced && !running) {
+          running = true;
+          last = 0;
+          requestAnimationFrame(frame);
+        }
+      };
       if (window.idleCurrentSceneId) switchScene(window.idleCurrentSceneId);
 
       const io = new IntersectionObserver((entries) => {
