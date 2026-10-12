@@ -218,6 +218,15 @@
 
       let rt;
       window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(fit, 200); });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          running = false;
+        } else if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          const rect = canvas.getBoundingClientRect();
+          const inView = rect.top < window.innerHeight && rect.bottom > 0;
+          if (inView && !running) { running = true; last = 0; requestAnimationFrame(frame); }
+        }
+      });
     } catch (e) {
       console.warn("[wasm-saver] init fallback:", e);
     }

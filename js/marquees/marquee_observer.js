@@ -23,7 +23,7 @@
     if (isPausedGlobally() || !isVisible) {
       el.style.animationPlayState = 'paused';
     } else {
-      el.style.animationPlayState = 'running';
+      el.style.animationPlayState = '';
     }
   }
 

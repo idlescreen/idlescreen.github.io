@@ -66,8 +66,10 @@
   margin-top: 24px;
 }
 
-.compare-card {
+.compare-card, .omarchy-card {
   background: rgba(17, 20, 23, 0.95);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 28px;

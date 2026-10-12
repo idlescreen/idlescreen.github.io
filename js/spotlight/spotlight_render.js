@@ -5,8 +5,7 @@
   'use strict';
   var canvas = document.getElementById('spotlight-canvas');
   if (!canvas) return;
-  var stage = document.getElementById('intro');
-  var ctx = canvas.getContext('2d', { alpha: false });
+  var stage = document.getElementById('intro'), ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
 
   var BAYER = [0, 32, 8, 40, 2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44, 4, 36, 14, 46, 6, 38, 60, 28, 52, 20, 62, 30, 54, 22, 3, 35, 11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21];
@@ -23,8 +22,7 @@
       }
       buf = next;
     }
-    var min = Infinity, max = -Infinity;
-    for (var j = 0; j < buf.length; j++) { if (buf[j] < min) min = buf[j]; if (buf[j] > max) max = buf[j]; }
+    var min = Infinity, max = -Infinity; for (var j = 0; j < buf.length; j++) { if (buf[j] < min) min = buf[j]; if (buf[j] > max) max = buf[j]; }
     var span = max - min || 1; for (var k = 0; k < buf.length; k++) buf[k] = (buf[k] - min) / span;
     return buf;
   })();
@@ -91,19 +89,23 @@
     apply();
   }
 
+  function wakeRender() {
+    if (!rafId && !reducedMotion && isVisible) rafId = requestAnimationFrame(render);
+  }
+
   function updateScroll() {
     if (!stage) { targetSubdued = 1; cachedStageRect = null; return; }
     cachedStageRect = stage.getBoundingClientRect();
     var stageH = stage.offsetHeight || window.innerHeight;
     targetSubdued = Math.min(1, Math.max(0, Math.max(0, -cachedStageRect.top) / (stageH * 0.55)));
     checkTextHit(null, lastPointerX, lastPointerY);
+    if (targetSubdued < 1.0 || mouse.active) wakeRender();
   }
 
   function deactivate() {
     if (hitTimer) { clearTimeout(hitTimer); hitTimer = null; }
     if (!mouse.active && smoothMouse.strength <= 0) return;
-    mouse.active = isOverText = false;
-    if (reducedMotion) render(performance.now());
+    mouse.active = isOverText = false; if (reducedMotion) render(performance.now());
   }
   function onLeave(e) { if (!e || !e.relatedTarget || e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) deactivate(); }
 
@@ -115,7 +117,7 @@
     if (!mouse.active || smoothMouse.strength < 0.01 || smoothMouse.x < -1000) { smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 0; }
     mouse.x = px; mouse.y = py; mouse.active = true;
     lastPointerTime = performance.now();
-    if (reducedMotion) render(performance.now());
+    if (reducedMotion) render(performance.now()); else wakeRender();
   }
 
   function onPointerDown(e) {
@@ -127,6 +129,7 @@
     mouse.x = px; mouse.y = py; mouse.active = true;
     lastPointerTime = performance.now();
     ripples.push({ x: px, y: py, born: performance.now(), maxR: 380 * dpr, dur: 950 }); if (ripples.length > 5) ripples.shift();
+    if (reducedMotion) render(performance.now()); else wakeRender();
   }
 
   function updateLights(t) {
@@ -144,10 +147,9 @@
   }
 
   function render(t) {
-    if (!isVisible && !reducedMotion) return;
+    if (!isVisible && !reducedMotion) { rafId = 0; return; }
     if (window.idleFullscreenActive || (targetSubdued >= 1.0 && !mouse.active && smoothMouse.strength <= 0.005 && ripples.length === 0)) {
-      if (!reducedMotion && isVisible) rafId = requestAnimationFrame(render);
-      return;
+      rafId = 0; return;
     }
     var isReading = currentSubdued > 0.75, pointerRecent = (t - lastPointerTime) < 1400, hasRipples = ripples.length > 0;
     var targetText = (isOverText && mouse.active) ? 1 : 0, textChanging = Math.abs(targetText - smoothText) > 0.005;
@@ -175,10 +177,8 @@
     var hr = Math.min(255, Math.round(ar + (255 - ar) * 0.4)), hg = Math.min(255, Math.round(ag + (255 - ag) * 0.4)), hb = Math.min(255, Math.round(ab + (255 - ab) * 0.4));
     var aFHigh = ((0.24 - 0.10 * sub) * (1 - 0.30 * textDim)).toFixed(3), aFLow = ((0.08 - 0.03 * sub) * (1 - 0.30 * textDim)).toFixed(3);
     var colorFieldHigh = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFHigh + ')', colorFieldLow = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFLow + ')';
-    var aHigh = ((1 - 0.35 * sub) * glareCut).toFixed(2), aMid = ((1 - 0.45 * sub) * glareCut).toFixed(2);
-    var hotRgb = hr + ',' + hg + ',' + hb, midRgb = ar + ',' + ag + ',' + ab;
-    var colorSpotHigh = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + hotRgb + ')') : ('rgba(' + hotRgb + ',' + aHigh + ')');
-    var colorSpotMid = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + midRgb + ')') : ('rgba(' + midRgb + ',' + aMid + ')');
+    var aHigh = ((1 - 0.35 * sub) * glareCut).toFixed(2), aMid = ((1 - 0.45 * sub) * glareCut).toFixed(2), hotRgb = hr + ',' + hg + ',' + hb, midRgb = ar + ',' + ag + ',' + ab;
+    var colorSpotHigh = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + hotRgb + ')') : ('rgba(' + hotRgb + ',' + aHigh + ')'), colorSpotMid = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + midRgb + ')') : ('rgba(' + midRgb + ',' + aMid + ')');
     var ditherThreshold = 0.74 + 0.02 * sub + 0.08 * textDim;
     var stageRect = cachedStageRect;
     var wordmarkVisible = Boolean(stageRect && stageRect.top > -20 && targetSubdued < 0.05 && !window.idleFullscreenActive);
@@ -226,13 +226,13 @@
     if (!reducedMotion && isVisible) rafId = requestAnimationFrame(render);
   }
 
-  window.idleRenderSpotlight = function () { render(performance.now()); };
+  window.idleRenderSpotlight = function () { wakeRender(); render(performance.now()); };
 
   function start() {
     initWordmark(); resize(); updateScroll();
     currentSubdued = targetSubdued; isVisible = !document.hidden;
     if (isVisible) render(performance.now());
-    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('resize', function () { resize(); wakeRender(); }, { passive: true });
     window.addEventListener('scroll', function () {
       if (!scrollScheduled) {
         scrollScheduled = true;
@@ -240,14 +240,14 @@
       }
     }, { passive: true });
     window.addEventListener('pointermove', onPointerMove, { passive: true });
-    ['pointerleave', 'mouseleave', 'mouseout'].forEach(function (ev) { document.addEventListener(ev, onLeave, { passive: true }); window.addEventListener(ev, onLeave, { passive: true }); });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
     window.addEventListener('pointerup', function (e) { if (e && e.pointerType === 'touch') deactivate(); }, { passive: true });
-    window.addEventListener('pointercancel', deactivate, { passive: true }); window.addEventListener('blur', deactivate, { passive: true });
+    ['pointercancel', 'blur'].forEach(function (ev) { window.addEventListener(ev, deactivate, { passive: true }); });
+    ['pointerleave', 'mouseleave', 'mouseout'].forEach(function (ev) { document.addEventListener(ev, onLeave, { passive: true }); window.addEventListener(ev, onLeave, { passive: true }); });
+    document.addEventListener('fullscreenchange', function () { if (!window.idleFullscreenActive) wakeRender(); }, { passive: true });
     document.addEventListener('visibilitychange', function () {
       isVisible = !document.hidden;
-      if (isVisible) { if (!rafId && !reducedMotion) rafId = requestAnimationFrame(render); }
-      else { deactivate(); smoothMouse.strength = 0; if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
+      if (isVisible) wakeRender(); else { deactivate(); smoothMouse.strength = 0; if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
     });
   }
 

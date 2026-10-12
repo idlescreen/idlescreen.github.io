@@ -126,8 +126,6 @@
   --mouse-y: -999px;
   --spotlight-radius: 350px;
   position: relative;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   transition: --spotlight-radius 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
