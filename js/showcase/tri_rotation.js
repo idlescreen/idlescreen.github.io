@@ -2,32 +2,29 @@
 (function initTriRotationDemo() {
   const TRI_DATA = {
     os: [
-      "Fedora Linux 41 (Workstation)",
-      "Arch Linux (Rolling Release)",
-      "Debian GNU/Linux 13 (Trixie)",
-      "Ubuntu 24.04.1 LTS (Noble)",
-      "Alpine Linux v3.21 (musl)",
-      "openSUSE Tumbleweed",
-      "Void Linux (runit)",
-      "Gentoo Linux (~amd64)"
+      "FEDORA",
+      "ARCH",
+      "DEBIAN",
+      "UBUNTU",
+      "ALPINE",
+      "OPENSUSE",
+      "VOID",
+      "GENTOO"
     ],
     de: [
-      "GNOME 47.2 (Mutter IdleMonitor)",
-      "KDE Plasma 6.2 (KWin Wayland)",
-      "COSMIC Desktop (cosmic-comp)",
-      "Hyprland (ext-idle-notify-v1)",
-      "Sway (wlroots layer-shell)",
-      "Wayfire 0.9 (3D Wayland)",
-      "River (Dynamic Tiling)",
-      "Labwc (wlroots Stacked)"
+      "GNOME",
+      "KDE",
+      "COSMIC",
+      "HYPRLAND",
+      "SWAY",
+      "WAYFIRE",
+      "RIVER",
+      "LABWC"
     ],
     kernel: [
-      "Linux 6.12.11-arch1-1",
-      "Linux 6.11.0-17-generic",
-      "Linux 6.12.8-200.fc41.x86_64",
-      "Linux 6.6.70-lts (longterm)",
-      "Linux 6.13.0-rc6 (zen-gaming)",
-      "Linux 6.1.124-hardened"
+      "LINUX",
+      "LINUX 6.12",
+      "LINUX 6.11"
     ]
   };
 

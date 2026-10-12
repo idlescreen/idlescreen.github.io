@@ -1,6 +1,5 @@
 // js/showcase/scene_sim.js — procedural ASCII simulation engine
 (function initSceneSim() {
-  const FONT = 'ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace';
 
   function rgbStr(r, g, b, a = 1) {
     return a < 1 ? `rgba(${r},${g},${b},${a.toFixed(2)})` : `rgb(${r},${g},${b})`;
@@ -16,15 +15,12 @@
 
   function drawAsciiText(ctx, w, h, t, acc, alpha = 0.8) {
     const [ar, ag, ab] = acc || [255, 176, 0];
-    const wm = window.IdleScreenWordmark, cx = w * 0.5, cy = h * 0.5;
-    const triEl = document.getElementById("tri-rot-text");
-    const sysText = (triEl && triEl.textContent) ? triEl.textContent : "idlescreen";
-    const useWordmark = (Math.floor(t * 0.001 / 3.2) % 2 === 0);
+    const wm = window.IdleScreenWordmark;
 
     ctx.save();
     ctx.shadowColor = "transparent";
     ctx.shadowBlur = 0;
-    if (wm && wm.rows && useWordmark) {
+    if (wm && wm.rows) {
       const cell = Math.max(2, Math.min(Math.floor((w * 0.82) / wm.width), Math.floor((h * 0.54) / wm.height)));
       const ox = Math.round((w - wm.width * cell) / 2);
       const oy = Math.round((h - wm.height * cell) / 2);
@@ -34,17 +30,11 @@
           if (wm.rows[r][c] === "1") ctx.fillRect(ox + c * cell, oy + r * cell, cell - 0.6, cell - 0.6);
         }
       }
-    } else {
-      ctx.font = "bold " + Math.round(Math.min(w * 0.065, 30)) + "px " + FONT;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillStyle = rgbStr(ar, ag, ab, alpha);
-      ctx.fillText(sysText, cx, cy);
     }
     ctx.restore();
   }
 
-  window.IdleSceneText = { draw: drawAsciiText, alpha: getCycleAlpha, rgb: rgbStr, font: FONT };
+  window.IdleSceneText = { draw: drawAsciiText, alpha: getCycleAlpha, rgb: rgbStr };
 
   function renderSpotlightOrbit(ctx, w, h, t, acc) {
     ctx.fillStyle = "#070809"; ctx.fillRect(0, 0, w, h);
@@ -79,10 +69,6 @@
             ctx.fillRect(px, py, cell - 0.6, cell - 0.6);
           }
         }
-      } else {
-        ctx.font = "bold " + Math.round(Math.min(w * 0.10, 64)) + "px " + FONT;
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillStyle = rgbStr(ar, ag, ab); ctx.fillText("idlescreen", cx, cy);
       }
     };
     const drawBeacon = () => {
@@ -108,13 +94,13 @@
   function renderGenericFallback(ctx, w, h, t, acc) {
     const [ar, ag, ab] = acc || [255, 176, 0];
     ctx.fillStyle = "rgba(7, 8, 9, 0.25)"; ctx.fillRect(0, 0, w, h);
-    const sec = t * 0.001, cx = w * 0.5, cy = h * 0.5, glyphs = ["+", "*", "·", "✦", "✧", "#", "%"];
+    const sec = t * 0.001, cx = w * 0.5, cy = h * 0.5;
     drawAsciiText(ctx, w, h, t, acc, getCycleAlpha(t));
-    ctx.font = "14px " + FONT; ctx.textAlign = "center"; ctx.textBaseline = "middle";
     for (let i = 0; i < 40; i++) {
       const a = (i / 40) * Math.PI * 2 + sec * (0.4 + (i % 3) * 0.2), rad = 40 + ((i * 19 + sec * 50) % Math.min(w * 0.4, h * 0.4));
       ctx.fillStyle = rgbStr(ar, ag, ab, Math.max(0.12, 0.8 - rad / (w * 0.45)));
-      ctx.fillText(glyphs[i % glyphs.length], cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+      const sz = i % 2 === 0 ? 2 : 3;
+      ctx.fillRect(Math.round(cx + Math.cos(a) * rad - sz * 0.5), Math.round(cy + Math.sin(a) * rad - sz * 0.5), sz, sz);
     }
   }
 
