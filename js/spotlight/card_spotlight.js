@@ -62,7 +62,7 @@
 
   function handlePointer(e) {
     if (!e) return;
-    if (e.clientX < 0 || e.clientY < 0 || e.clientX > window.innerWidth || e.clientY > window.innerHeight) {
+    if (e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
       setActiveCard(null);
       return;
     }
@@ -76,12 +76,10 @@
     }
 
     if (activeCard !== card) {
-      setActiveCard(card);
       var rect = card.getBoundingClientRect();
-      var x = Math.round(e.clientX - rect.left);
-      var y = Math.round(e.clientY - rect.top);
-      card.style.setProperty('--mouse-x', x + 'px');
-      card.style.setProperty('--mouse-y', y + 'px');
+      card.style.setProperty('--mouse-x', Math.round(e.clientX - rect.left) + 'px');
+      card.style.setProperty('--mouse-y', Math.round(e.clientY - rect.top) + 'px');
+      setActiveCard(card);
     }
 
     var overText = isTextTarget(target);
@@ -99,7 +97,7 @@
   }
 
   function handleDocumentLeave(e) {
-    if (!e || !e.relatedTarget) {
+    if (!e || !e.relatedTarget || e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
       setActiveCard(null);
     }
   }

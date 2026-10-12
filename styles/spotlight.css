@@ -219,9 +219,7 @@
 }
 
 /* Suppress surface glare over text elements */
-.spotlight-card.spotlight-over-text::before,
 .spotlight-card.spotlight-over-text.spotlight-active::before,
-.spotlight-over-text::before,
 .spotlight-over-text.spotlight-active::before {
   opacity: 0.12;
 }

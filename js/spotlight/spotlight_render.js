@@ -103,13 +103,11 @@
     mouse.active = isOverText = false;
     if (reducedMotion) render(performance.now());
   }
-  function onLeave(e) { if (!e || !e.relatedTarget) deactivate(); }
+  function onLeave(e) { if (!e || !e.relatedTarget || e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) deactivate(); }
 
   function onPointerMove(e) {
     if (!e) return;
-    if (e.clientX < 0 || e.clientY < 0 || e.clientX > window.innerWidth || e.clientY > window.innerHeight) {
-      deactivate(); return;
-    }
+    if (e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) { deactivate(); return; }
     var px = e.clientX * dpr, py = e.clientY * dpr;
     lastPointerX = e.clientX; lastPointerY = e.clientY;
     isOverText = isOverTextElement(e.target);
@@ -247,7 +245,7 @@
     document.addEventListener('visibilitychange', function () {
       isVisible = !document.hidden;
       if (isVisible) { if (!rafId && !reducedMotion) rafId = requestAnimationFrame(render); }
-      else { deactivate(); if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
+      else { deactivate(); smoothMouse.strength = 0; if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
     });
   }
 
