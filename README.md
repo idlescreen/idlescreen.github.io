@@ -28,7 +28,7 @@
 
 The product site — landing page, interactive 48-scene showcase (37 built-in ASCII
 effects + 11 `idlescreen-extras` mathematical savers), and the documented install
-entry point for [IdleScreen](https://idlescreen.github.io) (`v4.2.0`) —
+entry point for [IdleScreen](https://idlescreen.github.io) (`v4.2.1`) —
 zero-overhead Wayland screensavers for Linux featuring First-Class SuperFedora
 integration, clean OS-only (or custom text) 16-bit arcade banners, `wp_viewporter`
 1x native grid GPU scaling, `ext-idle-notify-v1` + GNOME Mutter idle tracking,
