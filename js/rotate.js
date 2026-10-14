@@ -1,15 +1,15 @@
 // rotate.js — hero title rotates through program facts with offscreen pause
 const HEADLINES = [
   "Ambient by Design",
-  "48 In-Tree ASCII Scenes",
-  "Host OS • DE • Kernel Tri-Rotation",
+  "37 ASCII Effects + 11 Extras Savers",
+  "Clean OS-Only 16-Bit Arcade Banner",
+  "First-Class SuperFedora Support",
+  "wp_viewporter 1x Grid GPU Scaling",
   "Dynamic 60–144 Hz Matching",
-  "Zero Cycles While Active",
-  "GNOME • KDE • COSMIC • Hyprland",
-  "systemd • OpenRC • runit • s6",
-  "400% Responsive Font Scaling",
-  "Multi-Monitor Layer-Shell",
-  "Yields on First Input",
+  "0.00% CPU at Idle (~2–3 MB RSS)",
+  "GNOME Mutter • KDE • COSMIC • Hyprland",
+  "systemd • OpenRC • runit • s6 • dinit",
+  "idlescreen doctor --fix & inhibitors",
 ];
 
 (function initRotateHeadline() {

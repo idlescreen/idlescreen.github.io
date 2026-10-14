@@ -1,9 +1,9 @@
-// js/showcase/tri_rotation.js — dynamic ASCII tri-rotation engine demo with offscreen pause
+// js/showcase/tri_rotation.js — dynamic 16-bit arcade banner demo with offscreen pause
 (function initTriRotationDemo() {
   const TRI_DATA = {
-    os: ["FEDORA", "ARCH", "DEBIAN", "UBUNTU", "ALPINE", "OPENSUSE", "VOID", "GENTOO"],
-    de: ["GNOME", "KDE", "COSMIC", "HYPRLAND", "SWAY", "WAYFIRE", "RIVER", "LABWC"],
-    kernel: ["LINUX", "LINUX 6.12", "LINUX 6.11"]
+    os: ["SUPERFEDORA", "FEDORA", "ARCH", "DEBIAN", "UBUNTU", "ALPINE", "OPENSUSE", "VOID"],
+    de: ["IDLESCREEN", "NIGHTSHIFT", "CYBERDECK", "STUDIO2201", "ARCADE 82"],
+    kernel: ["SYNTHGRID", "FIREWORKS", "MATRIX", "AURORA", "BLACKHOLE", "STORM"]
   };
 
   const MODES = ["os", "de", "kernel"];
@@ -15,7 +15,7 @@
 
   function updateDisplay(animate = true) {
     const mode = MODES[currentModeIdx];
-    const modeLabels = { os: "HOST OS", de: "DESKTOP ENV", kernel: "LINUX KERNEL" };
+    const modeLabels = { os: "HOST OS", de: "CUSTOM TEXT", kernel: "48 SAVERS" };
     document.querySelectorAll(".tri-rot-state, #tri-rot-mode").forEach((el) => {
       el.textContent = modeLabels[mode];
     });

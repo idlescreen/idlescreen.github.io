@@ -29,20 +29,20 @@
               <h3 class="eco-title">Supported Distributions</h3>
             </div>
             <p class="eco-desc">
-              Autonomous multi-probe detection with zero external dependencies via <code>/etc/os-release</code>, <code>/etc/lsb-release</code>, <code>/etc/issue</code>, and kernel <code>uname(2)</code>.
+              First-class <strong>SuperFedora</strong> integration and autonomous detection across Linux distributions via <code>/etc/os-release</code>, <code>/etc/lsb-release</code>, and <code>/etc/issue</code>.
             </p>
             <div class="eco-pill-list">
+              <span class="eco-pill"><b class="pill-dot">●</b> SuperFedora (First-Class)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Fedora / RHEL</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Debian / Ubuntu</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Arch Linux / EndeavourOS / CachyOS</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Alpine Linux</span>
               <span class="eco-pill"><b class="pill-dot">●</b> openSUSE</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Void Linux</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Gentoo</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Void / Gentoo / NixOS</span>
             </div>
             <div class="eco-spec-row">
               <span class="eco-spec-key">DETECTION:</span>
-              <span class="eco-spec-val">Multi-probe hierarchy (os-release, lsb, uname)</span>
+              <span class="eco-spec-val">SuperFedora &amp; universal os-release hierarchy</span>
             </div>
           </div>
 
@@ -53,21 +53,20 @@
               <h3 class="eco-title">Wayland &amp; Compositors</h3>
             </div>
             <p class="eco-desc">
-              Native Wayland surface overlay and per-output refresh rate matching over layer-shell. Auto-detects COSMIC, GNOME, KDE, or window managers on install, with instant input yield.
+              Native 1x grid GPU scaling via <code>wp_viewporter</code>, per-output 60–144 Hz matching over <code>wlr-layer-shell</code>, <code>ext-idle-notify-v1</code>, and native GNOME Mutter idle tracking.
             </p>
             <div class="eco-pill-list">
-              <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Hyprland (SuperFedora / Standalone)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter IdleMonitor + Wayland)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp / auto-setup)</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Hyprland</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (in-tree idlescreen-cosmic applet)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
               <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> River</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Labwc</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> River / Labwc / Niri</span>
             </div>
             <div class="eco-spec-row">
               <span class="eco-spec-key">PROTOCOLS:</span>
-              <span class="eco-spec-val">wlr-layer-shell &amp; ext-idle-notify-v1</span>
+              <span class="eco-spec-val">wp_viewporter • wlr-layer-shell • ext-idle-notify-v1</span>
             </div>
           </div>
 
@@ -78,52 +77,52 @@
               <h3 class="eco-title">All Init Systems</h3>
             </div>
             <p class="eco-desc">
-              Runs under any supervision architecture with zero-timeout D-Bus activation, clean SIGTERM dispatch, and zero CPU usage while the user is actively working.
+              Built-in <code>idlescreen service install</code> provisions user supervision across every init system with 0.00% CPU at idle (~2–3 MB RSS) and zero-timeout D-Bus activation.
             </p>
             <div class="eco-pill-list">
-              <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service with zero-timeout D-Bus activation)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> systemd (user service + D-Bus activation)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> OpenRC</span>
               <span class="eco-pill"><b class="pill-dot">●</b> runit</span>
               <span class="eco-pill"><b class="pill-dot">●</b> dinit</span>
               <span class="eco-pill"><b class="pill-dot">●</b> s6</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Standalone supervisor loop</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> XDG Autostart (~/.config/autostart)</span>
             </div>
             <div class="eco-spec-row">
-              <span class="eco-spec-key">D-BUS:</span>
-              <span class="eco-spec-val">org.freedesktop.ScreenSaver zero-timeout activation</span>
+              <span class="eco-spec-key">CLI SETUP:</span>
+              <span class="eco-spec-val">idlescreen service install --init &lt;system&gt;</span>
             </div>
           </div>
 
-          <!-- Card 4: ASCII Tri-Rotation -->
+          <!-- Card 4: 16-Bit Arcade Banner Engine -->
           <div class="eco-card eco-card-highlight spotlight-card">
             <div class="eco-card-header">
-              <span class="eco-badge eco-badge-hot">[ 04 // TRI-ROTATION ENGINE ]</span>
-              <h3 class="eco-title">ASCII Tri-Rotation</h3>
+              <span class="eco-badge eco-badge-hot">[ 04 // 16-BIT ARCADE ENGINE ]</span>
+              <h3 class="eco-title">Clean OS &amp; Custom Banner</h3>
             </div>
             <p class="eco-desc">
-              Dynamic in-tree rotation cycling between Host OS, Desktop Environment, and Linux Kernel versions across 48 punchy effects with 400% font scaling.
+              Displays a clean Host OS wordmark (<code>SUPERFEDORA</code>, <code>FEDORA</code>, <code>ARCH</code>, <code>DEBIAN</code>) or custom user text in 3D bevelled block glyphs across 37 ASCII effects + 11 extras savers.
             </p>
 
             <div class="tri-rotation-demo" id="tri-rotation-demo">
               <div class="tri-rot-header">
-                <span class="tri-rot-label">CYCLE PREVIEW:</span>
+                <span class="tri-rot-label">BANNER PREVIEW:</span>
                 <span class="tri-rot-state" id="tri-rot-mode">HOST OS</span>
               </div>
               <div class="tri-rot-display">
                 <span class="tri-rot-prompt">&gt;</span>
-                <span class="tri-rot-text" id="tri-rot-text">FEDORA</span>
+                <span class="tri-rot-text" id="tri-rot-text">SUPERFEDORA</span>
               </div>
               <div class="tri-rot-controls">
-                <button type="button" class="tri-rot-btn active" data-mode="os" onclick="cycleTriRotation('os')">OS</button>
-                <button type="button" class="tri-rot-btn" data-mode="de" onclick="cycleTriRotation('de')">DE</button>
-                <button type="button" class="tri-rot-btn" data-mode="kernel" onclick="cycleTriRotation('kernel')">KERNEL</button>
+                <button type="button" class="tri-rot-btn active" data-mode="os" onclick="cycleTriRotation('os')">HOST OS</button>
+                <button type="button" class="tri-rot-btn" data-mode="de" onclick="cycleTriRotation('de')">CUSTOM</button>
+                <button type="button" class="tri-rot-btn" data-mode="kernel" onclick="cycleTriRotation('kernel')">SAVER</button>
                 <button type="button" class="tri-rot-btn tri-rot-btn-auto" id="tri-rot-auto" onclick="toggleTriRotationAuto()">CYCLE [AUTO: ON]</button>
               </div>
             </div>
 
             <div class="eco-spec-row">
               <span class="eco-spec-key">FEATURES:</span>
-              <span class="eco-spec-val">400% font scaling • Dynamic 60–144 Hz display matching</span>
+              <span class="eco-spec-val">400% block scaling • Parallax starfield • 60–144 Hz</span>
             </div>
           </div>
         </div>

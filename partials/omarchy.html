@@ -67,23 +67,23 @@
             <ul class="compare-list">
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Distribution:</strong> Native packages and first-class support for Fedora, Debian, Ubuntu, Arch, Alpine, openSUSE, and Void.</div>
+                <div><strong>Keep Your Distribution:</strong> First-class <strong>SuperFedora</strong> integration plus native packages for Fedora, Debian, Ubuntu, Arch, Alpine, openSUSE, and Void.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Desktop:</strong> Seamless layer-shell integration across GNOME, KDE Plasma, COSMIC, Hyprland, Sway, River, and Wayfire.</div>
+                <div><strong>Keep Your Desktop:</strong> Seamless Wayland <code>wlr-layer-shell</code> + <code>ext-idle-notify-v1</code> + native GNOME Mutter support across GNOME, KDE Plasma, COSMIC, Hyprland, Sway, River, and Wayfire.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Init:</strong> Automatic daemon provisioning for systemd (user service), OpenRC, runit, dinit, s6, or standalone loop.</div>
+                <div><strong>Keep Your Init:</strong> Built-in <code>idlescreen service install</code> for systemd, OpenRC, runit, dinit, s6, or XDG autostart.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Instant Auto-Setup on Install:</strong> Single-line install auto-detects OS, DE, and Init. No manual wiring needed.</div>
+                <div><strong>1x Grid GPU Scaling (<code>wp_viewporter</code>):</strong> Rasterizes at 1x grid resolution (&lt;0.5 ms frame time) and offloads 4K/HiDPI scaling to display hardware.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Everything in <code>idlescreen tui</code>:</strong> Want to tune dwell times, change scenes, or test previews? Just launch the interactive TUI.</div>
+                <div><strong>Everything in <code>idlescreen tui</code>:</strong> Tune dwell times, switch across 37 ASCII effects + 11 extras savers, or set custom banner text in the interactive TUI.</div>
               </li>
             </ul>
             <div class="compare-footer-note">
@@ -102,22 +102,22 @@
             <code id="tui-copy-cmd" style="display:none;">idlescreen tui</code>
           </div>
 
-          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.1.21</span> <span class="tui-line-dim">─────────────────────────────────────────────────────┐</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> FEDORA            <span class="tui-line-cyan">Compositor:</span> GNOME                       <span class="tui-line-cyan">Kernel:</span> LINUX           <span class="tui-line-dim">│</span>
+          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.2.0</span> <span class="tui-line-dim">──────────────────────────────────────────────────────┐</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> SUPERFEDORA       <span class="tui-line-cyan">Compositor:</span> HYPRLAND / MUTTER           <span class="tui-line-cyan">Memory:</span> ~2.4 MB RSS     <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Screensaver</span>   <span class="tui-line-hot">► [ ascii ]</span>   [ fireworks ]   [ matrix ]   [ synthgrid ]        <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[2] Tri-Rotation Mode</span>    <span class="tui-line-green">► [ All 3 (Host OS • Desktop Env • Linux Kernel) ]</span>                  <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[3] Rotation Dwell</span>       <span class="tui-line-hot">◄ 4.5s ►</span> (Smooth phosphor fade between targets)                     <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[4] Idle Activation</span>      <span class="tui-line-hot">◄ 5 mins ►</span> (Zero render cycles while active)                        <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[5] Monitor Matching</span>     <span class="tui-line-green">144 Hz Dynamic Refresh</span> (ext-idle-notify-v1 + layer-shell)           <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[6] CPU Throttle Budget</span>  <span class="tui-line-green">0.12% Core Cap</span> (Instant yield on keyboard/mouse interrupt)          <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Screensaver</span>   <span class="tui-line-hot">► [ ascii (37 effects) ]</span>   [ aurora ]   [ matrix ]   [ storm ]     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[2] Arcade Banner Mode</span>   <span class="tui-line-green">► [ Clean Host OS Banner ("SUPERFEDORA") ]</span>   [ Custom Text ]       <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[3] Scene Pacing</span>         <span class="tui-line-hot">◄ 5.0s Dwell • 0.7s Dissolve ►</span> (Randomized 37-effect rotation)      <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[4] Idle Activation</span>      <span class="tui-line-hot">◄ 5 mins ►</span> (0.00% CPU at idle • zero periodic wakeups)              <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[5] GPU Scaling &amp; Hz</span>     <span class="tui-line-green">wp_viewporter 1x Grid • 144 Hz Dynamic</span> (ext-idle-notify-v1)         <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[6] Service &amp; Doctor</span>     <span class="tui-line-green">systemd / openrc / runit / s6 / dinit</span> (idlescreen doctor --fix)     <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-hot">[Enter]</span> Test Preview    <span class="tui-line-hot">[Tab]</span> Switch Field    <span class="tui-line-hot">[Space]</span> Toggle Mode    <span class="tui-line-hot">[Q]</span> Save &amp; Quit  <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">└───────────────────────────────────────────────────────────────────────────────────────┘</span></code></pre>
 
           <div class="tui-actions-row">
             <p class="tui-desc-text">
-              Auto-configured out of the box during install. Whenever you want to switch scenes, customize your wordmark, or tune idle dwell timeouts, you never have to parse obscure config files — just fire up <code>idlescreen tui</code>.
+              Auto-configured out of the box during install. Whenever you want to switch scenes, customize your wordmark with <code>idlescreen text</code>, or tune idle timeouts, you never have to parse obscure config files — just fire up <code>idlescreen tui</code>.
             </p>
             <a href="#install" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Get IdleScreen Now ↓</a>
           </div>
