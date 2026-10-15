@@ -45,12 +45,12 @@ window.SAVERS_SECONDARY = [
     sourceLabel: "[ SOURCE: print_effect.rs ↗ ]",
     video: "assets/videos/ascii.mp4" },
 
-  { num: "25", id: "random_sequence", name: "RANDOM SEQUENCE", sub: "Stochastic Character Annealing",
+  { num: "25", id: "randomsequence", name: "RANDOM SEQUENCE", sub: "Stochastic Character Annealing",
     desc: "Stochastic randomized character shuffle annealing into target text as entropy temperature drops to zero.",
     frame: "60–144 FPS", cpu: "0.07%", math: "Simulated Annealing",
     badge: "IN-TREE SCENE",
     tags: ["in-tree", "ascii", "crypto", "stochastic", "annealing", "entropy", "random_sequence.rs"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/random_sequence.rs",
+    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/matrix_cyber/random_sequence.rs",
     sourceLabel: "[ SOURCE: random_sequence.rs ↗ ]",
     video: "assets/videos/ascii.mp4" },
 
@@ -162,12 +162,12 @@ window.SAVERS_SECONDARY = [
     sourceLabel: "[ SOURCE: wipe.rs ↗ ]",
     video: "assets/videos/ascii.mp4" },
 
-  { num: "38", id: "spotlight_orbit", name: "SPOTLIGHT ORBIT", sub: "Keplerian Phosphor Orbit",
-    desc: "Signature yellow phosphor star beacon orbiting the idlescreen ASCII wordmark, casting dynamic radial luminescence across CRT cells.",
-    frame: "60–144 FPS", cpu: "0.05%", math: "Keplerian Orbital Luminescence",
+  { num: "38", id: "aurora", name: "AURORA", sub: "Ionosphere Curtain Drift",
+    desc: "Dancing polar aurora borealis curtains shimmering across the 16-bit wordmark with column-swept geomagnetic wave modulation.",
+    frame: "60–144 FPS", cpu: "0.08%", math: "Geomagnetic Curtain Harmonics",
     badge: "IN-TREE SCENE",
-    tags: ["in-tree", "ascii", "vector", "optics", "orbit", "spotlight", "star", "spotlight_orbit.rs"],
-    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/spotlight_orbit.rs",
-    sourceLabel: "[ SOURCE: spotlight_orbit.rs ↗ ]",
+    tags: ["in-tree", "ascii", "fluid", "aurora", "plasma", "field", "aurora.rs"],
+    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/weather_nature/math_fields/aurora.rs",
+    sourceLabel: "[ SOURCE: aurora.rs ↗ ]",
     video: "assets/videos/ascii.mp4" }
 ];
