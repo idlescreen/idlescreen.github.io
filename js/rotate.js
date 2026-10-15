@@ -1,7 +1,7 @@
 // rotate.js — hero title rotates through program facts with offscreen pause
 const HEADLINES = [
   "Ambient by Design",
-  "37 ASCII Effects + 11 Extras Savers",
+  "50 Built-In 16-Bit Arcade Scenes",
   "Clean OS-Only 16-Bit Arcade Banner",
   "First-Class SuperFedora Support",
   "wp_viewporter 1x Grid GPU Scaling",
