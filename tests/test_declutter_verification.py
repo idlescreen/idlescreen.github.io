@@ -135,10 +135,10 @@ def run_tests():
             };
         })()""")
         assert matrix_check["matrixExists"], "Matrix section missing"
-        assert matrix_check["cardCount"] >= 50, f"Expected at least 50 matrix cards, got {matrix_check['cardCount']}"
-        assert "[ 50 / 50 SCENES ]" in matrix_check["countText"], f"Bad count badge: {matrix_check['countText']}"
+        assert matrix_check["cardCount"] >= 52, f"Expected at least 52 matrix cards, got {matrix_check['cardCount']}"
+        assert "[ 52 / 52 SCENES ]" in matrix_check["countText"], f"Bad count badge: {matrix_check['countText']}"
         assert matrix_check["previewBtnsCount"] == 0, f"Preview buttons should be removed, found: {matrix_check['previewBtnsCount']}"
-        print("  PASS: 50-scene matrix intact with copy/source actions and no preview buttons.")
+        print("  PASS: 52-scene matrix intact with copy/source actions and no preview buttons.")
 
         # 4. Check for zero runtime JavaScript errors
         errs = cdp.eval("window.__testErrors")

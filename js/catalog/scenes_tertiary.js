@@ -1,4 +1,4 @@
-// js/catalog/scenes_tertiary.js — in-tree 16-bit arcade & math scenes catalog (39–50)
+// js/catalog/scenes_tertiary.js — in-tree 16-bit arcade & math scenes catalog (39–52)
 window.SAVERS_TERTIARY = [
   { num: "39", id: "breakout", name: "BREAKOUT", sub: "Arcade Brick Breaker",
     desc: "Autonomous AI paddle deflecting a high-velocity energy ball into rainbow arcade brick rows with explosive shatter physics.",
@@ -106,5 +106,23 @@ window.SAVERS_TERTIARY = [
     tags: ["in-tree", "ascii", "vector", "motion", "3d", "tunnel", "tunnel.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/weather_nature/arcade_retro/tunnel.rs",
     sourceLabel: "[ SOURCE: tunnel.rs ↗ ]",
+    video: "assets/videos/ascii.mp4" },
+
+  { num: "51", id: "mmx", name: "MMX", sub: "SNES X-Buster Spiral Crush",
+    desc: "5-act 16-bit Mega Man X choreography with teleport-in beam, Level-3 charge sparks, Spiral Crush Blast, and Scale2x sub-cell sprites.",
+    frame: "60–144 FPS", cpu: "0.08%", math: "4×8 Sub-Cell Scale2x Blit",
+    badge: "IN-TREE SCENE",
+    tags: ["in-tree", "ascii", "particles", "motion", "arcade", "mmx", "mmx_sim.rs"],
+    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/weather_nature/arcade_retro/mmx/mmx_sim.rs",
+    sourceLabel: "[ SOURCE: mmx_sim.rs ↗ ]",
+    video: "assets/videos/ascii.mp4" },
+
+  { num: "52", id: "zero", name: "ZERO", sub: "SNES Z-Saber & Twin Buster Combo",
+    desc: "5-act 16-bit Zero choreography featuring crimson teleport, twin Z-Buster shots, 3-stage Z-Saber crescent wave, and Maverick explosions.",
+    frame: "60–144 FPS", cpu: "0.08%", math: "Diagonal Slice & Scale2x",
+    badge: "IN-TREE SCENE",
+    tags: ["in-tree", "ascii", "particles", "motion", "arcade", "zero", "zero_sim.rs"],
+    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/weather_nature/arcade_retro/zero/zero_sim.rs",
+    sourceLabel: "[ SOURCE: zero_sim.rs ↗ ]",
     video: "assets/videos/ascii.mp4" }
 ];

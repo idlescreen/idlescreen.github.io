@@ -1,5 +1,5 @@
-// js/catalog/index.js — unified 50 in-tree 16-bit arcade scenes catalog
-// Combines scenes_primary (01–19), scenes_secondary (20–38), and scenes_tertiary (39–50) into canonical window.SAVERS.
+// js/catalog/index.js — unified 52 in-tree 16-bit arcade scenes catalog
+// Combines scenes_primary (01–19), scenes_secondary (20–38), and scenes_tertiary (39–52) into canonical window.SAVERS.
 (function initCatalog() {
   const primary = window.SAVERS_PRIMARY || [];
   const secondary = window.SAVERS_SECONDARY || [];
