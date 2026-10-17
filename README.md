@@ -28,7 +28,7 @@
 
 The product site — landing page, interactive 52-scene showcase (52 built-in 16-bit
 arcade & mathematical scenes in a single unified binary), and the documented install
-entry point for [IdleScreen](https://idlescreen.github.io) (`v4.5.0`) —
+entry point for [IdleScreen](https://idlescreen.github.io) (`v4.5.1`) —
 zero-overhead Wayland screensavers for Linux featuring First-Class SuperFedora
 integration, clean OS-only (or custom text) 16-bit arcade banners, 4×8 sub-cell
 sprite Scale2x compositing (`mmx`, `zero`), 8-theme /
