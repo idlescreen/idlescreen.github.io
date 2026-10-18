@@ -144,8 +144,8 @@
 
         <p class="hero-intro">
           You don't need to wipe your drive, switch distributions, or learn a bespoke tiling window manager just to experience high-craft ambient screensavers.
-          <strong>IdleScreen v4.5.2</strong> brings first-class <strong>SuperFedora</strong> integration and <strong>52 built-in 16-bit arcade &amp; mathematical scenes</strong> in a single unified binary to whatever you're already running —
-          SuperFedora, Fedora, Debian, Arch, Alpine, openSUSE, GNOME (Mutter), KDE, COSMIC, Hyprland, Sway, systemd, OpenRC, runit, s6, dinit, or XDG autostart.
+          <strong>IdleScreen v4.5.2</strong> brings first-class <strong>SuperFedora</strong> integration, <strong>COSMIC Cage &amp; container runtime detection</strong>, and <strong>52 built-in 16-bit arcade &amp; mathematical scenes</strong> in a single unified binary to whatever you're already running —
+          SuperFedora, Fedora, Debian, Arch, Alpine, openSUSE, GNOME (Mutter), KDE, COSMIC (including <code>CosmicCage</code> sandboxes), Hyprland, Sway, Podman/OCI containers, systemd, OpenRC, runit, s6, dinit, or XDG autostart.
           0.00% CPU at idle (~2–3 MB RSS), 8-theme / 8-drift-mode 3-layer parallax starfields, <code>wp_viewporter</code> 1x native grid GPU scaling, and effortless control via <code>idlescreen tui</code> and <code>idlescreen preview --tour</code>.
         </p>
 
@@ -173,20 +173,20 @@
           <div class="tenets-track">
             <span class="tenet-chip">⚡ 0.00% CPU AT IDLE (~2–3 MB RSS)</span>
             <span class="tenet-chip">🐧 FIRST-CLASS SUPERFEDORA • FEDORA • DEBIAN • ARCH • ALPINE</span>
-            <span class="tenet-chip">🪟 GNOME MUTTER • KDE • COSMIC • HYPRLAND • SWAY</span>
+            <span class="tenet-chip">🪟 GNOME MUTTER • KDE • COSMIC CAGE • HYPRLAND • SWAY</span>
+            <span class="tenet-chip">📦 RUNTIME DETECTION: COSMIC CAGE • PODMAN • DOCKER • HOST</span>
             <span class="tenet-chip">⚙️ SYSTEMD • OPENRC • RUNIT • S6 • DINIT • XDG</span>
             <span class="tenet-chip">🎯 1X GRID GPU SCALING (wp_viewporter) • 60–144 FPS</span>
             <span class="tenet-chip">🕹️ 52 BUILT-IN 16-BIT ARCADE SCENES • 8-THEME PARALLAX STARFIELD</span>
             <span class="tenet-chip">🛠️ TUI DIRECTOR • PREVIEW --TOUR • DOCTOR --FIX</span>
-            <span class="tenet-chip">✨ AUTO-SETUP ON INSTALL</span>
             <span class="tenet-chip" aria-hidden="true">⚡ 0.00% CPU AT IDLE (~2–3 MB RSS)</span>
             <span class="tenet-chip" aria-hidden="true">🐧 FIRST-CLASS SUPERFEDORA • FEDORA • DEBIAN • ARCH • ALPINE</span>
-            <span class="tenet-chip" aria-hidden="true">🪟 GNOME MUTTER • KDE • COSMIC • HYPRLAND • SWAY</span>
+            <span class="tenet-chip" aria-hidden="true">🪟 GNOME MUTTER • KDE • COSMIC CAGE • HYPRLAND • SWAY</span>
+            <span class="tenet-chip" aria-hidden="true">📦 RUNTIME DETECTION: COSMIC CAGE • PODMAN • DOCKER • HOST</span>
             <span class="tenet-chip" aria-hidden="true">⚙️ SYSTEMD • OPENRC • RUNIT • S6 • DINIT • XDG</span>
             <span class="tenet-chip" aria-hidden="true">🎯 1X GRID GPU SCALING (wp_viewporter) • 60–144 FPS</span>
             <span class="tenet-chip" aria-hidden="true">🕹️ 52 BUILT-IN 16-BIT ARCADE SCENES • 8-THEME PARALLAX STARFIELD</span>
             <span class="tenet-chip" aria-hidden="true">🛠️ TUI DIRECTOR • PREVIEW --TOUR • DOCTOR --FIX</span>
-            <span class="tenet-chip" aria-hidden="true">✨ AUTO-SETUP ON INSTALL</span>
           </div>
         </div>
       </section>
@@ -263,7 +263,7 @@
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Desktop:</strong> Seamless Wayland <code>wlr-layer-shell</code> + <code>ext-idle-notify-v1</code> + native GNOME Mutter support across GNOME, KDE Plasma, COSMIC, Hyprland, Sway, River, and Wayfire.</div>
+                <div><strong>Keep Your Desktop &amp; Sandbox:</strong> Seamless Wayland <code>wlr-layer-shell</code> + <code>ext-idle-notify-v1</code> + native GNOME Mutter support across GNOME, KDE Plasma, COSMIC (including <code>CosmicCage</code> sandboxes), Hyprland, Sway, River, Wayfire, and Podman/OCI containers.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
@@ -413,24 +413,23 @@
           <!-- Card 2: Desktop Environments & Compositors -->
           <div class="eco-card spotlight-card">
             <div class="eco-card-header">
-              <span class="eco-badge">[ 02 // COMPOSITORS &amp; DESKTOPS ]</span>
-              <h3 class="eco-title">Wayland &amp; Compositors</h3>
+              <span class="eco-badge">[ 02 // COMPOSITORS, CAGES &amp; CONTAINERS ]</span>
+              <h3 class="eco-title">Wayland, Cages &amp; Runtimes</h3>
             </div>
             <p class="eco-desc">
-              Native 1x grid GPU scaling via <code>wp_viewporter</code>, per-output 60–144 Hz matching over <code>wlr-layer-shell</code>, <code>ext-idle-notify-v1</code>, and native GNOME Mutter idle tracking.
+              Native 1x grid GPU scaling via <code>wp_viewporter</code>, 60–144 Hz matching over <code>wlr-layer-shell</code> &amp; GNOME Mutter, plus automatic <code>CosmicCage</code>, <code>PodmanContainer</code>, <code>GenericContainer</code>, and <code>Host</code> detection.
             </p>
             <div class="eco-pill-list">
               <span class="eco-pill"><b class="pill-dot">●</b> Hyprland (SuperFedora / Standalone)</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp + CosmicCage Sandbox)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> GNOME (Mutter IdleMonitor + Wayland)</span>
               <span class="eco-pill"><b class="pill-dot">●</b> KDE Plasma (KWin)</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> COSMIC (cosmic-comp)</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Sway</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> Wayfire</span>
-              <span class="eco-pill"><b class="pill-dot">●</b> River / Labwc / Niri</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Sway / Wayfire / River / Labwc / Niri</span>
+              <span class="eco-pill"><b class="pill-dot">●</b> Podman / Docker / Flatpak / OCI Runtimes</span>
             </div>
             <div class="eco-spec-row">
-              <span class="eco-spec-key">PROTOCOLS:</span>
-              <span class="eco-spec-val">wp_viewporter • wlr-layer-shell • ext-idle-notify-v1 • wlr-output-power</span>
+              <span class="eco-spec-key">RUNTIMES:</span>
+              <span class="eco-spec-val">CosmicCage • PodmanContainer • GenericContainer • Host</span>
             </div>
           </div>
 
