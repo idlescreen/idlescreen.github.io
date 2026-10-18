@@ -28,12 +28,12 @@
 
 The product site — landing page, interactive 52-scene showcase (52 built-in 16-bit
 arcade & mathematical scenes in a single unified binary), and the documented install
-entry point for [IdleScreen](https://idlescreen.github.io) (`v4.5.2`) —
+entry point for [IdleScreen](https://idlescreen.github.io) (`v4.6.0`) —
 zero-overhead Wayland screensavers for Linux featuring First-Class SuperFedora
-integration, COSMIC Cage & container runtime detection (`CosmicCage`, `PodmanContainer`, `GenericContainer`, `Host`), clean OS-only (or custom text) 16-bit arcade banners, 4×8 sub-cell
+integration, COSMIC Cage & container runtime detection (`CosmicCage`, `PodmanContainer`, `GenericContainer`, `Host`), 10-bit HDR deep color (`Argb2101010`/`Xrgb2101010`), 4K 2x Hi-Res `wp_viewporter` GPU scaling, system theme adaptation (XDG Portal / COSMIC / Hyprland / GTK / KDE colors, light/dark, and glyph fonts), anamorphic lens flares & neon overdrive, clean OS-only (or custom text) 16-bit arcade banners, 4×8 sub-cell
 sprite Scale2x compositing (`mmx`, `zero`), 8-theme /
-8-drift-mode 3-layer parallax starfields, `wp_viewporter` 1x native grid GPU
-scaling, `zwlr-output-power-management-v1` hardware DPMS monitor power-off,
+8-drift-mode 3-layer parallax starfields,
+`zwlr-output-power-management-v1` hardware DPMS monitor power-off,
 live side-by-side TUI mini-preview, `ext-idle-notify-v1` + GNOME Mutter idle
 tracking, `idlescreen preview --tour`, and multi-init support (`systemd`, `OpenRC`, `runit`, `s6`, `dinit`, XDG autostart).
 
