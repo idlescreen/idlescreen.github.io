@@ -16,8 +16,13 @@ import os
 import socket
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.request
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from chrome_launcher import (LaunchError, chrome_stderr_tail, launch_chrome,
+                               wait_for_cdp, wait_for_http, wait_for_ready)
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 PORT_HTTP = 8891
@@ -91,23 +96,22 @@ class CDPClient:
 def run_tests():
     httpd = subprocess.Popen([sys.executable, "-m", "http.server", str(PORT_HTTP), "--bind", "127.0.0.1"],
                              cwd=REPO_ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(0.5)
+    wait_for_http(f"http://127.0.0.1:{PORT_HTTP}/index.html")
 
-    chrome = subprocess.Popen([
-        "google-chrome", "--headless=new", f"--remote-debugging-port={PORT_CDP}",
-        "--no-sandbox", "--disable-gpu", "--window-size=1200,800",
-        f"http://127.0.0.1:{PORT_HTTP}/index.html"
-    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(1.5)
+    chrome_log = os.path.join(tempfile.gettempdir(), "idlescreen-chrome-9341.log")
+    try:
+        chrome = launch_chrome(PORT_CDP, f"http://127.0.0.1:{PORT_HTTP}/index.html", chrome_log)
+    except LaunchError as error:
+        raise LaunchError(f"{error}\nChrome log:\n{chrome_stderr_tail(chrome_log)}") from error
 
     try:
-        with urllib.request.urlopen(f"http://127.0.0.1:{PORT_CDP}/json") as r:
-            targets = json.loads(r.read().decode())
+        targets = wait_for_cdp(PORT_CDP)
         target = next(t for t in targets if "index.html" in t.get("url", ""))
         path = "/" + target["webSocketDebuggerUrl"].split("/", 3)[3]
         sock = socket.create_connection(("127.0.0.1", PORT_CDP))
         ws_handshake(sock, "127.0.0.1", PORT_CDP, path)
         cdp = CDPClient(sock)
+        wait_for_ready(cdp.eval, f"http://127.0.0.1:{PORT_HTTP}/index.html")
 
         # 1. Swatch presence in footer dock
         swatches = ["Coral", "Orange", "Amber", "Yellow", "Emerald", "Cyan", "Blue", "Violet"]

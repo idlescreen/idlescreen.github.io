@@ -48,8 +48,11 @@ jobs:
           # They were committed but never executed, so regressions in accent
           # handling, the matrix/wordmark layout and section navigation went
           # unnoticed. Run them on every change.
-          if ! command -v google-chrome >/dev/null 2>&1; then
-            echo "::error::google-chrome not found — the headless suites cannot run"
+          if ! command -v google-chrome >/dev/null 2>&1 \
+            && ! command -v google-chrome-stable >/dev/null 2>&1 \
+            && ! command -v chromium >/dev/null 2>&1 \
+            && ! command -v chromium-browser >/dev/null 2>&1; then
+            echo "::error::no Chrome or Chromium binary found — the headless suites cannot run"
             exit 1
           fi
           python3 tests/test_accent_verification.py
