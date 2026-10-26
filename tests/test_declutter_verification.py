@@ -92,7 +92,8 @@ def run_tests():
         sock = socket.create_connection(("127.0.0.1", PORT_CDP))
         ws_handshake(sock, "127.0.0.1", PORT_CDP, path)
         cdp = CDPClient(sock)
-        wait_for_ready(cdp.eval, f"http://127.0.0.1:{PORT_HTTP}/index.html")
+        wait_for_ready(cdp.eval, f"http://127.0.0.1:{PORT_HTTP}/index.html",
+                       "#scene-matrix")
         cdp.eval("window.__testErrors = []; window.addEventListener('error', e => window.__testErrors.push(e.message));")
 
         # 1. Verify complete absence of Showcase section and Demo buttons

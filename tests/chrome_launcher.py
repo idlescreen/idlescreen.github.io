@@ -112,13 +112,18 @@ def port_is_free(port):
         return probe.connect_ex(("127.0.0.1", port)) != 0
 
 
-def wait_for_ready(evaluate, expected_url=None, timeout=30.0):
+def wait_for_ready(evaluate, expected_url=None, ready_selector=None, timeout=30.0):
     """Block until the page is loaded and, optionally, at the expected URL.
 
     Two things happen after the DevTools socket is up: the page target
     still holds `about:blank` for a moment before Chrome navigates it, and
     the document keeps parsing afterwards. Querying the DOM in that window
     sees a blank document, so the elements under test are simply not there.
+
+    The URL alone is not a reliable signal: Chrome updates `location.href`
+    at the start of a navigation, while the document behind it is still the
+    old one. A selector that only exists in the real page is what proves the
+    new document is the one being inspected.
     """
     deadline = time.monotonic() + timeout
     state = None
@@ -129,13 +134,18 @@ def wait_for_ready(evaluate, expected_url=None, timeout=30.0):
             href = evaluate("location.href")
             at_url = expected_url is None or expected_url in (href or "")
             if state == "complete" and at_url:
-                return
+                if ready_selector is None:
+                    return
+                probe = f"Boolean(document.querySelector({json.dumps(ready_selector)}))"
+                if evaluate(probe):
+                    return
         except (OSError, ValueError):
             state = "<error>"
         time.sleep(0.2)
     raise LaunchError(
         "the page never became ready "
-        f"(last state: {state}, last url: {href}, expected url: {expected_url})"
+        f"(last state: {state}, last url: {href}, expected url: {expected_url}, "
+        f"selector: {ready_selector})"
     )
 
 

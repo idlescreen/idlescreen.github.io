@@ -111,13 +111,22 @@ def run_tests():
         sock = socket.create_connection(("127.0.0.1", PORT_CDP))
         ws_handshake(sock, "127.0.0.1", PORT_CDP, path)
         cdp = CDPClient(sock)
-        wait_for_ready(cdp.eval, f"http://127.0.0.1:{PORT_HTTP}/index.html")
+        wait_for_ready(cdp.eval, f"http://127.0.0.1:{PORT_HTTP}/index.html",
+                       "#footer-accent-picker")
 
         # 1. Swatch presence in footer dock
         swatches = ["Coral", "Orange", "Amber", "Yellow", "Emerald", "Cyan", "Blue", "Violet"]
         for s in swatches:
             f_btn = cdp.eval(f"Boolean(document.querySelector('.footer-accent-picker [data-accent-name=\"{s}\"]'))")
-            assert f_btn, f"Swatch {s} missing in footer accent picker"
+            if not f_btn:
+                state = cdp.eval(
+                    "JSON.stringify({href: location.href, ready: document.readyState,"
+                    " pickers: document.querySelectorAll('.footer-accent-picker').length,"
+                    " named: document.querySelectorAll('[data-accent-name]').length})"
+                )
+                raise AssertionError(
+                    f"Swatch {s} missing in footer accent picker (page state: {state})"
+                )
         print("  PASS: All 8 rainbow swatches present in footer dock.")
 
         # 2. Click each swatch and verify universal application
