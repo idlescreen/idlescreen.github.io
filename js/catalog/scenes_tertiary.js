@@ -1,4 +1,4 @@
-// js/catalog/scenes_tertiary.js — in-tree 16-bit arcade & math scenes catalog (39–52)
+// js/catalog/scenes_tertiary.js — in-tree 16-bit arcade & math scenes catalog (39–53)
 window.SAVERS_TERTIARY = [
   { num: "39", id: "breakout", name: "BREAKOUT", sub: "Arcade Brick Breaker",
     desc: "Autonomous AI paddle deflecting a high-velocity energy ball into rainbow arcade brick rows with explosive shatter physics.",
@@ -117,12 +117,21 @@ window.SAVERS_TERTIARY = [
     sourceLabel: "[ SOURCE: mmx_sim.rs ↗ ]",
     video: "assets/videos/ascii.mp4" },
 
-  { num: "52", id: "zero", name: "ZERO", sub: "SNES Z-Saber & Twin Buster Combo",
+  { num: "53", id: "zero", name: "ZERO", sub: "SNES Z-Saber & Twin Buster Combo",
     desc: "5-act 16-bit Zero choreography featuring crimson teleport, twin Z-Buster shots, 3-stage Z-Saber crescent wave, and Maverick explosions.",
     frame: "60–144 FPS", cpu: "0.08%", math: "Diagonal Slice & Scale2x",
     badge: "IN-TREE SCENE",
     tags: ["in-tree", "ascii", "particles", "motion", "arcade", "zero", "zero_sim.rs"],
     sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/weather_nature/arcade_retro/zero/zero_sim.rs",
     sourceLabel: "[ SOURCE: zero_sim.rs ↗ ]",
+    video: "assets/videos/ascii.mp4" },
+
+  { num: "53", id: "moire", name: "MOIRE", sub: "Two-Source Interference Fringes",
+    desc: "Counter-rotating line gratings weave shifting moiré beat bands across the canvas, radial falloff damping the corners before the fringe field settles into the arcade banner.",
+    frame: "60–144 FPS", cpu: "0.08%", math: "Dual Grating Cosine Interference",
+    badge: "IN-TREE SCENE",
+    tags: ["in-tree", "ascii", "optics", "motion", "vector", "moire", "moire.rs"],
+    sourceUrl: "https://github.com/idlescreen/idlescreen/blob/master/crates/idlescreen/src/ascii/scenes/optics/moire.rs",
+    sourceLabel: "[ SOURCE: moire.rs ↗ ]",
     video: "assets/videos/ascii.mp4" }
 ];

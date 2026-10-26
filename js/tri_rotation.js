@@ -15,7 +15,7 @@
 
   function updateDisplay(animate = true) {
     const mode = MODES[currentModeIdx];
-    const modeLabels = { os: "HOST OS", de: "CUSTOM TEXT", kernel: "48 SAVERS" };
+    const modeLabels = { os: "HOST OS", de: "CUSTOM TEXT", kernel: "53 SAVERS" };
     document.querySelectorAll(".tri-rot-state, #tri-rot-mode").forEach((el) => {
       el.textContent = modeLabels[mode];
     });

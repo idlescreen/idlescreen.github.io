@@ -41,3 +41,17 @@ jobs:
         run: |
           python3 scripts/assemble.py --check
           python3 tests/test_page_rules.py
+
+      - name: Headless Chrome verification suites
+        run: |
+          # The three suites below drive the real page in headless Chrome.
+          # They were committed but never executed, so regressions in accent
+          # handling, the matrix/wordmark layout and section navigation went
+          # unnoticed. Run them on every change.
+          if ! command -v google-chrome >/dev/null 2>&1; then
+            echo "::error::google-chrome not found — the headless suites cannot run"
+            exit 1
+          fi
+          python3 tests/test_accent_verification.py
+          python3 tests/test_declutter_verification.py
+          python3 tests/test_section_nav.py

@@ -227,7 +227,7 @@
 })();
 
 console.log(
-  "%c[IDLESCREEN // WAYLAND IDLE DAEMON ACTIVE]\n%cEngineered in Rust • 48 In-Tree ASCII Scenes • Dynamic 60–144 FPS",
+  "%c[IDLESCREEN // WAYLAND IDLE DAEMON ACTIVE]\n%cEngineered in Rust • 53 In-Tree ASCII Scenes • Dynamic 60–144 FPS",
   "color: #ffb000; font-weight: bold; font-size: 12px;",
   "color: #94a3b8; font-size: 11px;"
 );

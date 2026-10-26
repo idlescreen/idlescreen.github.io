@@ -110,7 +110,14 @@
       current = ACCENTS.find((a) => a.name.toLowerCase() === window.idleCurrentAccentName.toLowerCase());
     }
     if (!current && window.idleCurrentAccent) {
-      current = ACCENTS.find((a) => a.rgb[0] === window.idleCurrentAccent[0] && a.rgb[1] === window.idleCurrentAccent[1]);
+      // Compare the whole RGB triple: matching only R and G would pick the
+      // wrong swatch for two accents that share those channels.
+      current = ACCENTS.find(
+        (a) =>
+          a.rgb[0] === window.idleCurrentAccent[0] &&
+          a.rgb[1] === window.idleCurrentAccent[1] &&
+          a.rgb[2] === window.idleCurrentAccent[2]
+      );
     }
     applyAccent(current || ACCENTS.find((a) => a.name === "Amber") || ACCENTS[0]);
   }
