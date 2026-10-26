@@ -6,7 +6,7 @@
     <title>IdleScreen // High-Craft Wayland Screensavers for Modern Linux</title>
     <meta
       name="description"
-      content="IdleScreen v4.7.1 — high-craft Wayland screensaver suite for Linux. First-class SuperFedora integration, 10-bit HDR deep color, 4K 2x Hi-Res wp_viewporter GPU scaling, system theme adaptation, anamorphic lens flares &amp; neon overdrive, 53 built-in 16-bit arcade &amp; mathematical scenes in a single unified binary, multi-init support, preview --tour, and idlescreen tui."
+      content="IdleScreen v4.8.0 — high-craft Wayland screensaver suite for Linux. First-class SuperFedora integration, 10-bit HDR deep color, 4K 2x Hi-Res wp_viewporter GPU scaling, system theme adaptation, anamorphic lens flares &amp; neon overdrive, 53 built-in 16-bit arcade &amp; mathematical scenes in a single unified binary, multi-init support, preview --tour, and idlescreen tui."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base/tokens.css" />
@@ -80,7 +80,7 @@
             </span>
             <span class="brand-name">IdleScreen</span>
           </a>
-          <span class="brand-badge" title="Daemon Core v4.7.1 Online">CORE: v4.7.1</span>
+          <span class="brand-badge" title="Daemon Core v4.8.0 Online">CORE: v4.8.0</span>
         </div>
 
         <div class="header-actions">
@@ -146,7 +146,7 @@
 
         <p class="hero-intro">
           You don't need to wipe your drive, switch distributions, or learn a bespoke tiling window manager just to experience high-craft ambient screensavers.
-          <strong>IdleScreen v4.7.1</strong> brings first-class <strong>SuperFedora</strong> integration, <strong>System Theme Adaptation</strong> (XDG Portal / COSMIC / Hyprland / GTK / KDE colors, light/dark, and glyph fonts), <strong>10-bit HDR deep color</strong>, <strong>4K 2x Hi-Res <code>wp_viewporter</code> GPU scaling</strong>, <strong>Anamorphic Lens Flares &amp; Neon Overdrive</strong>, <strong>COSMIC Cage &amp; container runtime detection</strong>, and <strong>53 built-in 16-bit arcade &amp; mathematical scenes</strong> in a single unified binary to whatever you're already running —
+          <strong>IdleScreen v4.8.0</strong> brings first-class <strong>SuperFedora</strong> integration, <strong>System Theme Adaptation</strong> (XDG Portal / COSMIC / Hyprland / GTK / KDE colors, light/dark, and glyph fonts), <strong>10-bit HDR deep color</strong>, <strong>4K 2x Hi-Res <code>wp_viewporter</code> GPU scaling</strong>, <strong>Anamorphic Lens Flares &amp; Neon Overdrive</strong>, <strong>COSMIC Cage &amp; container runtime detection</strong>, and <strong>53 built-in 16-bit arcade &amp; mathematical scenes</strong> in a single unified binary to whatever you're already running —
           SuperFedora, Fedora, Debian, Arch, Alpine, openSUSE, GNOME (Mutter), KDE, COSMIC (including <code>CosmicCage</code> sandboxes), Hyprland, Sway, Podman/OCI containers, systemd, OpenRC, runit, s6, dinit, or XDG autostart.
           0.00% CPU at idle (~2–3 MB RSS), 8-theme / 8-drift-mode 3-layer parallax starfields, and effortless control via <code>idlescreen tui</code> and <code>idlescreen preview --tour</code>.
         </p>
@@ -298,7 +298,7 @@
             <code id="tui-copy-cmd" style="display:none;">idlescreen tui</code>
           </div>
 
-          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.7.1</span> <span class="tui-line-dim">──────────────────────────────────────────────────────┐</span>
+          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.8.0</span> <span class="tui-line-dim">──────────────────────────────────────────────────────┐</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> SUPERFEDORA       <span class="tui-line-cyan">Compositor:</span> HYPRLAND / MUTTER           <span class="tui-line-cyan">Memory:</span> ~2.4 MB RSS     <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Scene Mode</span>    <span class="tui-line-hot">► [ All 53 Arcade Scenes (Shuffle) ]</span>   [ 14 New ]   [ Single ]    <span class="tui-line-dim">│</span>
@@ -672,7 +672,7 @@
           </div>
           <h2 class="section-title">IdleScreen Studio</h2>
           <p class="section-intro">
-            Render saver loops to video, offline. The <code>render</code> engine simulates a saver frame by frame and pipes it straight into ffmpeg — no Wayland session, no compositor, no display attached. <code>idle-studio</code> is the Director TUI for queueing and tuning export jobs.
+            Render the screensaver to video, offline. Studio links the daemon's rendering core and runs the same 53 scenes the screensaver draws on screen, frame by frame, straight into ffmpeg — no Wayland session, no compositor, no display attached. <code>idle-studio</code> is the Director TUI for queueing and tuning export jobs.
           </p>
         </div>
 
@@ -715,7 +715,7 @@
               <h3 class="studio-title">Render a Saver</h3>
             </div>
             <p class="studio-desc">
-              One command, one file. The engine simulates the loop and encodes it through ffmpeg — nothing to clean up afterwards, and the same effect name and seed always produce the same bytes.
+              One command, one file. The engine runs the scene and encodes it through ffmpeg — nothing to clean up afterwards, and the same scene, text and seed always produce the same bytes.
             </p>
 
             <div class="studio-snippet-box">
@@ -750,7 +750,7 @@
               <h3 class="studio-title">Queue &amp; Tune Jobs</h3>
             </div>
             <p class="studio-desc">
-              Prefer a terminal to a command line? <code>idle-studio</code> is a Director for export jobs: pick the effect, set duration, resolution, fps and quality, then queue, pause and run them.
+              Prefer a terminal to a command line? <code>idle-studio</code> is a Director for export jobs: pick the scene and the words it animates, set duration, resolution, fps and quality, then queue, pause and run them.
             </p>
 
             <div class="studio-snippet-box">
@@ -760,8 +760,8 @@
 
             <div class="studio-spec-list">
               <div class="studio-spec-row">
-                <span class="studio-spec-key">EFFECTS</span>
-                <span class="studio-spec-val">12 built in — ascii · aurora · beams · …</span>
+                <span class="studio-spec-key">SCENES</span>
+                <span class="studio-spec-val">53 built in — aurora · beams · binarypath · …</span>
               </div>
               <div class="studio-spec-row">
                 <span class="studio-spec-key">TUNING</span>
@@ -777,7 +777,7 @@
 
         <p class="studio-footnote">
           Studio is a separate product from the daemon: it renders saver loops to files and never takes over your screen.
-          The engine simulates motion on its own, so an export is a clean, reproducible loop — not a screen recording of your live session.
+          It drives the daemon's own scene code, so an export is a clean, reproducible loop of the very same scenes — not a screen recording of your live session.
           <a href="https://github.com/idlescreen/studio" target="_blank" rel="noopener noreferrer">Source ↗</a>
         </p>
       </section>
@@ -864,7 +864,7 @@
               <span class="footer-logo-text">IdleScreen</span>
             </div>
             <p class="footer-tagline">
-              High-performance Wayland screensaver and idle daemon suite for Linux (v4.7.1). First-class SuperFedora integration, 53 built-in 16-bit arcade &amp; mathematical scenes, 8-theme parallax starfields, 0.00% CPU at idle, and universal Linux compatibility.
+              High-performance Wayland screensaver and idle daemon suite for Linux (v4.8.0). First-class SuperFedora integration, 53 built-in 16-bit arcade &amp; mathematical scenes, 8-theme parallax starfields, 0.00% CPU at idle, and universal Linux compatibility.
             </p>
           </div>
 

@@ -7,7 +7,7 @@
           </div>
           <h2 class="section-title">IdleScreen Studio</h2>
           <p class="section-intro">
-            Render saver loops to video, offline. The <code>render</code> engine simulates a saver frame by frame and pipes it straight into ffmpeg — no Wayland session, no compositor, no display attached. <code>idle-studio</code> is the Director TUI for queueing and tuning export jobs.
+            Render the screensaver to video, offline. Studio links the daemon's rendering core and runs the same 53 scenes the screensaver draws on screen, frame by frame, straight into ffmpeg — no Wayland session, no compositor, no display attached. <code>idle-studio</code> is the Director TUI for queueing and tuning export jobs.
           </p>
         </div>
 
@@ -50,7 +50,7 @@
               <h3 class="studio-title">Render a Saver</h3>
             </div>
             <p class="studio-desc">
-              One command, one file. The engine simulates the loop and encodes it through ffmpeg — nothing to clean up afterwards, and the same effect name and seed always produce the same bytes.
+              One command, one file. The engine runs the scene and encodes it through ffmpeg — nothing to clean up afterwards, and the same scene, text and seed always produce the same bytes.
             </p>
 
             <div class="studio-snippet-box">
@@ -85,7 +85,7 @@
               <h3 class="studio-title">Queue &amp; Tune Jobs</h3>
             </div>
             <p class="studio-desc">
-              Prefer a terminal to a command line? <code>idle-studio</code> is a Director for export jobs: pick the effect, set duration, resolution, fps and quality, then queue, pause and run them.
+              Prefer a terminal to a command line? <code>idle-studio</code> is a Director for export jobs: pick the scene and the words it animates, set duration, resolution, fps and quality, then queue, pause and run them.
             </p>
 
             <div class="studio-snippet-box">
@@ -95,8 +95,8 @@
 
             <div class="studio-spec-list">
               <div class="studio-spec-row">
-                <span class="studio-spec-key">EFFECTS</span>
-                <span class="studio-spec-val">12 built in — ascii · aurora · beams · …</span>
+                <span class="studio-spec-key">SCENES</span>
+                <span class="studio-spec-val">53 built in — aurora · beams · binarypath · …</span>
               </div>
               <div class="studio-spec-row">
                 <span class="studio-spec-key">TUNING</span>
@@ -112,7 +112,7 @@
 
         <p class="studio-footnote">
           Studio is a separate product from the daemon: it renders saver loops to files and never takes over your screen.
-          The engine simulates motion on its own, so an export is a clean, reproducible loop — not a screen recording of your live session.
+          It drives the daemon's own scene code, so an export is a clean, reproducible loop of the very same scenes — not a screen recording of your live session.
           <a href="https://github.com/idlescreen/studio" target="_blank" rel="noopener noreferrer">Source ↗</a>
         </p>
       </section>
