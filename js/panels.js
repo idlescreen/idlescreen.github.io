@@ -21,6 +21,7 @@
     { id: "scene-matrix", el: document.getElementById("scene-matrix") },
     { id: "ecosystem", el: document.getElementById("ecosystem") },
     { id: "install", el: document.getElementById("install") },
+    { id: "studio", el: document.getElementById("studio") },
   ].filter((s) => s.el !== null);
 
   const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link");

@@ -2,7 +2,7 @@
 """tests/test_section_nav.py — headless Chrome deep verification of section navigation & cycling.
 
 Tests:
-1. Section DOM order: intro -> overview -> showcase -> omarchy-play -> scene-matrix -> ecosystem -> install.
+1. Section DOM order: intro -> overview -> showcase -> omarchy-play -> scene-matrix -> ecosystem -> install -> studio.
 2. Floating right-side navigation arrows exist and are fixed on the right.
 3. Clicking down arrow advances section and cycles theme accent color.
 4. Clicking up arrow reverses section and cycles theme accent color.
@@ -117,7 +117,7 @@ def run_tests():
 
         # 1. Section DOM order check
         order = cdp.eval("""(() => {
-            const expectedIds = ['intro', 'overview', 'omarchy-play', 'scene-matrix', 'ecosystem', 'install'];
+            const expectedIds = ['intro', 'overview', 'omarchy-play', 'scene-matrix', 'ecosystem', 'install', 'studio'];
             const allNodes = Array.from(document.querySelectorAll('section[id], footer[id]'));
             const matched = expectedIds.map(id => document.getElementById(id));
             const positions = matched.map(el => el ? el.compareDocumentPosition(document.body) : null);
@@ -130,7 +130,7 @@ def run_tests():
             return { inOrder, ids: matched.map(el => el ? el.id : null) };
         })()""")
         assert order["inOrder"], f"Sections not in expected order: {order['ids']}"
-        print("  PASS: Section DOM order verified (intro -> overview -> showcase -> omarchy-play -> ...).")
+        print("  PASS: Section DOM order verified (intro -> overview -> showcase -> omarchy-play -> ... -> studio).")
 
         # 2. Footer dock exists, fixed at bottom, UP on left, palette centered, DOWN on right
         dock_info = cdp.eval("""(() => {

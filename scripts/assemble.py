@@ -16,6 +16,7 @@ PARTIAL_ORDER = [
     "matrix.html",
     "ecosystem.html",
     "install.html",
+    "studio.html",
     "footer.html",
 ]
 

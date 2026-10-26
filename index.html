@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/styles/panels/ecosystem.css" />
     <link rel="stylesheet" href="/styles/panels/tri_rotation.css" />
     <link rel="stylesheet" href="/styles/panels/install.css" />
+    <link rel="stylesheet" href="/styles/panels/studio.css" />
     <link rel="stylesheet" href="/styles/section_nav.css" />
     <link rel="stylesheet" href="/styles/panels/footer.css" />
     <script>
@@ -106,6 +107,7 @@
         <a href="#scene-matrix" class="mobile-nav-link">53 Scenes Matrix <span>→</span></a>
         <a href="#ecosystem" class="mobile-nav-link">Universal Ecosystem <span>→</span></a>
         <a href="#install" class="mobile-nav-link">Installation &amp; Packages <span>→</span></a>
+        <a href="#studio" class="mobile-nav-link">IdleScreen Studio <span>→</span></a>
         <div class="mobile-nav-actions">
           <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer" class="nav-btn nav-btn-ghost">GitHub ↗</a>
           <a href="#install" class="nav-btn nav-btn-primary">Install</a>
@@ -661,6 +663,124 @@
         </div>
       </div>
     </section>
+      <!-- Section 5: IdleScreen Studio -->
+      <section class="panel" id="studio">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span class="eyebrow-dot" aria-hidden="true"></span>
+            OFFLINE SAVER RENDERING // STUDIO
+          </div>
+          <h2 class="section-title">IdleScreen Studio</h2>
+          <p class="section-intro">
+            Render saver loops to video, offline. The <code>render</code> engine simulates a saver frame by frame and pipes it straight into ffmpeg — no Wayland session, no compositor, no display attached. <code>idle-studio</code> is the Director TUI for queueing and tuning export jobs.
+          </p>
+        </div>
+
+        <div class="studio-grid">
+          <!-- Card 1: Install Studio -->
+          <div class="studio-card studio-card-primary spotlight-card">
+            <div class="studio-card-header">
+              <span class="studio-badge studio-badge-hot">[ 01 // RECOMMENDED ]</span>
+              <h3 class="studio-title">Install Studio</h3>
+            </div>
+            <p class="studio-desc">
+              One command installs the render engine and the Director TUI from the same signed channel as the daemon. The signing key's fingerprint is pinned out-of-band, every helper module is verified against a pinned SHA-256, and the repo file is written from pinned content — never fetched.
+            </p>
+
+            <div class="studio-snippet-box">
+              <code class="studio-snippet-code" id="studio-install-cmd">curl -fsSL https://idlescreen.github.io/packages/install-studio.sh | sh</code>
+              <button type="button" class="studio-copy-btn" onclick="copySnippet('studio-install-cmd', this)" aria-label="Copy Studio install command">[ COPY ]</button>
+            </div>
+
+            <div class="studio-spec-list">
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">PACKAGES</span>
+                <span class="studio-spec-val">idle-studio · render</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">CHANNEL</span>
+                <span class="studio-spec-val">gpgcheck=1 · repo gpgcheck=1</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">REMOVE</span>
+                <span class="studio-spec-val">install.sh | sh -s -- --uninstall</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Render a saver loop -->
+          <div class="studio-card spotlight-card">
+            <div class="studio-card-header">
+              <span class="studio-badge">[ 02 // HEADLESS RENDER ]</span>
+              <h3 class="studio-title">Render a Saver</h3>
+            </div>
+            <p class="studio-desc">
+              One command, one file. The engine simulates the loop and encodes it through ffmpeg — nothing to clean up afterwards, and the same effect name and seed always produce the same bytes.
+            </p>
+
+            <div class="studio-snippet-box">
+              <code class="studio-snippet-code" id="studio-render-cmd">render -e beams --duration 10s -o ~/Videos/beams.mkv</code>
+              <button type="button" class="studio-copy-btn" onclick="copySnippet('studio-render-cmd', this)" aria-label="Copy render command">[ COPY ]</button>
+            </div>
+
+            <div class="studio-spec-list">
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">DURATION</span>
+                <span class="studio-spec-val">10s · 5m · 2h · 1d</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">FORMAT</span>
+                <span class="studio-spec-val">AV1 (mkv) · H.264 (mp4) · PNG · raw</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">SIZE</span>
+                <span class="studio-spec-val">--width / --height</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">REPEATABLE</span>
+                <span class="studio-spec-val">same seed → same bytes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Director TUI -->
+          <div class="studio-card spotlight-card">
+            <div class="studio-card-header">
+              <span class="studio-badge">[ 03 // DIRECTOR TUI ]</span>
+              <h3 class="studio-title">Queue &amp; Tune Jobs</h3>
+            </div>
+            <p class="studio-desc">
+              Prefer a terminal to a command line? <code>idle-studio</code> is a Director for export jobs: pick the effect, set duration, resolution, fps and quality, then queue, pause and run them.
+            </p>
+
+            <div class="studio-snippet-box">
+              <code class="studio-snippet-code" id="studio-director-cmd">idle-studio</code>
+              <button type="button" class="studio-copy-btn" onclick="copySnippet('studio-director-cmd', this)" aria-label="Copy idle-studio command">[ COPY ]</button>
+            </div>
+
+            <div class="studio-spec-list">
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">EFFECTS</span>
+                <span class="studio-spec-val">12 built in — ascii · aurora · beams · …</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">TUNING</span>
+                <span class="studio-spec-val">duration · width · height · fps · crf</span>
+              </div>
+              <div class="studio-spec-row">
+                <span class="studio-spec-key">DRY RUN</span>
+                <span class="studio-spec-val">toggle before you commit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="studio-footnote">
+          Studio is a separate product from the daemon: it renders saver loops to files and never takes over your screen.
+          The engine simulates motion on its own, so an export is a clean, reproducible loop — not a screen recording of your live session.
+          <a href="https://github.com/idlescreen/studio" target="_blank" rel="noopener noreferrer">Source ↗</a>
+        </p>
+      </section>
       <!-- Noscript Fallback -->
       <noscript>
         <section class="panel">
@@ -756,6 +876,7 @@
               <a href="#scene-matrix">53 Scenes Matrix</a>
               <a href="#ecosystem">Ecosystem</a>
               <a href="#install">Installation</a>
+              <a href="#studio">Studio</a>
             </div>
 
             <div class="footer-col">

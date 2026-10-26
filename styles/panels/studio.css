@@ -1,0 +1,189 @@
+/* styles/panels/studio.css — IdleScreen Studio: offline saver → video rendering */
+.studio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.studio-card {
+  background: rgba(17, 20, 23, 0.95);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* Grid items default to min-width:auto, which refuses to shrink below
+     the min-content width of the nowrap command lines inside. That pushes
+     the grid past its container. min-width:0 lets the inner
+     overflow-x:auto take over instead. */
+  min-width: 0;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.studio-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+.studio-card-primary {
+  border-color: rgba(var(--accent-rgb, 255, 176, 0), 0.35);
+  background: linear-gradient(175deg, rgba(24, 28, 32, 0.95) 0%, rgba(18, 21, 23, 0.95) 100%);
+}
+
+.studio-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.studio-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--phosphor);
+  letter-spacing: 0.06em;
+}
+
+.studio-badge-hot {
+  color: var(--hot);
+  background: var(--phosphor-dim);
+  border: 1px solid rgba(var(--accent-rgb, 255, 176, 0), 0.3);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+
+.studio-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.studio-desc {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.studio-snippet-box {
+  background: #070809;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.studio-snippet-code {
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  /* Wrap rather than clip: the 3-column grid is far narrower than the
+     install panel, so a nowrap command would be cut off mid-URL with the
+     scrollbar hidden. Verified that soft wrapping leaves innerText
+     intact, so copySnippet() still copies the exact command. */
+  white-space: normal;
+  overflow-wrap: break-word;
+  background: transparent;
+  padding: 0;
+  min-width: 0;
+}
+
+.studio-copy-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 9px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.studio-copy-btn:hover {
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+  background: var(--phosphor-dim);
+}
+
+.studio-spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.studio-spec-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: #070809;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+
+.studio-spec-key {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  min-width: 92px;
+}
+
+.studio-spec-val {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--hot);
+  white-space: normal;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.studio-footnote {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 20px;
+}
+
+.studio-footnote a {
+  color: var(--hot);
+}
+
+@media (max-width: 1100px) {
+  .studio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .studio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .studio-card {
+    padding: 18px;
+  }
+
+  .studio-spec-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .studio-spec-key {
+    min-width: 0;
+  }
+}
