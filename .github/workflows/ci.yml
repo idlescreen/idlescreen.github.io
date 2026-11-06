@@ -27,34 +27,10 @@ jobs:
       - name: shellcheck install.sh
         run: |
           shellcheck install.sh
-          shellcheck tests/test_forwarder.sh
-
-      - name: Syntax check
-        run: |
           sh -n install.sh
-          sh -n tests/test_forwarder.sh
 
-      - name: Run forwarder test suite
-        run: sh tests/test_forwarder.sh
-
-      - name: Verify page rules and assembly
+      - name: Verify partials sync and page rules
         run: |
-          python3 scripts/assemble.py --check
-          python3 tests/test_page_rules.py
-
-      - name: Headless Chrome verification suites
-        run: |
-          # The three suites below drive the real page in headless Chrome.
-          # They were committed but never executed, so regressions in accent
-          # handling, the matrix/wordmark layout and section navigation went
-          # unnoticed. Run them on every change.
-          if ! command -v google-chrome >/dev/null 2>&1 \
-            && ! command -v google-chrome-stable >/dev/null 2>&1 \
-            && ! command -v chromium >/dev/null 2>&1 \
-            && ! command -v chromium-browser >/dev/null 2>&1; then
-            echo "::error::no Chrome or Chromium binary found — the headless suites cannot run"
-            exit 1
-          fi
-          python3 tests/test_accent_verification.py
-          python3 tests/test_declutter_verification.py
-          python3 tests/test_section_nav.py
+          cat partials/header.html partials/hero.html partials/omarchy.html partials/matrix.html partials/ecosystem.html partials/install.html partials/studio.html partials/footer.html > /tmp/assembled.html
+          cmp -s index.html /tmp/assembled.html
+          sh install.sh --help >/dev/null

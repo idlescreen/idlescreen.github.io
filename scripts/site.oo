@@ -1,0 +1,144 @@
+// # Site Assembler & Page Rule Verifier - Native openOODA (.oo) Tool
+//
+// Logline: Assembles index.html from partials/ and enforces the 16-256 line Page Rule, <= 8 directory density, and HTML sync.
+// Setup: RequiresFsReadCap, FsWriteCap, ProcessCap, and AllocCap.
+// Beats:
+//   1. Assemble or verify index.html against partials/ in canonical order.
+//   2. Verify <= 8 files per directory and 16..256 line bounds on all code files.
+//   3. Exit 0 on pass or return Err on any violation.
+
+import "std/core/primitives/str.oo";
+import "std/fs/process/process.oo";
+
+fn shell_quote(s: String) -> String {
+    return "'" + str_replace(s, "'", "'\\''") + "'";
+}
+
+fn partial_order() -> List[String] {
+    let mut out: List[String] = list_new();
+    out = list_push(out, "header.html");
+    out = list_push(out, "hero.html");
+    out = list_push(out, "omarchy.html");
+    out = list_push(out, "matrix.html");
+    out = list_push(out, "ecosystem.html");
+    out = list_push(out, "install.html");
+    out = list_push(out, "studio.html");
+    out = list_push(out, "footer.html");
+    return out;
+}
+
+fn assemble_content(fs_r: &FsReadCap) -> Result[String, String] {
+    let order: List[String] = partial_order();
+    let mut acc: String = "";
+    let mut i: Int = 0;
+    while i < list_len(order) {
+        let name: String = list_get(order, i);
+        let path: String = "partials/" + name;
+        let rd: Result[String, String] = read_file(fs_r, path);
+        if rd.is_err() {
+            return Err("Missing required partial: " + path);
+        }
+        acc = acc + match rd { Ok(s) => s, Err(_) => "" };
+        i = i + 1;
+    }
+    return Ok(acc);
+}
+
+fn cmd_assemble(fs_r: &FsReadCap, fs_w: &FsWriteCap, check: Bool) -> Int {
+    let res: Result[String, String] = assemble_content(fs_r);
+    if res.is_err() {
+        println("FAIL: " + match res { Ok(_) => "", Err(e) => e });
+        return 1;
+    }
+    let assembled: String = match res { Ok(s) => s, Err(_) => "" };
+    if check {
+        let cur: Result[String, String] = read_file(fs_r, "index.html");
+        if cur.is_err() {
+            println("FAIL: index.html does not exist");
+            return 1;
+        }
+        let cur_s: String = match cur { Ok(s) => s, Err(_) => "" };
+        if cur_s != assembled {
+            println("FAIL: index.html is out of sync with partials/.");
+            println("Run './bin/site assemble' to regenerate.");
+            return 1;
+        }
+        println("OK: index.html matches partials/ exactly.");
+        return 0;
+    }
+    let w: Result[String, String] = write_file(fs_w, "index.html", assembled);
+    if w.is_err() {
+        println("FAIL: could not write index.html");
+        return 1;
+    }
+    println("Successfully assembled index.html from 8 partials.");
+    return 0;
+}
+
+fn check_rules(proc: &ProcessCap, fs_r: &FsReadCap, fs_w: &FsWriteCap) -> Int {
+    let mut fails: Int = 0;
+    println("Checking directory density (<= 8 files per directory)...");
+    let d_cmd: String = "for d in $(find . -type d -not -path './.git*' -not -path './.github*' -not -path './bin*' -not -path './.ooda-cache*'); do c=$(find \"$d\" -maxdepth 1 -type f -not -name '.*' | wc -l); if [ \"$c\" -gt 8 ]; then echo \"FAIL: $d has $c files\"; fi; done";
+    let d_out: String = match process_exec(proc, d_cmd) { Ok(s) => str_trim(s), Err(_) => "" };
+    if d_out != "" {
+        println("  " + d_out);
+        fails = fails + 1;
+    } else {
+        println("  PASS: All directories satisfy <= 8 files.");
+    }
+    println("Checking code page sizing (16 <= lines <= 256)...");
+    let l_cmd: String = "for f in $(find . -type f \\( -name '*.js' -o -name '*.css' -o -name '*.sh' -o -name '*.oo' -o -name '*.html' \\) -not -path './.git/*' -not -path './.github/*' -not -name 'index.html'); do n=$(wc -l < \"$f\"); if [ \"$n\" -lt 16 ] || [ \"$n\" -gt 256 ]; then echo \"FAIL: $f has $n lines\"; fi; done";
+    let l_out: String = match process_exec(proc, l_cmd) { Ok(s) => str_trim(s), Err(_) => "" };
+    if l_out != "" {
+        println("  " + l_out);
+        fails = fails + 1;
+    } else {
+        println("  PASS: All code files satisfy 16 <= lines <= 256.");
+    }
+    println("Checking partials assembly synchronization...");
+    if cmd_assemble(fs_r, fs_w, true) != 0 {
+        fails = fails + 1;
+    } else {
+        println("  PASS: index.html is fully synchronized with partials/.");
+    }
+    if fails > 0 {
+        println("Result: FAILED with " + fails.to_string() + " violation(s).");
+        return 1;
+    }
+    println("Result: All page rules, assembly, and syntax checks PASSED.");
+    return 0;
+}
+
+fn check_forwarder(proc: &ProcessCap) -> Int {
+    let mut fails: Int = 0;
+    println("Checking install.sh entry forwarder...");
+    let h_out: String = match process_exec(proc, "sh install.sh --help >/dev/null 2>&1 && echo ok") { Ok(s) => str_trim(s), Err(_) => "" };
+    if h_out != "ok" { println("  FAIL: install.sh --help exited non-zero"); fails = fails + 1; }
+    let vs_bad: String = match process_exec(proc, "sh install.sh --verify-self deadbeef install.sh >/dev/null 2>&1 && echo bad || echo ok") { Ok(s) => str_trim(s), Err(_) => "ok" };
+    if vs_bad != "ok" { println("  FAIL: install.sh --verify-self accepted short hash"); fails = fails + 1; }
+    let vs_good: String = match process_exec(proc, "h=$(sha256sum install.sh | awk '{print $1}') && sh install.sh --verify-self \"$h\" install.sh >/dev/null 2>&1 && echo ok") { Ok(s) => str_trim(s), Err(_) => "" };
+    if vs_good != "ok" { println("  FAIL: install.sh --verify-self rejected valid hash"); fails = fails + 1; }
+    if fails == 0 { println("  PASS: install.sh entry forwarder checks passed."); }
+    return fails;
+}
+
+pub fn main(fs_r: &FsReadCap, fs_w: &FsWriteCap, proc: &ProcessCap, alloc: &AllocCap, args: List[String]) -> Result[Int, String] {
+    let _q: Int = alloc_bytes(alloc, 268435456);
+    let mut mode: String = "assemble";
+    let mut check: Bool = false;
+    let mut i: Int = 0;
+    while i < list_len(args) {
+        let a: String = list_get(args, i);
+        if a == "--check" { check = true; }
+        else if a == "rules" || a == "--rules" || a == "verify" { mode = "rules"; }
+        else if a == "assemble" { mode = "assemble"; }
+        i = i + 1;
+    }
+    if mode == "rules" {
+        let r1: Int = check_rules(proc, fs_r, fs_w);
+        let r2: Int = check_forwarder(proc);
+        if r1 + r2 > 0 { return Ok(1); }
+        return Ok(0);
+    }
+    return Ok(cmd_assemble(fs_r, fs_w, check));
+}
