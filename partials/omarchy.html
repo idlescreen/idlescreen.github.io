@@ -1,93 +1,91 @@
-      <!-- Section: A Play on the Omarchy Theme -->
+      <!-- Section: Native openOODA Architecture -->
       <section class="panel omarchy-section" id="omarchy-play">
         <div class="section-header">
           <div class="section-eyebrow">
             <span class="eyebrow-dot" aria-hidden="true"></span>
-            THE PHILOSOPHY // HIGH CRAFT WITHOUT THE DOGMA
+            FIRST-PRINCIPLES ENGINEERING // ZERO RUNTIME BLOAT
           </div>
-          <h2 class="section-title">A Play on the Omarchy Theme — For Everyone Else</h2>
+          <h2 class="section-title">Why Native openOODA (<code>.oo</code>) Changes Everything</h2>
           <p class="section-intro">
-            Omarchy demonstrated that Linux ricing can be gorgeous, punchy, and deeply tactile.
-            But why should you have to repartition your storage drive, migrate distributions, adopt an opinionated window manager,
-            or abandon your init system just to enjoy that ambient craft?
-            IdleScreen brings the same artisanal phosphor aesthetic to the system you already built.
+            Traditional screensaver suites either pull in hundreds of megabytes of desktop framework dependencies or leak memory over long-running sessions.
+            IdleScreen v5.0.0 is compiled directly to native machine code by <code>oodac</code> with capability-attenuated permissions, per-frame OODA arena resets, and deterministic 62-bit math — delivering 53 scenes in a single 339 KB binary.
           </p>
 
           <!-- View Toggle Bar -->
           <div class="omarchy-view-toggle-bar">
-            <div class="omarchy-view-toggle" role="group" aria-label="Philosophy layout view">
+            <div class="omarchy-view-toggle" role="group" aria-label="Architecture layout view">
               <button type="button" class="view-btn active" id="omarchy-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
               <button type="button" class="view-btn" id="omarchy-view-grid" aria-pressed="false">[ ⊞ FULL COMPARISON (3) ]</button>
             </div>
-            <span class="marquee-hint">PAUSE ON HOVER • HIGH CRAFT WITHOUT DISTRO-HOPPING</span>
+            <span class="marquee-hint">PAUSE ON HOVER • DETERMINISTIC &amp; CAPABILITY-SECURED</span>
           </div>
         </div>
 
         <div class="omarchy-viewport marquee-mode" id="omarchy-viewport">
           <div class="omarchy-marquee-track" id="omarchy-track">
-          <!-- Column 1: The Opinionated Way -->
+          <!-- Column 1: Legacy Screensaver Suites -->
           <div class="compare-card compare-card-opinionated spotlight-card">
             <div class="compare-header">
-              <span class="compare-badge compare-badge-dim">[ THE OPINIONATED SETUP ]</span>
-              <h3 class="compare-header-title">The Dogmatic Way</h3>
+              <span class="compare-badge compare-badge-dim">[ LEGACY SCREENSAVER SUITES ]</span>
+              <h3 class="compare-header-title">Bloated &amp; Ambient-Authority</h3>
             </div>
             <ul class="compare-list">
               <li class="compare-item">
                 <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Drive Wipe Required:</strong> Demands an unpartitioned target drive and overrides your base installation.</div>
+                <div><strong>Unbounded Heap Churn:</strong> Per-frame string and buffer allocations steadily grow RSS over multi-hour idle sessions.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Enforced Desktop Workflow:</strong> Mandates an opinionated tiling compositor and forces 50+ new keyboard shortcuts on you.</div>
+                <div><strong>Ambient Authority Risk:</strong> Screensaver processes run with full user filesystem and network privileges despite only needing display/TTY output.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Init &amp; Shell Coupling:</strong> Tied to a single init architecture and specific configuration dotfile sprawl.</div>
+                <div><strong>Multi-Binary Sprawl:</strong> Dozens of external helper executables, shared libraries, and fragile IPC glue.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>High Maintenance Fragility:</strong> Upstream package churn risks breaking everyday development workflows.</div>
+                <div><strong>Distro &amp; Init Lock-In:</strong> Coupled to a single window manager, init daemon, or OS toolchain.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Distro Lock-in:</strong> If you don't run Arch Linux, you're out of luck.</div>
+                <div><strong>Non-Deterministic Rendering:</strong> Floating-point drift and unseeded state make bit-exact verification impossible.</div>
               </li>
             </ul>
             <div class="compare-footer-note">
-              // Great if you want someone else to decide everything for you.
+              // Heavy dependencies for something meant to run while your machine is idle.
             </div>
           </div>
 
-          <!-- Column 2: The IdleScreen Way -->
+          <!-- Column 2: The IdleScreen v5.0.0 Way -->
           <div class="compare-card compare-card-idlescreen spotlight-card">
             <div class="compare-header">
-              <span class="compare-badge compare-badge-bright">[ THE IDLESCREEN WAY ]</span>
-              <h3 class="compare-header-title">Universal Linux Freedom</h3>
+              <span class="compare-badge compare-badge-bright">[ IDLESCREEN V5.0.0 // OPENOODA ]</span>
+              <h3 class="compare-header-title">Capability-Secured Native Engine</h3>
             </div>
             <ul class="compare-list">
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Distribution:</strong> First-class <strong>SuperFedora</strong> integration plus native packages for Fedora, Debian, Ubuntu, Arch, Alpine, openSUSE, and Void.</div>
+                <div><strong>2.62 MiB Flat 1,000-Frame RSS:</strong> Per-frame OODA arena mark/reset reclamation (<code>@oo_arena_mark</code> / <code>@oo_arena_reset_mark</code>) guarantees zero memory growth across 1,000+ frames.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Desktop &amp; Sandbox:</strong> Seamless Wayland <code>wlr-layer-shell</code> + <code>ext-idle-notify-v1</code> + native GNOME Mutter support across GNOME, KDE Plasma, COSMIC (including <code>CosmicCage</code> sandboxes), Hyprland, Sway, River, Wayfire, and Podman/OCI containers.</div>
+                <div><strong>Default-Deny Capability Security:</strong> Attenuated OODA capabilities ensure scene math runs as pure compute with zero ambient filesystem or network access.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Keep Your Init:</strong> Built-in <code>idlescreen service install</code> for systemd, OpenRC, runit, dinit, s6, or XDG autostart.</div>
+                <div><strong>Single 339 KB Binary (Linux ELF + Windows PE32+):</strong> All 53 scenes, 4 bevelled wordmark presets, TUI director, and idle daemon compiled into one self-contained executable.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>10-Bit HDR &amp; 4K 2x Hi-Res GPU Scaling (<code>wp_viewporter</code>):</strong> Negotiates 10-bit deep color (`Argb2101010`), adapts to your system theme &amp; fonts, adds anamorphic lens flares &amp; neon overdrive, and offloads 4K/HiDPI scaling directly to display hardware.</div>
+                <div><strong>Bit-Exact Determinism:</strong> Byte-identical builds (<code>make det</code>) and 18/18 bit-exact scene parity (<code>make parity</code>) from a single seed.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Everything in <code>idlescreen tui</code>:</strong> Tune idle &amp; DPMS power-off timeouts, watch the live side-by-side mini-preview on wide terminals, browse all 53 built-in 16-bit arcade scenes, launch <code>preview --tour</code>, or set custom banner text in the interactive TUI.</div>
+                <div><strong>Everything in <code>idlescreen tui</code>:</strong> Browse all 53 scenes, watch the live side-by-side preview, launch <code>preview --tour</code>, or customize your wordmark in seconds.</div>
               </li>
             </ul>
             <div class="compare-footer-note">
-              // High craft everywhere. Zero compromise. Zero distro-hopping.
+              // Built in native openOODA (.oo). Zero dependencies. Zero memory leaks.
             </div>
           </div>
 
@@ -103,14 +101,14 @@
           </div>
 
           <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v5.0.0 (openOODA)</span> <span class="tui-line-dim">───────────────────────────────────────────┐</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> SUPERFEDORA       <span class="tui-line-cyan">Compositor:</span> HYPRLAND / MUTTER           <span class="tui-line-cyan">Memory:</span> ~2.4 MB RSS     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Engine:</span> openOODA .oo (ELF/PE32+)  <span class="tui-line-cyan">Capabilities:</span> Default-Deny     <span class="tui-line-cyan">Peak RSS:</span> 2.62 MiB      <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Scene Mode</span>    <span class="tui-line-hot">► [ All 53 Arcade Scenes (Shuffle) ]</span>   [ 14 New ]   [ Single ]    <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[2] 53-Scene Catalog</span>     <span class="tui-line-green">► [ mmx ]   [ zero ]   [ plasma ]   [ tetris ]   [ breakout ]</span>     <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[3] Arcade Banner Text</span>   <span class="tui-line-green">► [ Clean Host OS Banner ("SUPERFEDORA") ]</span>   [ Custom Text ]       <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[4] Idle Activation</span>      <span class="tui-line-hot">◄ 5 mins ►</span> (0.00% CPU at idle • zero periodic wakeups)              <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[5] Starfield &amp; GPU</span>      <span class="tui-line-green">8 Palettes × 8 Drift Modes • wp_viewporter 1x Grid (60–144 Hz)</span>     <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[6] Service &amp; Doctor</span>     <span class="tui-line-green">systemd / openrc / runit / s6 / dinit</span> (idlescreen doctor --fix)     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Scene Mode</span>    <span class="tui-line-hot">► [ All 53 Arcade Scenes (Shuffle) ]</span>   [ Tour ]     [ Single ]    <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[2] 53-Scene Catalog</span>     <span class="tui-line-green">► [ blackhole ] [ binarypath ] [ burn ] [ plasma ] [ matrix ]</span>     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[3] Arcade Banner Text</span>   <span class="tui-line-green">► [ OPENOODA / SUPERFEDORA / FEDORA / ARCH ]</span>   [ Custom Text ]    <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[4] Idle Activation</span>      <span class="tui-line-hot">◄ 5 mins ►</span> (0.00% CPU at idle • per-frame arena reset)             <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[5] Parity &amp; Determinism</span> <span class="tui-line-green">18/18 Bit-Exact Scene Parity • Byte-Identical Build (make det)</span>    <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[6] Service &amp; Doctor</span>     <span class="tui-line-green">systemd / openrc / runit / s6 / dinit</span> (idlescreen doctor)          <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-hot">[P]</span> Preview Scene   <span class="tui-line-hot">[N]</span> Tour 53 Scenes   <span class="tui-line-hot">[T]</span> Edit Banner   <span class="tui-line-hot">[Space]</span> Toggle   <span class="tui-line-hot">[Q]</span> Save &amp; Quit  <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">└───────────────────────────────────────────────────────────────────────────────────────┘</span></code></pre>

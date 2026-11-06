@@ -29,13 +29,11 @@
 The product site — landing page, interactive 53-scene showcase (53 built-in 16-bit
 arcade & mathematical scenes in a single unified binary), and the documented install
 entry point for [IdleScreen](https://idlescreen.github.io) (`v5.0.0`) —
-capability-secured Wayland & terminal screensavers for Linux and Windows (`PE32+`) built natively in **openOODA (`.oo`)** featuring First-Class openOODA & SuperFedora
-integration, COSMIC Cage & container runtime detection (`CosmicCage`, `PodmanContainer`, `GenericContainer`, `Host`), single-pass 10-bit HDR deep color (`Argb2101010`/`Xrgb2101010`), branchless glyph blitting, dirty-cell partial `damage_buffer`, 4K 2x Hi-Res `wp_viewporter` GPU scaling, system theme adaptation (XDG Portal / COSMIC / Hyprland / GTK / KDE colors, light/dark, and glyph fonts), anamorphic lens flares & neon overdrive, clean OS-only (or custom text) 16-bit arcade banners, 4×8 sub-cell
-sprite Scale2x compositing (`mmx`, `zero`), 8-theme /
-8-drift-mode 3-layer parallax starfields,
-`zwlr-output-power-management-v1` hardware DPMS monitor power-off,
-live side-by-side TUI mini-preview, `ext-idle-notify-v1` + GNOME Mutter idle
-tracking, `idlescreen preview --tour`, and multi-init support (`systemd`, `OpenRC`, `runit`, `s6`, `dinit`, XDG autostart).
+a capability-secured screensaver and idle management suite for Linux (`ELF`) and Windows (`PE32+`) built natively in **openOODA (`.oo`)** with zero external runtime dependencies:
+
+- **`339 KB` Single Binary & `< 2.7 MiB` Flat 1,000-Frame RSS**: Per-frame OODA arena reclamation (`@oo_arena_mark` / `@oo_arena_reset_mark`) sustains a flat `2.62 MiB` resident footprint across 1,000+ frames with `0.00%` CPU at idle.
+- **Default-Deny Capability Security (`std/core/ooda.oo` + `std/sec/pqc.oo`)**: Explicit capability tokens for every I/O surface (`CAP_FS_READ`, `CAP_STDIO`) and zero `unsafe` blocks.
+- **53 Built-In Scenes & `18/18` Bit-Exact Golden Parity**: Clean OS-only (or custom text) 16-bit block wordmarks (`OPENOODA`, `SUPERFEDORA`, `FEDORA`, `ARCH`, `UBUNTU`, `DEBIAN`, etc.), 4×8 sub-cell sprite Scale2x compositing (`mmx`, `zero`), 3-layer parallax starfields, interactive `idlescreen tui` director, `idlescreen preview --tour`, container/cage detection (`CosmicCage`, `PodmanContainer`, `GenericContainer`, `Host`), and multi-init service support (`systemd`, `OpenRC`, `runit`, `s6`, `dinit`, XDG autostart).
 
 ## Install
 

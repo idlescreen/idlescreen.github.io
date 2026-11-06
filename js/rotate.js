@@ -1,15 +1,15 @@
 // rotate.js — hero title rotates through program facts with offscreen pause
 const HEADLINES = [
-  "Ambient by Design",
   "53 Built-In 16-Bit Arcade Scenes",
-  "Clean OS-Only 16-Bit Arcade Banner",
-  "First-Class SuperFedora Support",
-  "wp_viewporter 1x Grid GPU Scaling",
-  "Dynamic 60–144 Hz Matching",
-  "0.00% CPU at Idle (~2–3 MB RSS)",
-  "GNOME Mutter • KDE • COSMIC • Hyprland",
+  "Built Natively in openOODA (.oo)",
+  "2.62 MiB Flat 1,000-Frame RSS",
+  "339 KB Single Binary • Zero Dependencies",
+  "Default-Deny Capability Security",
+  "18/18 Bit-Exact Scene Parity",
+  "0.00% CPU at Idle (~2.6 MiB RSS)",
+  "Linux ELF & Windows PE32+ Binaries",
   "systemd • OpenRC • runit • s6 • dinit",
-  "idlescreen doctor --fix & inhibitors",
+  "idlescreen tui • preview --tour • doctor",
 ];
 
 (function initRotateHeadline() {

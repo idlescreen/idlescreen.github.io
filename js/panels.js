@@ -228,7 +228,7 @@
 })();
 
 console.log(
-  "%c[IDLESCREEN // WAYLAND IDLE DAEMON ACTIVE]\n%cEngineered in Rust • 53 In-Tree ASCII Scenes • Dynamic 60–144 FPS",
+  "%c[IDLESCREEN v5.0.0 // NATIVE OPENOODA (.oo) ENGINE]\n%c53 Built-In Scenes • 339 KB Single Binary • 2.62 MiB Flat 1,000-Frame RSS",
   "color: #ffb000; font-weight: bold; font-size: 12px;",
   "color: #94a3b8; font-size: 11px;"
 );
