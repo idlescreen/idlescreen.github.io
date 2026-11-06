@@ -1,123 +1,123 @@
-      <!-- Section: Native openOODA Architecture -->
+      <!-- Section: Rust vs Native openOODA (.oo) Head-to-Head Benchmark -->
       <section class="panel omarchy-section" id="omarchy-play">
         <div class="section-header">
           <div class="section-eyebrow">
             <span class="eyebrow-dot" aria-hidden="true"></span>
-            FIRST-PRINCIPLES ENGINEERING // ZERO RUNTIME BLOAT
+            HEAD-TO-HEAD CASE STUDY // RUST v4.8.2 VS. NATIVE OPENOODA v5.0.0
           </div>
-          <h2 class="section-title">Why Native openOODA (<code>.oo</code>) Changes Everything</h2>
+          <h2 class="section-title">Rust (<code>v4.8.2</code>) vs. Native openOODA (<code>v5.0.0</code>)</h2>
           <p class="section-intro">
-            Traditional screensaver suites either pull in hundreds of megabytes of desktop framework dependencies or leak memory over long-running sessions.
-            IdleScreen v5.0.0 is compiled directly to native machine code by <code>oodac</code> with capability-attenuated permissions, per-frame OODA arena resets, and deterministic 62-bit math — delivering 53 scenes in a single 339 KB binary.
+            IdleScreen was rebuilt 1:1 from Rust (<code>main</code> branch, <code>v4.8.2</code>) into native <strong>openOODA (<code>.oo</code>)</strong> (<code>ooda</code> branch, <code>v5.0.0</code>).
+            Same 53 built-in scenes, same CLI/TUI workflow, and <code>18/18</code> bit-exact golden scene parity — at <strong>14× smaller binary size</strong>, <strong>zero external dependencies</strong>, and a flat <strong>2.62 MiB</strong> 1,000-frame resident footprint.
           </p>
 
           <!-- View Toggle Bar -->
           <div class="omarchy-view-toggle-bar">
             <div class="omarchy-view-toggle" role="group" aria-label="Architecture layout view">
               <button type="button" class="view-btn active" id="omarchy-view-marquee" aria-pressed="true">[ ⚡ SCROLLING MARQUEE ]</button>
-              <button type="button" class="view-btn" id="omarchy-view-grid" aria-pressed="false">[ ⊞ FULL COMPARISON (3) ]</button>
+              <button type="button" class="view-btn" id="omarchy-view-grid" aria-pressed="false">[ ⊞ FULL BENCHMARK (3) ]</button>
             </div>
-            <span class="marquee-hint">PAUSE ON HOVER • DETERMINISTIC &amp; CAPABILITY-SECURED</span>
+            <span class="marquee-hint">PAUSE ON HOVER • MEASURED ON IDENTICAL 53-SCENE WORKLOAD</span>
           </div>
         </div>
 
         <div class="omarchy-viewport marquee-mode" id="omarchy-viewport">
           <div class="omarchy-marquee-track" id="omarchy-track">
-          <!-- Column 1: Legacy Screensaver Suites -->
+          <!-- Column 1: IdleScreen v4.8.2 (Rust) -->
           <div class="compare-card compare-card-opinionated spotlight-card">
             <div class="compare-header">
-              <span class="compare-badge compare-badge-dim">[ LEGACY SCREENSAVER SUITES ]</span>
-              <h3 class="compare-header-title">Bloated &amp; Ambient-Authority</h3>
+              <span class="compare-badge compare-badge-dim">[ IDLESCREEN v4.8.2 // RUST (main) ]</span>
+              <h3 class="compare-header-title">4.28 MB Binary • Cargo Crate Tree</h3>
             </div>
             <ul class="compare-list">
               <li class="compare-item">
-                <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Unbounded Heap Churn:</strong> Per-frame string and buffer allocations steadily grow RSS over multi-hour idle sessions.</div>
+                <span class="compare-item-icon icon-no">•</span>
+                <div><strong>Binary &amp; Package Footprint:</strong> <code>4.28 MB</code> stripped Linux ELF (<code>1.47 MB</code> RPM / <code>1.36 MB</code> DEB) across 4 duplicate binaries (<code>17.1 MB</code> installed).</div>
               </li>
               <li class="compare-item">
-                <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Ambient Authority Risk:</strong> Screensaver processes run with full user filesystem and network privileges despite only needing display/TTY output.</div>
+                <span class="compare-item-icon icon-no">•</span>
+                <div><strong>External Supply-Chain Surface:</strong> Multi-crate <code>Cargo.lock</code> dependency graph requiring external crates for CLI, serialization, and system bindings.</div>
               </li>
               <li class="compare-item">
-                <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Multi-Binary Sprawl:</strong> Dozens of external helper executables, shared libraries, and fragile IPC glue.</div>
+                <span class="compare-item-icon icon-no">•</span>
+                <div><strong>Standard Heap Allocator:</strong> Per-frame <code>Vec</code> and <code>String</code> heap allocations managed through standard libc <code>malloc</code>/<code>free</code>.</div>
               </li>
               <li class="compare-item">
-                <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Distro &amp; Init Lock-In:</strong> Coupled to a single window manager, init daemon, or OS toolchain.</div>
+                <span class="compare-item-icon icon-no">•</span>
+                <div><strong>Ambient POSIX Authority:</strong> Runs with standard process-wide permissions without compile-time capability token attenuation.</div>
               </li>
               <li class="compare-item">
-                <span class="compare-item-icon icon-no">✕</span>
-                <div><strong>Non-Deterministic Rendering:</strong> Floating-point drift and unseeded state make bit-exact verification impossible.</div>
+                <span class="compare-item-icon icon-no">•</span>
+                <div><strong>Linux-Only Target:</strong> Coupled to Linux-specific crates with no native Windows <code>PE32+</code> cross-compilation target.</div>
               </li>
             </ul>
             <div class="compare-footer-note">
-              // Heavy dependencies for something meant to run while your machine is idle.
+              // Preserved on the `main` branch (`v4.8.2`) as the baseline reference implementation.
             </div>
           </div>
 
-          <!-- Column 2: The IdleScreen v5.0.0 Way -->
+          <!-- Column 2: IdleScreen v5.0.0 (Native openOODA .oo) -->
           <div class="compare-card compare-card-idlescreen spotlight-card">
             <div class="compare-header">
-              <span class="compare-badge compare-badge-bright">[ IDLESCREEN V5.0.0 // OPENOODA ]</span>
-              <h3 class="compare-header-title">Capability-Secured Native Engine</h3>
+              <span class="compare-badge compare-badge-bright">[ IDLESCREEN v5.0.0 // OPENOODA (ooda) ]</span>
+              <h3 class="compare-header-title">339 KB Binary • 2.62 MiB Flat RSS</h3>
             </div>
             <ul class="compare-list">
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>2.62 MiB Flat 1,000-Frame RSS:</strong> Per-frame OODA arena mark/reset reclamation (<code>@oo_arena_mark</code> / <code>@oo_arena_reset_mark</code>) guarantees zero memory growth across 1,000+ frames.</div>
+                <div><strong>14× Smaller Binary &amp; 11× Smaller Package:</strong> <code>339 KB</code> single Linux ELF (<code>133 KB</code> RPM / <code>115 KB</code> DEB, <code>1.4 MB</code> total installed) + <code>1.5 MB</code> native Windows <code>PE32+</code> (<code>idlescreen.exe</code>).</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Default-Deny Capability Security:</strong> Attenuated OODA capabilities ensure scene math runs as pure compute with zero ambient filesystem or network access.</div>
+                <div><strong>Zero External Dependencies:</strong> 100% self-contained <code>.oo</code> + <code>oostd</code> across 35 modular pages obeying the strict <code>1/2/4/8/16/32/64/128/256</code> power-of-2 shape ladder.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Single 339 KB Binary (Linux ELF + Windows PE32+):</strong> All 53 scenes, 4 bevelled wordmark presets, TUI director, and idle daemon compiled into one self-contained executable.</div>
+                <div><strong>2.62 MiB Flat 1,000-Frame Peak RSS:</strong> Per-frame OODA arena mark/reset reclamation (<code>@oo_arena_mark</code> / <code>@oo_arena_reset_mark</code>) sustains <code>2,688 KB</code> RSS across 1,000 frames of <code>blackhole</code> with zero heap growth.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Bit-Exact Determinism:</strong> Byte-identical builds (<code>make det</code>) and 18/18 bit-exact scene parity (<code>make parity</code>) from a single seed.</div>
+                <div><strong>Default-Deny 64-Bit Capabilities:</strong> Explicit <code>CAP_FS_READ</code> and <code>CAP_STDIO</code> capability tokens attenuated before entering the render loop; zero <code>unsafe</code> blocks.</div>
               </li>
               <li class="compare-item">
                 <span class="compare-item-icon icon-yes">✓</span>
-                <div><strong>Everything in <code>idlescreen tui</code>:</strong> Browse all 53 scenes, watch the live side-by-side preview, launch <code>preview --tour</code>, or customize your wordmark in seconds.</div>
+                <div><strong>18/18 Bit-Exact Golden Parity:</strong> Deterministic SplitMix64 PRNG and integer trig LUTs pass <code>make det &amp;&amp; make parity</code> with byte-identical builds and 18/18 golden scene verification.</div>
               </li>
             </ul>
             <div class="compare-footer-note">
-              // Built in native openOODA (.oo). Zero dependencies. Zero memory leaks.
+              // Default branch (`ooda`, `v5.0.0`). Same 53 scenes — 14× smaller, capability-secured, zero dependencies.
             </div>
           </div>
 
-          <!-- Interactive TUI Showcase Mockup -->
+          <!-- Column 3: Measured Head-to-Head Benchmark Table -->
           <div class="tui-showcase-container spotlight-card">
           <div class="tui-header-bar">
             <div class="tui-header-title-wrap">
-              <span class="tui-tag">INTERACTIVE DIRECTOR</span>
-              <h3 class="tui-header-title">Zero Config Headaches: Just <code>idlescreen tui</code></h3>
+              <span class="tui-tag">MEASURED TELEMETRY</span>
+              <h3 class="tui-header-title">Head-to-Head Build &amp; Runtime Metrics (<code>v4.8.2</code> Rust vs. <code>v5.0.0</code> openOODA)</h3>
             </div>
-            <button type="button" class="copy-action-btn" onclick="copySnippet('tui-copy-cmd', this)">[ COPY: idlescreen tui ]</button>
-            <code id="tui-copy-cmd" style="display:none;">idlescreen tui</code>
+            <button type="button" class="copy-action-btn" onclick="copySnippet('tui-copy-cmd', this)">[ COPY: VERIFY PARITY ]</button>
+            <code id="tui-copy-cmd" style="display:none;">make verify &amp;&amp; make test &amp;&amp; make det &amp;&amp; make parity</code>
           </div>
 
-          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v5.0.0 (openOODA)</span> <span class="tui-line-dim">───────────────────────────────────────────┐</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Engine:</span> openOODA .oo (ELF/PE32+)  <span class="tui-line-cyan">Capabilities:</span> Default-Deny     <span class="tui-line-cyan">Peak RSS:</span> 2.62 MiB      <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Scene Mode</span>    <span class="tui-line-hot">► [ All 53 Arcade Scenes (Shuffle) ]</span>   [ Tour ]     [ Single ]    <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[2] 53-Scene Catalog</span>     <span class="tui-line-green">► [ blackhole ] [ binarypath ] [ burn ] [ plasma ] [ matrix ]</span>     <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[3] Arcade Banner Text</span>   <span class="tui-line-green">► [ OPENOODA / SUPERFEDORA / FEDORA / ARCH ]</span>   [ Custom Text ]    <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[4] Idle Activation</span>      <span class="tui-line-hot">◄ 5 mins ►</span> (0.00% CPU at idle • per-frame arena reset)             <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[5] Parity &amp; Determinism</span> <span class="tui-line-green">18/18 Bit-Exact Scene Parity • Byte-Identical Build (make det)</span>    <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-accent">[6] Service &amp; Doctor</span>     <span class="tui-line-green">systemd / openrc / runit / s6 / dinit</span> (idlescreen doctor)          <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
-<span class="tui-line-dim">│</span>  <span class="tui-line-hot">[P]</span> Preview Scene   <span class="tui-line-hot">[N]</span> Tour 53 Scenes   <span class="tui-line-hot">[T]</span> Edit Banner   <span class="tui-line-hot">[Space]</span> Toggle   <span class="tui-line-hot">[Q]</span> Save &amp; Quit  <span class="tui-line-dim">│</span>
-<span class="tui-line-dim">└───────────────────────────────────────────────────────────────────────────────────────┘</span></code></pre>
+          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──────────────────────────────┬───────────────────────────┬───────────────────────────────┬────────────────────┐</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">METRIC</span>                       <span class="tui-line-dim">│</span> <span class="tui-line-cyan">RUST v4.8.2 (main)</span>        <span class="tui-line-dim">│</span> <span class="tui-line-green">OPENOODA v5.0.0 (ooda)</span>        <span class="tui-line-dim">│</span> <span class="tui-line-hot">MEASURED DELTA</span>     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">├──────────────────────────────┼───────────────────────────┼───────────────────────────────┼────────────────────┤</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">Linux x86-64 Binary Size</span>     <span class="tui-line-dim">│</span> 4,281 KB (4.28 MB ELF)    <span class="tui-line-dim">│</span> <span class="tui-line-green">346 KB (339 KiB single ELF)</span>   <span class="tui-line-dim">│</span> <span class="tui-line-hot">12.4× smaller</span>      <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">Signed RPM / DEB Package</span>     <span class="tui-line-dim">│</span> 1,465 KB RPM / 1,359 KB   <span class="tui-line-dim">│</span> <span class="tui-line-green">133 KB RPM / 115 KB DEB</span>       <span class="tui-line-dim">│</span> <span class="tui-line-hot">11.0× smaller</span>      <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">Windows x86-64 PE32+ (.exe)</span>  <span class="tui-line-dim">│</span> N/A (Linux-only crates)   <span class="tui-line-dim">│</span> <span class="tui-line-green">1.51 MB native PE32+ (.exe)</span>   <span class="tui-line-dim">│</span> <span class="tui-line-hot">Cross-platform</span>     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">External Crate / Pkg Deps</span>    <span class="tui-line-dim">│</span> Cargo.lock crate graph    <span class="tui-line-dim">│</span> <span class="tui-line-green">0 external dependencies</span>       <span class="tui-line-dim">│</span> <span class="tui-line-hot">-100% supply chain</span> <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">Frame Memory Model</span>           <span class="tui-line-dim">│</span> Standard heap malloc/free <span class="tui-line-dim">│</span> <span class="tui-line-green">@oo_arena_mark / reset_mark</span>   <span class="tui-line-dim">│</span> <span class="tui-line-hot">0 B/frame leak</span>     <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">1,000-Frame Peak RSS</span>         <span class="tui-line-dim">│</span> Standard heap allocator   <span class="tui-line-dim">│</span> <span class="tui-line-green">2.62 MiB (2,688 KB) flat</span>      <span class="tui-line-dim">│</span> <span class="tui-line-hot">Flat O(1) arena</span>    <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">Authority &amp; Sandbox Model</span>    <span class="tui-line-dim">│</span> Ambient POSIX authority   <span class="tui-line-dim">│</span> <span class="tui-line-green">Default-deny CAP_FS / STDIO</span>   <span class="tui-line-dim">│</span> <span class="tui-line-hot">Zero ambient auth</span>  <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">│</span> <span class="tui-line-accent">53-Scene Output Parity</span>       <span class="tui-line-dim">│</span> 53 scenes (reference)     <span class="tui-line-dim">│</span> <span class="tui-line-green">53 scenes (18/18 bit-exact)</span>   <span class="tui-line-dim">│</span> <span class="tui-line-hot">100% 1:1 parity</span>    <span class="tui-line-dim">│</span>
+<span class="tui-line-dim">└──────────────────────────────┴───────────────────────────┴───────────────────────────────┴────────────────────┘</span></code></pre>
 
           <div class="tui-actions-row">
             <p class="tui-desc-text">
-              Auto-configured out of the box during install. Whenever you want to browse all 53 scenes, tour every arcade effect with <code>idlescreen preview --tour</code>, customize your wordmark with <code>idlescreen text</code>, or tune idle timeouts — just fire up <code>idlescreen tui</code>.
+              Both branches live in <a href="https://github.com/idlescreen/idlescreen" target="_blank" rel="noopener noreferrer"><code>github.com/idlescreen/idlescreen</code></a> (<code>ooda</code> default branch for <code>v5.0.0</code>, <code>main</code> branch for <code>v4.8.2</code> Rust) so you can inspect and benchmark every line of code side by side.
             </p>
-            <a href="#install" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Get IdleScreen Now ↓</a>
+            <a href="#install" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Install IdleScreen v5.0.0 ↓</a>
           </div>
         </div>
       </div>
