@@ -6,7 +6,7 @@
     <title>IdleScreen // High-Craft Wayland Screensavers for Modern Linux</title>
     <meta
       name="description"
-      content="IdleScreen v4.8.2 — high-craft Wayland screensaver suite for Linux. First-class SuperFedora integration, 10-bit HDR deep color, 4K 2x Hi-Res wp_viewporter GPU scaling, system theme adaptation, anamorphic lens flares &amp; neon overdrive, 53 built-in 16-bit arcade &amp; mathematical scenes in a single unified binary, multi-init support, preview --tour, and idlescreen tui."
+      content="IdleScreen v5.0.0 — high-craft capability-secured Wayland &amp; terminal screensaver suite for Linux and Windows (PE32+), built natively in openOODA (.oo). First-class SuperFedora integration, 10-bit HDR deep color, 4K 2x Hi-Res wp_viewporter GPU scaling, system theme adaptation, anamorphic lens flares &amp; neon overdrive, 53 built-in 16-bit arcade &amp; mathematical scenes in a single unified binary, multi-init support, preview --tour, and idlescreen tui."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/base/tokens.css" />
@@ -80,7 +80,7 @@
             </span>
             <span class="brand-name">IdleScreen</span>
           </a>
-          <span class="brand-badge" title="Daemon Core v4.8.2 Online">CORE: v4.8.2</span>
+          <span class="brand-badge" title="Daemon Core v5.0.0 (openOODA) Online">CORE: v5.0.0</span>
         </div>
 
         <div class="header-actions">
@@ -146,9 +146,9 @@
 
         <p class="hero-intro">
           You don't need to wipe your drive, switch distributions, or learn a bespoke tiling window manager just to experience high-craft ambient screensavers.
-          <strong>IdleScreen v4.8.2</strong> brings first-class <strong>SuperFedora</strong> integration, <strong>System Theme Adaptation</strong> (XDG Portal / COSMIC / Hyprland / GTK / KDE colors, light/dark, and glyph fonts), <strong>10-bit HDR deep color</strong>, <strong>4K 2x Hi-Res <code>wp_viewporter</code> GPU scaling</strong>, <strong>Anamorphic Lens Flares &amp; Neon Overdrive</strong>, <strong>COSMIC Cage &amp; container runtime detection</strong>, and <strong>53 built-in 16-bit arcade &amp; mathematical scenes</strong> in a single unified binary to whatever you're already running —
+          <strong>IdleScreen v5.0.0</strong> (built natively in <strong>openOODA <code>.oo</code></strong>) brings first-class <strong>SuperFedora</strong> integration, <strong>System Theme Adaptation</strong> (XDG Portal / COSMIC / Hyprland / GTK / KDE colors, light/dark, and glyph fonts), <strong>10-bit HDR deep color</strong>, <strong>4K 2x Hi-Res <code>wp_viewporter</code> GPU scaling</strong>, <strong>Anamorphic Lens Flares &amp; Neon Overdrive</strong>, <strong>COSMIC Cage &amp; container runtime detection</strong>, and <strong>53 built-in 16-bit arcade &amp; mathematical scenes</strong> in a single unified binary to whatever you're already running —
           SuperFedora, Fedora, Debian, Arch, Alpine, openSUSE, GNOME (Mutter), KDE, COSMIC (including <code>CosmicCage</code> sandboxes), Hyprland, Sway, Podman/OCI containers, systemd, OpenRC, runit, s6, dinit, or XDG autostart.
-          0.00% CPU at idle (~2–3 MB RSS), 8-theme / 8-drift-mode 3-layer parallax starfields, and effortless control via <code>idlescreen tui</code> and <code>idlescreen preview --tour</code>.
+          0.00% CPU at idle (~2.6 MB flat 1,000-frame RSS), 8-theme / 8-drift-mode 3-layer parallax starfields, and effortless control via <code>idlescreen tui</code> and <code>idlescreen preview --tour</code>.
         </p>
 
         <!-- High-Contrast Terminal Install Box -->
@@ -298,7 +298,7 @@
             <code id="tui-copy-cmd" style="display:none;">idlescreen tui</code>
           </div>
 
-          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v4.8.2</span> <span class="tui-line-dim">──────────────────────────────────────────────────────┐</span>
+          <pre class="tui-screen-mock"><code><span class="tui-line-dim">┌──</span> <span class="tui-line-accent">IDLESCREEN TERMINAL DIRECTOR // v5.0.0 (openOODA)</span> <span class="tui-line-dim">───────────────────────────────────────────┐</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-cyan">Host OS:</span> SUPERFEDORA       <span class="tui-line-cyan">Compositor:</span> HYPRLAND / MUTTER           <span class="tui-line-cyan">Memory:</span> ~2.4 MB RSS     <span class="tui-line-dim">│</span>
 <span class="tui-line-dim">├───────────────────────────────────────────────────────────────────────────────────────┤</span>
 <span class="tui-line-dim">│</span>  <span class="tui-line-accent">[1] Active Scene Mode</span>    <span class="tui-line-hot">► [ All 53 Arcade Scenes (Shuffle) ]</span>   [ 14 New ]   [ Single ]    <span class="tui-line-dim">│</span>
@@ -333,7 +333,7 @@
             <span class="matrix-count-badge" id="matrix-count">[ 53 / 53 SCENES ]</span>
           </div>
           <p class="matrix-intro">
-            53 built-in 16-bit arcade &amp; mathematical scenes in <code>crates/idlescreen/src/ascii/scenes/</code> — featuring clean OS-only (or custom text) 16-bit arcade banners, 4×8 sub-cell sprite Scale2x compositing, 8-theme / 8-drift-mode 3-layer parallax starfields with per-scene randomized star coordinates, <code>wp_viewporter</code> 1x grid GPU scaling, dynamic 60–144 Hz refresh matching, and 0.00% CPU at idle.
+            53 built-in 16-bit arcade &amp; mathematical scenes in <code>ascii/scenes/</code> — featuring clean OS-only (or custom text) 16-bit arcade banners, 4×8 sub-cell sprite Scale2x compositing, 8-theme / 8-drift-mode 3-layer parallax starfields with per-scene randomized star coordinates, <code>wp_viewporter</code> 1x grid GPU scaling, dynamic 60–144 Hz refresh matching, and 0.00% CPU at idle.
           </p>
 
           <div class="matrix-controls-bar">
@@ -375,7 +375,7 @@
           </div>
           <h2 class="section-title">Built for Every Distro, DE, and Init</h2>
           <p class="section-intro">
-            IdleScreen is engineered from the metal up in Rust to integrate natively across the entire modern Linux landscape without runtime bloat or desktop-specific lock-in.
+            IdleScreen v5.0.0 is engineered from the metal up in native openOODA (<code>.oo</code>) to integrate across the entire modern Linux and Windows (<code>PE32+</code>) landscape without runtime bloat or desktop-specific lock-in.
           </p>
 
           <!-- View Toggle Bar -->
@@ -504,7 +504,7 @@
           </div>
           <h2 class="section-title">Installation &amp; Package Channels</h2>
           <p class="section-intro">
-            Be up and running in seconds. Available via standalone shell installer, native package repositories, or Rust Cargo.
+            Be up and running in seconds. Available via standalone shell installer, native package repositories, or native openOODA (<code>oodac</code>) source build.
           </p>
 
           <!-- View Toggle Bar -->
@@ -587,18 +587,18 @@
             </div>
           </div>
 
-          <!-- Card 3: Rust Cargo & Source -->
+          <!-- Card 3: openOODA Source -->
           <div class="install-card spotlight-card">
             <div class="install-card-header">
-              <span class="install-badge">[ 03 // HARDWARE-TUNED SOURCE ]</span>
+              <span class="install-badge">[ 03 // NATIVE OPENOODA SOURCE ]</span>
               <h3 class="install-title">Build from Source</h3>
             </div>
             <p class="install-desc">
-              Compile from source with native CPU SIMD acceleration (<code>target-cpu=native</code>) and LTO using the Rust toolchain.
+              Compile the capability-secured native Linux ELF and Windows PE32+ binaries from source using the openOODA compiler (<code>oodac</code>).
             </p>
 
             <div class="install-snippet-box">
-              <code class="install-snippet-code" id="inst-cargo-cmd">RUSTFLAGS="-C target-cpu=native" cargo build --release --workspace</code>
+              <code class="install-snippet-code" id="inst-cargo-cmd">make build &amp;&amp; make verify &amp;&amp; make test &amp;&amp; make det &amp;&amp; make parity</code>
               <button type="button" class="install-copy-btn" onclick="copySnippet('inst-cargo-cmd', this)">[ COPY ]</button>
             </div>
 
@@ -607,7 +607,7 @@
             </p>
 
             <div class="install-snippet-box">
-              <code class="install-snippet-code" id="inst-git-cmd">git clone https://github.com/idlescreen/idlescreen &amp;&amp; cd idlescreen &amp;&amp; cargo build --release --workspace</code>
+              <code class="install-snippet-code" id="inst-git-cmd">git clone https://github.com/idlescreen/idlescreen &amp;&amp; cd idlescreen &amp;&amp; make build</code>
               <button type="button" class="install-copy-btn" onclick="copySnippet('inst-git-cmd', this)">[ COPY ]</button>
             </div>
           </div>
@@ -864,7 +864,7 @@
               <span class="footer-logo-text">IdleScreen</span>
             </div>
             <p class="footer-tagline">
-              High-performance Wayland screensaver and idle daemon suite for Linux (v4.8.2). First-class SuperFedora integration, 53 built-in 16-bit arcade &amp; mathematical scenes, 8-theme parallax starfields, 0.00% CPU at idle, and universal Linux compatibility.
+              High-performance capability-secured Wayland &amp; terminal screensaver suite for Linux and Windows (v5.0.0, built natively in openOODA). First-class SuperFedora integration, 53 built-in 16-bit arcade &amp; mathematical scenes, 8-theme parallax starfields, 0.00% CPU at idle, and universal Linux compatibility.
             </p>
           </div>
 
@@ -898,7 +898,7 @@
 
         <div class="footer-bottom">
           <span>&copy; 1982–2026 Studio2201 &amp; Contributors // ZERO TRACKING</span>
-          <span>Engineered in Rust for Modern Linux Wayland</span>
+          <span>Engineered in Native openOODA (.oo) for Modern Linux Wayland &amp; Windows PE32+</span>
         </div>
       </div>
     </footer>

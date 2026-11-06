@@ -7,7 +7,7 @@
           </div>
           <h2 class="section-title">Installation &amp; Package Channels</h2>
           <p class="section-intro">
-            Be up and running in seconds. Available via standalone shell installer, native package repositories, or Rust Cargo.
+            Be up and running in seconds. Available via standalone shell installer, native package repositories, or native openOODA (<code>oodac</code>) source build.
           </p>
 
           <!-- View Toggle Bar -->
@@ -90,18 +90,18 @@
             </div>
           </div>
 
-          <!-- Card 3: Rust Cargo & Source -->
+          <!-- Card 3: openOODA Source -->
           <div class="install-card spotlight-card">
             <div class="install-card-header">
-              <span class="install-badge">[ 03 // HARDWARE-TUNED SOURCE ]</span>
+              <span class="install-badge">[ 03 // NATIVE OPENOODA SOURCE ]</span>
               <h3 class="install-title">Build from Source</h3>
             </div>
             <p class="install-desc">
-              Compile from source with native CPU SIMD acceleration (<code>target-cpu=native</code>) and LTO using the Rust toolchain.
+              Compile the capability-secured native Linux ELF and Windows PE32+ binaries from source using the openOODA compiler (<code>oodac</code>).
             </p>
 
             <div class="install-snippet-box">
-              <code class="install-snippet-code" id="inst-cargo-cmd">RUSTFLAGS="-C target-cpu=native" cargo build --release --workspace</code>
+              <code class="install-snippet-code" id="inst-cargo-cmd">make build &amp;&amp; make verify &amp;&amp; make test &amp;&amp; make det &amp;&amp; make parity</code>
               <button type="button" class="install-copy-btn" onclick="copySnippet('inst-cargo-cmd', this)">[ COPY ]</button>
             </div>
 
@@ -110,7 +110,7 @@
             </p>
 
             <div class="install-snippet-box">
-              <code class="install-snippet-code" id="inst-git-cmd">git clone https://github.com/idlescreen/idlescreen &amp;&amp; cd idlescreen &amp;&amp; cargo build --release --workspace</code>
+              <code class="install-snippet-code" id="inst-git-cmd">git clone https://github.com/idlescreen/idlescreen &amp;&amp; cd idlescreen &amp;&amp; make build</code>
               <button type="button" class="install-copy-btn" onclick="copySnippet('inst-git-cmd', this)">[ COPY ]</button>
             </div>
           </div>
