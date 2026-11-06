@@ -28,7 +28,7 @@
       </div>
       <div class="matrix-card-actions">
         <button type="button" class="matrix-btn matrix-btn-copy" data-cmd="idlescreen preview ${s.id}" title="Copy preview command">[ COPY CMD ]</button>
-        <a class="matrix-btn matrix-btn-src" href="${s.sourceUrl}" target="_blank" rel="noopener noreferrer" title="View Rust source code">[ .rs ↗ ]</a>
+        <a class="matrix-btn matrix-btn-src" href="${s.sourceUrl}" target="_blank" rel="noopener noreferrer" title="View openOODA (.oo) source code">[ .oo ↗ ]</a>
       </div>
     `;
 
